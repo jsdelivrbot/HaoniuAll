@@ -47,18 +47,15 @@
 					<h2>{{item.courseName}}</h2>
 					<p>地址:{{item.address}}</p>
 					<ul>
-						<router-link tag='li' :to="'/tips/'+item.id" class="icon-tips">
+						<router-link tag='li' :to="'/tips/'+item.id+'/'+childrenId" class="icon-tips">
 							通知
 							<span v-if="item.countNotiec>0">
 								{{item.countNotiec}}
 							</span>
 						</router-link>
-						<!--<li class="icon-tips">
-							通知
-						</li>-->
-						<li class="icon-img">
+						<router-link tag='li' class="icon-img" :to='"/databank/"+childrenId+"/"+item.id'>
 							相册
-						</li>
+						</router-link>
 
 						<router-link class="icon-msg" tag='li' :to='"/msg/"+childrenId+"/"+item.id'>
 							私信
@@ -66,9 +63,6 @@
 									{{item.countMessage}}
 							</span>
 						</router-link>
-						<!--<li class="icon-msg">
-							私信
-						</li>-->
 					</ul>
 				</li>
 			</ul>

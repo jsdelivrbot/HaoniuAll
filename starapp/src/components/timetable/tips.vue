@@ -11,15 +11,10 @@
 			<div class="photo  vux-1px-b" v-if='item.type==1'>
 				<h2 class="title">{{item.content}}</h2>
 				<ul class="imglist">
-					<router-link tag='li' v-for="(items,index) in item.objectSome" :key='index' :to='"/saveImg/"+items.id+"/"+childrenId+"/"+timetableId'>
-						<img :src="items.url" />
+					<router-link tag='li' v-for="(items,index) in item.objectSome" :key='index' :to='"/saveImg/"+item.id+"/"+childrenId+"/"+timetableId'>
+						<img :src="items.cover" />
 					</router-link>
-					<!--					
-					<li >
-						<img :src="items.url" />
-					</li>-->
 				</ul>
-
 				<span class="time">
 					{{item.createTime}}
 				</span>
