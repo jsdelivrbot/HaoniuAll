@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>星星点课</title>
+		<!--<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>-->
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	</head>
+
+	<body>
+
+		<div id="app">
+			{{message1}} {{message2}} {{message3}}
+		</div>
+		<script type="text/javascript">
+			var arr = [{
+					name: "全部",
+					items: null
+				},
+				{
+					name: "附近3公里",
+					items: null
+				},
+				{
+					name: "热门商圈",
+					items: [{
+							name: "八佰伴",
+							items: null,
+							lng: 121.523228,
+							lat: 31.233729
+						},
+						{
+							name: "陆家嘴",
+							items: null,
+							lng: 121.508824,
+							lat: 31.243637
+						},
+						{
+							name: "徐家汇",
+							items: null,
+							lng: 121.443173,
+							lat: 31.200871
+						},
+						{
+							name: "人民广场",
+							items: null,
+							lng: 121.481033,
+							lat: 31.238802
+						},
+						{
+							name: "上南地区",
+							items: null,
+							lng: 121.503612,
+							lat: 31.182258
+						},
+						{
+							name: "淮海路",
+							items: null,
+							lng: 121.474387,
+							lat: 31.226735
+						},
+						{
+							name: "静安寺",
+							items: null,
+							lng: 121.453901,
+							lat: 31.229402
+						},
+						{
+							name: "世纪公园",
+							items: null,
+							lng: 121.558566,
+							lat: 31.221702
+						},
+						{
+							name: "虹桥镇",
+							items: null,
+							lng: 121.391243,
+							lat: 31.182559
+						},
+						{
+							name: "莘庄",
+							items: null,
+							lng: 121.391623,
+							lat: 31.116581
+						},
+						{
+							name: "虹桥",
+							items: null,
+							lng: 121.400793,
+							lat: 31.183216
+						},
+						{
+							name: "张江",
+							items: null,
+							lng: 121.591849,
+							lat: 31.210823
+						},
+						{
+							name: "金桥",
+							items: null,
+							lng: 121.597306,
+							lat: 31.259608
+						},
+						{
+							name: "南京西路",
+							items: null,
+							lng: 121.46678,
+							lat: 31.236136
+						},
+						{
+							name: "五角场/大学区",
+							items: null,
+							lng: 121.520482,
+							lat: 31.307447
+						},
+						{
+							name: "长寿路",
+							items: null,
+							lng: 121.444762,
+							lat: 31.246718
+						},
+						{
+							name: "南京东路",
+							items: null,
+							lng: 121.490857,
+							lat: 31.243738
+						},
+						{
+							name: "七宝",
+							items: null,
+							lng: 121.356049,
+							lat: 31.161393
+						},
+						{
+							name: "天山",
+							items: null,
+							lng: 121.395338,
+							lat: 31.220209
+						}
+					]
+				},
+				{
+					name: "浦东新区",
+					items: [{
+							name: "全部浦东新区",
+							items: null,
+							lng: 121.54905,
+							lat: 31.228218
+						},
+						{
+							name: "八佰伴",
+							items: null,
+							lng: 121.523228,
+							lat: 31.233729
+						},
+						{
+							name: "陆家嘴",
+							items: null,
+							lng: 121.502306,
+							lat: 31.24398
+						},
+						{
+							name: "上南地区",
+							items: null,
+							lng: 121.503612,
+							lat: 31.182258
+						},
+						{
+							name: "世纪公园",
+							items: null,
+							lng: 121.558566,
+							lat: 31.221702
+						},
+						{
+							name: "张江",
+							items: null,
+							lng: 121.591849,
+							lat: 31.210823
+						},
+						{
+							name: "金桥",
+							items: null,
+							lng: 121.597306,
+							lat: 31.259608
+						},
+						{
+							name: "康桥/周浦",
+							items: null,
+							lng: 121.581323,
+							lat: 31.130732
+						},
+						{
+							name: "金杨地区",
+							items: null,
+							lng: 121.579321,
+							lat: 31.252986
+						},
+						{
+							name: "塘桥",
+							items: null,
+							lng: 121.525353,
+							lat: 31.215407
+						},
+						{
+							name: "川沙",
+							items: null,
+							lng: 121.704499,
+							lat: 31.192886
+						},
+						{
+							name: "惠南镇",
+							items: null,
+							lng: 121.762326,
+							lat: 31.054277
+						},
+						{
+							name: "源深体育中心",
+							items: null,
+							lng: 121.544231,
+							lat: 31.238523
+						},
+						{
+							name: "三林地区",
+							items: null,
+							lng: 121.517292,
+							lat: 31.148724
+						},
+						{
+							name: "北蔡",
+							items: null,
+							lng: 121.55915,
+							lat: 31.194806
+						},
+						{
+							name: "外高桥",
+							items: null,
+							lng: 121.593068,
+							lat: 31.342554
+						},
+						{
+							name: "三林镇",
+							items: null,
+							lng: 121.509258,
+							lat: 31.150463
+						},
+						{
+							name: "碧云社区",
+							items: null,
+							lng: 121.587696,
+							lat: 31.24486
+						},
+						{
+							name: "临沂/南码头",
+							items: null,
+							lng: 117.989608,
+							lat: 34.943019
+						},
+						{
+							name: "浦东机场",
+							items: null,
+							lng: 121.809466,
+							lat: 31.156303
+						},
+						{
+							name: "高行",
+							items: null,
+							lng: 121.615447,
+							lat: 31.298896
+						},
+						{
+							name: "曹路",
+							items: null,
+							lng: 121.673431,
+							lat: 31.284586
+						},
+						{
+							name: "临港新城",
+							items: null,
+							lng: 121.90375,
+							lat: 30.891101
+						},
+						{
+							name: "东明",
+							items: null,
+							lng: 121.535765,
+							lat: 31.169815
+						},
+						{
+							name: "新场",
+							items: null,
+							lng: 121.655259,
+							lat: 31.051489
+						},
+						{
+							name: "航头",
+							items: null,
+							lng: 121.603213,
+							lat: 31.033598
+						},
+						{
+							name: "泥城",
+							items: null,
+							lng: 121.834862,
+							lat: 30.906353
+						}
+					]
+				},
+				{
+					name: "徐汇区",
+					items: [{
+							name: "全部徐汇区",
+							items: null,
+							lng: 121.444991,
+							lat: 31.194616
+						},
+						{
+							name: "徐家汇",
+							items: null,
+							lng: 121.443173,
+							lat: 31.200871
+						},
+						{
+							name: "音乐学院",
+							items: null,
+							lng: 121.561638,
+							lat: 31.233783
+						},
+						{
+							name: "万体馆",
+							items: null,
+							lng: 121.448524,
+							lat: 31.194623
+						},
+						{
+							name: "漕河泾/田林",
+							items: null,
+							lng: 121.43915,
+							lat: 31.174214
+						},
+						{
+							name: "肇嘉浜路沿线",
+							items: null,
+							lng: 121.456239,
+							lat: 31.205916
+						},
+						{
+							name: "复兴西路/丁香花园",
+							items: null,
+							lng: 121.445055,
+							lat: 31.218771
+						},
+						{
+							name: "衡山路",
+							items: null,
+							lng: 121.45316,
+							lat: 31.211335
+						},
+						{
+							name: "光启城",
+							items: null,
+							lng: 121.43553,
+							lat: 31.189765
+						},
+						{
+							name: "龙华",
+							items: null,
+							lng: 121.459229,
+							lat: 31.179259
+						},
+						{
+							name: "上海南站",
+							items: null,
+							lng: 121.436708,
+							lat: 31.160405
+						}
+					]
+				},
+				{
+					name: "黄浦区",
+					items: [{
+							name: "全部黄浦区",
+							items: null,
+							lng: 121.492134,
+							lat: 31.237358
+						},
+						{
+							name: "人民广场",
+							items: null,
+							lng: 121.481033,
+							lat: 31.238802
+						},
+						{
+							name: "南京东路",
+							items: null,
+							lng: 121.490857,
+							lat: 31.243738
+						},
+						{
+							name: "外滩",
+							items: null,
+							lng: 121.497842,
+							lat: 31.240723
+						},
+						{
+							name: "老西门",
+							items: null,
+							lng: 121.489485,
+							lat: 31.224674
+						},
+						{
+							name: "董家渡",
+							items: null,
+							lng: 121.508834,
+							lat: 31.219061
+						},
+						{
+							name: "城隍庙",
+							items: null,
+							lng: 121.498344,
+							lat: 31.231498
+						},
+						{
+							name: "淮海路",
+							items: null,
+							lng: 121.474387,
+							lat: 31.226735
+						},
+						{
+							name: "打浦桥",
+							items: null,
+							lng: 121.475402,
+							lat: 31.212073
+						},
+						{
+							name: "新天地",
+							items: null,
+							lng: 121.481813,
+							lat: 31.222245
+						},
+						{
+							name: "瑞金宾馆区",
+							items: null,
+							lng: 121.471792,
+							lat: 31.219077
+						},
+						{
+							name: "淮海路",
+							items: null,
+							lng: 121.474387,
+							lat: 31.226735
+						}
+					]
+				},
+				{
+					name: "静安区",
+					items: [{
+							name: "全部静安区",
+							items: null,
+							lng: 121.462238,
+							lat: 31.2297
+						},
+						{
+							name: "静安寺",
+							items: null,
+							lng: 121.45272,
+							lat: 31.229517
+						},
+						{
+							name: "南京西路",
+							items: null,
+							lng: 121.46678,
+							lat: 31.236136
+						},
+						{
+							name: "同乐坊",
+							items: null,
+							lng: 121.450427,
+							lat: 31.243555
+						},
+						{
+							name: "曹家渡",
+							items: null,
+							lng: 121.435375,
+							lat: 31.23474
+						}
+					]
+				},
+				{
+					name: "长宁区",
+					items: [{
+							name: "全部长宁区",
+							items: null,
+							lng: 121.431193,
+							lat: 31.22723
+						},
+						{
+							name: "中山公园",
+							items: null,
+							lng: 121.422977,
+							lat: 31.224163
+						},
+						{
+							name: "虹桥",
+							items: null,
+							lng: 121.400793,
+							lat: 31.183216
+						},
+						{
+							name: "天山",
+							items: null,
+							lng: 121.383116,
+							lat: 31.221733
+						},
+						{
+							name: "上海影城/新华路",
+							items: null,
+							lng: 121.436218,
+							lat: 31.20863
+						},
+						{
+							name: "古北",
+							items: null,
+							lng: 121.400247,
+							lat: 31.200283
+						},
+						{
+							name: "北新泾",
+							items: null,
+							lng: 121.38064,
+							lat: 31.222104
+						},
+						{
+							name: "动物园/虹桥机场",
+							items: null,
+							lng: 121.369411,
+							lat: 31.199264
+						}
+					]
+				},
+				{
+					name: "闵行区",
+					items: [{
+							name: "全部闵行区",
+							items: null,
+							lng: 121.388649,
+							lat: 31.119461
+						},
+						{
+							name: "虹桥镇",
+							items: null,
+							lng: 121.391243,
+							lat: 31.182559
+						},
+						{
+							name: "莘庄",
+							items: null,
+							lng: 121.391623,
+							lat: 31.116581
+						},
+						{
+							name: "七宝",
+							items: null,
+							lng: 121.356049,
+							lat: 31.161393
+						},
+						{
+							name: "南方商城",
+							items: null,
+							lng: 121.407621,
+							lat: 31.137374
+						},
+						{
+							name: "龙柏地区",
+							items: null,
+							lng: 121.37699,
+							lat: 31.182886
+						},
+						{
+							name: "虹梅路",
+							items: null,
+							lng: 121.414604,
+							lat: 31.154596
+						},
+						{
+							name: "仲盛商业中心",
+							items: null,
+							lng: 121.395033,
+							lat: 31.113261
+						},
+						{
+							name: "万源城/东兰路",
+							items: null,
+							lng: 121.400231,
+							lat: 31.155546
+						},
+						{
+							name: "老闵行",
+							items: null,
+							lng: 121.424433,
+							lat: 31.014817
+						},
+						{
+							name: "莘庄龙之梦",
+							items: null,
+							lng: 121.384141,
+							lat: 31.113957
+						},
+						{
+							name: "浦江镇",
+							items: null,
+							lng: 121.512891,
+							lat: 31.102197
+						},
+						{
+							name: "春申地区",
+							items: null,
+							lng: 121.391399,
+							lat: 31.106463
+						},
+						{
+							name: "华漕",
+							items: null,
+							lng: 121.335517,
+							lat: 31.228426
+						},
+						{
+							name: "颛桥",
+							items: null,
+							lng: 121.408435,
+							lat: 31.072842
+						},
+						{
+							name: "好爱广场",
+							items: null,
+							lng: 121.405816,
+							lat: 31.092437
+						},
+						{
+							name: "吴泾",
+							items: null,
+							lng: 121.47432,
+							lat: 31.049829
+						},
+						{
+							name: "交大闵行校区",
+							items: null,
+							lng: 121.442869,
+							lat: 31.032031
+						},
+						{
+							name: "金平路步行街",
+							items: null,
+							lng: 121.442869,
+							lat: 31.032031
+						},
+						{
+							name: "北桥",
+							items: null,
+							lng: 121.41832,
+							lat: 31.016612
+						}
+					]
+				},
+				{
+					name: "杨浦区",
+					items: [{
+							name: "全部杨浦区",
+							items: null,
+							lng: 121.538702,
+							lat: 31.311678
+						},
+						{
+							name: "五角场/大学区",
+							items: null,
+							lng: 121.515919,
+							lat: 31.309899
+						},
+						{
+							name: "平凉路",
+							items: null,
+							lng: 121.543416,
+							lat: 31.269694
+						},
+						{
+							name: "控江地区",
+							items: null,
+							lng: 121.537153,
+							lat: 31.28577
+						},
+						{
+							name: "中原地区",
+							items: null,
+							lng: 121.55033,
+							lat: 31.318487
+						},
+						{
+							name: "黄兴公园",
+							items: null,
+							lng: 121.539677,
+							lat: 31.301934
+						},
+						{
+							name: "鞍山新村",
+							items: null,
+							lng: 121.516066,
+							lat: 31.278923
+						}
+					]
+				},
+				{
+					name: "普陀区",
+					items: [{
+							name: "全部普陀区",
+							items: null,
+							lng: 121.403597,
+							lat: 31.254894
+						},
+						{
+							name: "长寿路",
+							items: null,
+							lng: 121.444762,
+							lat: 31.246718
+						},
+						{
+							name: "月星环球港",
+							items: null,
+							lng: 121.41957,
+							lat: 31.240591
+						},
+						{
+							name: "梅川路",
+							items: null,
+							lng: 121.388692,
+							lat: 31.248888
+						},
+						{
+							name: "中山北路/甘泉地区",
+							items: null,
+							lng: 121.448738,
+							lat: 31.262973
+						},
+						{
+							name: "长风公园/华师大",
+							items: null,
+							lng: 121.402937,
+							lat: 31.231012
+						},
+						{
+							name: "武宁地区",
+							items: null,
+							lng: 121.429779,
+							lat: 31.244407
+						},
+						{
+							name: "曹阳地区",
+							items: null,
+							lng: 121.429779,
+							lat: 31.244407
+						},
+						{
+							name: "真如",
+							items: null,
+							lng: 121.413834,
+							lat: 31.256497
+						},
+						{
+							name: "曹家渡",
+							items: null,
+							lng: 121.432544,
+							lat: 31.23628
+						},
+						{
+							name: "桃浦",
+							items: null,
+							lng: 121.359453,
+							lat: 31.29092
+						}
+					]
+				},
+				{
+					name: "虹口区",
+					items: [{
+							name: "全部虹口区",
+							items: null,
+							lng: 121.513406,
+							lat: 31.270204
+						},
+						{
+							name: "虹口足球场",
+							items: null,
+							lng: 121.485807,
+							lat: 31.276632
+						},
+						{
+							name: "四川北路",
+							items: null,
+							lng: 121.490774,
+							lat: 31.257732
+						},
+						{
+							name: "临平路/和平公园",
+							items: null,
+							lng: 121.507604,
+							lat: 31.26658
+						},
+						{
+							name: "北外滩",
+							items: null,
+							lng: 121.51002,
+							lat: 31.256947
+						},
+						{
+							name: "海宁路/七浦路",
+							items: null,
+							lng: 121.487912,
+							lat: 31.25292
+						},
+						{
+							name: "凉城/江湾镇",
+							items: null,
+							lng: 121.491636,
+							lat: 31.311153
+						},
+						{
+							name: "曲阳地区",
+							items: null,
+							lng: 121.496941,
+							lat: 31.282363
+						},
+						{
+							name: "赤峰路",
+							items: null,
+							lng: 121.48899,
+							lat: 31.287038
+						}
+					]
+				},
+				{
+					name: "宝山区",
+					items: [{
+							name: "全部宝山区",
+							items: null,
+							lng: 121.495008,
+							lat: 31.411337
+						},
+						{
+							name: "庙行/共康",
+							items: null,
+							lng: 121.445637,
+							lat: 31.327534
+						},
+						{
+							name: "大华地区",
+							items: null,
+							lng: 121.421312,
+							lat: 31.281476
+						},
+						{
+							name: "通河/泗塘",
+							items: null,
+							lng: 121.453776,
+							lat: 31.340118
+						},
+						{
+							name: "宝山地区",
+							items: null,
+							lng: 121.429056,
+							lat: 31.285673
+						},
+						{
+							name: "顾村公园",
+							items: null,
+							lng: 121.384711,
+							lat: 31.346641
+						},
+						{
+							name: "上海大学",
+							items: null,
+							lng: 121.400532,
+							lat: 31.322212
+						},
+						{
+							name: "淞滨地区",
+							items: null,
+							lng: 121.499504,
+							lat: 31.377799
+						},
+						{
+							name: "淞南",
+							items: null,
+							lng: 121.493278,
+							lat: 31.344043
+						},
+						{
+							name: "高境",
+							items: null,
+							lng: 121.486175,
+							lat: 31.325906
+						},
+						{
+							name: "杨行",
+							items: null,
+							lng: 121.447846,
+							lat: 31.378207
+						},
+						{
+							name: "美兰湖",
+							items: null,
+							lng: 121.360042,
+							lat: 31.408231
+						},
+						{
+							name: "月浦",
+							items: null,
+							lng: 121.432535,
+							lat: 31.420489
+						}
+					]
+				},
+				{
+					name: "闸北区",
+					items: [{
+							name: "全部闸北区",
+							items: null,
+							lng: 121.46122,
+							lat: 31.277696
+						},
+						{
+							name: "大宁地区",
+							items: null,
+							lng: 121.458074,
+							lat: 31.281156
+						},
+						{
+							name: "闸北公园",
+							items: null,
+							lng: 121.46418,
+							lat: 31.27544
+						},
+						{
+							name: "火车站",
+							items: null,
+							lng: 121.462056,
+							lat: 31.25592
+						},
+						{
+							name: "彭浦新村",
+							items: null,
+							lng: 121.455097,
+							lat: 31.312943
+						},
+						{
+							name: "大悦城",
+							items: null,
+							lng: 121.478723,
+							lat: 31.248773
+						},
+						{
+							name: "西藏北路/中兴路",
+							items: null,
+							lng: 121.475457,
+							lat: 31.259277
+						},
+						{
+							name: "北区汽车站",
+							items: null,
+							lng: 121.464982,
+							lat: 31.265898
+						},
+						{
+							name: "市北工业园/汶水路",
+							items: null,
+							lng: 121.45652,
+							lat: 31.299112
+						},
+						{
+							name: "彭浦镇",
+							items: null,
+							lng: 121.446701,
+							lat: 31.289276
+						}
+					]
+				},
+				{
+					name: "松江区",
+					items: [{
+							name: "全部松江区",
+							items: null,
+							lng: 121.232272,
+							lat: 31.0388
+						},
+						{
+							name: "佘山",
+							items: null,
+							lng: 121.236257,
+							lat: 31.110609
+						},
+						{
+							name: "九亭",
+							items: null,
+							lng: 121.325378,
+							lat: 31.143844
+						},
+						{
+							name: "松江大学城",
+							items: null,
+							lng: 121.239201,
+							lat: 31.060041
+						},
+						{
+							name: "松江镇",
+							items: null,
+							lng: 121.239535,
+							lat: 31.01597
+						},
+						{
+							name: "松江万达",
+							items: null,
+							lng: 121.248145,
+							lat: 31.06433
+						},
+						{
+							name: "开元地中海",
+							items: null,
+							lng: 121.224529,
+							lat: 31.044717
+						},
+						{
+							name: "新桥",
+							items: null,
+							lng: 121.321933,
+							lat: 31.066225
+						},
+						{
+							name: "鹿都国际商业广场",
+							items: null,
+							lng: 121.241105,
+							lat: 31.010445
+						},
+						{
+							name: "中山中路",
+							items: null,
+							lng: 121.246348,
+							lat: 31.01279
+						},
+						{
+							name: "泰晤士小镇",
+							items: null,
+							lng: 121.204502,
+							lat: 31.04013
+						},
+						{
+							name: "新松江路",
+							items: null,
+							lng: 121.229344,
+							lat: 31.045049
+						},
+						{
+							name: "泗泾",
+							items: null,
+							lng: 121.267259,
+							lat: 31.123976
+						},
+						{
+							name: "江学路",
+							items: null,
+							lng: 121.218523,
+							lat: 31.044063
+						},
+						{
+							name: "松东路",
+							items: null,
+							lng: 121.26157,
+							lat: 31.024507
+						},
+						{
+							name: "飞航广场",
+							items: null,
+							lng: 121.214956,
+							lat: 31.016325
+						},
+						{
+							name: "荣乐中路",
+							items: null,
+							lng: 121.237565,
+							lat: 31.022976
+						},
+						{
+							name: "人民北路",
+							items: null,
+							lng: 121.227383,
+							lat: 31.056998
+						}
+					]
+				},
+				{
+					name: "嘉定区",
+					items: [{
+							name: "全部松江区",
+							items: null,
+							lng: 121.273091,
+							lat: 31.380267
+						},
+						{
+							name: "嘉定镇",
+							items: null,
+							lng: 121.253297,
+							lat: 31.384775
+						},
+						{
+							name: "江桥",
+							items: null,
+							lng: 121.360904,
+							lat: 31.2593
+						},
+						{
+							name: "南翔",
+							items: null,
+							lng: 121.329748,
+							lat: 31.303357
+						},
+						{
+							name: "安亭",
+							items: null,
+							lng: 121.168602,
+							lat: 31.294335
+						},
+						{
+							name: "丰庄",
+							items: null,
+							lng: 121.362183,
+							lat: 31.248367
+						},
+						{
+							name: "马陆",
+							items: null,
+							lng: 121.28343,
+							lat: 31.325402
+						},
+						{
+							name: "罗宾森广场",
+							items: null,
+							lng: 121.252365,
+							lat: 31.390308
+						},
+						{
+							name: "嘉定新城",
+							items: null,
+							lng: 121.26104,
+							lat: 31.335744
+						},
+						{
+							name: "新源路",
+							items: null,
+							lng: 121.157704,
+							lat: 31.320948
+						},
+						{
+							name: "博乐广场",
+							items: null,
+							lng: 121.258933,
+							lat: 31.390038
+						},
+						{
+							name: "黄渡",
+							items: null,
+							lng: 121.220671,
+							lat: 31.275095
+						},
+						{
+							name: "戬浜",
+							items: null,
+							lng: 121.30315,
+							lat: 31.383109
+						},
+						{
+							name: "外冈",
+							items: null,
+							lng: 121.181324,
+							lat: 31.363825
+						}
+					]
+				},
+				{
+					name: "青浦区",
+					items: [{
+							name: "全部青浦区",
+							items: null,
+							lng: 121.131087,
+							lat: 31.156057
+						},
+						{
+							name: "青浦城区",
+							items: null,
+							lng: 121.133473,
+							lat: 31.155541
+						},
+						{
+							name: "朱家角",
+							items: null,
+							lng: 121.066797,
+							lat: 31.115245
+						},
+						{
+							name: "徐泾",
+							items: null,
+							lng: 121.280912,
+							lat: 31.176573
+						},
+						{
+							name: "赵巷",
+							items: null,
+							lng: 121.200052,
+							lat: 31.151583
+						},
+						{
+							name: "新华",
+							items: null,
+							lng: 121.0385,
+							lat: 31.128881
+						},
+						{
+							name: "重固",
+							items: null,
+							lng: 121.184629,
+							lat: 31.206345
+						}
+					]
+				},
+				{
+					name: "奉贤区",
+					items: [{
+							name: "全部奉贤区",
+							items: null,
+							lng: 121.481785,
+							lat: 30.923876
+						},
+						{
+							name: "南桥",
+							items: null,
+							lng: 121.486091,
+							lat: 30.920955
+						},
+						{
+							name: "百联南桥购物中心",
+							items: null,
+							lng: 121.490488,
+							lat: 30.92128
+						},
+						{
+							name: "海湾旅游区",
+							items: null,
+							lng: 121.531677,
+							lat: 30.839683
+						},
+						{
+							name: "新都汇",
+							items: null,
+							lng: 121.531677,
+							lat: 30.839683
+						},
+						{
+							name: "西渡",
+							items: null,
+							lng: 121.439936,
+							lat: 30.996149
+						},
+						{
+							name: "环城东路",
+							items: null,
+							lng: 121.46663,
+							lat: 30.959192
+						},
+						{
+							name: "易买得",
+							items: null,
+							lng: 121.472307,
+							lat: 30.932572
+						},
+						{
+							name: "南桥新城区",
+							items: null,
+							lng: 121.49396,
+							lat: 30.920576
+						},
+						{
+							name: "正阳世纪星城",
+							items: null,
+							lng: 121.484695,
+							lat: 30.919995
+						},
+						{
+							name: "环城南路",
+							items: null,
+							lng: 121.472278,
+							lat: 30.911537
+						}
+					]
+				},
+				{
+					name: "金山区",
+					items: [{
+							name: "全部金山区",
+							items: null,
+							lng: 121.35128,
+							lat: 30.748248
+						},
+						{
+							name: "金山卫",
+							items: null,
+							lng: 121.324193,
+							lat: 30.730982
+						},
+						{
+							name: "金山万达",
+							items: null,
+							lng: 121.342706,
+							lat: 30.762205
+						},
+						{
+							name: "朱泾",
+							items: null,
+							lng: 121.173227,
+							lat: 30.904643
+						},
+						{
+							name: "石化",
+							items: null,
+							lng: 121.345988,
+							lat: 30.719643
+						},
+						{
+							name: "蒙山路",
+							items: null,
+							lng: 121.353563,
+							lat: 30.718999
+						},
+						{
+							name: "枫泾",
+							items: null,
+							lng: 121.029426,
+							lat: 30.89853
+						},
+						{
+							name: "卫清路",
+							items: null,
+							lng: 121.35846,
+							lat: 30.73712
+						},
+						{
+							name: "金山新城",
+							items: null,
+							lng: 121.336675,
+							lat: 30.782544
+						},
+						{
+							name: "卫零路",
+							items: null,
+							lng: 121.345157,
+							lat: 30.730547
+						},
+						{
+							name: "金山嘴",
+							items: null,
+							lng: 121.380141,
+							lat: 30.741388
+						},
+						{
+							name: "亭林",
+							items: null,
+							lng: 121.322702,
+							lat: 30.892295
+						},
+						{
+							name: "朱行",
+							items: null,
+							lng: 121.34818,
+							lat: 30.855689
+						},
+						{
+							name: "廊下",
+							items: null,
+							lng: 121.198797,
+							lat: 30.794557
+						}
+					]
+				},
+				{
+					name: "崇明区",
+					items: [{
+							name: "全部崇明区",
+							items: null,
+							lng: 121.407046,
+							lat: 31.629521
+						},
+						{
+							name: "建设镇",
+							items: null,
+							lng: 121.462006,
+							lat: 31.660868
+						},
+						{
+							name: "港西镇",
+							items: null,
+							lng: 121.422697,
+							lat: 31.693426
+						},
+						{
+							name: "东平镇",
+							items: null,
+							lng: 121.547564,
+							lat: 31.681674
+						},
+						{
+							name: "新海镇",
+							items: null,
+							lng: 121.29967,
+							lat: 31.823852
+						},
+						{
+							name: "新村乡",
+							items: null,
+							lng: 121.339295,
+							lat: 31.834528
+						},
+						{
+							name: "长兴镇",
+							items: null,
+							lng: 121.70025,
+							lat: 31.395694
+						},
+						{
+							name: "横沙乡",
+							items: null,
+							lng: 121.848411,
+							lat: 31.346217
+						},
+						{
+							name: "堡镇",
+							items: null,
+							lng: 121.624896,
+							lat: 31.542238
+						},
+						{
+							name: "新河镇",
+							items: null,
+							lng: 121.531104,
+							lat: 31.587496
+						},
+						{
+							name: "城桥镇",
+							items: null,
+							lng: 121.404578,
+							lat: 31.633925
+						},
+						{
+							name: "向化镇",
+							items: null,
+							lng: 121.730085,
+							lat: 31.526272
+						},
+						{
+							name: "三星镇",
+							items: null,
+							lng: 121.294288,
+							lat: 31.749213
+						},
+						{
+							name: "庙镇",
+							items: null,
+							lng: 121.280177,
+							lat: 31.729644
+						},
+						{
+							name: "竖新镇",
+							items: null,
+							lng: 121.585145,
+							lat: 31.570614
+						},
+						{
+							name: "陈家镇",
+							items: null,
+							lng: 121.813642,
+							lat: 31.505146
+						},
+						{
+							name: "绿华镇",
+							items: null,
+							lng: 121.225017,
+							lat: 31.76839
+						},
+						{
+							name: "港沿镇",
+							items: null,
+							lng: 121.66427,
+							lat: 31.595401
+						}
+					]
+				}
+			]
+			var one = []
+			var two = []
+			var three = []
+
+			var num1 = 0
+			var num2 = 0
+
+			for(var i = 0; i < arr.length; i++) {
+				var arr2 = {}
+				arr2.name = arr[i].name
+				arr2.value = arr[i].name
+				arr2.parent = 0
+				one.push(arr2)
+				if(arr[i].items) {
+					for(var j = 0; j < arr[i].items.length; j++) {
+						var arr3 = {}
+						arr3.name = arr[i].items[j].name
+						arr3.value = arr[i].items[j].lng+','+arr[i].items[j].lat
+						arr3.parent = arr[i].name
+						two.push(arr3)
+
+//						if(arr[i].items[j].items) {
+//							for(var k = 0; k < arr[i].items[j].items.length; k++) {
+//								var arr4 = {}
+//								arr4.name = arr[i].items[j].items[k].name
+//								arr4.value = arr[i].items[j].items[k].lng + ',' + arr[i].items[j].items[k].lat
+//								arr4.parent = arr[i].items[j].name + i
+//								three.push(arr4)
+//							}
+//						} else {
+//							var arr4 = {}
+//							arr4.name = '全部'
+//							arr4.value = '全部abc'
+//							arr4.parent = arr[i].items[j].name + i
+//							three.push(arr4)
+//						}
+					}
+				} else {
+					var arr3 = {}
+					arr3.name = '全部'
+					arr3.value = '全部' + i
+					arr3.parent = arr[i].name
+					two.push(arr3)
+				}
+			}
+
+			var app = new Vue({
+				el: '#app',
+				data: {
+					message1: one,
+					message2: two,
+					message3: three
+				}
+			})
+		</script>
+
+	</body>
+
+</html>
