@@ -35,7 +35,6 @@
 			this.$http.get('/user/dou/list?page=1&rows=100000').then(
 				(res) => {
 					this.list = res.data.obj.result
-					console.log(res.data)
 				}
 			)
 		}

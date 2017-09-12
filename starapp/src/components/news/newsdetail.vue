@@ -33,7 +33,6 @@
 					this.$vux.loading.hide()
 					this.isshow = true
 					this.newsdetail = res.data.obj
-					console.log(res.data.obj)
 				}
 			)
 		}

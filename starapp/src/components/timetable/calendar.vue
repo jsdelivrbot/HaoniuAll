@@ -37,7 +37,6 @@
 			}).then(
 				(res) => {
 					this.childrenInfo = res.data.obj
-					console.log(res.data)
 				}
 			)
 
@@ -53,7 +52,6 @@
 						arr.title = 'null'
 						this.datetime.push(arr)
 					}
-					console.log(res.data)
 				}
 			)
 		},
@@ -62,10 +60,8 @@
 				this.$router.go(-1)
 			},
 			monthChange(month) {
-				console.log(month)
 			},
 			dayChange(day) {
-				console.log(day)
 				let dates = day.date.split('/')
 				if(dates[1] < 10) {
 					dates[1] = '0' + dates[1]

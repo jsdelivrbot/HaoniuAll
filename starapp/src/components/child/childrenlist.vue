@@ -74,9 +74,6 @@
 		},
 		activated() {
 			this.list = JSON.parse(localStorage.getItem('childrenInfo'))
-		},
-		mounted() {
-			console.log(localStorage.getItem('childrenInfo'))
 		}
 	}
 </script>

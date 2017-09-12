@@ -64,7 +64,6 @@
 			this.$http.get('/user/reward/findBalance').then(
 				(res) => {
 					this.total = res.data.obj
-					console.log(res.data.obj)
 				}
 			)
 		},
@@ -114,7 +113,6 @@
 								content: res.data.msg
 							})
 						}
-						console.log(res.data)
 					}
 				)
 			}

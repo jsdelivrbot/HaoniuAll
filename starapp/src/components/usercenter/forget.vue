@@ -101,7 +101,6 @@
 								content: '密码修改失败!'
 							})
 						}
-						console.log(res.data)
 					}
 				)
 			},
@@ -138,7 +137,6 @@
 								content: '获取失败,请重试!'
 							})
 						}
-						console.log(res.data)
 					}
 				)
 			},

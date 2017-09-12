@@ -116,7 +116,6 @@
 						} else {
 							this.timeline = ''
 						}
-						console.log(res.data)
 					}
 				)
 			},

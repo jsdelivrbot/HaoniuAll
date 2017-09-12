@@ -80,7 +80,6 @@
 					click: true
 				})
 				this.scroll.on('touchend', (pos) => {
-					console.log(pos)
 				})
 				let foodsList = $this.$refs.scroll.getElementsByClassName('selectSc')
 				let el = foodsList[$this.msgInfo.page2.length - 1]
@@ -109,7 +108,6 @@
 								$this.scroll.scrollToElement(el, 600)
 							})
 						}
-						console.log(res.data)
 					}
 				)
 			}

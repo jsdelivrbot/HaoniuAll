@@ -47,7 +47,6 @@
 				map
 			}) {
 				let arr = this.$route.params.lg.split(',')
-				console.log(BMap, map)
 				this.center[0].lng = arr[0]
 				this.center[0].lat = arr[1]
 			}

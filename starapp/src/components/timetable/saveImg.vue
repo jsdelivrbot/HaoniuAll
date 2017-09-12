@@ -45,7 +45,6 @@
 						arr.src = res.data.obj.objectSome[i].cover
 						this.chuli.push(arr)
 					}
-					console.log(this.chuli)
 				}
 			)
 		},
@@ -57,7 +56,6 @@
 			save() {
 				let weizhi = document.getElementsByClassName('pswp__counter')[0].innerHTML.indexOf('/')
 				let num = document.getElementsByClassName('pswp__counter')[0].innerHTML.substr(0, weizhi).trim()
-				console.log(this.chuli[num - 1].src)
 				this.$http.get('/classHour/datum/saveDatum', {
 					params: {
 						childId: this.chidlrenId,

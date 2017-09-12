@@ -20,7 +20,6 @@
 			this.$http.get('/about').then(
 				(res) => {
 					this.info = res.data.obj.content
-					console.log(res.data)
 				}
 			)
 		}

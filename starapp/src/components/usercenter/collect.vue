@@ -66,7 +66,6 @@
 						if(res.data.result === 0) {
 							this.jigou = res.data.obj
 						}
-						console.log(res.data)
 					}
 				)
 			} else {

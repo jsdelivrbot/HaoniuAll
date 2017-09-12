@@ -75,7 +75,6 @@
 			this.$http.get('/hotKeyword').then(
 				(res) => {
 					this.hottxt = res.data.obj
-					console.log(res.data)
 				}
 			)
 		},
@@ -110,7 +109,6 @@
 				let arr = []
 				let val = {}
 				val.name = this.searchval
-				console.log(this.histroy)
 
 				if(JSON.parse(localStorage.getItem('histroy'))) {
 					let loop = false
@@ -132,8 +130,6 @@
 					localStorage.setItem('histroy', JSON.stringify(arr))
 				}
 				this.histroy = JSON.parse(localStorage.getItem('histroy'))
-				console.log(JSON.parse(localStorage.getItem('histroy')))
-
 				//				this.hidebox = false
 				let targets = ''
 				let $this = this

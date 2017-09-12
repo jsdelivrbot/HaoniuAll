@@ -80,33 +80,37 @@ export default {
 				})
 			},
 			Vue.prototype.$CopenWifi = function() {
-				if(mui.os.ios) {
-					plus.runtime.launchApplication({
-						action: 'App-Prefs:root=WIFI'
-					}, function(e) {
-						console.log(JSON.stringify(e))
-					})
-				} else {
-					var main = plus.android.runtimeMainActivity()
-					var Intent = plus.android.importClass('android.content.Intent')
-					var mIntent = new Intent('android.settings.WIFI_SETTINGS')
-					main.startActivity(mIntent)
-				}
+				mui.plusReady(function() {
+					if(mui.os.ios) {
+						plus.runtime.launchApplication({
+							action: 'App-Prefs:root=WIFI'
+						}, function(e) {
+							console.log(JSON.stringify(e))
+						})
+					} else {
+						var main = plus.android.runtimeMainActivity()
+						var Intent = plus.android.importClass('android.content.Intent')
+						var mIntent = new Intent('android.settings.WIFI_SETTINGS')
+						main.startActivity(mIntent)
+					}
+				})
 			},
 			Vue.prototype.$CopenGps = function() {
-				if(mui.os.ios) {
-					plus.runtime.launchApplication({
-						action: 'App-Prefs:root=Privacy&path=LOCATION'
-					}, function(e) {
-						console.log(JSON.stringify(e))
-					})
-				} else {
-					var main = plus.android.runtimeMainActivity(); //获取activity 
-					var Intent = plus.android.importClass('android.content.Intent');
-					var Settings = plus.android.importClass('android.provider.Settings');
-					var intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS); //可设置表中所有Action字段
-					main.startActivity(intent)
-				}
+				mui.plusReady(function() {
+					if(mui.os.ios) {
+						plus.runtime.launchApplication({
+							action: 'App-Prefs:root=Privacy&path=LOCATION'
+						}, function(e) {
+							console.log(JSON.stringify(e))
+						})
+					} else {
+						var main = plus.android.runtimeMainActivity(); //获取activity 
+						var Intent = plus.android.importClass('android.content.Intent');
+						var Settings = plus.android.importClass('android.provider.Settings');
+						var intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS); //可设置表中所有Action字段
+						main.startActivity(intent)
+					}
+				})
 			},
 			Vue.prototype.$ConLine = function(callback) {
 				mui.plusReady(function() {

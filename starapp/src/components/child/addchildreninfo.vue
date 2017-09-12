@@ -86,9 +86,7 @@
 							if(JSON.parse(localStorage.getItem('childrenInfo'))) {
 								info = JSON.parse(localStorage.getItem('childrenInfo'))
 							}
-							console.log(info)
 							info.push(res.data.obj)
-							console.log(info)
 							localStorage.setItem('childrenInfo', JSON.stringify(info))
 							mui.toast('恭喜您添加成功!')
 						} else {

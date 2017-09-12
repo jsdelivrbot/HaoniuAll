@@ -78,23 +78,16 @@ import databank from './components/timetable/databank'
 import play from './components/timetable/play'
 import play2 from './components/timetable/saveVideo'
 import saveImg from './components/timetable/saveImg'
-
 import 'vue-event-calendar/dist/style.css' //1.1.10之后的版本，css被放在了单独的文件中，方便替换
 import vueEventCalendar from 'vue-event-calendar'
 Vue.use(vueEventCalendar, {
-	locale: 'zh'
-}) //可以设置语言，支持中文和英文
+        locale: 'zh'
+    }) //可以设置语言，支持中文和英文
 
 import BaiduMap from 'vue-baidu-map'
 import exmuis from './../static/exmui'
-//import aliyun from './../static/aliyun-sdk.min'
-//import vod from './../static/vod-sdk-upload-1.0.6.min'
 Vue.use(exmuis)
-//Vue.use(aliyun)
-//Vue.use(vod)
 import { querystring, AjaxPlugin, AlertPlugin, ConfirmPlugin, ToastPlugin, LoadingPlugin } from 'vux'
-
-//Vue.use(BScroll)
 Vue.use(AjaxPlugin)
 Vue.use(querystring)
 Vue.use(ToastPlugin)
@@ -103,314 +96,312 @@ Vue.use(AlertPlugin)
 Vue.use(VueRouter)
 Vue.use(LoadingPlugin)
 Vue.use(BaiduMap, {
-	ak: 'Z8Oh2BjN3e3a0bZ7EUoUYiY9fpNTFxtP'
+    ak: 'Z8Oh2BjN3e3a0bZ7EUoUYiY9fpNTFxtP'
 })
 
 Vue.http.defaults.withCredentials = true
-//localStorage.setItem('uploadUrl', 'http://dev.dianke8.com:7000/xxdk/app')
+    //localStorage.setItem('uploadUrl', 'http://dev.dianke8.com:7000/xxdk/app')
 localStorage.setItem('uploadUrl', 'http://wx.dianke8.com/xxdk/app')
-Vue.http.defaults.baseURL = 'http://dev.dianke8.com:7000/xxdk/app'
-//Vue.http.defaults.baseURL = 'http://wx.dianke8.com/xxdk/app'
-//Vue.http.defaults.baseURL = 'http://192.168.1.121:8080/xingxingdianke/app'
+localStorage.setItem('uploadUrl', 'http://wx.dianke8.com/xxdk/app')
+    // Vue.http.defaults.baseURL = 'http://dev.dianke8.com:7000/xxdk/app'
+Vue.http.defaults.baseURL = 'http://wx.dianke8.com/xxdk/app'
+    //Vue.http.defaults.baseURL = 'http://192.168.1.121:8080/xingxingdianke/app'
 Vue.http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 Vue.http.defaults.headers.get['token'] = sessionStorage.getItem('token')
 Vue.http.defaults.headers.post['token'] = sessionStorage.getItem('token')
 
 Vue.http.interceptors.response.use(function(response) {
-	return response
+    return response
 }, function(error) {
-	//	Vue.$vux.toast.show({
-	//		width: '80%',
-	//		type: 'text',
-	//		text: '系统出错,请稍后重试!!!' + error
-	//	})
-	Vue.$vux.loading.hide()
-	//	console.log(error)
-	return Promise.reject(error)
+    //	Vue.$vux.toast.show({
+    //		width: '80%',
+    //		type: 'text',
+    //		text: '系统出错,请稍后重试!!!' + error
+    //	})
+    Vue.$vux.loading.hide()
+    return Promise.reject(error)
 })
 
 const routes = [{
-		path: '/',
-		redirect: '/pub/home'
-	},
-	{
-		path: '/saveImg/:id/:childrenId/:timetableId',
-		component: saveImg
-	},
-	{
-		path: '/play2/:id/:childrenId/:timetableId',
-		component: play2
-	},
-	{
-		path: '/play/:id',
-		component: play
-	},
-	{
-		path: '/databank/:childid/:timetableid',
-		component: databank
-	},
-	{
-		path: '/changeChildrenInfo/:id',
-		component: changeChildrenInfo
-	},
-	{
-		path: '/forget',
-		component: forget
-	},
-	{
-		path: '/tips/:id/:childid',
-		component: tips
-	},
-	{
-		path: '/msg/:childid/:timetableId',
-		component: msg
-	},
-	{
-		path: '/videoDetail/:url',
-		component: videoDetail
-	},
-	{
-		path: '/setuserinfo',
-		component: setuserinfo,
-		meta: {
-			requiresAuth: true
-		}
-	},
-	{
-		path: '/resetpassword',
-		component: resetpassword
-	},
-	{
-		path: '/resetusername',
-		component: resetusername
-	},
-	{
-		path: '/newslist',
-		component: newslist
-	}, {
-		path: '/addchildreninfo',
-		component: addchildreninfo
-	}, {
-		path: '/login',
-		component: Login
-	}, {
-		path: '/reg',
-		component: Reg
-	},
-	{
-		path: '/childrenlist',
-		component: childrenlist
-	},
-	{
-		path: '/compact',
-		component: compact
-	},
-	{
-		path: '/about',
-		component: About
-	},
-	{
-		path: '/mapes/:id',
-		component: mapes
-	},
-	{
-		path: '/tuijianlist',
-		component: tuijianlist
-	},
-	{
-		path: '/vaguesearch',
-		component: vaguesearch
-	},
-	{
-		path: '/feedback',
-		component: Feedback
-	}, {
-		path: '/generalize',
-		component: Generalize
-	},
-	{
-		path: '/maps/:lg',
-		component: maps
-	},
-	{
-		path: '/orderdetail/:id',
-		component: orderdetail
-	},
-	{
-		path: '/successpay/:id',
-		component: successpay
-	},
-	{
-		path: '/newsdetail/:id',
-		component: newsdetail
-	},
-	{
-		path: '/dourecord',
-		component: dourecord
-	},
-	{
-		path: '/orderevaluation/:id',
-		component: orderEvaluation
-	}, {
-		path: '/orderaffirm/:name',
-		component: orderAffirm
-	}, {
-		path: '/orderpay/:id',
-		component: orderpay
-	}, {
-		path: '/myorder',
-		component: myOrder
-	},
-	{
-		path: '/tuiguang',
-		component: tuiguang,
-		meta: {
-			requiresAuth: true
-		}
-	},
-	{
-		path: '/coupon',
-		component: coupon,
-		meta: {
-			requiresAuth: true
-		}
-	},
-	{
-		path: '/coupondetail/:id',
-		component: coupondetail
-	},
-	{
-		path: '/jigoudetail/:name',
-		component: jigoudetail
-	},
-	{
-		path: '/getrecord',
-		component: getRecord
-	},
-	{
-		path: '/tuiguangma',
-		component: tuiguangma
-	},
-	{
-		path: '/tixian',
-		component: tixian
-	}, {
-		path: '/dou',
-		component: dou,
-		meta: {
-			requiresAuth: true
-		}
-	},
-	{
-		path: '/coursedetail/:name',
-		component: coursedetail
-	},
-	{
-		path: '/searchlist/:name',
-		component: searchlist
-	}, {
-		path: '/collect',
-		component: collect
-	},
-	{
-		path: '*',
-		component: pub,
-		children: [{
-			path: '/pub/usercenter',
-			component: usercenter,
-			meta: {
-				requiresAuth: true
-			}
-		}, {
-			path: '/pub/kcb',
-			component: kcb,
-			redirect: '/pub/kcb/timeline/default',
-			children: [{
-					path: '/pub/kcb/timeline/:id',
-					component: kcbtable,
-					meta: {
-						requiresAuth: true
-					}
-				},
-				{
-					path: '/pub/kcb/weekCalendar/:id',
-					component: weekCalendar,
-					meta: {
-						requiresAuth: true
-					}
-				},
-				{
-					path: '/pub/kcb/calendar/:id',
-					component: calendar,
-					meta: {
-						requiresAuth: true
-					}
-				}
-			],
-			meta: {
-				requiresAuth: true
-			}
-		}, {
-			path: '/pub/home',
-			component: Index
-		}]
-	}
+        path: '/',
+        redirect: '/pub/home'
+    },
+    {
+        path: '/saveImg/:id/:childrenId/:timetableId',
+        component: saveImg
+    },
+    {
+        path: '/play2/:id/:childrenId/:timetableId',
+        component: play2
+    },
+    {
+        path: '/play/:id',
+        component: play
+    },
+    {
+        path: '/databank/:childid/:timetableid',
+        component: databank
+    },
+    {
+        path: '/changeChildrenInfo/:id',
+        component: changeChildrenInfo
+    },
+    {
+        path: '/forget',
+        component: forget
+    },
+    {
+        path: '/tips/:id/:childid',
+        component: tips
+    },
+    {
+        path: '/msg/:childid/:timetableId',
+        component: msg
+    },
+    {
+        path: '/videoDetail/:url',
+        component: videoDetail
+    },
+    {
+        path: '/setuserinfo',
+        component: setuserinfo,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/resetpassword',
+        component: resetpassword
+    },
+    {
+        path: '/resetusername',
+        component: resetusername
+    },
+    {
+        path: '/newslist',
+        component: newslist
+    }, {
+        path: '/addchildreninfo',
+        component: addchildreninfo
+    }, {
+        path: '/login',
+        component: Login
+    }, {
+        path: '/reg',
+        component: Reg
+    },
+    {
+        path: '/childrenlist',
+        component: childrenlist
+    },
+    {
+        path: '/compact',
+        component: compact
+    },
+    {
+        path: '/about',
+        component: About
+    },
+    {
+        path: '/mapes/:id',
+        component: mapes
+    },
+    {
+        path: '/tuijianlist',
+        component: tuijianlist
+    },
+    {
+        path: '/vaguesearch',
+        component: vaguesearch
+    },
+    {
+        path: '/feedback',
+        component: Feedback
+    }, {
+        path: '/generalize',
+        component: Generalize
+    },
+    {
+        path: '/maps/:lg',
+        component: maps
+    },
+    {
+        path: '/orderdetail/:id',
+        component: orderdetail
+    },
+    {
+        path: '/successpay/:id',
+        component: successpay
+    },
+    {
+        path: '/newsdetail/:id',
+        component: newsdetail
+    },
+    {
+        path: '/dourecord',
+        component: dourecord
+    },
+    {
+        path: '/orderevaluation/:id',
+        component: orderEvaluation
+    }, {
+        path: '/orderaffirm/:name',
+        component: orderAffirm
+    }, {
+        path: '/orderpay/:id',
+        component: orderpay
+    }, {
+        path: '/myorder',
+        component: myOrder
+    },
+    {
+        path: '/tuiguang',
+        component: tuiguang,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/coupon',
+        component: coupon,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/coupondetail/:id',
+        component: coupondetail
+    },
+    {
+        path: '/jigoudetail/:name',
+        component: jigoudetail
+    },
+    {
+        path: '/getrecord',
+        component: getRecord
+    },
+    {
+        path: '/tuiguangma',
+        component: tuiguangma
+    },
+    {
+        path: '/tixian',
+        component: tixian
+    }, {
+        path: '/dou',
+        component: dou,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/coursedetail/:name',
+        component: coursedetail
+    },
+    {
+        path: '/searchlist/:name',
+        component: searchlist
+    }, {
+        path: '/collect',
+        component: collect
+    },
+    {
+        path: '*',
+        component: pub,
+        children: [{
+            path: '/pub/usercenter',
+            component: usercenter,
+            meta: {
+                requiresAuth: true
+            }
+        }, {
+            path: '/pub/kcb',
+            component: kcb,
+            redirect: '/pub/kcb/timeline/default',
+            children: [{
+                    path: '/pub/kcb/timeline/:id',
+                    component: kcbtable,
+                    meta: {
+                        requiresAuth: true
+                    }
+                },
+                {
+                    path: '/pub/kcb/weekCalendar/:id',
+                    component: weekCalendar,
+                    meta: {
+                        requiresAuth: true
+                    }
+                },
+                {
+                    path: '/pub/kcb/calendar/:id',
+                    component: calendar,
+                    meta: {
+                        requiresAuth: true
+                    }
+                }
+            ],
+            meta: {
+                requiresAuth: true
+            }
+        }, {
+            path: '/pub/home',
+            component: Index
+        }]
+    }
 ]
-if(localStorage.getItem('loginname') !== '') {
-	if(!localStorage.getItem('loginname')) {
-		console.log(localStorage.getItem('loginname'))
-	} else {
-		Vue.http.get('/login', {
-			params: {
-				phone: localStorage.getItem('loginname'),
-				password: localStorage.getItem('loginpwd'),
-				openId: localStorage.getItem('loginopenid')
-			}
-		}).then(
-			(res) => {
-				if(res.data.result === 0) {
-					localStorage.setItem('userinfos', querystring.stringify(res.data.obj))
-					sessionStorage.setItem('token', res.data.obj.token)
-					Vue.http.defaults.headers.post['token'] = sessionStorage.getItem('token')
-					Vue.http.defaults.headers.get['token'] = sessionStorage.getItem('token')
-				} else {
-					localStorage.removeItem('loginname')
-					localStorage.removeItem('loginpwd')
-					localStorage.removeItem('loginopenid')
-					localStorage.removeItem('userinfos')
-				}
-			}
-		)
-	}
+if (localStorage.getItem('loginname') !== '') {
+    if (!localStorage.getItem('loginname')) {} else {
+        Vue.http.get('/login', {
+            params: {
+                phone: localStorage.getItem('loginname'),
+                password: localStorage.getItem('loginpwd'),
+                openId: localStorage.getItem('loginopenid')
+            }
+        }).then(
+            (res) => {
+                if (res.data.result === 0) {
+                    localStorage.setItem('userinfos', querystring.stringify(res.data.obj))
+                    sessionStorage.setItem('token', res.data.obj.token)
+                    Vue.http.defaults.headers.post['token'] = sessionStorage.getItem('token')
+                    Vue.http.defaults.headers.get['token'] = sessionStorage.getItem('token')
+                } else {
+                    localStorage.removeItem('loginname')
+                    localStorage.removeItem('loginpwd')
+                    localStorage.removeItem('loginopenid')
+                    localStorage.removeItem('userinfos')
+                }
+            }
+        )
+    }
 }
 
 const router = new VueRouter({
-	routes
+    routes
 })
 
 router.beforeEach((to, from, next) => {
-	if(to.matched.some(record => record.meta.requiresAuth)) {
-		if(!sessionStorage.getItem('token')) {
-			sessionStorage.setItem('path', to.path)
-			if(!localStorage.getItem('loginname')) {
-				Vue.$vux.alert.show({
-					title: '提示',
-					content: '您还没有登录,请先登录!',
-					onHide() {
-						next({
-							path: '/login'
-						})
-					}
-				})
-			} else {
-				next()
-			}
-		} else {
-			next()
-		}
-	} else {
-		next() // 确保一定要调用 next()
-	}
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!sessionStorage.getItem('token')) {
+            sessionStorage.setItem('path', to.path)
+            if (!localStorage.getItem('loginname')) {
+                Vue.$vux.alert.show({
+                    title: '提示',
+                    content: '您还没有登录,请先登录!',
+                    onHide() {
+                        next({
+                            path: '/login'
+                        })
+                    }
+                })
+            } else {
+                next()
+            }
+        } else {
+            next()
+        }
+    } else {
+        next() // 确保一定要调用 next()
+    }
 })
 
 FastClick.attach(document.body)
@@ -419,6 +410,6 @@ Vue.config.productionTip = true
 
 /* eslint-disable no-new */
 const vm = new Vue({
-	router,
-	render: h => h(App)
+    router,
+    render: h => h(App)
 }).$mount('#app-box')

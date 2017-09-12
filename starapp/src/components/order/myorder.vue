@@ -49,7 +49,6 @@
 							(res) => {
 								$this.$vux.loading.hide()
 								$this.orderlist = res.data.obj
-								console.log(res.data)
 							}
 						)
 					} else {
@@ -65,7 +64,6 @@
 					(res) => {
 						this.$vux.loading.hide()
 						this.orderlist = res.data.obj
-						console.log(res.data)
 					}
 				)
 			}

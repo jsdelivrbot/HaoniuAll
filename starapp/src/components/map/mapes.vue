@@ -46,7 +46,6 @@
 		methods: {
 			abcd(a, b) {
 				this.sty = a.point
-				console.log(a.point)
 			},
 			chenalert(val) {
 				this.$emit('getaddress', val)

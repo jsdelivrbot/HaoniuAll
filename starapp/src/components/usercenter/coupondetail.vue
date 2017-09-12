@@ -48,7 +48,6 @@
 			}).then(
 				(res) => {
 					this.info = res.data.obj
-					console.log(this.info)
 				}
 			)
 		}

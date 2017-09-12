@@ -31,7 +31,6 @@
 			this.$http.get('/user/reward/createErwei').then(
 				(res) => {
 					this.total = res.data.obj.count
-					console.log(res.data)
 				}
 			)
 		},

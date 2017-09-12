@@ -35,23 +35,21 @@
 			this.$http.get('/recommendArticles?page=1&rows=1000').then(
 				(res) => {
 					this.newslist = res.data.obj.items
-					console.log(res.data)
 				}
 			)
 		}
 	}
 </script>
 <style lang="less">
-.news-list{
-	padding-top: 44px;
-	box-sizing: border-box;
-	.subject-text {
+	.news-list {
+		padding-top: 44px;
+		box-sizing: border-box;
+		.subject-text {
 			margin-top: 10px;
 			background: #fff;
 			height: auto;
 			overflow: hidden;
 			li {
-				float: left;
 				list-style: none;
 				height: auto;
 				overflow: hidden;
@@ -94,5 +92,5 @@
 				}
 			}
 		}
-}
+	}
 </style>

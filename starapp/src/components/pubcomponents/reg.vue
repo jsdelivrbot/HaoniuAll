@@ -103,7 +103,6 @@
 								content: '获取失败,请重试!'
 							})
 						}
-						console.log(res.data)
 					}
 				)
 			},
@@ -199,7 +198,6 @@
 								content: res.data.msg
 							})
 						}
-						console.log(res.data)
 					}
 				)
 			}

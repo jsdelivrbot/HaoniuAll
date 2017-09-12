@@ -65,7 +65,6 @@
 				(res) => {
 					this.$vux.loading.hide()
 					this.list = res.data.obj.result
-					console.log(this.list)
 				}
 			)
 		},
@@ -189,13 +188,11 @@
 				)
 			},
 			search2() {
-				console.log(this.$refs.picker1.getNameValues().split(' '))
 				if(this.tabbar <= 0) {
 					return false
 				}
 				let $this = this
 				let searchtxt = ''
-				console.log(this.$refs.picker1.getNameValues().split(' '))
 				for(var i = 0; i < this.$refs.picker1.getNameValues().split(' ').length; i++) {
 					if(this.$refs.picker1.getNameValues().split(' ')[i] !== '全部') {
 						searchtxt += this.$refs.picker1.getNameValues().split(' ')[i] + '$'

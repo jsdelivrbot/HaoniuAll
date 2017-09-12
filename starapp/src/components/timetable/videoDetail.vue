@@ -74,7 +74,6 @@
 				}
 			}).then(
 				(res) => {
-					console.log(res.data)
 					this.player = new prismplayer({
 						id: 'J_prismPlayer',
 						width: '100%',
@@ -112,7 +111,6 @@
 					}
 				}).then(
 					(res) => {
-						console.log(res.data)
 						this.videoDetail = res.data.obj
 						this.player.loadByUrl(res.data.obj.flvUrl)
 					}

@@ -179,7 +179,6 @@
 				(res) => {
 					this.contacts = res.data.obj.nickname
 					this.contactsPhone = res.data.obj.phone
-					console.log(res.data)
 				}
 			)
 		},

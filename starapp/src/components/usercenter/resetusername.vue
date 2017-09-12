@@ -48,7 +48,6 @@
 								content: '修改失败!'
 							})
 						}
-						console.log(res.data)
 					}
 				)
 			}

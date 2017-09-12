@@ -99,7 +99,6 @@
 					(res) => {
 						if(res.data.result === 0) {
 							localStorage.setItem('childrenInfo', JSON.stringify(res.data.obj))
-							console.log(localStorage.getItem('childrenInfo'))
 							mui.toast('恭喜您修改成功!')
 							this.$router.replace('/childrenlist')
 						} else {

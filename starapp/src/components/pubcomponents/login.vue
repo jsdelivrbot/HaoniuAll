@@ -55,7 +55,6 @@
 				}).then(
 					(res) => {
 						let $this = this
-						console.log(JSON.stringify(res))
 						if(res.data.result === 0) {
 							sessionStorage.setItem('token', res.data.obj.token)
 							this.$http.defaults.headers.post['token'] = sessionStorage.getItem('token')
@@ -75,7 +74,6 @@
 								content: res.data.msg
 							})
 						}
-						console.log(res.data)
 					}
 				)
 			},

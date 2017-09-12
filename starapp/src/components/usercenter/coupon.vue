@@ -39,7 +39,6 @@
 						$this.$http.get('/user/coupon/list?page=1&rows=1000').then(
 							(res) => {
 								$this.couponList = res.data.obj.result
-								console.log(res.data)
 							}
 						)
 					} else {

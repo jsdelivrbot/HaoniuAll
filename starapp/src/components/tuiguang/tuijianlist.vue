@@ -32,7 +32,6 @@
 			}).then(
 				(res) => {
 					this.course = res.data.obj.result
-					console.log(res.data)
 				}
 			)
 		}

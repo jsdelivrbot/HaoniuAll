@@ -173,7 +173,6 @@
 			}).then(
 				(res) => {
 					this.detailInfo = res.data.obj
-					console.log(res.data)
 				}
 			)
 		},
@@ -198,9 +197,6 @@
 								}
 							}
 						)
-					},
-					onCancel() {
-						console.log('plugin confirm')
 					}
 				})
 			}

@@ -96,7 +96,6 @@
 					if(res.data.result === 0) {
 						this.detailInfo = res.data.obj
 					}
-					console.log(res.data.obj)
 				}
 			)
 		},
@@ -110,7 +109,6 @@
 			},
 			collect() {
 				let $this = this
-				console.log(this.token)
 				if(this.token === null) {
 					this.$vux.alert.show({
 						title: '提示',
@@ -131,13 +129,11 @@
 							$this.$vux.toast.text('收藏成功!', 'center')
 							$this.detailInfo.watched = false
 						}
-						console.log(res.data)
 					}
 				)
 			},
 			nocollect() {
 				let $this = this
-				console.log(this.token)
 				if(this.token === null) {
 					this.$vux.alert.show({
 						title: '提示',
@@ -160,12 +156,8 @@
 						}).then(
 							(res) => {
 								$this.detailInfo.watched = true
-								console.log(res.data)
 							}
 						)
-					},
-					onCancel() {
-						console.log('plugin confirm')
 					}
 				})
 			}

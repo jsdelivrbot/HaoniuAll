@@ -38,7 +38,6 @@
 						$this.$http.get('/user/dou/findDou').then(
 							(res) => {
 								$this.total = res.data.obj
-								console.log(res.data)
 							}
 						)
 					} else {

@@ -71,7 +71,6 @@
 			}).then(
 				(res) => {
 					this.detailInfo = res.data.obj
-					console.log(res.data)
 				}
 			)
 		},
@@ -181,7 +180,6 @@
 				//									mui.toast('请勿重复支付')
 				//								}
 				//							}
-				//							console.log(JSON.stringify(res.data))
 				//						})
 				//				}
 			},
@@ -251,7 +249,6 @@
 									mui.toast('请勿重复支付')
 								}
 							}
-							console.log(JSON.stringify(res.data))
 						})
 				}
 			}
@@ -288,7 +285,6 @@
 			//
 			//					$this.$http.get(WXPAYSERVER).then(
 			//						(res) => {
-			//							console.log(JSON.stringify(res.data))
 			//							if(res.data.result === 0) {
 			//								plus.payment.request(channel, res.data.obj, function(result) {
 			//									plus.nativeUI.alert('支付成功！', function() {})

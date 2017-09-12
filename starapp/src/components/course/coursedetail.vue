@@ -2,7 +2,7 @@
 	<div class="course-detail">
 		<topbar title='课程简介'></topbar>
 		<div class="course-info vux-1px-b">
-			<img :src="detailInfo.school.thumbnail" v-if='detailInfo.school' />
+			<img :src="detailInfo.school.thumbnail" @click="show(0)" v-if='detailInfo.school' />
 			<div>
 				<h2>{{detailInfo.name}}</h2>
 				<h1><em style="font-size: 15px; font-style: normal;margin-right: 2px;">¥</em>{{detailInfo.price}}</h1>
@@ -10,10 +10,13 @@
 				<p>上课时间:{{detailInfo.openTime}}</p>
 			</div>
 		</div>
-		<div class="link" v-if='detailInfo'>
+		<div v-transfer-dom>
+			<previewer :list="list" ref="previewer" :options="options"></previewer>
+		</div>
+		<div class="link" v-if='detailInfo.school'>
 			<ul>
 				<li class="vux-1px-b">
-					<router-link :to='"/maps/"+detailInfo.school.coords' v-if='detailInfo.school.coords'>
+					<router-link :to='"/maps/"+detailInfo.school.coords' v-if='detailInfo.school'>
 						<img src="../../../static/img/address.png" />
 						<span v-if="detailInfo.school">
 							{{detailInfo.school.address}}
@@ -47,7 +50,7 @@
 			</div>
 			<p>以上优惠二选一</p>
 		</div>-->
-		
+
 		<div class="intro-box" v-if='detailInfo.douAmount>0||detailInfo.couponId>0||detailInfo.discount>0'>
 			<div class="title vux-1px-b">
 				优惠活动
@@ -138,21 +141,28 @@
 </template>
 <script>
 	import topbar from '@/components/callback'
-	import { Rater } from 'vux'
+	import { Rater, Previewer, TransferDom } from 'vux'
 	export default {
 		name: 'nokeep',
+		directives: {
+			TransferDom
+		},
 		components: {
 			topbar,
-			Rater
+			Rater,
+			Previewer
 		},
 		data() {
 			return {
 				token: sessionStorage.getItem('token'),
 				star: 3,
+				options: {
+				},
 				detailInfo: {},
 				urls: '',
 				pllist: [],
-				pltotal: ''
+				pltotal: '',
+				list: []
 			}
 		},
 		mounted() {
@@ -173,6 +183,9 @@
 			this.$http.get('/business/course/detail?' + urls).then(
 				(res) => {
 					this.$vux.loading.hide()
+					if(res.data.obj.school.nphotos >= 2) {
+						this.getPhotos()
+					}
 					this.detailInfo = res.data.obj
 				}
 			)
@@ -188,6 +201,27 @@
 			)
 		},
 		methods: {
+			show(index) {
+				this.$refs.previewer.show(index)
+			},
+			getPhotos() {
+				let props = this.$route.params.name.split(',')
+				this.$http.get('/business/course/schoolPic', {
+					params: {
+						companyName: props[1],
+						schoolName: props[0]
+					}
+				}).then(
+					(res) => {
+						for(var i = 0; i < res.data.obj.length; i++) {
+							let arr = {}
+							arr.src = res.data.obj[i]
+							this.list.push(arr)
+						}
+						console.log(this.list)
+					}
+				)
+			},
 			getmore() {
 				let props = this.$route.params.name.split(',')
 				let urls = 'schoolName=' + props[0] + '&companyName=' + props[1] + '&name=' + props[2]
@@ -283,7 +317,8 @@
 	}
 </script>
 <style lang="less">
-	@import url("../../../static/font/iconfont.css");
+	/*@import url("../../../static/font/iconfont.css");*/
+	
 	#star {
 		a {
 			width: 20px !important;

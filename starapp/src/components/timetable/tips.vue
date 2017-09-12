@@ -25,19 +25,16 @@
 				<router-link tag='div' :to='"/play2/"+item.objectSome[0].url+"/"+childrenId+"/"+timetableId'>
 					<img :src="item.objectSome[0].cover" />
 				</router-link>
-				<!--<d-player :video="{url: item.objectSome[0].url,pic: 'http://chenbowen.cc/kindeditor/attached/image/20170112/20170112012144_75926.jpg'}" :contextmenu="contextmenu" :autoplay="autoplay" ref="player"></d-player>-->
 			</div>
 		</div>
 	</div>
 </template>
 <script>
-	import VueDPlayer from 'vue-dplayer'
 	import topbar from '@/components/callback'
 	export default {
 		name: 'nokeep',
 		components: {
-			topbar,
-			'd-player': VueDPlayer
+			topbar
 		},
 		data() {
 			return {
@@ -65,7 +62,6 @@
 					if(res.data.result === 0) {
 						this.tipsInfo = res.data.obj
 					}
-					console.log(res.data)
 				}
 			)
 			let $this = this

@@ -168,7 +168,6 @@
 				this.playClick()
 			},
 			onChange(val) {
-				console.log('是的就的数据')
 				let times = parseInt(this.allTime * (val / 100))
 				this.player.seek(times)
 			},
@@ -177,10 +176,8 @@
 				let $this = this
 				if($this.play) {
 					setTimeout(function() {
-						console.log($this.allTime)
 						$this.getPercent()
 						$this.timeline = parseInt($this.player.getCurrentTime()) / $this.allTime * 100
-						console.log($this.timeline)
 					}, 1)
 				}
 			},
