@@ -124,7 +124,7 @@
 
 					function shareMessage(s, ex) {
 						var msg = {
-							href: window.location.href,
+							href: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.haoniu.gscq',
 							title: '民间骨事',
 							content: '分享：有缓解颈肩腰腿痛小妙方，超实用！',
 							thumbs: [localStorage.getItem('http') + '/file/logo.png'],

@@ -52,22 +52,11 @@ const store = new Vuex.Store({
 		}
 	}
 }) // 这里你可能已经有其他 module
-localStorage.setItem('http', 'http://testgscq.chenbowen.cc:8080')
+localStorage.setItem('http', 'http://xcqct.kjs999.com:8080')
 
 //localStorage.setItem('http', 'http://192.168.1.189:8080')
 //localStorage.setItem('http', 'http://125.77.27.7:8080')
 //localStorage.setItem('http', 'http://localhost:8080')
-
-//store.registerModule('vux', { // 名字自己定义
-//	state: {
-//		isLoading: false
-//	},
-//	mutations: {
-//		updateLoadingStatus(state, payload) {
-//			state.isLoading = payload.isLoading
-//		}
-//	}
-//})
 
 const routes = [{
 	path: '/pub',
@@ -164,7 +153,6 @@ const routes = [{
 
 const router = new VueRouter({
 	routes,
-	//	mode: 'history',
 	scrollBehavior(to, from, savedPosition) {
 		return {
 			x: 0,
@@ -224,9 +212,10 @@ document.addEventListener('plusready', function() {
 	plus.runtime.setBadgeNumber(0)
 	plus.push.addEventListener('click', function(msg) {
 		if(msg.content === '您有新的消息!') {
-			vm.$router.push('/newsdetail/' + msg.id)
+			let info = JSON.parse(msg.payload)
+			vm.$router.push('/newsdetail/' + info.id)
 		} else {
-			let info = msg.aps.category
+			let info = JSON.parse(msg.aps.category)
 			vm.$router.push('/newsdetail/' + info.id)
 		}
 	}, false)
