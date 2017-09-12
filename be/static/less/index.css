@@ -1,0 +1,48 @@
+.border-none:after {
+  display: none;
+}
+/* 2倍屏 */
+@media only screen and (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) {
+  .border-1px::after {
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+  }
+}
+/* 3倍屏 */
+@media only screen and (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
+  .border-1px::after {
+    -webkit-transform: scaleY(0.33);
+    transform: scaleY(0.33);
+  }
+}
+.clearfix {
+  display: inline-block;
+}
+.clearfix:after {
+  display: block;
+  content: ".";
+  height: 0;
+  line-height: 0;
+  clear: both;
+  visibility: hidden;
+}
+@font-face {
+  font-family: "iconfont";
+  src: url('../font/iconfont.eot?t=1501643966920');
+  /* IE9*/
+  src: url('../fonticonfont.eot?t=1501643966920#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('../fonticonfont.woff?t=1501643966920') format('woff'), /* chrome, firefox */ url('../fonticonfont.ttf?t=1501643966920') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/ url('../fonticonfont.svg?t=1501643966920#iconfont') format('svg');
+  /* iOS 4.1- */
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-fanhui:before {
+  content: "\e601";
+}
+.icon-gengduo:before {
+  content: "\e600";
+}

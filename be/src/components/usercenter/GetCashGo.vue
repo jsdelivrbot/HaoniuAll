@@ -1,0 +1,77 @@
+<template>
+	<div class="get-cash-go-box">
+		<v-header title="收益提现"></v-header>
+		<p class="top-detail">支付宝账户提现</p>
+		<div class="top">
+			支付宝：谢惠伊（17755164120）
+		</div>
+		<p class="top-detail">提现金额</p>
+		<group style="margin-top: 0;">
+			<x-input title="金额（元）：" placeholder="最低50元起，您现有10元" style="font-size: 16px;"></x-input>
+		</group>
+		<p class="detail">
+			1、提现最低10元起，手续费按0.2%计算，最低2元/笔，最高25元/笔；<br />
+			2、根据国家规定，个人用户每月提现超800元部分需缴纳个人所得税； <br />
+			3、提现处理周期，自申请3-5个工作日内按成处理；<br />
+			4、如有疑问请致电咨询，电话4008-566-116
+		</p>
+		<div class="btn">
+			提交申请
+		</div>
+	</div>
+</template>
+
+<script>
+	import Header from '@/common/vue/Header'
+	import { Group, XInput } from 'vux'
+	export default {
+		components: {
+			'v-header': Header,
+			Group,
+			XInput
+		}
+	}
+</script>
+
+<style lang="less">
+	.get-cash-go-box {
+		padding: 44px 0 50px;
+		.top-detail {
+			font-size: 14px;
+			height: 50px;
+			line-height: 50px;
+			color: #707070;
+			padding-left: 15px;
+		}
+		.top {
+			height: 50px;
+			background: url(../../../static/usercenter/usercenterpay2.png) 12px center no-repeat;
+			background-size: 37px 30px;
+			background-color: white;
+			font-size: 14px;
+			line-height: 50px;
+			padding-left: 60px;
+		}
+		.btn {
+			width: 100%;
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			text-align: center;
+			height: 50px;
+			color: white;
+			line-height: 50px;
+			background-color: #e70012;
+			font-size: 16px;
+			font-weight: 500;
+		}
+		.weui-cells__title {
+			font-size: 12px;
+		}
+		.detail {
+			font-size: 12px;
+			color: #999999;
+			padding-left: 15px;
+		}
+	}
+</style>
