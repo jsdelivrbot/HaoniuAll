@@ -51,12 +51,8 @@
 						if(empty) {
 							that.newslist = []
 						}
-						console.log('请求数据')
 						that.newslist.push.apply(that.newslist, pages.result)
-						console.log(that.newslist)
-						console.log('请求数据2')
 						if(done) {
-							console.log('请求数据3')
 							done()
 						}
 					}
