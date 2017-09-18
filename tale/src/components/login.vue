@@ -53,8 +53,8 @@
 		data() {
 			return {
 				lchttp: localStorage.getItem('http'),
-				username: '18326121135',
-				pwd: '123456',
+				username: '',
+				pwd: '',
 				openid: '',
 				nickname: '',
 				headimgurl: ''
@@ -72,9 +72,6 @@
 				let $this = this
 				plus.oauth.getServices(function(services) {
 					auths = services
-					//					for(var k in auths) {
-					//						console.log(auths[k].id)
-					//					}
 					var s
 					for(var i = 0; i < auths.length; i++) {
 						if(auths[i].id === 'weixin') {

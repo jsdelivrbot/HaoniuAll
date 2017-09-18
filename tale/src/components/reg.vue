@@ -23,8 +23,9 @@
 		</div>
 
 		<p style="color: #999999;text-align: center;font-size: 14px;">点击'注册' 即表示您同意本公司的</p>
-		<a style="display: block;text-align: center;color: #ff5d5c;">《平台使用协议》</a>
-
+		<router-link to='/regxy' style="display: block;text-align: center;color: #ff5d5c;">
+			《平台使用协议》
+		</router-link>
 	</div>
 </template>
 <script>

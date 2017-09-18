@@ -32,6 +32,7 @@ import ifm2 from './components/ifm2'
 import changeusername from './components/changeusername'
 import integralrule from './components/integralrule'
 import goodsay from './components/goodsay'
+import regxy from './components/regxy'
 
 import { AjaxPlugin, AlertPlugin, ToastPlugin, LoadingPlugin } from 'vux'
 Vue.use(LoadingPlugin)
@@ -54,102 +55,104 @@ const store = new Vuex.Store({
 }) // 这里你可能已经有其他 module
 localStorage.setItem('http', 'http://xcqct.kjs999.com:8080')
 
-//localStorage.setItem('http', 'http://192.168.1.189:8080')
-//localStorage.setItem('http', 'http://125.77.27.7:8080')
-//localStorage.setItem('http', 'http://localhost:8080')
-
 const routes = [{
-	path: '/pub',
-	component: Home,
-	children: [{
-		path: '/pub/job',
-		component: home
+		path: '/pub',
+		component: Home,
+		children: [{
+			path: '/pub/job',
+			component: home
+		}, {
+			path: '/pub/find',
+			component: find
+		}, {
+			path: '/pub/ranking',
+			component: ranking,
+			meta: {
+				needLoading: true
+			}
+		}, {
+			path: '/pub/my',
+			component: usercenter
+		}]
+	},
+	{
+		path: '/regxy',
+		component: regxy
+	},
+	{
+		path: '/login',
+		component: login
 	}, {
-		path: '/pub/find',
-		component: find
+		path: '/changepwd',
+		component: changepwd
 	}, {
-		path: '/pub/ranking',
-		component: ranking,
+		path: '/about',
+		component: about
+	}, {
+		path: '/userinfo',
+		component: userinfo,
 		meta: {
-			needLoading: true
+			requiresAuth: true
 		}
 	}, {
-		path: '/pub/my',
-		component: usercenter
-	}]
-}, {
-	path: '/login',
-	component: login
-}, {
-	path: '/changepwd',
-	component: changepwd
-}, {
-	path: '/about',
-	component: about
-}, {
-	path: '/userinfo',
-	component: userinfo,
-	meta: {
-		requiresAuth: true
+		path: '/newslist/:id/:title',
+		component: newslist
+	}, {
+		path: '/comment',
+		component: comment
+	}, {
+		path: '/collect',
+		component: collect,
+		meta: {
+			requiresAuth: true
+		}
+	}, {
+		path: '/integral',
+		component: integral,
+		meta: {
+			requiresAuth: true
+		}
+	}, {
+		path: '/feedback',
+		component: feedback2
+	}, {
+		path: '/reg',
+		component: reg
+	}, {
+		path: '/newsdetail/:id',
+		component: newsdetail
+	}, {
+		path: '/newsdetailSingle/:id',
+		component: newsdetailSingle
+	}, {
+		path: '/commentlist/:newsInfoId',
+		component: commentlist
+	}, {
+		path: '/search/:id',
+		component: search
+	}, {
+		path: '/',
+		component: guide
+	}, {
+		path: '/wechat',
+		component: wechat
+	}, {
+		path: '/ifm/:url',
+		component: ifm
+	}, {
+		path: '/ifm2',
+		component: ifm2
+	}, {
+		path: '/changeusername',
+		component: changeusername
+	}, {
+		path: '/integralrule',
+		component: integralrule
+	}, {
+		path: '/goodsay',
+		component: goodsay
 	}
-}, {
-	path: '/newslist/:id/:title',
-	component: newslist
-}, {
-	path: '/comment',
-	component: comment
-}, {
-	path: '/collect',
-	component: collect,
-	meta: {
-		requiresAuth: true
-	}
-}, {
-	path: '/integral',
-	component: integral,
-	meta: {
-		requiresAuth: true
-	}
-}, {
-	path: '/feedback',
-	component: feedback2
-}, {
-	path: '/reg',
-	component: reg
-}, {
-	path: '/newsdetail/:id',
-	component: newsdetail
-}, {
-	path: '/newsdetailSingle/:id',
-	component: newsdetailSingle
-}, {
-	path: '/commentlist/:newsInfoId',
-	component: commentlist
-}, {
-	path: '/search/:id',
-	component: search
-}, {
-	path: '/',
-	component: guide
-}, {
-	path: '/wechat',
-	component: wechat
-}, {
-	path: '/ifm/:url',
-	component: ifm
-}, {
-	path: '/ifm2',
-	component: ifm2
-}, {
-	path: '/changeusername',
-	component: changeusername
-}, {
-	path: '/integralrule',
-	component: integralrule
-}, {
-	path: '/goodsay',
-	component: goodsay
-}]
+]
 
 const router = new VueRouter({
 	routes,

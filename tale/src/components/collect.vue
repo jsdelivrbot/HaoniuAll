@@ -4,8 +4,8 @@
 		<v-scroll :on-refresh="onRefresh" :on-infinite="onInfinite">
 			<ul>
 				<li v-for="news in newslist">
-					<router-link :to='"/newsdetail/"+news.id'>
-						<img src="../../static/img/logo.png" />
+					<router-link :to='"/newsdetail/"+news.newsInfoId'>
+						<img :src="news.newsInfoVo.imgUrl" />
 						<div>
 							<h2>{{news.newsInfoVo.title}}</h2>
 							<p>收藏于 {{news.createTime}}</p>
