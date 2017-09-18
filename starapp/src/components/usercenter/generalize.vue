@@ -4,7 +4,7 @@
 		<group style='margin-top: 60px;'>
 			<cell title="奖励余额" value="提现" is-link link='/tixian'></cell>
 			<cell title="已推广人数" :value="total"></cell>
-			<cell title="我的推广码" is-link link='/tuiguangma'></cell>
+			<!--<cell title="我的推广码" is-link link='/tuiguangma'></cell>-->
 		</group>
 		<group>
 			<cell title="推广记录" is-link link='/tuiguang'></cell>

@@ -27,11 +27,23 @@
 			</button>
 		</div>
 
+		<div class="other-login">
+			<ul>
+				<li @click="other">
+					<img src="../../../static/img/46.png" />
+				</li>
+			</ul>
+			<divider>第三方登录</divider>
+		</div>
+
 	</div>
 </template>
 <script>
-	import { querystring } from 'vux'
+	import { querystring, Divider } from 'vux'
 	export default {
+		components: {
+			Divider
+		},
 		data() {
 			return {
 				iphone: '',
@@ -46,6 +58,39 @@
 			next()
 		},
 		methods: {
+			other() {
+				let $this = this
+				var loading = plus.nativeUI.showWaiting()
+				this.$CotherLogin(0, function(res) {
+					$this.$http.get('/weixin/partyLoginWeixin', {
+						params: {
+							openId: res.userInfo.openid,
+							headImgUrl: res.userInfo.headimgurl,
+							nickName: res.userInfo.nickname
+						}
+					}).then(
+						(res) => {
+							loading.close()
+							if(res.data.result !== 0) {
+								$this.$router.replace('/bindinfo/' + res.data.obj)
+							} else {
+								sessionStorage.setItem('token', res.data.obj.token)
+								$this.$http.defaults.headers.post['token'] = sessionStorage.getItem('token')
+								$this.$http.defaults.headers.get['token'] = sessionStorage.getItem('token')
+								localStorage.setItem('userinfos', querystring.stringify(res.data.obj))
+								if(sessionStorage.getItem('path')) {
+									$this.$router.replace(sessionStorage.getItem('path'))
+									sessionStorage.removeItem('path')
+								} else {
+									$this.$router.replace('/pub/home')
+								}
+							}
+							console.log(JSON.stringify(res.data))
+						}
+					)
+					console.log(JSON.stringify(res))
+				})
+			},
 			login() {
 				this.$http.get('/login', {
 					params: {
@@ -87,6 +132,24 @@
 	@import '~vux/src/styles/1px.less';
 	body {
 		background: #f0eff5;
+	}
+	
+	.other-login {
+		height: auto;
+		overflow: hidden;
+		ul {
+			margin-bottom: 10px;
+			display: flex;
+			li {
+				flex: 1;
+				img {
+					margin: auto;
+					display: block;
+					width: 45px;
+					height: 45px;
+				}
+			}
+		}
 	}
 	
 	.login {

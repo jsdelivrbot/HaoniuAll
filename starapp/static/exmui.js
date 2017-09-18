@@ -1,9 +1,8 @@
 export default {
 	install: function(Vue, options) {
-		console.log('调用插件成功')
 		Vue.prototype.$CwxShare = function(selectId, opts, cb) {
-				let selectMsg = ''
-				let shares = {}
+				var selectMsg = ''
+				var shares = {}
 				mui.plusReady(function() {
 					plus.share.getServices(function(s) {
 						for(var i in s) {
@@ -55,7 +54,7 @@ export default {
 				}
 			},
 			Vue.prototype.$CGPS = function(callback) {
-				let val = false
+				var val = false
 				mui.plusReady(function() {
 					plus.geolocation.getCurrentPosition(geoInf, function(e) {
 						callback(val)
@@ -73,7 +72,7 @@ export default {
 				}
 			},
 			Vue.prototype.$CgetCID = function(callback) {
-				let cid = ''
+				var cid = ''
 				mui.plusReady(function() {
 					cid = plus.push.getClientInfo()
 					callback(cid.clientid)
@@ -124,7 +123,7 @@ export default {
 			Vue.prototype.$CtoPay = function(payid, payres, callback) {
 				mui.plusReady(function() {
 					plus.payment.getChannels(function(channels) {
-						let channel = ''
+						var channel = ''
 						if(payid === 1) {
 							channel = channels[1]
 						} else {
@@ -139,6 +138,51 @@ export default {
 						callback("获取支付通道失败：" + e.message);
 					});
 				})
+			},
+			Vue.prototype.$CotherLogin = function(otherName, callback) {
+				plus.oauth.getServices(function(services) {
+					var auths = services
+					var s, other
+					switch(otherName) {
+						case 0:
+							other = 'weixin'
+							break;
+						case 1:
+							other = 'qq'
+							break;
+						case 2:
+							other = 'sinaweibo'
+							break;
+						default:
+							other = 'weixin'
+							break;
+					}
+
+					for(var i = 0; i < auths.length; i++) {
+						if(auths[i].id === other) {
+							s = auths[i]
+							break
+						}
+					}
+					if(!s.authResult) {
+						s.login(function(e) {
+							s.getUserInfo(function(e) {
+								callback(s)
+							}, function(e) {})
+						}, function(e) {
+							mui.toast('登录认证失败')
+						})
+					} else {
+						callback(s)
+					}
+				}, function(e) {
+					mui.toast('登录认证失败')
+				})
+			},
+			Vue.prototype.$CisANDROID = function() {
+				var u = navigator.userAgent
+				var result = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1
+				return result
 			}
 	}
 }

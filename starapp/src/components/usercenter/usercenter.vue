@@ -20,6 +20,7 @@
 			<cell title='我的订单' is-link link='/myorder'></cell>
 			<cell title='我的收藏' link='/collect' is-link></cell>
 			<cell title='我的推广' link='/generalize' is-link></cell>
+			<cell title='我的推广码' link='/tuiguangma' is-link></cell>
 			<cell title='我的转换豆' is-link link='/dou'></cell>
 			<cell title='我的优惠券' is-link link='/coupon'></cell>
 		</group>

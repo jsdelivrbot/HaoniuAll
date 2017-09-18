@@ -18,7 +18,11 @@
 				暂无资料,您可以点击右下角上传
 			</div>
 		</div>
-		<!--<button @click="kas">上传</button>-->
+
+		<input type="file" name="" id="anc">
+
+		<!--<input type="file" name="" id="" @change="abc" value="" />-->
+		<button @click="kas">上传</button>
 		<div class="bg-box" v-if='bigShow'>
 			<div class="bg" @click=" bigShow = ''"></div>
 			<img :src="bigShow" />
@@ -30,8 +34,7 @@
 		<div class="actionsheet" v-show="actionsheetshow">
 			<ul>
 				<li class="vux-1px-b">
-					<input type="button" name="" id="" value="" @click="iphoneUpload2()" v-if='!this.isandroid' />
-					<input type="file" name="file" id="fsiles" multiple @change="uploadVideo" v-if='this.isandroid'> 视频
+					<input type="file" name="file" id="files" multiple @change="uploadVideo"> 视频
 				</li>
 				<li>
 					<input type="file" id="upload2" @change="uploadImg">图片
@@ -63,8 +66,7 @@
 				info: '',
 				actionsheetshow: false,
 				showLoading: false,
-				loadingText: '',
-				isandroid: this.$CisANDROID()
+				loadingText: ''
 			}
 		},
 		methods: {
@@ -102,88 +104,8 @@
 					}
 				)
 			},
-			iphoneUpload(event) {
-				alert(event.target.files[0].size)
-				let file = event.target.files[0]
-				let param = new FormData()
-				param.append('file', file, file.name)
-				let config = {
-					headers: {
-						'Content-Type': 'multipart/form-data'
-					}
-				}
-				this.showLoading = true
-				this.loadingText = '视频上传中.....'
-				this.$http.post('/classHour/aliLive/uploadVideo', param, config).then(
-					(res) => {
-						let $this = this
-						this.loadingText = '视频后台转码中,稍后.....'
-						setTimeout(function() {
-							$this.showLoading = false
-						}, 1200)
-						let a = setInterval(function() {
-							$this.$http.get('/classHour/aliLive/getPlayInfo', {
-								params: {
-									childId: $this.$route.params.childid,
-									timetableId: $this.$route.params.timetableid,
-									videoId: res.data.obj
-								}
-							}).then(
-								(res) => {
-									$this.list.list.push(res.data.obj)
-									$this.showLoading = false
-									clearInterval(a)
-								}
-							)
-						}, 2000)
-						console.log(res.data.obj)
-					}
-				)
-			},
-			callback(val) {
-				let $this = this
-				$this.showLoading = true
-				this.loadingText = '转码中,稍后.....'
-				let a = setInterval(function() {
-					$this.$http.get('/classHour/aliLive/getPlayInfo', {
-						params: {
-							childId: $this.$route.params.childid,
-							timetableId: $this.$route.params.timetableid,
-							videoId: val
-						}
-					}).then(
-						(res) => {
-							$this.list.list.push(res.data.obj)
-							$this.showLoading = false
-							clearInterval(a)
-						}
-					)
-				}, 2000)
-			},
-			iphoneUpload2() {
-				this.actionsheetshow = false
-				this.showLoading = true
-				this.loadingText = '视频上传中..'
-				plus.gallery.pick(function(p) {
-					task.addFile(p, {
-						key: 'uploadvideo'
-					})
-					task.start()
-				}, function(p) {}, {
-					filter: 'video'
-				})
-				let $this = this
-				var se = $this.$http.defaults.baseURL + '/classHour/aliLive/uploadVideo'
-				var task = plus.uploader.createUpload(se, {
-					method: 'post'
-				}, function(t, status) {
-					if(status === 200) {
-						var res = JSON.parse(t.responseText)
-						$this.callback(res.obj)
-					} else {
-						mui.toast('上传错误:' + status)
-					}
-				})
+			kas() {
+				this.uploader.startUpload()
 			}
 		},
 		beforeRouteLeave(to, from, next) {
@@ -194,10 +116,15 @@
 			}
 		},
 		mounted() {
+			this.$http.get('/classHour/aliLive/createUploadVideo').then(
+				(res) => {
+					console.log(res.data)
+				}
+			)
 			let $this = this
 			this.uploader = new VODUpload({
 				onUploadstarted(uploadInfo) {
-					console.log(JSON.stringify(uploadInfo))
+					console.log('onUploadStarted:' + uploadInfo.file.name + ', endpoint:' + uploadInfo.endpoint + ', bucket:' + uploadInfo.bucket + ', object:' + uploadInfo.object)
 					$this.uploader.setUploadAuthAndAddress(uploadInfo, $this.info.UploadAuth, $this.info.UploadAddress)
 				},
 				onUploadSucceed(uploadInfo) {
@@ -228,6 +155,15 @@
 					}
 				},
 				onUploadTokenExpired() {}
+			})
+
+			document.getElementById('anc').addEventListener('change', function(event) {
+				let userData = '{"Vod":{"UserData":"{"IsShowWaterMark":"false","Priority":"7"}"}}'
+				for(var i = 0; i < event.target.files.length; i++) {
+					$this.uploader.addFile(event.target.files[i], null, null, null, userData)
+				}
+				console.log($this.uploader.listFiles())
+				//				$this.uploader.startUpload()
 			})
 
 			this.$http.get('/classHour/datum/listDatum', {
