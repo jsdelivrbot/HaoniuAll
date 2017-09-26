@@ -2,13 +2,13 @@
 	<div>
 		<div class="kcb-topbar">
 			<em></em>
-			<ul>
+			<ul v-if='childrenList'>
 				<li v-for="(item,index) in childrenList" :key="index" @click="getTimeline(item.id)" :class="{'tips':item.tixin,'active':changeChildrenSelect==item.id}">
 					{{item.name}}
 				</li>
 			</ul>
 			<em></em>
-			<div class="right-icon" v-if='childrenList.length > 0'>
+			<div class="right-icon" v-if='childrenList!==null'>
 				<router-link :to='"/pub/kcb/calendar/"+changeChildrenSelect'>
 					<img src="../../../static/img/calendar.png" />
 				</router-link>
@@ -45,31 +45,17 @@
 									{{item.countNotiec}}
 								</span>
 							</router-link>
-							<!--<li class="icon-tips">
-												通知
-												<span v-if="item.countNotiec>0">
-													{{item.countNotiec}}
-												</span>
-											</li>-->
-
 							<router-link tag='li' class="icon-img" :to='"/databank/"+changeChildrenSelect+"/"+item.id'>
 								相册
 							</router-link>
-							<!--<li class="icon-img">
-												相册
-											</li>-->
+
 							<router-link class="icon-msg" tag='li' :to='"/msg/"+changeChildrenSelect+"/"+item.id'>
 								私信
 								<span v-if="item.countMessage>0">
 									{{item.countMessage}}
 								</span>
 							</router-link>
-							<!--<li class="icon-msg">
-												私信
-												<span v-if="item.countMessage>0">
-													{{item.countMessage}}
-												</span>
-											</li>-->
+
 						</ul>
 					</div>
 
@@ -94,7 +80,7 @@
 		data() {
 			return {
 				changeChildrenSelect: '',
-				childrenList: [],
+				childrenList: JSON.parse(localStorage.getItem('childrenInfo')),
 				timeline: '',
 				childrenId: '',
 				clickone: true,
@@ -115,49 +101,26 @@
 			}
 		},
 		activated() {
+			this.childrenList = JSON.parse(localStorage.getItem('childrenInfo'))
+			if(this.childrenList !== null) {
+				this.getTimeline()
+			}
 			if(this.$route.params.id >= 0) {
-				this.getAllChildren(this.$route.params.id)
-			} else {
-				this.getAllChildren()
+				this.getTimeline(this.$route.params.id)
 			}
 		},
 		mounted() {
+			this.bs()
 			if(this.$route.params.id >= 0) {
-				this.getAllChildren(this.$route.params.id)
+				this.getTimeline(this.$route.params.id)
 			} else {
-				this.getAllChildren()
+				this.getTimeline()
 			}
 		},
+		destroyed() {
+			this.$vux.loading.hide()
+		},
 		methods: {
-			getAllChildren(id) {
-				this.$http.get('/business/timetable/getByUserId').then(
-					(res) => {
-						if(res.data.result === 0) {
-							this.bs()
-							if(res.data.obj.length === 0) {
-								mui.toast('请添加子女信息!')
-							} else {
-								this.childrenList = res.data.obj
-								if(id) {
-									this.getTimeline(id)
-								} else {
-									let allNo = true
-									for(var i = 0; i < this.childrenList.length; i++) {
-										if(this.childrenList[i].tixin) {
-											this.getTimeline(this.childrenList[i].id)
-											allNo = false
-											return false
-										}
-									}
-									if(allNo) {
-										this.getTimeline(this.childrenList[0].id)
-									}
-								}
-							}
-						}
-					}
-				)
-			},
 			bs() {
 				let $this = this
 				if(!this.$refs.bsc) {
@@ -180,6 +143,15 @@
 				})
 			},
 			getTimeline(id) {
+				if(this.childrenList === null) {
+					return false
+				}
+				if(!id) {
+					id = this.childrenList[0].id
+				}
+				this.$vux.loading.show({
+					text: '加载中...'
+				})
 				this.childrenId = id
 				this.changeChildrenSelect = id
 				this.$http.get('/business/timetable/listBychildid', {
@@ -188,6 +160,7 @@
 					}
 				}).then(
 					(res) => {
+						this.$vux.loading.hide()
 						let $this = this
 						this.timeline = res.data.obj
 						this.beforeEnd = true
@@ -199,6 +172,9 @@
 				)
 			},
 			upTimeline() {
+				this.$vux.loading.show({
+					text: '加载中...'
+				})
 				const $this = this
 				this.beforeEnd = false
 				this.$http.get('/business/timetable/listBychildid', {
@@ -209,6 +185,7 @@
 					}
 				}).then(
 					(res) => {
+						this.$vux.loading.hide()
 						if(res.data.result === 0) {
 							this.beforeEnd = true
 							for(var i = 0; i < res.data.obj.length; i++) {
@@ -225,6 +202,9 @@
 				)
 			},
 			downTimeline() {
+				this.$vux.loading.show({
+					text: '加载中...'
+				})
 				const $this = this
 				let end = this.timeline.length - 1
 				this.laterEnd = false
@@ -236,6 +216,7 @@
 					}
 				}).then(
 					(res) => {
+						this.$vux.loading.hide()
 						if(res.data.result === 0) {
 							for(var i = 0; i < res.data.obj.length; i++) {
 								this.timeline.push(res.data.obj[i])
@@ -371,7 +352,6 @@
 				}
 				ul {
 					height: auto;
-					/*overflow: hidden;*/
 					display: flex;
 					li {
 						flex: 1;
@@ -399,15 +379,6 @@
 							color: #fff;
 						}
 					}
-					/*.icon-tips {
-						background-image: url(../../static/img/tips1.png);
-					}
-					.icon-img {
-						background-image: url(../../static/img/photo1.png);
-					}
-					.icon-msg {
-						background-image: url(../../static/img/sixin1.png);
-					}*/
 				}
 				h3 {
 					font-size: 12px;

@@ -17,6 +17,7 @@ import Reg from './components/pubcomponents/reg'
 import Index from './components/pubcomponents/index'
 import searchlist from './components/pubcomponents/searchlist'
 import vaguesearch from './components/pubcomponents/vaguesearch'
+import coursesort from './components/pubcomponents/coursesort'
 
 //usercenter
 import collect from './components/usercenter/collect'
@@ -87,6 +88,9 @@ import invite from './components/invite'
 import invitereg from './components/invitereg'
 import bindinfo from './components/bindinfo'
 
+//css
+import '../static/video.css'
+import '../static/swiper.min.css'
 import 'vue-event-calendar/dist/style.css' //1.1.10之后的版本，css被放在了单独的文件中，方便替换
 import vueEventCalendar from 'vue-event-calendar'
 Vue.use(vueEventCalendar, {
@@ -114,8 +118,9 @@ Vue.http.defaults.baseURL = 'http://wx.dianke8.com/xxdk/app'
 //Vue.http.defaults.baseURL = 'http://dev.dianke8.com:7000/xxdk/app'
 //Vue.http.defaults.baseURL = 'http://192.168.1.121:8080/xingxingdianke/app'
 Vue.http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-Vue.http.defaults.headers.get['token'] = sessionStorage.getItem('token')
-Vue.http.defaults.headers.post['token'] = sessionStorage.getItem('token')
+//Vue.http.defaults.headers.get['token'] = sessionStorage.getItem('token')
+//Vue.http.defaults.headers.post['token'] = sessionStorage.getItem('token')
+Vue.http.defaults.headers.common['token'] = sessionStorage.getItem('token')
 //import VueAwesomeSwiper from 'vue-awesome-swiper'
 //Vue.use(VueAwesomeSwiper)
 Vue.http.interceptors.response.use(function(response) {
@@ -128,6 +133,10 @@ Vue.http.interceptors.response.use(function(response) {
 const routes = [{
 		path: '/bindinfo/:id',
 		component: bindinfo
+	},
+	{
+		path: '/coursesort',
+		component: coursesort
 	},
 	{
 		path: '/invitereg',
@@ -376,7 +385,6 @@ if(localStorage.getItem('loginname') !== '') {
 			}
 		}).then(
 			(res) => {
-				console.log(JSON.stringify(res.data))
 				if(res.data.result === 0) {
 					localStorage.setItem('userinfos', querystring.stringify(res.data.obj))
 					sessionStorage.setItem('token', res.data.obj.token)

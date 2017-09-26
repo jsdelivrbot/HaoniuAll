@@ -85,10 +85,8 @@
 									$this.$router.replace('/pub/home')
 								}
 							}
-							console.log(JSON.stringify(res.data))
 						}
 					)
-					console.log(JSON.stringify(res))
 				})
 			},
 			login() {

@@ -20,31 +20,8 @@
 							<img src="../../../static/img/childrenicon.png" />
 							<span>课程表</span>
 						</router-link>
-						<!--<div>
-							<img src="../../../static/img/childrenicon.png" />
-							<span>课程表</span>
-						</div>-->
 					</div>
 				</router-link>
-				<!--<li class="vux-1px-b" v-for="item in list">
-					<div class="left-info">
-						<div>
-							<h2>{{item.name}}</h2>
-							<img src="../../../static/img/girl.png" v-if='item.gender ===1' />
-							<img src="../../../static/img/boy.png" v-if='item.gender ===0' />
-							<em></em>
-						</div>
-						<p>
-							出生日期: <span>{{item.birthday}}</span>
-						</p>
-					</div>
-					<div class="right-info">
-						<router-link :to='"/pub/kcb/timeline/"+item.id' tag='div'>
-							<img src="../../../static/img/childrenicon.png" />
-							<span>课程表</span>
-						</router-link>
-					</div>
-				</li>-->
 			</ul>
 		</div>
 

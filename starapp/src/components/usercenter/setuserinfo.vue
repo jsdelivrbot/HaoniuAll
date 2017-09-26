@@ -113,7 +113,6 @@
 							quality: 80,
 							overwrite: true
 						}, function(e) {
-							console.log(e.target)
 							//							var server = 'http://dev.dianke8.com:7000/xxdk/app/user/uploadPath'
 							var server = localStorage.getItem('uploadUrl') + '/user/uploadPath'
 							var wt = plus.nativeUI.showWaiting()
@@ -122,7 +121,6 @@
 							}, function(t, status) {
 								if(status === 200) {
 									wt.close()
-									console.log(t.responseText)
 									$this.imgs(JSON.parse(t.responseText).obj)
 									//									$this.imgs('http://192.168.1.121:8080/xingxingdianke//file/picture/20170821173832817385.jpg')
 								} else {
@@ -135,14 +133,10 @@
 							})
 							task.start()
 						}, function(err) {
-							console.log('压缩失败：  ' + err.message)
+							console.log('11')
 						})
-					}, function(e) {
-						console.log('读取拍照文件错误：' + e.message)
-					})
-				}, function(s) {
-					console.log('error' + s)
-				}, {
+					}, function(e) {})
+				}, function(s) {}, {
 					filename: '_doc/head'
 				})
 			},
@@ -183,7 +177,6 @@
 			imgs(ulrs) {
 				this.actionsheethide()
 				if(this.cropper) {
-					console.log(ulrs)
 					this.cropper.replace(ulrs)
 				}
 				this.panel = true
@@ -194,10 +187,8 @@
 				if(!files.length) return
 				this.panel = true
 				this.picValue = files[0]
-				console.log(this.picValue)
 				this.url = this.getObjectURL(this.picValue)
 				if(this.cropper) {
-					console.log(this.url)
 					this.cropper.replace(this.url)
 				}
 				this.panel = true
@@ -210,7 +201,6 @@
 					return
 				}
 				croppedCanvas = this.cropper.getCroppedCanvas()
-				console.log(this.cropper)
 				roundedCanvas = this.getRoundedCanvas(croppedCanvas)
 				this.headerImage = roundedCanvas.toDataURL()
 				this.postImg()
@@ -257,7 +247,6 @@
 								content: '上传失败,请重试!'
 							})
 						}
-						console.log(res.data)
 					}
 				)
 			}

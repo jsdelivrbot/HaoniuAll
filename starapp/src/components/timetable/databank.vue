@@ -136,7 +136,6 @@
 								}
 							)
 						}, 2000)
-						console.log(res.data.obj)
 					}
 				)
 			},
@@ -197,7 +196,6 @@
 			let $this = this
 			this.uploader = new VODUpload({
 				onUploadstarted(uploadInfo) {
-					console.log(JSON.stringify(uploadInfo))
 					$this.uploader.setUploadAuthAndAddress(uploadInfo, $this.info.UploadAuth, $this.info.UploadAddress)
 				},
 				onUploadSucceed(uploadInfo) {

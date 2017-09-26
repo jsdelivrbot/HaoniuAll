@@ -34,6 +34,7 @@ module.exports = {
 		'no-redeclare': 0,
 		'no-unused-vars': 0,
 		'no-eval': 0,
-		'no-unreachabl': 0
+		'no-unreachabl': 0,
+		'handle-callback-err': 0
 	}
 }

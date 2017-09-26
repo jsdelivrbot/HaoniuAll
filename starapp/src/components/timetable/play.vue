@@ -20,10 +20,10 @@
 				</div>
 				<div class="selectVideo">
 					<p @click="selectShow = !selectShow">
-						HD
+						清晰度
 					</p>
 					<ul>
-						<li v-show="selectShow" v-for="item in videoUrlList " @click="changeUrl(item.playURL)" class="vux-1px-b">
+						<li v-show="selectShow" v-for="item in videoUrlList " @click="changeUrl(item.playURL)">
 							{{item.definition}}
 						</li>
 					</ul>
@@ -282,22 +282,30 @@
 					line-height: 26px;
 					height: 26px;
 					margin: 6px;
+					padding: 0 10px;
 					border: 1px solid #fff;
 					border-radius: 3px;
+					font-size: 12px;
 				}
 				ul {
 					position: absolute;
-					top: -60px;
+					top: -80px;
 					left: 0px;
 					width: 100%;
 					height: auto;
 					overflow: hidden;
 					z-index: 99999;
+					background: #f90;
+					border-radius:3px ;
+					li:last-child{
+						border: none;
+					}
 					li {
 						height: 30px;
 						font-size: 12px;
 						line-height: 30px;
-						background: rgba(0, 0, 0, 0.5);
+						color: #fff;
+						border-bottom: 1px solid #fff;
 					}
 				}
 			}

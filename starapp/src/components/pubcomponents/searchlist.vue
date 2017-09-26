@@ -72,7 +72,7 @@
 			next()
 		},
 		activated() {
-			if(sessionStorage.getItem('searchpath') === '/pub/home' || sessionStorage.getItem('searchpath') === '/vaguesearch') {
+			if(sessionStorage.getItem('searchpath') === '/pub/home' || sessionStorage.getItem('searchpath') === '/vaguesearch' || sessionStorage.getItem('searchpath') === '/coursesort') {
 				this.dian = 0
 				this.ismaps = ''
 				this.tabbar = 0
@@ -162,10 +162,9 @@
 								this.jigoulist = res.data.obj.result
 							}
 						}
-						console.log(res.data)
 					},
 					(err) => {
-						console.log(err)
+						console.log('1')
 					}
 				)
 			},
@@ -235,7 +234,6 @@
 				}
 				let $this = this
 				let searchtxt = ''
-				console.log(this.$refs.picker1.getNameValues().split(' '))
 				for(var i = 0; i < this.$refs.picker1.getNameValues().split(' ').length; i++) {
 					if(this.$refs.picker1.getNameValues().split(' ')[i] !== '全部') {
 						searchtxt += this.$refs.picker1.getNameValues().split(' ')[i] + '$'

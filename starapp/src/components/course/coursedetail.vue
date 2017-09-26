@@ -177,9 +177,7 @@
 			this.token = sessionStorage.getItem('token')
 			let props = this.$route.params.name.split(',')
 			this.urls = this.$route.params.name
-			console.log(props[0])
 			let urls = 'schoolName=' + props[0] + '&companyName=' + props[1] + '&name=' + props[2]
-			console.log(urls)
 			this.$http.get('/business/course/detail?' + urls).then(
 				(res) => {
 					this.$vux.loading.hide()
@@ -196,7 +194,6 @@
 						this.pllist = res.data.obj.result
 						this.pltotal = res.data.obj.totalRows
 					}
-					console.log(res.data)
 				}
 			)
 		},
@@ -218,7 +215,6 @@
 							arr.src = res.data.obj[i]
 							this.list.push(arr)
 						}
-						console.log(this.list)
 					}
 				)
 			},
@@ -231,13 +227,11 @@
 							this.pllist = res.data.obj.result
 							this.pltotal = 0
 						}
-						console.log(res.data)
 					}
 				)
 			},
 			nocollect() {
 				let $this = this
-				console.log(this.token)
 				if(this.token === null) {
 					this.$vux.alert.show({
 						title: '提示',
@@ -263,12 +257,8 @@
 						}).then(
 							(res) => {
 								$this.detailInfo.watched = true
-								console.log(res.data)
 							}
 						)
-					},
-					onCancel() {
-						console.log('plugin confirm')
 					}
 				})
 			},
@@ -284,7 +274,6 @@
 			},
 			collect() {
 				let $this = this
-				console.log(this.token)
 				if(this.token === null) {
 					this.$vux.alert.show({
 						title: '提示',
@@ -309,7 +298,6 @@
 							$this.$vux.toast.text('收藏成功!', 'center')
 							$this.detailInfo.watched = false
 						}
-						console.log(res.data)
 					}
 				)
 			}

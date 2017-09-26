@@ -18,15 +18,16 @@ let webpackConfig = {
 	output: {
 		path: config.build.assetsRoot,
 		filename: '[name].js',
-		//      publicPath: process.env.NODE_ENV === 'production' ?
-		//          config.build.assetsPublicPath : config.dev.assetsPublicPath
-		publicPath: './'
+		publicPath: process.env.NODE_ENV === 'production' ?
+			config.build.assetsPublicPath : config.dev.assetsPublicPath
+//		publicPath: './'
 	},
 	resolve: {
 		extensions: ['.js', '.vue', '.json'],
 		alias: {
 			'vue$': 'vue/dist/vue.esm.js',
-			'@': resolve('src')
+			'@': resolve('src'),
+			'IMG': resolve('static/img')
 		}
 	},
 	module: {
@@ -54,7 +55,7 @@ let webpackConfig = {
 				loader: 'url-loader',
 				options: {
 					limit: 10000,
-					name: utils.assetsPath('img/[name].[hash:7].[ext]')
+					name: utils.assetsPath('images/[hash:11].[ext]')
 				}
 			},
 			{
