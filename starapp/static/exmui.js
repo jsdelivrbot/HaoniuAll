@@ -16,6 +16,12 @@ export default {
 						if(selectId == 'tm') {
 							shareAction('weixin', 'WXSceneTimeline')
 						}
+						if(selectId == 'qq') {
+							shareAction('qq')
+						}
+						if(selectId == 'sinaweibo') {
+							shareAction('sinaweibo')
+						}
 					}, function(e) {})
 				})
 

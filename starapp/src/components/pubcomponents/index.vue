@@ -9,18 +9,18 @@
 				<em>地图</em>
 			</router-link>
 		</div>
-		<swiper :options="swiperOption2" ref="mySwiper2" style='margin: 0;'>
+		<swiper :options="swiperOption2" ref="mySwiper2" style='margin: 0;' class='indexSwiper'>
 			<swiper-slide v-for='(item,index) in list' :key="index" class='swiper-contentBox'>
-				<router-link tag='li' v-if='item.type == 0' to='/invitereg' style='list-style: none;'>
+				<router-link tag='a' v-if='item.type == 0' to='/invitereg' style='list-style: none;'>
 					<img :src="item.postUrl" alt="" style="display: block;" />
 				</router-link>
-				<router-link tag='li' v-if='item.type == 1' to='/invite' style='list-style: none;'>
+				<router-link tag='a' v-if='item.type == 1' to='/invite' style='list-style: none;'>
 					<img :src="item.postUrl" alt="" style="display: block;" />
 				</router-link>
-				<router-link tag='li' v-if='item.type == "k"' :to="'/coursedetail/'+item.target" style='list-style: none;'>
+				<router-link tag='a' v-if='item.type == "k"' :to="'/coursedetail/'+item.target" style='list-style: none;'>
 					<img :src="item.postUrl" alt="" style="display: block;" />
 				</router-link>
-				<router-link tag='li' v-if='item.type == "c"' :to="'/jigoudetail/'+item.target" style='list-style: none;'>
+				<router-link tag='a' v-if='item.type == "c"' :to="'/jigoudetail/'+item.target" style='list-style: none;'>
 					<img :src="item.postUrl" alt="" style="display: block;" />
 				</router-link>
 			</swiper-slide>
@@ -28,7 +28,7 @@
 		</swiper>
 
 		<div class="sort">
-			<ul class="sort-list vux-1px-b">
+			<ul class="sort-list vux-1px-t  vux-1px-b">
 				<router-link tag='li' to='/searchlist/cat=教辅&target=k'>
 					<div>
 						<img src="../../../static/img/newsort3.png" />
@@ -86,10 +86,11 @@
 		</div>-->
 
 		<div class="recommend">
-			<div class="title  vux-1px-b">
+			<div class="title">
 				<div class="left">
-					<span>热门</span>
-					<em>推荐</em>
+					<img src="../../../static/img/hottj.png" />
+					<!--<span>热门</span>
+					<em>推荐</em>-->
 				</div>
 				<router-link to='/tuijianlist' class="right">
 					<span>全部</span>
@@ -110,10 +111,9 @@
 		</div>
 
 		<div class="course-sort">
-			<div class="title  vux-1px-b">
+			<div class="title">
 				<div class="left">
-					<span>课程</span>
-					<em style="color: #65b5ff;">分类</em>
+					<img src="../../../static/img/hotsort.png" />
 				</div>
 				<router-link to='/coursesort' class="right">
 					<span>全部</span>
@@ -157,6 +157,11 @@
 					<img src="../../../static/img/jiqi.png" />
 					<span>机器人</span>
 				</router-link>
+			</ul>
+			<div @click='mores = !mores' class="more" v-if='!mores'>
+				查看更多
+			</div>
+			<ul v-if='mores'>
 				<router-link tag='li' :to='seacherText("足球")'>
 					<img src='../../../static/img/足球@3x.png' />
 					<span>足球</span>
@@ -195,7 +200,7 @@
 				</router-link>
 			</ul>
 
-			<router-link tag='div' class="more" to='/coursesort'>
+			<router-link tag='div' v-if='mores' class="more" to='/coursesort'>
 				查看更多
 			</router-link>
 		</div>
@@ -231,6 +236,7 @@
 				list: [],
 				tj: [],
 				newslist: [],
+				mores: false,
 				swiperOption2: {
 					pagination: '.swiper-pagination',
 					autoplayDisableOnInteraction: false,
@@ -241,7 +247,7 @@
 				},
 				swiperOption3: {
 					autoplayDisableOnInteraction: false,
-					pagination: '.swiper-pagination',
+					//					pagination: '.swiper-pagination',
 					direction: 'vertical',
 					slidesPerView: 1,
 					autoplay: 3000,
@@ -338,6 +344,15 @@
 </script>
 
 <style lang="less">
+	.indexSwiper {
+		a {
+			display: block;
+			img {
+				display: block;
+			}
+		}
+	}
+	
 	.swiper-contentBox {
 		height: auto;
 		overflow: hidden;
@@ -363,7 +378,7 @@
 		ul {
 			display: flex;
 			flex-wrap: wrap;
-			padding: 10px;
+			padding: 0 10px;
 			box-sizing: border-box;
 			list-style: none;
 			li {
@@ -464,6 +479,7 @@
 				width: 100%;
 				height: 300px;
 				margin: 20px auto;
+				margin-bottom: 10px;
 			}
 			.swiper-slide {
 				text-align: center;
@@ -561,17 +577,16 @@
 				flex: 1;
 			}
 			.left {
-				display: flex;
+				/*display: flex;*/
 				line-height: 17px;
 				font-size: 15px;
 				height: 17px;
-				span {
-					color: #333;
-				}
-				em {
-					margin: 0;
-					font-style: normal;
-					color: #ffa421;
+				font-weight: bold;
+				img {
+					display: block;
+					margin: 1px 0;
+					width: auto;
+					height: 15px;
 				}
 			}
 			.right {
@@ -595,6 +610,15 @@
 		.sort {
 			height: auto;
 			background: #fff;
+			
+			.vux-1px-t:after{
+				border-color: #f5f5f5;
+			}
+			
+			.vux-1px-b:after{
+				border-color: #F0EFF5;
+			}
+			
 			.sort-list {
 				display: flex;
 				padding: 8px 4px;
@@ -630,23 +654,28 @@
 			}
 			.hot-text {
 				width: 100%;
-				height: auto;
-				overflow: hidden;
 				display: flex;
-				padding: 8px 12px;
+				padding: 9px 12px;
 				box-sizing: border-box;
-				max-height: 50px;
+				height: 52px;
+				overflow: hidden;
+				position: relative;
 				/*.swiper-slide{
 					height: auto !important;
 				}
 				*/
 				img {
+					position: absolute;
+					top: 9px;
+					left: 9px;
 					width: 34px;
 					height: 34px;
-					margin-right: 10px;
 				}
 				.div {
 					flex: 1;
+					padding-left: 42px;
+					padding-right: 15px;
+					box-sizing: border-box;
 					color: #666;
 					height: 50px;
 					height: 34px;

@@ -114,8 +114,8 @@ Vue.use(BaiduMap, {
 
 Vue.http.defaults.withCredentials = true
 localStorage.setItem('uploadUrl', 'http://wx.dianke8.com/xxdk/app')
-Vue.http.defaults.baseURL = 'http://wx.dianke8.com/xxdk/app'
-//Vue.http.defaults.baseURL = 'http://dev.dianke8.com:7000/xxdk/app'
+//Vue.http.defaults.baseURL = 'http://wx.dianke8.com/xxdk/app'
+Vue.http.defaults.baseURL = 'http://dev.dianke8.com:7000/xxdk/app'
 //Vue.http.defaults.baseURL = 'http://192.168.1.121:8080/xingxingdianke/app'
 Vue.http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 //Vue.http.defaults.headers.get['token'] = sessionStorage.getItem('token')
