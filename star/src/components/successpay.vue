@@ -17,6 +17,10 @@
 			查看订单
 		</router-link>
 
+		<a href='http://a.app.qq.com/o/simple.jsp?pkgname=com.dianke8.star' class='link-btn'>
+			下载APP
+		</a>
+
 		<router-link to='/pub/home' style='text-align: center;display: block;color: #333333;margin-top: 20px;'>
 			回到首页
 		</router-link>
@@ -95,6 +99,19 @@
 			line-height: 36px;
 			color: #1aad19;
 			border: 1px solid #1aad19;
+			text-align: center;
+			font-size: 14px;
+			border-radius: 5px;
+		}
+		>.link-btn2 {
+			display: block;
+			margin: auto;
+			margin-top: 20px;
+			width: 180px;
+			height: 36px;
+			line-height: 36px;
+			color: #84BEF3;
+			border: 1px solid #84BEF3;
 			text-align: center;
 			font-size: 14px;
 			border-radius: 5px;

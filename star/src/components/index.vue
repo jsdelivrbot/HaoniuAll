@@ -1,182 +1,335 @@
 <template>
 	<div class="home-box">
 		<div class="search-top-bar">
-			<img src="../../static/img/smlogo.png" />
 			<span @click="search">
-				<!--<img src="../../static/img/iconsearch.png"/>-->
 				搜索科目、机构、课程
 			</span>
-			<!--<input type="search" name="" id="" value="" @click="search" placeholder="搜索" />-->
+			<router-link tag='div' to='/searchlist/cat=&target=k'>
+				<img src="~IMG/ditu@3x.png" />
+				<em>地图</em>
+			</router-link>
 		</div>
-
-		<div>
-			<swiper :list="list" :show-desc-mask='!isloop' :auto='isloop'  :loop='isloop' :aspect-ratio="37/100" dots-position="center"></swiper>
-		</div>
-		<div class="sort  vux-1px-b">
-			<div class="title  vux-1px-b">
-				<div class="left">
-					<img src="../../static/img/sort.png" />
-					<span>科目分类</span>
-				</div>
-				<router-link to='/searchlist/cat=&target=k' class="right">
-					<!--<div>-->
-					<span>地图</span>
-					<img src="../../static/img/righticon.png" />
-					<!--</div>-->
+		<swiper :options="swiperOption2" ref="mySwiper2" style='margin: 0;'>
+			<swiper-slide v-for='(item,index) in list' :key="index" class='swiper-contentBox'>
+				<router-link tag='li' v-if='item.type == 0' to='/invitereg' style='list-style: none;'>
+					<img :src="item.postUrl" alt="" style="display: block;" />
 				</router-link>
-			</div>
+				<router-link tag='li' v-if='item.type == 1' to='/invite' style='list-style: none;'>
+					<img :src="item.postUrl" alt="" style="display: block;" />
+				</router-link>
+				<router-link tag='li' v-if='item.type == "k"' :to="'/coursedetail/'+item.target" style='list-style: none;'>
+					<img :src="item.postUrl" alt="" style="display: block;" />
+				</router-link>
+				<router-link tag='li' v-if='item.type == "c"' :to="'/jigoudetail/'+item.target" style='list-style: none;'>
+					<img :src="item.postUrl" alt="" style="display: block;" />
+				</router-link>
+			</swiper-slide>
+			<div class="swiper-pagination" slot="pagination"></div>
+		</swiper>
 
-			<ul class="sort-list">
-				<li>
-					<router-link to='/searchlist/cat=教辅&target=k'>
-						<img src="../../static/img/sortlist1.png" />
-						<span>教辅</span>
-					</router-link>
-				</li>
-				<li>
-					<router-link to='/searchlist/cat=综合素质&target=k'>
-						<img src="../../static/img/sortlist2.png" />
-						<span>综合素质</span>
-					</router-link>
-				</li>
-				<li>
-					<router-link to='/searchlist/cat=运动&target=k'>
-						<img src="../../static/img/sortlist3.png" />
-						<span>运动</span>
-					</router-link>
-				</li>
-				<li>
-					<router-link to='/searchlist/cat=益智&target=k'>
-						<img src="../../static/img/sortlist4.png" />
-						<span>益智</span>
-					</router-link>
-				</li>
-				<li>
-					<router-link to='/searchlist/cat=艺术&target=k'>
-						<img src="../../static/img/sortlist5.png" />
-						<span>艺术</span>
-					</router-link>
-				</li>
+		<div class="sort">
+			<ul class="sort-list vux-1px-b">
+				<router-link tag='li' to='/searchlist/cat=教辅&target=k'>
+					<div>
+						<img src="~IMG/newsort3.png" />
+					</div>
+					<span>教辅</span>
+				</router-link>
+				<router-link tag='li' to='/searchlist/cat=综合素质&target=k'>
+					<div>
+						<img src="~IMG/newsort4.png" />
+					</div>
+					<span>综合素质</span>
+				</router-link>
+				<router-link tag='li' to='/searchlist/cat=运动&target=k'>
+					<div>
+						<img src="~IMG/newsort5.png" />
+					</div>
+					<span>运动</span>
+				</router-link>
+				<router-link tag='li' to='/searchlist/cat=益智&target=k'>
+					<div>
+						<img src="~IMG/newsort1.png" />
+					</div>
+					<span>益智</span>
+				</router-link>
+				<router-link tag='li' to='/searchlist/cat=艺术&target=k'>
+					<div>
+						<img src="~IMG/newsort2.png" />
+					</div>
+					<span>艺术</span>
+				</router-link>
 			</ul>
+
+			<div class="hot-text" v-if='newslist[0]'>
+				<router-link to='/newslist'>
+					<img src="~IMG/remenwenzhang@3x.png" />
+				</router-link>
+
+				<swiper :options="swiperOption3" ref="mySwiper2" style='margin: 0;'>
+					<swiper-slide v-for='(item,index) in newslist' :key="index" class='swiper-contentBox'>
+						<router-link class='div' tag='div' to='/newslist'>
+							{{item.title}} {{item.intro}}
+						</router-link>
+					</swiper-slide>
+				</swiper>
+			</div>
 		</div>
+		<!--<div style="height: 100px;overflow: hidden;">
+			<swiper :options="swiperOption3" ref="mySwiper2">
+				<swiper-slide v-for='(item,index) in newslist' :key="index" class='swiper-contentBox'>
+					<router-link tag='div' to='/newslist'>
+						{{item.title}}{{item.intro}}
+					</router-link>
+				</swiper-slide>
+			</swiper>
+		</div>-->
 
 		<div class="recommend">
 			<div class="title  vux-1px-b">
 				<div class="left">
-					<img src="../../static/img/tuijian.png" />
-					<span>课程推荐</span>
+					<span>热门</span>
+					<em>推荐</em>
 				</div>
-
 				<router-link to='/tuijianlist' class="right">
-					<!--<div>-->
 					<span>全部</span>
-					<img src="../../static/img/righticon.png" />
-					<!--<img src="../../static/img/iconright.png" />-->
-					<!--</div>-->
 				</router-link>
-
 			</div>
 
-			<scroller lock-y :scrollbar-x=false>
-				<ul class="recommend-list">
-					<li v-for='item in tj'>
-						<router-link :to='"/coursedetail/"+item.target'>
-							<img :src="item.postUrl" />
-							<span>{{item.name.substring(0,6)}}</span>
-						</router-link>
-					</li>
-				</ul>
-			</scroller>
+			<swiper :options="swiperOption" ref="mySwiper" v-if='tj'>
+				<swiper-slide v-for='(item,index) in tj' :key="index" class='swiper-contentBox'>
+					<router-link :to='"/coursedetail/"+item.target'>
+						<div>
+							<img :src="item.postUrl" style="width: 100%;" />
+						</div>
+						<span>{{item.name.substring(0,6)}}</span>
+					</router-link>
+				</swiper-slide>
+			</swiper>
+
 		</div>
 
-		<div class="subject-text">
+		<div class="course-sort">
 			<div class="title  vux-1px-b">
 				<div class="left">
-					<img src="../../static/img/news.png" />
-					<span>专题文章</span>
+					<span>课程</span>
+					<em style="color: #65b5ff;">分类</em>
 				</div>
-				<router-link to='/newslist' class="right">
-					<!--<div>-->
+				<router-link to='/coursesort' class="right">
 					<span>全部</span>
-					<img src="../../static/img/righticon.png" />
-					<!--<img src="../../static/img/iconright.png" />-->
-					<!--</div>-->
 				</router-link>
 			</div>
 
-			<ul class="subject-text-list">
-				<li v-for='item in newslist' class="vux-1px-b">
-					<router-link :to='"/newsdetail/"+item.id'>
-						<img :src="item.thumb" />
-						<div class="info">
-							<h2>{{item.title}}</h2>
-							<p>{{item.intro}}</p>
-							<span class="time">
-								{{item.updateTime}}
-							</span>
-						</div>
-					</router-link>
-				</li>
+			<ul>
+				<router-link tag='li' :to='seacherText("英语")'>
+					<img src="~IMG/yingyu.png" />
+					<span>英语</span>
+				</router-link>
+				<router-link tag='li' to='/searchlist/cat=教辅$托班&target=k'>
+					<img src="~IMG/tuoban.png" />
+					<span>托班</span>
+				</router-link>
+				<router-link tag='li' to='/searchlist/cat=运动$运动其他$运动&target=k'>
+					<img src="~IMG/yundong.png" />
+					<span>运动</span>
+				</router-link>
+				<router-link tag='li' to='/searchlist/cat=艺术$舞蹈&target=k'>
+					<img src="~IMG/wudao.png" />
+					<span>舞蹈</span>
+				</router-link>
+				<router-link tag='li' to='/searchlist/cat=艺术$器乐&target=k'>
+					<img src="~IMG/yueqi.png" />
+					<span>器乐</span>
+				</router-link>
+				<router-link tag='li' to='/searchlist/cat=艺术$美术$绘画&target=k'>
+					<img src="~IMG/huihua.png" />
+					<span>绘画</span>
+				</router-link>
+				<router-link tag='li' to='/searchlist/cat=益智$潜能开发$逻辑思维&target=k'>
+					<img src="~IMG/luojisiwei.png" />
+					<span>逻辑思维</span>
+				</router-link>
+				<router-link tag='li' to='/searchlist/cat=益智$益智训练$棋类&target=k'>
+					<img src="~IMG/qilei.png" />
+					<span>棋类</span>
+				</router-link>
+				<router-link tag='li' to='/searchlist/cat=益智$科学$机器人&target=k'>
+					<img src="~IMG/jiqi.png" />
+					<span>机器人</span>
+				</router-link>
+				<router-link tag='li' :to='seacherText("足球")'>
+					<img src='~IMG/足球@3x.png' />
+					<span>足球</span>
+				</router-link>
+				<router-link tag='li' :to='seacherText("幼小衔接班")'>
+					<img src='~IMG/幼小衔接班@3x.png' />
+					<span>幼小衔接班</span>
+				</router-link>
+				<router-link tag='li' :to='seacherText("看图说话")'>
+					<img src='~IMG/看图说话@3x.png' />
+					<span>看图说话</span>
+				</router-link>
+				<router-link tag='li' :to='seacherText("书法")'>
+					<img src='~IMG/书法@3x.png' />
+					<span>书法</span>
+				</router-link>
+				<router-link tag='li' :to='seacherText("表演")'>
+					<img src='~IMG/表演@3x.png' />
+					<span>表演</span>
+				</router-link>
+				<router-link tag='li' :to='seacherText("口才训练")'>
+					<img src='~IMG/口才训练@3x.png' />
+					<span>口才训练</span>
+				</router-link>
+				<router-link tag='li' :to='seacherText("亲子活动")'>
+					<img src='~IMG/亲子活动@3x.png' />
+					<span>亲子活动</span>
+				</router-link>
+				<router-link tag='li' :to='seacherText("益智训练")'>
+					<img src='~IMG/益智训练@3x.png' />
+					<span>益智训练</span>
+				</router-link>
+				<router-link tag='li' :to='seacherText("儿童早教")'>
+					<img src='~IMG/儿童早教@3x.png' />
+					<span>儿童早教</span>
+				</router-link>
 			</ul>
-		</div>
 
+			<router-link tag='div' class="more" to='/coursesort'>
+				查看更多
+			</router-link>
+		</div>
 	</div>
 </template>
 
 <script>
-	import { Search, Swiper, SwiperItem, Scroller } from 'vux'
+	import { swiper, swiperSlide } from 'vue-awesome-swiper'
+	import km from '../../static/km'
 	export default {
+		//		name: 'nokeep',
 		components: {
-			Search,
-			Swiper,
-			SwiperItem,
-			Scroller
+			swiper,
+			swiperSlide
+		},
+		activated() {
+//			this.tj = []
+			this.$http.post('/business/course/recommend').then(
+				(res) => {
+					if(res.data.result === 0) {
+						this.tj = res.data.obj
+						let $this = this
+						setTimeout(() => {
+							$this.swiperOption.autoplay = 3000
+						}, 0)
+					}
+				}
+			)
 		},
 		data() {
 			return {
 				isloop: true,
-				localhttp: localStorage.getItem('localhttp'),
 				list: [],
 				tj: [],
-				newslist: []
-			}
-		},
-		created() {
-			this.$http.get('/adv').then(
-				(res) => {
-					if(res.data.result === 0) {
-						for(var i = 0; i < res.data.obj.length; i++) {
-							let arr = {}
-							if(res.data.obj[i].type === 'k') {
-								arr.url = '/coursedetail/' + res.data.obj[i].target
-							} else {
-								arr.url = '/jigoudetail/' + res.data.obj[i].target
-							}
-							arr.img = res.data.obj[i].postUrl
-							this.list.push(arr)
-						}
+				newslist: [],
+				swiperOption2: {
+					pagination: '.swiper-pagination',
+					autoplayDisableOnInteraction: false,
+					autoplay: 4000,
+					loop: true,
+					centeredSlides: true,
+					paginationClickable: true
+				},
+				swiperOption3: {
+					autoplayDisableOnInteraction: false,
+					pagination: '.swiper-pagination',
+					direction: 'vertical',
+					slidesPerView: 1,
+					autoplay: 3000,
+					spaceBetween: 8,
+					loop: true
+				},
+				swiperOption: {
+					autoplayDisableOnInteraction: false,
+					autoplay: 1000,
+					effect: 'coverflow',
+					height: 120,
+					loop: true,
+					slidesPerView: 3,
+					centeredSlides: true,
+					paginationClickable: true,
+					spaceBetween: 30,
+					coverflow: {
+						rotate: -15,
+						stretch: 0,
+						depth: 100,
+						modifier: 2,
+						slideShadows: false
 					}
 				}
-			)
-			this.$http.post(
-				'/business/course/recommend'
-			).then(
+			}
+		},
+		mounted() {
+			this.$http.post('/business/course/recommend').then(
 				(res) => {
 					if(res.data.result === 0) {
 						this.tj = res.data.obj
-						console.log(res.data)
+						let $this = this
+						setTimeout(() => {
+							$this.swiperOption.autoplay = 3000
+						}, 0)
 					}
 				}
 			)
-
+			this.$http.get('/adv').then(
+				(res) => {
+					if(res.data.result === 0) {
+						this.list = res.data.obj
+					}
+				}
+			)
 			this.$http.get('/recommendArticles?page=1&rows=1000').then(
 				(res) => {
 					this.newslist = res.data.obj.items
-					console.log(res.data)
 				}
 			)
 		},
 		methods: {
+			seacherText(res) {
+				let $this = this
+				let result = ''
+				km.map(function(item, index) {
+					var arr = []
+					arr.push(item)
+					let a = arr.filter((p) => {
+						return p.name === res
+					})
+					if(a.length > 0) {
+						result += arr[0].name
+						$this.searchtxt(arr[0].parent, function(data, parent) {
+							if(data !== '') {
+								result = data + '$' + result
+								$this.searchtxt(parent, function(datas, parent) {
+									result = datas + '$' + result
+								})
+							}
+						})
+					}
+				})
+				result = '/searchlist/cat=' + result + '&target=k'
+				return result
+			},
+			searchtxt(res, cb) {
+				km.map(function(item, index) {
+					var arr = []
+					arr.push(item)
+					let a = arr.filter((p) => {
+						return p.value === res
+					})
+					if(a.length > 0) {
+						cb(arr[0].name, arr[0].parent)
+					}
+				})
+			},
 			search() {
 				this.$router.push('/vaguesearch')
 			}
@@ -185,8 +338,63 @@
 </script>
 
 <style lang="less">
+	.swiper-contentBox {
+		height: auto;
+		overflow: hidden;
+		img {
+			display: block;
+			width: 100%;
+		}
+		span {
+			display: block;
+			color: #363636;
+			text-align: left;
+			font-size: 12px;
+			height: 30px;
+			line-height: 30px;
+		}
+	}
+	
+	.course-sort {
+		background: #fff;
+		background: url(~IMG/bg_img@3x.png) no-repeat center / 100% 100%;
+		height: auto;
+		overflow: hidden;
+		ul {
+			display: flex;
+			flex-wrap: wrap;
+			padding: 10px;
+			box-sizing: border-box;
+			list-style: none;
+			li {
+				flex: 1;
+				padding: 3px;
+				box-sizing: border-box;
+				max-width: 33.33333%;
+				min-width: 33.33333%;
+				img {
+					width: 100%;
+				}
+				span {
+					display: block;
+					color: #333333;
+					font-size: 14px;
+					text-align: center;
+				}
+			}
+		}
+		.more {
+			text-align: center;
+			line-height: 40px;
+			font-size: 14px;
+			color: #999999;
+		}
+	}
+	
 	.home-box {
 		padding-bottom: 60px;
+		width: 100%;
+		overflow: hidden;
 		box-sizing: border-box;
 		.subject-text {
 			margin-top: 10px;
@@ -194,7 +402,6 @@
 			height: auto;
 			overflow: hidden;
 			li {
-				/*float: left;*/
 				list-style: none;
 				height: auto;
 				overflow: hidden;
@@ -253,6 +460,28 @@
 			margin-top: 10px;
 			height: auto;
 			background: #fff;
+			.swiper-container {
+				width: 100%;
+				height: 300px;
+				margin: 20px auto;
+			}
+			.swiper-slide {
+				text-align: center;
+				font-size: 18px;
+				background: #fff;
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-pack: center;
+				-ms-flex-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+			}
 			.recommend-list {
 				height: 140px;
 				padding: 15px;
@@ -283,16 +512,10 @@
 			}
 		}
 		.search-top-bar {
-			padding: 8px 15px;
+			padding: 8px 10px;
 			box-sizing: border-box;
-			background: #efeff4;
+			background: #84bef3;
 			display: flex;
-			img {
-				width: 29px;
-				height: 29px;
-				margin-right: 11px;
-				display: block;
-			}
 			span {
 				vertical-align: text-top;
 				flex: 1;
@@ -305,10 +528,28 @@
 				outline: none;
 				font-size: 13px;
 				color: #B2B2B2;
-				background: url(../../static/img/iconsearch.png) no-repeat #fff;
+				background: url(~IMG/iconsearch.png) no-repeat #fff;
 				background-size: 15px;
 				background-position: 4%;
 				text-indent: 32px;
+				margin-right: 8px;
+			}
+			div {
+				display: flex;
+				color: #fff;
+				height: 28px;
+				img {
+					width: 16px;
+					height: 16px;
+					display: block;
+					margin: 6px 3px;
+				}
+				em {
+					font-size: 12px;
+					line-height: 28px;
+					color: #fff;
+					font-style: normal;
+				}
 			}
 		}
 		.title {
@@ -321,16 +562,16 @@
 			}
 			.left {
 				display: flex;
-				img {
-					display: block;
-					width: 17px;
-					margin-right: 5px;
-				}
+				line-height: 17px;
+				font-size: 15px;
+				height: 17px;
 				span {
-					line-height: 17px;
-					font-size: 15px;
-					height: 17px;
 					color: #333;
+				}
+				em {
+					margin: 0;
+					font-style: normal;
+					color: #ffa421;
 				}
 			}
 			.right {
@@ -356,22 +597,27 @@
 			background: #fff;
 			.sort-list {
 				display: flex;
-				padding: 15px 8px;
-				height: 109px;
+				padding: 8px 4px;
+				height: auto;
 				box-sizing: border-box;
 				li {
 					list-style: none;
 					flex: 1;
 					box-sizing: border-box;
-					a {
-						display: block;
-					}
-					img {
-						margin: auto;
-						display: block;
-						width: 100%;
-						max-width: 55px;
-						margin-bottom: 7px;
+					div {
+						height: 44px;
+						position: relative;
+						text-align: center;
+						img {
+							position: absolute;
+							top: 0;
+							left: 0;
+							right: 0;
+							bottom: 0;
+							margin: auto;
+							max-width: 90%;
+							max-height: 44px;
+						}
 					}
 					span {
 						display: block;
@@ -382,6 +628,38 @@
 					}
 				}
 			}
+			.hot-text {
+				width: 100%;
+				height: auto;
+				overflow: hidden;
+				display: flex;
+				padding: 8px 12px;
+				box-sizing: border-box;
+				max-height: 50px;
+				/*.swiper-slide{
+					height: auto !important;
+				}
+				*/
+				img {
+					width: 34px;
+					height: 34px;
+					margin-right: 10px;
+				}
+				.div {
+					flex: 1;
+					color: #666;
+					height: 50px;
+					height: 34px;
+					font-size: 12px;
+					line-height: 17px;
+					overflow: hidden;
+					display: -webkit-box;
+					text-overflow: ellipsis;
+					-webkit-box-orient: vertical;
+					-webkit-line-clamp: 2;
+				}
+			}
 		}
 	}
+	/**/
 </style>

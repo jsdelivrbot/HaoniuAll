@@ -43,8 +43,9 @@ import uploadimg from './components/uploadimg'
 import forget from './components/forget'
 import addchildreninfo from './components/addchildreninfo'
 import childrenlist from './components/childrenlist'
-
-//import jsonp from 'jsonp'
+import invite from './components/invite'
+import invitereg from './components/invitereg'
+import coursesort from './components/coursesort'
 
 import maps from './components/map'
 import BaiduMap from 'vue-baidu-map'
@@ -52,7 +53,6 @@ import { querystring, AjaxPlugin, AlertPlugin, WechatPlugin, ConfirmPlugin, Toas
 
 Vue.use(AjaxPlugin)
 Vue.use(querystring)
-//Vue.use(jsonp)
 Vue.use(ToastPlugin)
 Vue.use(ConfirmPlugin)
 Vue.use(WechatPlugin)
@@ -72,8 +72,18 @@ Vue.http.defaults.headers.post['token'] = sessionStorage.getItem('token')
 Vue.http.defaults.baseURL = 'http://wx.dianke8.com/xxdk/app'
 //localStorage.setItem('localhttp', 'http://dev.dianke8.com:7000/xxdk/app')
 //localStorage.setItem('localhttp', 'http://192.168.1.121:8080/xingxingdianke/app')
-
 const routes = [{
+		path: '/coursesort',
+		component: coursesort
+	},
+	{
+		path: '/invitereg',
+		component: invitereg
+	},
+	{
+		path: '/invite',
+		component: invite
+	}, {
 		path: '/newslist',
 		component: newslist
 	},
@@ -200,7 +210,10 @@ const routes = [{
 	},
 	{
 		path: '/tuiguangma',
-		component: tuiguangma
+		component: tuiguangma,
+		meta: {
+			requiresAuth: true
+		}
 	},
 	{
 		path: '/tixian',

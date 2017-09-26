@@ -25,7 +25,8 @@ let webpackConfig = {
 		extensions: ['.js', '.vue', '.json'],
 		alias: {
 			'vue$': 'vue/dist/vue.esm.js',
-			'@': resolve('src')
+			'@': resolve('src'),
+			'IMG': resolve('static/img')
 		}
 	},
 	module: {
@@ -53,7 +54,7 @@ let webpackConfig = {
 				loader: 'url-loader',
 				options: {
 					limit: 10000,
-					name: utils.assetsPath('img/[name].[hash:7].[ext]')
+					name: utils.assetsPath('images/[hash:11].[ext]')
 				}
 			},
 			{
@@ -70,8 +71,7 @@ let webpackConfig = {
 
 module.exports = vuxLoader.merge(webpackConfig, {
 	plugins: ['vux-ui', 'progress-bar', 'duplicate-style', {
-			name: 'less-theme',
-			path: 'src/theme.less'
-		}
-	]
+		name: 'less-theme',
+		path: 'src/theme.less'
+	}]
 })

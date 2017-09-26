@@ -73,7 +73,7 @@
 			next()
 		},
 		activated() {
-			if(sessionStorage.getItem('searchpath') === '/pub/home' || sessionStorage.getItem('searchpath') === '/vaguesearch') {
+			if(sessionStorage.getItem('searchpath') === '/pub/home' || sessionStorage.getItem('searchpath') === '/vaguesearch' || sessionStorage.getItem('searchpath') === '/coursesort') {
 				this.dian = 0
 				this.ismaps = ''
 				this.tabbar = 0
