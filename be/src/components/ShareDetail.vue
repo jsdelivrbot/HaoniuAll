@@ -22,7 +22,7 @@
 			</div>-->
 			<div class="adv">
 				<!--<img src="../../../static/hot-article2.png" />-->
-				<swiper :list="footerAdvList" auto :aspect-ratio="130/679" 
+				<swiper :list="footerAdvList" auto :aspect-ratio="1/4" 
 					:show-desc-mask="false" :loop="true" class="banner"></swiper>
 			</div>
 		</div>
@@ -30,7 +30,7 @@
 			<div class="fix-close" @click="cancelFixAdv">
 				&times;
 			</div>
-			<swiper :list="fixedAdvList" auto :aspect-ratio="130/679" 
+			<swiper :list="fixedAdvList" auto :aspect-ratio="1/4" 
 				:show-desc-mask="false" :loop="true"></swiper>
 		</div>
 	</div>
@@ -144,7 +144,7 @@
 					params: {
 						type: 2,
 						seachdata: {
-							position: 2,
+							position: 3,
 							page_type: this.page_type
 						}
 					}
@@ -216,9 +216,9 @@
 					margin: auto;
 				}
 			}
-			.adv {
+			/*.adv {
 				padding: 12px 0 0;
-			}
+			}*/
 		}
 		.fix-adv {
 			position: fixed;

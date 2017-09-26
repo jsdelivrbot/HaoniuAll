@@ -1,28 +1,55 @@
 <template>
 	<div class="usercenter-task-list-box">
 		<ul>
-			<router-link to="/task/detail/1" tag="li" class="border-1px">
+			<router-link :to="'/task/detail/' + item.article_detail.id" tag="li" class="border-1px" v-for="(item, index) in list"
+				:key="index">
 				<div class="icon">
-					<img src="../../../static/usercenter/task-icon.png" />
+					<img :src="httpUrl + item.article_detail.resp_img" />
 				</div>
 				<div class="content">
 					<p class="firstrow">
-						<span class="title">【进行时】</span>
+						<span class="title">【{{judgeDateText(item.date)}}】</span>
 						<span class="date-label">
-							<span class="date">2017-7-3~2017-7-10</span>
-							<span class="label">待推荐</span>
+							<span class="date">{{item.begin_time | formDate}}~{{item.end_time | formDate}}</span>
+							<!--<span class="label">待推荐</span>-->
 						</span>
 					</p>
 					<p class="secondrow">
-						民以食为天，各种各样的美食对于人来说都是一个……
+						{{item.article_detail.article_title}}
 					</p>
 				</div>
 			</router-link>
 		</ul>
+		<load-more :show-loading="loadingShow" :tip="tip" background-color="#f0f0f0"></load-more>
 	</div>
 </template>
 
 <script>
+	import { LoadMore } from 'vux'
+	export default {
+		data() {
+			return {
+				httpUrl: localStorage.getItem('httpUrl')
+			}
+		},
+		props: {
+			list: Array,
+			tip: String,
+			loadingShow: Boolean
+		},
+		components: {
+			LoadMore
+		},
+		methods: {
+			judgeDateText(value) {
+				if(value === 0) {
+					return '已过期'
+				} else {
+					return '进行中'
+				}
+			}
+		}
+	}
 </script>
 
 <style lang="less">

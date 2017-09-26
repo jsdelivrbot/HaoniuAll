@@ -11,7 +11,8 @@
 					</div>
 				</div>
 				<div class="search vux-1px-b">
-					<input type="search" placeholder="请输入城市名/拼音查询" />
+					<input type="search" placeholder="请输入城市名/拼音查询" v-model="searchtext"/>
+					<span @click="goSearch">搜索</span>
 				</div>
 				<div class="now vux-1px-b">
 					<span>您正在看：{{cityNow}}</span>
@@ -33,16 +34,19 @@
 				<span>当前城市：{{cityPosition}}</span>
 			</div>
 		</div>
-		<city-list :city="city" @select="selectCity"></city-list>
+		<city-list :city="city" @select="selectCity" v-show="cityShow"></city-list>
+		<city-search-list :city="searchCity" @select="selectCity" v-show="!cityShow"></city-search-list>
 	</div>
 </template>
 
 <script>
-	import CityList from '@/common/vue/CityList'
+	import CityList from '@/common/vue/CityList2'
+	import CitySearchList from '@/common/vue/CitySearchList'
 	import city from '../../../static/js/city.js'
 	export default {
 		components: {
-			CityList
+			CityList,
+			CitySearchList
 		},
 		methods: {
 			back() {
@@ -78,6 +82,24 @@
 				sessionStorage.setItem('counties', item)
 				this.countiesnow = item
 				this.countiesShow = false
+			},
+			goSearch() {
+				this.searchCity = []
+				for (let i = 0; i < this.city.length; i++) {
+					for(let j = 0; j < this.city[i].content.length; j++) {
+						if (this.city[i].content[j].indexOf(this.searchtext) !== -1) {
+							this.searchCity.push(this.city[i].content[j])
+						}
+					}
+				}
+				if(this.searchCity.length === 0) {
+					this.$vux.alert.show({
+						title: '提示',
+						content: '没有搜索结果'
+					})
+				}else {
+					this.cityShow = false
+				}
 			}
 		},
 		data() {
@@ -87,7 +109,10 @@
 				countiesShow: false,
 				countiesData: [],
 				citynow: sessionStorage.getItem('city'),
-				countiesnow: sessionStorage.getItem('counties')
+				countiesnow: sessionStorage.getItem('counties'),
+				searchCity: [],
+				searchtext: '',
+				cityShow: true
 			}
 		},
 		computed: {
@@ -103,14 +128,27 @@
 				}
 				return this.countiesnow
 			}
+		},
+		watch: {
+			searchtext() {
+				if(this.searchtext === '') {
+					this.cityShow = true
+				}
+			}
 		}
 	}
 </script>
 
 <style lang="less">
 	.position-box {
+		padding-top: 176px;
 		.top {
+			width: 100%;
 			height: 176px;
+			position: fixed;
+			left: 0;
+			top: 0;
+			z-index: 2;
 			.topbar {
 				position: relative;
 				z-index: 2;
@@ -155,7 +193,8 @@
 				align-items: center;
 				input {
 					height: 32px;
-					width: 100%;
+					width: 0;
+					flex: 1;
 					outline: none;
 					border: none;
 					background: url(../../../static/search.png) 10px center no-repeat;
@@ -164,6 +203,14 @@
 					text-indent: 2em;
 					font-size: 16px;
 					border-radius: 4px;
+				}
+				span {
+					font-size: 14px;
+					display: block;
+					padding: 0 10px;
+					text-align: center;
+					height: 32px;
+					line-height: 32px;
 				}
 			}
 			.now {

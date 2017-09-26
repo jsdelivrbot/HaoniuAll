@@ -1,7 +1,7 @@
 <template>
 	<div class="interaction-detail-box">
 		<v-header :title="title"></v-header>
-		<swiper :list="imgList" :show-desc-mask="false" :loop="true" :aspect-ratio="360/750"></swiper>
+		<swiper :list="imgList" :show-desc-mask="false" :loop="true" :aspect-ratio="3/5"></swiper>
 		<div class="home-info">
 			<div class="info-top border-1px">
 				<p class="info-title">
@@ -176,18 +176,19 @@
 				}
 			}
 			.position {
-				height: 44px;
+				/*height: 44px;*/
 				background: url(../../../static/position.png) 12px center no-repeat;
 				background-size: 15px 20px;
 				font-size: 14px;
-				line-height: 44px;
+				/*line-height: 44px;*/
+				padding: 10px 0;
 				.border-1px(#e2e2e2);
 				p {
 					margin-left: 47px;
 					margin-right: 12px;
-					white-space: nowrap;
+					/*white-space: nowrap;
 					overflow: hidden;
-					text-overflow: ellipsis;
+					text-overflow: ellipsis;*/
 				}
 			}
 			.tel {

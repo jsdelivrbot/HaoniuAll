@@ -80,9 +80,9 @@
 			display: flex;
 			width:100%;
 			.img {
-				flex: 0 0 164px;
-				width: 164px;
-				height: 130px;
+				flex: 0 0 160px;
+				width: 160px;
+				height: 128px;
 				img {
 					width: 100%;
 					height: 100%;

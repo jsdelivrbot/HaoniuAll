@@ -35,11 +35,11 @@
 		<div class="person-info">
 			<div class="item vux-1px-b">
 				<span class="name">姓 名：</span>
-				<span class="value">莫小仙</span>
+				<span class="value">{{username}}</span>
 			</div>
 			<div class="item vux-1px-b">
 				<span class="name">联系电话：</span>
-				<span class="value">13234240306</span>
+				<span class="value">{{phone}}</span>
 			</div>
 		</div>
 		<div class="btn">
@@ -61,17 +61,20 @@
 			Swiper
 		},
 		created() {
-			this.$http.get('getData/index.php?m=home&c=Form&a=infoList', {
+			this.$http.get('getData/index.php?m=home&c=Form&a=infoJoinList', {
 				params: {
 					seachdata: {
-						'id': this.$route.params.id
+						'info_id': this.$route.params.id,
+						'action_type': 6
 					}
 				}
 			}).then((res) => {
 				console.log('详情页')
 				console.log(res)
-				this.content = res.data.data[0]
-				this.detail = res.data.detail
+				this.content = res.data.data[0].info_detail
+				this.username = res.data.data[0].username
+				this.phone = res.data.data[0].phone
+//				this.detail = res.data.detail
 				var imgData = res.data.img_data
 				for(let i = 0; i < imgData.length; i++) {
 					this.imgList.push({
@@ -87,7 +90,9 @@
 				httpUrl: localStorage.getItem('httpUrl'),
 				imgList: [],
 				content: {},
-				detail: []
+				username: '',
+				phone: ''
+//				detail: []
 			}
 		},
 		computed: {

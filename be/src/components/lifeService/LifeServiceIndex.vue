@@ -1,7 +1,7 @@
 <template>
 	<div class="life-service-index-box">
 		<v-header title="生活服务"></v-header>
-		<swiper :list="baseList" auto :aspect-ratio="194/750" :show-desc-mask="false" :loop="true" class="banner" dots-position="center"></swiper>
+		<swiper :list="baseList" auto :aspect-ratio="1/4" :show-desc-mask="false" :loop="true" class="banner" dots-position="center"></swiper>
 		<div class="list">
 			<ul class="clearfix">
 				<router-link :to="'/lifeService/in/' + item.id" tag="li" class="vux-1px"
@@ -24,28 +24,31 @@
 		},
 		data() {
 			return {
-				baseList: [{
-					url: 'javascript:',
-					img: 'https://static.vux.li/demo/1.jpg',
-					title: '送你一朵fua'
-				}, {
-					url: 'javascript:',
-					img: 'https://static.vux.li/demo/2.jpg',
-					title: '送你一辆车'
-				}, {
-					url: 'javascript:',
-					img: 'https://static.vux.li/demo/3.jpg',
-					title: '送你一次旅行'
-				}, {
-					url: 'javascript:',
-					img: 'https://static.vux.li/demo/3.jpg',
-					title: '送你一次旅行'
-				}],
+				baseList: [],
 				list: [],
 				httpUrl: localStorage.getItem('httpUrl')
 			}
 		},
 		created() {
+			//轮播图
+			this.$http.get('getData/index.php?m=home&c=Form&a=bannerList', {
+					params: {
+						type: 0,
+						seachdata: {
+							page_type: 3
+						}
+					}
+				})
+				.then((res) => {
+					let imgarr = res.data.data
+					for(let i = 0; i < imgarr.length; i++) {
+						this.baseList.push({
+							url: 'javascript:',
+							img: this.httpUrl + imgarr[i].banner_img,
+							title: imgarr[i].banner_title
+						})
+					}
+				})
 			this.$http.get('getData/index.php?m=home&c=Form&a=infoTypeList', {
 					params: {
 						seachdata: {

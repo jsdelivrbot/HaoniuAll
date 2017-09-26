@@ -8,7 +8,7 @@
 		</router-link>
 		<input class="search" type="text" @focus="search"
 			placeholder="请输入关键词"/>
-		<div class="service"></div>
+		<router-link to="/service" class="service"></router-link>
 		<search v-if="searchShow" @closeSearchHandle="closeSearch"></search>
 	</div>
 </template>
@@ -50,7 +50,7 @@
 		display: flex;
 		align-items: center;
 		box-sizing: border-box;
-		z-index: 3;
+		z-index: 2;
 		.city {
 			color: white;
 			font-size: 16px;

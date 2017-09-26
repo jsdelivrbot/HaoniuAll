@@ -108,8 +108,8 @@
 			return {
 				listData: [],
 				count: 0,
-				tip: '上拉加载更多',
-				loadingShow: false,
+				tip: '加载中',
+				loadingShow: true,
 				currentId: 1
 			}
 		}

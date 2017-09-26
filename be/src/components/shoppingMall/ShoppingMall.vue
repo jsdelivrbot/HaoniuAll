@@ -1,7 +1,7 @@
 <template>
 	<div class="iframeBox">
 		<v-header title="佣金商城"></v-header>
-		<iframe src="http://afx.hfrjkf.cn/app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=goods" class="iframeContent" frameborder="0">
+		<iframe :src="httpUrl + 'app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=goods&token=' + token" class="iframeContent" frameborder="0">
 		</iframe>
 	</div>
 </template>
@@ -9,6 +9,12 @@
 	import Header from '@/common/vue/Header'
 
 	export default {
+		data() {
+			return {
+				token: sessionStorage.getItem('token'),
+				httpUrl: localStorage.getItem('httpUrl')
+			}
+		},
 		components: {
 			'v-header': Header
 		}

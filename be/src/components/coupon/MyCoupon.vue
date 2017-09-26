@@ -3,66 +3,68 @@
 		<v-header title="优惠券" map="使用规则" @edit="showMaster"></v-header>
 		<div class="tab-box">
 			<tab bar-active-color="#e60012" active-color="#e60012">
-				<tab-item selected>全部</tab-item>
-				<tab-item>未使用</tab-item>
-				<tab-item>已使用</tab-item>
-				<tab-item>已过期</tab-item>
+				<tab-item selected @on-item-click="chooseAll">全部</tab-item>
+				<tab-item @on-item-click="chooseInProgress">进行中</tab-item>
+				<tab-item @on-item-click="chooseOverProgress">已结束</tab-item>
 			</tab>
 		</div>
-		<div class="list">
-			<div class="item">
-				<div class="item-title vux-1px-b">
-					<p class="number">订单编号：24256542515</p>
-					<p class="label">未使用</p>
-				</div>
-				<div class="item-content-unused">
-					<div class="price-box">
-						￥50元
+		<div ref="wrapper" class="wrapper">
+			<div class="list">
+				<router-link to="" tag="div" class="item" v-for="(item, index) in listData" :key="index">
+					<div class="item-title vux-1px-b">
+						<p class="number">订单编号：{{item.info_detail.info_num}}</p>
+						<p class="label">{{judgeDateText(item.date)}}</p>
 					</div>
-					<div class="text">
-						<p class="first">徽州太太专用</p>
-						<p class="second">指定适用范围：安庆铜陵店用</p>
-						<p class="third">有效期至：2017-12-12</p>
+					<div class="item-content-unused">
+						<div class="price-box">
+							{{item.info_detail.price}}{{item.info_detail.company}}
+						</div>
+						<div class="text">
+							<p class="first">{{item.info_detail.title}}</p>
+							<p class="second">{{item.info_detail.subtitle}}</p>
+							<p class="third">有效期至：{{item.info_detail.action_end_time | formDate}}</p>
+						</div>
 					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="item-title vux-1px-b">
-					<p class="number">订单编号：24256542515</p>
-					<p class="label">已使用</p>
-				</div>
-				<div class="item-content-used">
-					<div class="price-box">
-						￥50元
+				</router-link>
+				<!--<div class="item">
+					<div class="item-title vux-1px-b">
+						<p class="number">订单编号：24256542515</p>
+						<p class="label">已使用</p>
 					</div>
-					<div class="text">
-						<p class="first">徽州太太专用</p>
-						<p class="second">指定适用范围：安庆铜陵店用</p>
-						<p class="third">有效期至：2017-12-12</p>
-					</div>
-					<div class="label">
-						<img src="../../../static/coupon12.png" />
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="item-title vux-1px-b">
-					<p class="number">订单编号：24256542515</p>
-					<p class="label">已过期</p>
-				</div>
-				<div class="item-content-overdue">
-					<div class="price-box">
-						￥50元
-					</div>
-					<div class="text">
-						<p class="first">徽州太太专用</p>
-						<p class="second">指定适用范围：安庆铜陵店用</p>
-						<p class="third">有效期至：2017-12-12</p>
-					</div>
-					<div class="label">
-						<img src="../../../static/coupon13.png" />
+					<div class="item-content-used">
+						<div class="price-box">
+							￥50元
+						</div>
+						<div class="text">
+							<p class="first">徽州太太专用</p>
+							<p class="second">指定适用范围：安庆铜陵店用</p>
+							<p class="third">有效期至：2017-12-12</p>
+						</div>
+						<div class="label">
+							<img src="../../../static/coupon12.png" />
+						</div>
 					</div>
 				</div>
+				<div class="item">
+					<div class="item-title vux-1px-b">
+						<p class="number">订单编号：24256542515</p>
+						<p class="label">已过期</p>
+					</div>
+					<div class="item-content-overdue">
+						<div class="price-box">
+							￥50元
+						</div>
+						<div class="text">
+							<p class="first">徽州太太专用</p>
+							<p class="second">指定适用范围：安庆铜陵店用</p>
+							<p class="third">有效期至：2017-12-12</p>
+						</div>
+						<div class="label">
+							<img src="../../../static/coupon13.png" />
+						</div>
+					</div>
+				</div>-->
+				<load-more :show-loading="loadingShow" :tip="tip" background-color="#f0f0f0"></load-more>
 			</div>
 		</div>
 		<div class="master" @touchmove.prevent v-show="masterShow" @click="masterShow=!masterShow">
@@ -81,21 +83,145 @@
 
 <script>
 	import Header from '@/common/vue/Header'
-	import { Tab, TabItem } from 'vux'
+	import BScroll from 'better-scroll'
+	import { Tab, TabItem, LoadMore } from 'vux'
 	export default {
 		components: {
 			'v-header': Header,
 			Tab,
-			TabItem
+			TabItem,
+			LoadMore
 		},
 		data() {
 			return {
-				masterShow: false
+				masterShow: false,
+				listData: [],
+				count: 0,
+				tip: '上拉加载更多',
+				loadingShow: false,
+				status: ''
 			}
+		},
+		created() {
+			this.getData('')
 		},
 		methods: {
 			showMaster() {
 				this.masterShow = true
+			},
+			judgeDate(value) {
+				let timestamp = Date.parse(new Date()) / 1000
+				if(timestamp >= value) {
+					return 0
+				} else {
+					return 1
+				}
+			},
+			judgeDateText(value) {
+				if(value === 0) {
+					return '已过期'
+				} else {
+					return '进行中'
+				}
+			},
+			getData(status) {
+				this.$http.get('getData/index.php?m=home&c=Form&a=infoCouponList', {
+						params: {
+							seachdata: {
+								'limit': this.count + ',12',
+								'action_status': status
+							}
+						}
+					})
+					.then((res) => {
+						if(res.data.datastatus === 1) {
+							console.log('优惠券')
+							console.log(res)
+							this.listData = res.data.data
+							this.listData.map((item) => {
+								let time = item.info_detail.action_end_time
+								if(this.judgeDate(time) === 0) {
+									item.date = 0
+								}
+								if(this.judgeDate(time) === 1) {
+									item.date = 1
+								}
+							})
+							this.loadingShow = false
+							this.count = this.count + 12
+							this.$nextTick(() => {
+								this._initScroll()
+							})
+						} else {
+							this.listData = []
+							this.$nextTick(() => {
+								this.scroll.refresh()
+							})
+							this.tip = '暂无优惠券'
+							this.loadingShow = false
+						}
+					})
+			},
+			_initScroll() {
+				if(!this.$refs.wrapper) {
+					return
+				}
+				this.scroll = new BScroll(this.$refs.wrapper, {
+					probeType: 2,
+					click: true
+				})
+				this.scroll.on('touchend', (pos) => {
+					//					console.log(pos)
+					if(pos.y <= this.scroll.maxScrollY + 20) {
+						this.tip = '上拉加载更多'
+						this.loadingShow = true
+						this.getListData()
+						console.log(pos)
+					}
+				})
+			},
+			getListData() {
+				this.$http.get('getData/index.php?m=home&c=Form&a=infoCouponList', {
+						params: {
+							seachdata: {
+								'limit': this.count + ',12',
+								'action_status': this.status
+							}
+						}
+					})
+					.then((res) => {
+						if(res.data.datastatus === 1) {
+							console.log('我的优惠券')
+							console.log(res)
+							this.listData.push.apply(this.listData, res.data.data)
+							this.loadingShow = false
+							this.count = this.count + 12
+							this.$nextTick(() => {
+								this.scroll.refresh()
+							})
+						} else {
+							this.tip = '没有数据了'
+							this.loadingShow = false
+						}
+					})
+			},
+			chooseAll() {
+				this.count = 0
+				this.status = ''
+				this.tip = '上拉加载更多'
+				this.getData()
+			},
+			chooseInProgress() {
+				this.count = 0
+				this.status = 2
+				this.tip = '上拉加载更多'
+				this.getData(2)
+			},
+			chooseOverProgress() {
+				this.count = 0
+				this.status = 3
+				this.tip = '上拉加载更多'
+				this.getData(3)
 			}
 		}
 	}
@@ -104,7 +230,14 @@
 <style lang="less">
 	@rem: 40rem;
 	.my-coupon-box {
-		padding-top: 98px;
+		padding-top: 88px;
+		.wrapper {
+			position: fixed;
+			top: 88px;
+			bottom: 0;
+			width: 100%;
+			overflow: hidden;
+		}
 		.header-box {
 			.map {
 				padding-right: 16px;
@@ -113,7 +246,7 @@
 		.tab-box {
 			width: 100%;
 			position: fixed;
-			top: 54px;
+			top: 44px;
 			z-index: 2;
 			padding: 0 12px;
 			box-sizing: border-box;
@@ -167,18 +300,27 @@
 						align-items: center;
 						p {
 							&.first {
+								width: 80%;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								white-space: nowrap;
 								font-size: 16px;
 								color: #333333;
 								line-height: 26px;
 							}
-							&.second, &.third {
+							&.second,
+							&.third {
 								font-size: 12px;
 								color: #707070;
+								width: 80%;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								white-space: nowrap;
 							}
 						}
 					}
 				}
-				.item-content-used {
+				/*.item-content-used {
 					height: 84px;
 					padding: 0 12px;
 					display: flex;
@@ -211,7 +353,8 @@
 								color: #afafaf;
 								line-height: 26px;
 							}
-							&.second, &.third {
+							&.second,
+							&.third {
 								font-size: 12px;
 								color: #afafaf;
 							}
@@ -259,8 +402,12 @@
 								font-size: 16px;
 								color: #afafaf;
 								line-height: 26px;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								white-space: nowrap;
 							}
-							&.second, &.third {
+							&.second,
+							&.third {
 								font-size: 12px;
 								color: #afafaf;
 							}
@@ -275,7 +422,7 @@
 							height: 41px;
 						}
 					}
-				}
+				}*/
 			}
 		}
 		.master {

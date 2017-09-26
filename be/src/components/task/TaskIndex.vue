@@ -20,9 +20,9 @@
 			this.$http('getData/index.php?m=home&c=Form&a=articleList', {
 						params: {
 							type: 1,
-							page_type: 1,
-							city: sessionStorage.getItem('city'),
 							seachdata: {
+								page_type: 1,
+								city: sessionStorage.getItem('city'),
 								'limit': this.count + ',12'
 							}
 						}
@@ -32,10 +32,11 @@
 							console.log('任务大厅')
 							console.log(res)
 							this.taskList.push.apply(this.taskList, res.data.data)
-							this.loadingShow = false
 							this.count = this.count + 12
 							this.$nextTick(() => {
 								this._initScroll()
+								this.loadingShow = false
+								this.tip = '上拉加载更多'
 							})
 						}else {
 							this.tip = '没有数据了'
@@ -52,8 +53,8 @@
 			return {
 				taskList: [],
 				count: 0,
-				tip: '上拉加载更多',
-				loadingShow: false
+				tip: '加载中',
+				loadingShow: true
 			}
 		},
 		methods: {
@@ -61,9 +62,9 @@
 				this.$http('getData/index.php?m=home&c=Form&a=articleList', {
 						params: {
 							type: 1,
-							page_type: 1,
-							city: sessionStorage.getItem('city'),
 							seachdata: {
+								page_type: 1,
+								city: sessionStorage.getItem('city'),
 								'limit': this.count + ',12'
 							}
 						}

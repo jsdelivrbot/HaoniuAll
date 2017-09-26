@@ -1,9 +1,9 @@
 <template>
-	<div class="usercenter-adress-box">
-		<v-header title="收货地址"></v-header>
-		<!--<iframe src="http://afx.hfrjkf.cn/app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=member.address" class="iframeContent" frameborder="0">
+	<div class="my-order">
+		<v-header title="订单管理"></v-header>
+		<!--<iframe src="http://afx.hfrjkf.cn/app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=order" class="iframeContent" frameborder="0">
 		</iframe>-->
-		<iframe :src="httpUrl + 'app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=member.address'" class="iframeContent" frameborder="0">
+		<iframe :src="httpUrl + 'app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=order'" class="iframeContent" frameborder="0">
 		</iframe>
 	</div>
 </template>
@@ -23,7 +23,7 @@
 </script>
 
 <style lang="less">
-	.usercenter-adress-box {
+	.my-order {
 		width: 100%;
 		height: 100vh;
 		.iframeContent {

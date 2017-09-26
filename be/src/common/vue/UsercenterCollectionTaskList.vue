@@ -14,17 +14,17 @@
 					<img src="../../../static/usercenter/delete.png" />
 				</div>
 			</li>-->
-			<router-link :to="'/task/detail/' + item.info_detail.id" tag="li" class="border-1px test" 
-				v-for="(item, index) in list" :key="item">
+			<router-link :to="'/task/detail/' + item.article_id" tag="li" class="border-1px test" 
+				v-for="(item, index) in list" :key="index">
 				<div class="img">
-					<img :src="httpUrl + item.info_detail.img">
+					<img :src="httpUrl + item.article_detail.resp_img">
 				</div>
 				<div class="content">
-					<p class="title">{{item.info_detail.title}}</p>
-					<p class="text">{{item.info_detail.subtitle}}</p>
-					<span class="category">{{item.info_detail.type_name}}</span>
+					<p class="title">【今日推荐】</p>
+					<p class="text">{{item.article_detail.article_title}}</p>
+					<!--<span class="category"></span>-->
 				</div>
-				<div class="delete" v-show="editting" :class="{shakeLittle:editting}" 
+				<div class="delete" v-show="editting"
 					@click.stop="deleteItem(index)">
 					<img src="../../../static/usercenter/delete.png" />
 				</div>
@@ -66,22 +66,17 @@
 
 <style lang="less">
 	@import url("../../../static/less/mixin.less");
-	@import url("../../../static/less/csshake.css");
+	/*@import url("../../../static/less/csshake.css");*/
 	.usercenter-collection-task-list-box {
-		.test {
+		/*.test {
 			transition: all .6s ease;
 		}
 		.flip-list-enter,
 		.flip-list-leave-to
-		/* .list-complete-leave-active for below version 2.1.8 */
 		{
 			opacity: 0;
 			transform: translateX(100%);
-			 /*transform: translateY(30px);*/
-		}
-		.flip-list-leave-active {
-			/*position: absolute;*/
-		}
+		}*/
 		ul {
 			margin-top: 10px;
 			/*padding-bottom: 34px;*/
@@ -96,7 +91,7 @@
 				.border-1px(#e2e2e2);
 				.img {
 					flex: 0 0 120px;
-					height: 85px;
+					height: 80px;
 					img {
 						width: 100%;
 						height: 100%;
@@ -109,11 +104,12 @@
 					margin-left: 10px;
 					position: relative;
 					.title {
-						font-size: 16px;
+						font-size: 14px;
 						margin-top: -4px;
 						overflow: hidden;
 						text-overflow: ellipsis;
 						white-space: nowrap;
+						color: #e70012;
 					}
 					.text {
 						font-size: 12px;

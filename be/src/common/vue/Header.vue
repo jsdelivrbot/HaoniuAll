@@ -38,14 +38,22 @@
 								seachdata: {
 									'type_id': this.$route.params.id,
 									'city': sessionStorage.getItem('city'),
-									seach_value: this.text
+									'seach_value': this.text
 								}
 							}
 						})
 						.then((res) => {
 //							console.log('搜索列表')
 //							console.log(res)
-							this.$emit('getSearchData', res)
+							if(res.data.datastatus === 0) {
+								this.$vux.alert.show({
+									title: '提示',
+									content: '没有搜索结果'
+								})
+								return
+							}
+							this.$emit('getSearchData', res, this.text)
+							return
 						})
 				}
 				this.$emit('edit')
@@ -71,14 +79,14 @@
 	.header-box {
 		width: 100%;
 		height: 44px;
-		background-color: #e70012;
+		background-color: #e70012;		
 		position: fixed;
 		top: 0;
 		left: 0;
 		box-shadow: 0 2px 2px rgba(0, 0, 0, 0.35);
 		display: flex;
 		align-items: center;
-		z-index: 2;
+		z-index: 2147483648;
 		.icon-fanhui {
 			color: white;
 			font-size: 20px;

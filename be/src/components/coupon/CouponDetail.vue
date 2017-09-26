@@ -4,7 +4,7 @@
 			<span class="iconfont icon-fanhui" @click="back"></span>
 			<router-link to="/coupon/myCoupon" tag="span" class="info">我的优惠券</router-link>
 		</div>
-		<swiper :list="imgList" auto :aspect-ratio="763/750" :show-desc-mask="false" :loop="true" dots-position="center" class="img"></swiper>
+		<swiper :list="imgList" auto :aspect-ratio="750/750" :show-desc-mask="false" :loop="true" dots-position="center" class="img"></swiper>
 		<div class="first-content">
 			<div class="top vux-1px-b">
 				<p class="price">￥{{content.price}}{{content.company}}</p>
@@ -157,7 +157,7 @@
 			}
 		}
 		.first-content {
-			height: 122px;
+			/*height: 122px;*/
 			background-color: white;
 			border-radius: 8px;
 			margin: -20px 12px 0;
@@ -184,17 +184,18 @@
 				}
 			}
 			.text {
-				height: 64px;
+				/*height: 64px;*/
 				display: flex;
 				align-items: center;
 				.text-content {
 					flex: 1;
 					width: 0;
 					p {
-						line-height: 30px;
-						overflow: hidden;
+						padding: 0 10px 10px 0;
+						/*line-height: 30px;*/
+						/*overflow: hidden;
 						white-space: nowrap;
-						text-overflow: ellipsis;
+						text-overflow: ellipsis;*/
 					}
 					.text-title {
 						font-size: 14px;

@@ -5,6 +5,7 @@ import Home from '@/components/home/Home'
 import HomeIndex from '@/components/home/HomeIndex'
 import HomePosition from '@/components/home/HomePosition'
 import TaskGuide from '@/components/home/TaskGuide'
+import Service from '@/components/home/Service'
 //搜索
 import Search from '@/common/vue/Search'
 //任务大厅
@@ -48,6 +49,8 @@ import Center from '@/components/center/Center'
 import BindingPhone from '@/components/usercenter/BindingPhone'
 import BindingPhoneNew from '@/components/usercenter/BindingPhoneNew'
 import AboutUs from '@/components/usercenter/AboutUs'
+import MyOrder from '@/components/usercenter/MyOrder'
+
 //热门文章
 import HotArticle from '@/components/hotArticle/HotArticle'
 import HotArticleIndex from '@/components/hotArticle/HotArticleIndex'
@@ -105,6 +108,9 @@ const router = new Router({
 			}, {
 				path: '/taskGuide',
 				component: TaskGuide
+			}, {
+				path: '/service',
+				component: Service
 			}]
 		}, {
 			path: '/task',
@@ -338,7 +344,7 @@ const router = new Router({
 					requiresAuth: true
 				}
 			}, {
-				path: '/usercenter/infoDetail',
+				path: '/usercenter/infoDetail/:id',
 				component: UsercenterInfoDetail
 			}, {
 				path: '/usercenter/setting',
@@ -367,6 +373,12 @@ const router = new Router({
 			}, {
 				path: '/usercenter/AboutUs',
 				component: AboutUs
+			}, {
+				path: '/usercenter/MyOrder',
+				component: MyOrder,
+				meta: {
+					requiresAuth: true
+				}
 			}]
 		},
 		{

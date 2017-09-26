@@ -3,7 +3,7 @@
 		<index-header :city="city"></index-header>
 		<div ref="wrapper" class="wrapper">
 			<div>
-				<swiper :list="baseList" auto :aspect-ratio="280/750" :show-desc-mask="false" :loop="true" class="banner"></swiper>
+				<swiper :list="baseList" auto :aspect-ratio="2/5" :show-desc-mask="false" :loop="true" class="banner"></swiper>
 				<div class="menu">
 					<div class="row">
 						<router-link to="/task" tag="div" class="item">
@@ -107,9 +107,9 @@
 			this.$http.get('getData/index.php?m=home&c=Form&a=articleList', {
 					params: {
 						type: 0,
-						page_type: 0,
-						city: sessionStorage.getItem('city'),
 						seachdata: {
+							page_type: 0,
+							city: sessionStorage.getItem('city'),
 							'limit': this.count + ',12'
 						}
 					}

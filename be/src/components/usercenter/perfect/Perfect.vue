@@ -2,6 +2,13 @@
 	<div class="perfect-box">
 		<div class="main">
 			<v-header title="修改个人资料"></v-header>
+			<div class="avatar">
+				<img :src="avatar" />
+			</div>
+			<div class="avatar-btn">
+				<input type="file" value="test" style="background-color: white;" @change="getImgInfo" />
+				<p>上传头像</p>
+			</div>
 			<group>
 				<cell title="账号" value="17755164120"></cell>
 				<!--<cell title="昵称" value="默默"></cell>-->
@@ -9,7 +16,7 @@
 				<!--<datetime title="出生年月" :min-year="1900" :max-year="2017" 
 					placeholder="请选择" style="font-size: 14px;" default-selected-value="1995-03-24"
 					year-row="{value}年" month-row="{value}月" day-row="{value}日"></datetime>-->
-				<cell is-link>
+				<!--<cell is-link>
 					<span slot="title">
 	        			头像
 					</span>
@@ -19,7 +26,7 @@
 					<input type="file" value="test" style="background-color: white;" />
 					</span>
 					</span>
-				</cell>
+				</cell>-->
 				<cell is-link @click.native="isShow = true">
 					<span slot="title">
         			<span>性别</span> &nbsp;
@@ -110,6 +117,17 @@
 				} else {
 					this.hobby = chosenList[3].join(',')
 				}
+			},
+			getImgInfo(ev) {
+				var oFile = ev.target.files[0]
+				var reader = new FileReader()
+				console.log(oFile)
+				let $this = this
+				reader.onload = function() {
+					// 也可以用 window.URL.createObjectURL(this.result)
+					$this.avata = this.result;
+				}
+//				reader.readAsDataURL(oFile)
 			}
 		},
 		data() {
@@ -119,7 +137,17 @@
 				age: '请选择',
 				work: '请选择',
 				hobby: '请选择',
-				username: '默默'
+				username: localStorage.getItem('nickname'),
+				avata: ''
+			}
+		},
+		computed: {
+			avatar() {
+				if(!localStorage.getItem('avatar')) {
+					return '../../../../static/avatar.png'
+				} else {
+					return localStorage.getItem('httpUrl') + localStorage.getItem('avatar')
+				}
 			}
 		}
 	}
@@ -130,7 +158,42 @@
 		.main {
 			min-height: 100vh;
 			padding-top: 44px;
-			box-sizing: border-box;
+			padding-bottom: 88px;
+			/*box-sizing: border-box;*/
+			.avatar {
+				width: 100%;
+				height: 140px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				img {
+					width: 100px;
+					height: 100px;
+				}
+			}
+			.avatar-btn {
+				position: relative;
+				p {
+					text-align: center;
+					height: 26px;
+					line-height: 26px;
+					width: 30%;
+					margin: 0 auto;
+					/*margin: -48px 25px 16px;*/
+					background-color: #e60012;
+					color: white;
+					font-size: 14px;
+					border-radius: 6px;
+				}
+				input {
+					position: absolute;
+					width: 30%;
+					height: 26px;
+					left: 50%;
+					transform: translateX(-50%);
+					opacity: 0;
+				}
+			}
 			.vux-label {
 				font-size: 14px;
 				color: #333333;

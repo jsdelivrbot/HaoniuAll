@@ -1,7 +1,7 @@
 <template>
 	<div class="home-property-new-detail-box">
 		<v-header :title="content.type_name"></v-header>
-		<swiper :list="imgList" :show-desc-mask="false" :loop="true" :aspect-ratio="360/750"></swiper>
+		<swiper :list="imgList" :show-desc-mask="false" :loop="true" :aspect-ratio="3/5"></swiper>
 		<div class="home-info">
 			<div class="info-top border-1px">
 				<p class="info-title">

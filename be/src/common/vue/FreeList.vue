@@ -50,7 +50,7 @@
 			.img {
 				flex: 0 0 120px;
 				width: 120px;
-				height: 94px;
+				height: 90px;
 				img {
 					width: 100%;
 					height: 100%;

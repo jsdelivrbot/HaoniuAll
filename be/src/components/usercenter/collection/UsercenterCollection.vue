@@ -39,7 +39,7 @@
 			}
 		},
 		created() {
-			this.$http('getData/index.php?m=home&c=Form&a=infoThumbUpList', {
+			this.$http('getData/index.php?m=home&c=Form&a=infoCollectList', {
 						params: {
 							seachdata: {
 								'limit': this.count + ',12'
@@ -67,7 +67,7 @@
 				this.$store.commit('edit')
 			},
 			getData() {
-				this.$http('getData/index.php?m=home&c=Form&a=infoThumbUpList', {
+				this.$http('getData/index.php?m=home&c=Form&a=infoCollectList', {
 						params: {
 							seachdata: {
 								'limit': this.count + ',12'

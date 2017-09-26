@@ -40,10 +40,11 @@ Vue.filter('formDate', function(value) {
 	return newDate.toLocaleDateString()
 })
 
-Vue.http.defaults.baseURL = 'http://afx.hfrjkf.cn/'
+localStorage.setItem('httpUrl', 'http://aifengxiang.hfrjkf.cn/')
+//localStorage.setItem('httpUrl', 'http://afx.hfrjkf.cn/')
+Vue.http.defaults.baseURL = localStorage.getItem('httpUrl')
 Vue.http.defaults.headers.get['token'] = sessionStorage.getItem('token')
 //Vue.http.defaults.headers.get['Access-Control-Max-Age'] = 3628800
-localStorage.setItem('httpUrl', 'http://afx.hfrjkf.cn/')
 sessionStorage.setItem('city', '')
 sessionStorage.setItem('cityPosition', '')
 sessionStorage.setItem('counties', '')

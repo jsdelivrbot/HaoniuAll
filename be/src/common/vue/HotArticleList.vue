@@ -90,7 +90,7 @@
 				align-items: center;
 				.border-1px(#e2e2e2);
 				.img {
-					flex: 0 0 60px;
+					flex: 0 0 75px;
 					height: 60px;
 					img {
 						width: 100%;

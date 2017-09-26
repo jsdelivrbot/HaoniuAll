@@ -12,8 +12,11 @@
 					<span>分享</span>
 				</div>
 			</div>
-			<div class="detail" @click="showMaster">
+			<div class="detail" @click="getCharge" v-show="!getted">
 				点击按钮轻松赚取{{article_rule_money}}元
+			</div>
+			<div class="detail getted" @click="showMaster" v-show="getted">
+				已经赚取{{article_rule_money}}元
 			</div>
 		</div>
 		<transition name="all">
@@ -66,11 +69,24 @@
 		data() {
 			return {
 				collected: false,
-				masterShow: false
+				masterShow: false,
+				getted: false
 			}
 		},
 		methods: {
 			showMaster() {
+//				if(!sessionStorage.getItem('token')) {
+//					this.$router.push({
+//						path: '/login',
+//						query: {
+//							redirect: this.$route.fullPath
+//						}
+//					})
+//					return
+//				}
+				this.masterShow = true
+			},
+			getCharge() {
 				if(!sessionStorage.getItem('token')) {
 					this.$router.push({
 						path: '/login',
@@ -80,7 +96,34 @@
 					})
 					return
 				}
-				this.masterShow = true
+				this.$http.get('getData/index.php?m=home&c=Form&a=articleShare', {
+					params: {
+						seachdata: {
+							'article_id': this.articleId
+						}
+					}
+				}).then((res) => {
+					console.log(res)
+					if(res.data.datastatus === 1) {
+						this.getted = true
+					}
+					if(res.data.datastatus === 0) {
+						this.$vux.alert.show({
+							title: '提示',
+							content: '提交失败'
+						})
+					}
+					if(res.data.datastatus === 2) {
+						let $this = this
+						this.$vux.alert.show({
+							title: '提示',
+							content: '请补全信息',
+							onHide() {
+								$this.$router.push('/usercenter/perfect')
+							}
+						})
+					}
+				})
 			},
 			collect() {
 				if(!sessionStorage.getItem('token')) {
@@ -209,6 +252,9 @@
 				font-size: 16px;
 				text-align: center;
 				line-height: 50px;
+			}
+			.getted {
+				background-color: lightcoral;
 			}
 		}
 		.share-master {

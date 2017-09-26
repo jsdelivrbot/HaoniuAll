@@ -82,10 +82,11 @@
 						console.log('房产家居列表')
 						console.log(res)
 						this.listData.push.apply(this.listData, res.data.data)
-						this.loadingShow = false
 						this.count = this.count + 12
 						this.$nextTick(() => {
 							this._initScroll()
+							this.loadingShow = false
+							this.tip = '上拉加载更多'
 						})
 					} else {
 						this.tip = '没有数据了'
@@ -112,8 +113,8 @@
 				httpUrl: localStorage.getItem('httpUrl'),
 				listData: [],
 				count: 0,
-				tip: '上拉加载更多',
-				loadingShow: false
+				tip: '加载中',
+				loadingShow: true
 			}
 		},
 		methods: {

@@ -27,7 +27,7 @@
 				</router-link>
 			</div>
 			<div class="head">
-				<img :src="httpUrl + avatar" />
+				<img :src="avatar" />
 			</div>
 			<p class="username">{{nickname}}</p>
 			<p class="usernumber">{{mobile}}</p>
@@ -40,13 +40,13 @@
 				</div>
 				<p>提现管理</p>
 			</router-link>
-			<div class="item border-1px-right order">
+			<router-link to="/usercenter/MyOrder" tag="div" class="item border-1px-right order">
 				<div class="item-img">
 					<img src="../../../static/usercenter/order.png" />
 					<!--<badge text="1" v-if="login"></badge>-->
 				</div>
 				<p>订单管理</p>
-			</div>
+			</router-link>
 			<router-link to="/coupon/myCoupon" tag="div" class="item border-1px-right coupon">
 				<div class="item-img">
 					<img src="../../../static/usercenter/coupon.png" />
@@ -177,9 +177,18 @@
 				login: sessionStorage.getItem('token'),
 				path: this.$route.fullPath,
 				httpUrl: localStorage.getItem('httpUrl'),
-				avatar: localStorage.getItem('avatar'),
+//				avatar: localStorage.getItem('avatar'),
 				mobile: localStorage.getItem('mobile'),
 				nickname: localStorage.getItem('nickname')
+			}
+		},
+		computed: {
+			avatar() {
+				if(!localStorage.getItem('avatar')) {
+					return '../../../../static/avatar.png'
+				}else {
+					return localStorage.getItem('httpUrl') + localStorage.getItem('avatar')
+				}
 			}
 		}
 	}
@@ -303,8 +312,8 @@
 				}
 			}
 			.head {
-				height: 90px;
-				width: 90px;
+				height: 80px;
+				width: 80px;
 				border-radius: 50%;
 				margin: -16px auto 0;
 				position: relative;
@@ -321,6 +330,9 @@
 				color: white;
 				font-size: 16px;
 				line-height: 24px;
+			}
+			.username {
+				margin-top: 10px;
 			}
 		}
 		.tab {

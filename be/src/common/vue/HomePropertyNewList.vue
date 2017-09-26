@@ -48,7 +48,7 @@
 		margin-top: 10px;
 		.item {
 			height: 104px;
-			padding: 10px 12px;
+			padding: 12px;
 			box-sizing: border-box;
 			display: flex;
 			background-color: white;

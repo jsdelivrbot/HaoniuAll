@@ -1,6 +1,6 @@
 <template>
 	<div class="flea-market-in-box">
-		<v-header :search="true" map="搜索" @getSearchData="getData"></v-header>
+		<v-header :search="true" map="搜索" @getSearchData="getSearchData"></v-header>
 		<tab :data="tabList" :type_id="listId" @getData="getData"></tab>
 		<div ref="wrapper" class="wrapper">
 			<flea-market-list :list="listData" :tip="tip" :loadingShow="loadingShow"></flea-market-list>
@@ -26,8 +26,9 @@
 				listId: this.$route.params.id,
 				searchData: [],
 				count: 0,
-				tip: '上拉加载更多',
-				loadingShow: false
+				tip: '加载中',
+				loadingShow: true,
+				searchData2: ''
 			}
 		},
 		created() {
@@ -46,10 +47,11 @@
 						console.log('跳蚤市场列表')
 						console.log(res)
 						this.listData.push.apply(this.listData, res.data.data)
-						this.loadingShow = false
 						this.count = this.count + 12
 						this.$nextTick(() => {
 							this._initScroll()
+							this.loadingShow = false
+							this.tip = '上拉加载更多'
 						})
 					} else {
 						this.tip = '没有数据了'
@@ -76,6 +78,27 @@
 				console.log('选项结果')
 				console.log(res, searchData)
 				this.searchData = searchData
+				this.searchData2 = ''
+				let $this = this
+				this.count = 12
+				if(res.data.datastatus === 0) {
+					this.listData = []
+					setTimeout(() => {
+						$this.scroll.refresh()
+						this.tip = '暂无此类信息'
+					}, 20)
+					return
+				}
+				this.listData = res.data.data
+				setTimeout(() => {
+					$this.scroll.refresh()
+				}, 20)
+			},
+			getSearchData(res, searchData) {
+				console.log('搜索结果')
+				console.log(res, searchData)
+				this.searchData = []
+				this.searchData2 = searchData
 				let $this = this
 				this.count = 12
 				if(res.data.datastatus === 0) {
@@ -97,7 +120,8 @@
 								'type_id': this.listId,
 								'city': sessionStorage.getItem('city'),
 								'option_data': this.searchData,
-								'limit': this.count + ',12'
+								'limit': this.count + ',12',
+								'searchData2': this.searchData2
 							}
 						}
 					})
