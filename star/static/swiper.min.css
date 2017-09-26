@@ -202,7 +202,7 @@
 .swiper-container-horizontal>.swiper-pagination-bullets,
 .swiper-pagination-custom,
 .swiper-pagination-fraction {
-	bottom: 10px;
+	bottom: 0px;
 	left: 0;
 	width: 100%
 }
@@ -213,7 +213,8 @@
 	display: inline-block;
 	border-radius: 100%;
 	background: #000;
-	opacity: .2
+	background: #fff;
+	opacity: .6
 }
 
 button.swiper-pagination-bullet {
@@ -237,7 +238,8 @@ button.swiper-pagination-bullet {
 
 .swiper-pagination-bullet-active {
 	opacity: 1;
-	background: #007aff
+	background: #007aff;
+	background: #6ab7fe;
 }
 
 .swiper-pagination-white .swiper-pagination-bullet-active {
