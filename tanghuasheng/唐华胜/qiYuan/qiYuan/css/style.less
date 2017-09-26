@@ -1,0 +1,273 @@
+.header {
+    width: 100%;
+    height: 3.5rem;
+    background-color: #f1f1f3;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 2px solid #cbcbcd;
+    -webkit-box-shadow: -2px 6px 3px #ebebed;
+    -moz-box-shadow: -2px 6px 3px #ebebed;
+    box-shadow: -2px 6px 3px #ebebed;
+    margin-bottom: 6px;
+    div {
+        width: 100%;
+        height: 2.5rem;
+        display: flex;
+        justify-content: center;
+        //      align-items: center;
+        img {
+            height: 2.5rem;
+        }
+    }
+    .sign {
+        flex: 1;
+        //      background-color: palevioletred;
+    }
+    .search {
+        flex: 4.25;
+        background: url(../img/img/Search-Box.png) no-repeat;
+        background-size: 100% 2.25rem;
+        position: relative;
+        input {
+            width: 80%;
+            height: 1.7rem;
+            position: absolute;
+            top: 0.3rem;
+            left: 2.5rem;
+            border: none;
+            //          background: red;
+            font-size: 0.8rem;
+        }
+        .search_icon {
+            width: 1.15rem;
+            height: 1.15rem;
+            position: absolute;
+            left: 0.5rem;
+            top: 0.6rem;
+        }
+        .message_icon {
+            width: 1.15rem;
+            height: 1.15rem;
+            position: absolute;
+            right: 0.5rem;
+            top: 0.6rem;
+        }
+    }
+    .message {
+        flex: 1;
+        //      background-color: lightgoldenrodyellow;
+    }
+}
+
+.imglist {
+    height: auto;
+    overflow: hidden;
+    img {
+        width: 100%;
+        display: block;
+    }
+}
+
+.styled-select {
+    margin: auto;
+    width: 240px;
+    height: 34px;
+    border-radius: 5px;
+    overflow: hidden;
+    padding: 1px;
+    background: url("http://images.cnblogs.com/cnblogs_com/shishm/201203/20120302110411201.jpg") no-repeat right #fff;
+}
+
+video{
+    width: 100%;
+}
+
+.styled-select select {
+    margin: auto;
+    background: none;
+    width: 240px;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    height: 34px;
+    border-radius: 5px;
+    -webkit-appearance: none;
+    /*for chrome*/
+}
+
+//-----------轮播图------------
+.swiper-slide {
+    width: 100%;
+    height: 19.35rem;
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+//-----------------------------
+.tab_wrapper {
+    width: 100%;
+    height: 9rem;
+    background-color: #f8f5f5;
+    border-top: 0.15rem solid #f1f1f3;
+    border-bottom: 0.15rem solid #f1f1f3;
+    ul {
+        width: 100%;
+        height: 6rem;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+        align-items: center;
+        li {
+            width: 5.5rem;
+            height: 1.95rem;
+            //          background-color: red;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+    .yubaotoutiao {
+        width: 100%;
+        height: 3rem;
+        background: url(../img/img/bg1.png) no-repeat center;
+        background-size: 90% 2.0rem;
+        position: relative;
+        .yubaotoutiao_text {
+            position: absolute;
+            top: 1rem;
+            left: 2.5rem;
+            color: #ee627f;
+            font-size: 12px;
+        }
+        .yubaotoutiao_img {
+            position: absolute;
+            width: 1.25rem;
+            height: 1.25rem;
+            top: 1rem;
+            left: 7rem;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}
+
+.coupon {
+    background: url(../img/img/img5.png) #fee7ef no-repeat;
+    background-size: 100% auto;
+    height: 16rem;
+    padding-top: 4rem;
+    height: auto;
+    padding-bottom: 30px;
+    overflow: hidden;
+    h2 {
+        text-align: center;
+        color: #f82d6c;
+        line-height: 50px;
+        font-size: 20px;
+    }
+    ul {
+        display: block;
+        height: auto;
+        overflow: hidden;
+        padding: 0 5px;
+        box-sizing: border-box;
+        li:nth-child(2n-1) {
+            margin-right: 2%;
+        }
+        li {
+            width: 49%;
+            padding: 5px;
+            box-sizing: border-box;
+            height: auto;
+            background: #d4405a;
+            margin-bottom: 0.625rem;
+            float: left;
+            color: #fff;
+            overflow: hidden;
+            .left {
+                display: inline-block;
+                width: 50%;
+                float: left;
+                text-align: center;
+                line-height: 80px;
+                font-size: 16px;
+            }
+            .right {
+                display: inline-block;
+                float: left;
+                width: 50%;
+                text-align: left;
+                h4 {
+                    line-height: 30px;
+                    font-size: 14px;
+                }
+                p {
+                    font-size: 10px;
+                    line-height: 25px;
+                }
+                a {
+                    width: 7rem;
+                    display: block;
+                    line-height: 25px;
+                    font-size: 12px;
+                    background: #ffc12e;
+                    border-radius: 12px;
+                    box-sizing: border-box;
+                    text-align: center;
+                    text-decoration: none;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}
+
+//-----------video----------
+.video_warpper {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    background-color: #f7f8fa;
+    //  padding: 0.5rem 1rem 0 1rem;
+    box-sizing: border-box;
+    .caidan {
+        width: 10rem;
+        height: 4rem;
+        margin: 0 auto;
+        .dept_select {
+            /*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
+            border: solid 1px #CBCBCD;
+            border-radius: 2px;
+            /*很关键：将默认的select选择框样式清除*/
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            /*在选择框的最右侧中间显示小箭头图片*/
+            background: url("http://ourjs.github.io/static/2015/arrow.png") no-repeat scroll right center transparent;
+            /*为下拉小箭头留出一点位置，避免被文字覆盖*/
+            padding-right: 14px;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+    }
+    .video_content {
+        width: 100%;
+        height: 17.5rem;
+        border-radius: 5px;
+        background-color: red;
+    }
+}
+
+select {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}

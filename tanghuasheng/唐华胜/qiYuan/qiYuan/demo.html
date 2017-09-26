@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+
+		<title>Document</title>
+	</head>
+
+	<body>
+		<select data-placeholder="请选择类型" class="dept_select chzn-rtl" style="width:150px;">
+			<option value="-1">s司法所地方</option>
+			<option value="0">限速牌</option>
+			<option value="1">标志牌</option>
+			<option value="2">红绿灯</option>
+			<option value="3">摄像图</option>
+			<option value="4">收费站</option>
+			<option value="5">加油站</option>
+			<option value="6">充电桩</option>
+			<option value="7">停车场</option>
+		</select>
+	</body>
+
+	<script type="text/javascript">
+		$(function() {
+			$('.typeselect').chosen();
+		});
+	</script>
+
+</html>
