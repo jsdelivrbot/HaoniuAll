@@ -6,8 +6,7 @@
 			<tab-item>佣金商城</tab-item>
 		</tab>-->
 		<div ref="wrapper" class="wrapper">
-			<usercenter-collection-task-list :list="listData" :tip="tip" :loadingShow="loadingShow"
-				@spliceList="spliceList"></usercenter-collection-task-list>
+			<usercenter-collection-task-list :list="listData" :tip="tip" :loadingShow="loadingShow" @spliceList="spliceList"></usercenter-collection-task-list>
 		</div>
 		<!--<usercenter-collection-shopping-list v-show="index === 1"></usercenter-collection-shopping-list>-->
 	</div>
@@ -31,7 +30,7 @@
 		},
 		data() {
 			return {
-//				index: 0
+				//				index: 0
 				listData: [],
 				count: 0,
 				tip: '上拉加载更多',
@@ -40,27 +39,28 @@
 		},
 		created() {
 			this.$http('getData/index.php?m=home&c=Form&a=infoCollectList', {
-						params: {
-							seachdata: {
-								'limit': this.count + ',12'
-							}
+					params: {
+						seachdata: {
+							'limit': this.count + ',12'
 						}
-					})
-					.then((res) => {
-						if(res.data.datastatus === 1) {
-							console.log('任务收藏')
-							console.log(res)
-							this.listData.push.apply(this.listData, res.data.data)
-							this.loadingShow = false
-							this.count = this.count + 12
-							this.$nextTick(() => {
-								this._initScroll()
-							})
-						} else {
-							this.tip = '暂无收藏'
-							this.loadingShow = false
-						}
-					})
+					}
+				})
+				.then((res) => {
+					console.log(res)
+					if(res.data.datastatus === 1) {
+						console.log('任务收藏')
+						console.log(res)
+						this.listData.push.apply(this.listData, res.data.data)
+						this.loadingShow = false
+						this.count = this.count + 12
+						this.$nextTick(() => {
+							this._initScroll()
+						})
+					} else {
+						this.tip = '暂无收藏'
+						this.loadingShow = false
+					}
+				})
 		},
 		methods: {
 			edit() {
@@ -107,9 +107,31 @@
 					}
 				})
 			},
-			spliceList(index) {
-				this.listData.splice(index, 1)
-				this.scroll.refresh()
+			spliceList(id, index) {
+				this.$vux.loading.show({
+					text: '正在删除'
+				})
+				console.log(index)
+				this.$http.get('getData/index.php?m=home&c=Form&a=deleteMycollect', {
+					params: {
+						seachdata: {
+							id: id
+						}
+					}
+				}).then((res) => {
+					console.log(res)
+					this.$vux.loading.hide()
+					if(res.data.datastatus === 1) {
+						this.listData.splice(index, 1)
+						this.$vux.toast.show({
+							text: '删除成功!',
+							time: '1000'
+						})
+						this.scroll.refresh()
+					} else {
+						this.$vux.toast.text(res.data.message)
+					}
+				})
 			}
 		},
 		beforeRouteLeave(to, from, next) {

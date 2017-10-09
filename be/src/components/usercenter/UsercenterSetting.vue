@@ -2,14 +2,23 @@
 	<div class="usercenter-setting">
 		<v-header title="系统设置"></v-header>
 		<div class="list">
-			<cell is-link style="height: 29px;" link="/usercenter/BindingPhone" v-show="login">
+			<cell is-link style="height: 29px;" link="/usercenter/BindingPhoneNew" v-show="login && mobile === ''">
 				<div slot="icon" style="width: 26px; margin-right: 20px;">
 					<img slot="icon" width="22" src="../../../static/usercenter/icon12.png" style="vertical-align:middle; display: block; margin: auto; margin: auto;">
 				</div>
 				<span slot="title">
         			<span style="font-size: 14px; line-height: 49px;">安全手机</span>
 				</span>
-				<span slot="default" style="font-size: 14px;">12345678910</span>
+				<span slot="default" style="font-size: 14px;">{{mobile}}</span>
+			</cell>
+			<cell style="height: 29px;" v-show="login && mobile !== ''">
+				<div slot="icon" style="width: 26px; margin-right: 20px;">
+					<img slot="icon" width="22" src="../../../static/usercenter/icon12.png" style="vertical-align:middle; display: block; margin: auto; margin: auto;">
+				</div>
+				<span slot="title">
+        			<span style="font-size: 14px; line-height: 49px;">安全手机</span>
+				</span>
+				<span slot="default" style="font-size: 14px;">{{mobile}}</span>
 			</cell>
 			<cell is-link style="height: 29px;" link="/changePsd" v-show="login">
 				<div slot="icon" style="width: 26px; margin-right: 20px;">
@@ -76,7 +85,9 @@
 					onConfirm() {
 						sessionStorage.clear()
 						localStorage.clear()
-						localStorage.setItem('httpUrl', 'http://afx.hfrjkf.cn/')
+//						localStorage.setItem('httpUrl', 'http://afx.hfrjkf.cn/')
+						localStorage.setItem('httpUrl', 'http://aifengxiang.hfrjkf.cn/')
+						_this.$http.defaults.baseURL = localStorage.getItem('httpUrl')
 						sessionStorage.setItem('city', '')
 						sessionStorage.setItem('cityPosition', '')
 						sessionStorage.setItem('counties', '')
@@ -90,6 +101,16 @@
 			return {
 				show: false,
 				login: sessionStorage.getItem('token')
+			}
+		},
+		computed: {
+			mobile() {
+				let mobile = localStorage.getItem('mobile')
+				if(mobile === 'null' || !mobile) {
+					return ''
+				}else {
+					return mobile
+				}
 			}
 		}
 	}

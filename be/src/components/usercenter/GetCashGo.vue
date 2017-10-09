@@ -3,11 +3,11 @@
 		<v-header title="收益提现"></v-header>
 		<p class="top-detail">支付宝账户提现</p>
 		<div class="top">
-			支付宝：谢惠伊（17755164120）
+			支付宝：{{pay}}
 		</div>
 		<p class="top-detail">提现金额</p>
 		<group style="margin-top: 0;">
-			<x-input title="金额（元）：" placeholder="最低50元起，您现有10元" style="font-size: 16px;"></x-input>
+			<x-input title="金额（元）：" placeholder="最低50元起" style="font-size: 16px;" v-model="cash"></x-input>
 		</group>
 		<p class="detail">
 			1、提现最低10元起，手续费按0.2%计算，最低2元/笔，最高25元/笔；<br />
@@ -15,7 +15,7 @@
 			3、提现处理周期，自申请3-5个工作日内按成处理；<br />
 			4、如有疑问请致电咨询，电话4008-566-116
 		</p>
-		<div class="btn">
+		<div class="btn" @click="getCash">
 			提交申请
 		</div>
 	</div>
@@ -25,10 +25,47 @@
 	import Header from '@/common/vue/Header'
 	import { Group, XInput } from 'vux'
 	export default {
+		data() {
+			return {
+				cash: '',
+				pay: localStorage.getItem('ali_pay_phone')
+			}
+		},
 		components: {
 			'v-header': Header,
 			Group,
 			XInput
+		},
+		methods: {
+			getCash() {
+				if(this.cash === '') {
+					this.$vux.toast.text('请输入提现金额')
+					return
+				}
+				if(parseFloat(this.cash) < 50) {
+					this.$vux.toast.text('提现金额最低50元起')
+					return
+				}
+				if(parseFloat(this.cash) % 50 !== 0) {
+					this.$vux.toast.text('提现金额需为50的倍数')
+					return
+				}
+				this.$http.get('getData/index.php?m=home&c=Form&a=txList', {
+					params: {
+						seachdata: {
+							tx_num: this.cash
+						}
+					}
+				}).then((res) => {
+					console.log(res)
+					if(res.data.datastatus === 1) {
+						this.$vux.toast.text('申请成功')
+						this.$router.replace('/usercenter/getCash')
+					}else {
+						this.$vux.toast.text(res.data.message)
+					}
+				})
+			}
 		}
 	}
 </script>

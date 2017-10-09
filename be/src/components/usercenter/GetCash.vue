@@ -1,26 +1,32 @@
 <template>
 	<div class="get-cash-box">
 		<v-header title="提现管理"></v-header>
-		<div class="top">
+		<!--<div class="top">
 			<span class="total">累计提现</span>
 			<span class="cash">1123.35元</span>
-		</div>
+		</div>-->
 		<div class="content">
-			<div class="item vux-1px-b">
+			<div class="item vux-1px-b" v-for="(item, index) in infoList" :key="index">
 				<div class="text">
 					<p class="first">
 						单次转出
-						<span class="label">
+						<span class="label" v-if="item.status === '0'">
 							提现中
 						</span>
+						<span class="label token" v-if="item.status === '1'">
+							已提现
+						</span>
+						<span class="label token" v-if="item.status === '-1'">
+							已驳回
+						</span>
 					</p>
-					<p class="second">2017-6-27 14:44</p>
+					<p class="second">{{item.createtime | formDate}}</p>
 				</div>
 				<div class="price">
-					-300.5
+					-{{item.tx_num}}
 				</div>
 			</div>
-			<div class="item vux-1px-b">
+			<!--<div class="item vux-1px-b">
 				<div class="text">
 					<p class="first">
 						单次转出
@@ -33,19 +39,61 @@
 				<div class="price">
 					-300.5
 				</div>
-			</div>
+			</div>-->
 		</div>
-		<router-link to="/usercenter/getCashBindingPhone" tag="div" class="btn">
+		<div v-if="infoList.length === 0">
+			<load-more :show-loading="false" tip="暂无提现记录" background-color="#f0f0f0"></load-more>
+		</div>
+		<!--<router-link to="/usercenter/getCashBindingPhone" tag="div" class="btn" v-if="!mobile">
 			立即提现
-		</router-link>
+		</router-link>-->
+		<div class="btn" @click="goCash">
+			立即提现
+		</div>
+		<!--<router-link to="/usercenter/getCashBindingPay" tag="div" class="btn" v-if="pay">
+			立即提现
+		</router-link>-->
 	</div>
 </template>
 
 <script>
 	import Header from '@/common/vue/Header'
+	import { LoadMore } from 'vux'
 	export default {
+		data() {
+			return {
+				infoList: [],
+				mobile: localStorage.getItem('mobile'),
+				pay: localStorage.getItem('ali_pay_phone')
+			}
+		},
 		components: {
-			'v-header': Header
+			'v-header': Header,
+			LoadMore
+		},
+		created() {
+			this.$http.get('getData/index.php?m=home&c=Form&a=txList', {
+				params: {
+					seachdata: {
+						limit: '100'
+					}
+				}
+			}).then((res) => {
+				this.infoList = res.data.data
+				console.log(res)
+//				console.log(this.mobile)
+			})
+		},
+		methods: {
+			goCash() {
+				if(!this.mobile || this.mobile === 'null') {
+					this.$router.replace('/usercenter/getCashBindingPhone')
+				}else if(!this.pay || this.pay === 'null') {
+					this.$router.replace('/usercenter/getCashBindingPay')
+				}else {
+					this.$router.replace('/usercenter/getCashGo')
+				}
+			}
 		}
 	}
 </script>

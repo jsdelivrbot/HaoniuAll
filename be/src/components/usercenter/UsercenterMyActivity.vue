@@ -3,8 +3,7 @@
 		<v-header title="我的活动"></v-header>
 		<div ref="wrapper" class="wrapper">
 			<div class="list">
-				<router-link :to="'/usercenter/myActivityDetail/' + item.info_id" tag="div" class="item"
-					v-for="(item, index) in listData" :key="index">
+				<router-link :to="'/usercenter/myActivityDetail/' + item.info_id" tag="div" class="item" v-for="(item, index) in listData" :key="index">
 					<div class="content vux-1px-b">
 						<div class="img">
 							<img :src="httpUrl + item.info_detail.img" />
@@ -22,14 +21,21 @@
 					<div class="total">
 						<p>
 							<!--{{item.remark}}-->
-							<span>成人票</span>
-							<span class="count">×2</span>
-							<span class="price">￥200.00</span>
+							<span v-text="josn2Obj(item.remark).adult.title"></span> 
+							<span class="count" v-text="josn2Obj(item.remark).adult.num"></span>
+							<span class="price" v-text="josn2Obj(item.remark).adult.price"></span>
 						</p>
 						<p>
-							<span>免费票</span>
-							<span class="count">×2</span>
-							<span class="price">￥0.00</span>
+							<!--{{item.remark}}-->
+							<span v-text="josn2Obj(item.remark).children.title"></span> 
+							<span class="count" v-text="josn2Obj(item.remark).children.num"></span>
+							<span class="price" v-text="josn2Obj(item.remark).children.price"></span>
+						</p>
+						<p>
+							<!--{{item.remark}}-->
+							<span v-text="josn2Obj(item.remark).free.title"></span> 
+							<span class="count" v-text="josn2Obj(item.remark).free.num"></span>
+							<span class="price" v-text="josn2Obj(item.remark).free.price"></span>
 						</p>
 					</div>
 				</router-link>
@@ -90,9 +96,9 @@
 					}
 				})
 				.then((res) => {
+					console.log(res)
 					if(res.data.datastatus === 1) {
 						console.log('我的活动列表')
-						console.log(res)
 						this.listData = res.data.data
 						this.loadingShow = false
 						this.count = this.count + 12
@@ -106,6 +112,9 @@
 				})
 		},
 		methods: {
+			josn2Obj(value) {
+				return JSON.parse(value)
+			},
 			_initScroll() {
 				if(!this.$refs.wrapper) {
 					return

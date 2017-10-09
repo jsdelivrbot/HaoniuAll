@@ -36,6 +36,7 @@
 				this.$emit('closeSearchHandle')
 			},
 			goSearch() {
+				this.count = 0
 				this.$http.get('getData/index.php?m=home&c=Form&a=articleList', {
 						params: {
 							type: 0,

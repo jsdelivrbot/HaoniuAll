@@ -15,7 +15,7 @@
 		</router-link>
 		<router-link to="/shopping-mall" class="item commission" tag="div">
 			<!--<div class="commission"></div>-->
-			<span class="text">佣金商城</span>
+			<span class="text">蜂购商城</span>
 		</router-link>
 		<router-link to="/usercenter" class="item user" tag="div">
 			<!--<div class="user"></div>-->

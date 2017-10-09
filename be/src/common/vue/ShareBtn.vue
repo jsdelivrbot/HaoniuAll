@@ -9,14 +9,14 @@
 					<span>已收藏</span>
 				</div>
 				<div class="go-share" @click="showMaster">
-					<span>分享</span>
+					<span>分享到社交圈赚取更多</span>
 				</div>
 			</div>
 			<div class="detail" @click="getCharge" v-show="!getted">
-				点击按钮轻松赚取{{article_rule_money}}元
+				点击赚取{{article_rule_money}}元
 			</div>
 			<div class="detail getted" @click="showMaster" v-show="getted">
-				已经赚取{{article_rule_money}}元
+				已赚取{{article_rule_money}}元
 			</div>
 		</div>
 		<transition name="all">
@@ -24,18 +24,18 @@
 				<transition name="up">
 					<div class="category" @click.stop v-show="masterShow">
 						<div class="row row1">
-							<div class="icon">
+							<div class="icon" @click="share('tm')">
 								<img src="../../../static/hot-article-category5.png" width="38px" />
 								<p>微信朋友圈</p>
 							</div>
-							<div class="icon">
+							<div class="icon" @click="share('wx')">
 								<img src="../../../static/hot-article-category4.png" width="40px" />
 								<p>微信好友</p>
 							</div>
-							<div class="icon">
+							<!--<div class="icon">
 								<img src="../../../static/hot-article-category1.png" width="40px" />
 								<p>QQ空间</p>
-							</div>
+							</div>-->
 							<div class="icon">
 								<img src="../../../static/hot-article-category6.png" width="40px" />
 								<p>QQ好友</p>
@@ -46,10 +46,10 @@
 								<img src="../../../static/hot-article-category3.png" width="38px" />
 								<p>微博</p>
 							</div>
-							<div class="icon">
+							<!--<div class="icon">
 								<img src="../../../static/hot-article-category2.png" width="38px" />
 								<p>贴吧</p>
-							</div>
+							</div>-->
 							<div class="icon"></div>
 							<div class="icon"></div>
 						</div>
@@ -65,7 +65,7 @@
 
 <script>
 	export default {
-		props: ['articleId', 'article_rule_money'],
+		props: ['articleId', 'article_rule_money', 'title', 'id'],
 		data() {
 			return {
 				collected: false,
@@ -74,16 +74,22 @@
 			}
 		},
 		methods: {
+			share(selects) {
+				let opts = {
+					url: 'http://aifengxiang.hfrjkf.cn/app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=article&aid=' + this.id,
+					title: this.title.substring(0, 10) + '...',
+					content: this.title,
+					img: 'http://aifengxiang.hfrjkf.cn/logo.png'
+				}
+				this.$CwxShare(selects, opts, function(res) {
+					if(res) {
+						mui.toast('分享成功!')
+					} else {
+						mui.toast('分享失败,请重试!')
+					}
+				})
+			},
 			showMaster() {
-//				if(!sessionStorage.getItem('token')) {
-//					this.$router.push({
-//						path: '/login',
-//						query: {
-//							redirect: this.$route.fullPath
-//						}
-//					})
-//					return
-//				}
 				this.masterShow = true
 			},
 			getCharge() {
@@ -216,24 +222,27 @@
 			background-color: white;
 			.border-1px(#e2e2e2);
 			.btn {
-				flex: 2;
+				flex: 4;
 				width: 0;
 				background-color: #3d3d3d;
 				display: flex;
 				div {
-					flex: 1;
 					width: 0;
 					&.go-collect {
+						flex: 1;
 						background: url(../../../static/hot-article-collect.png) center 6px no-repeat;
 						background-size: 22px 22px;
 					}
 					&.collected {
+						flex: 1;
 						background: url(../../../static/hot-article-share-active.png) center 6px no-repeat;
 						background-size: 20px 20px;
 					}
 					&.go-share {
+						flex: 2;
 						background: url(../../../static/hot-article-share.png) center 6px no-repeat;
 						background-size: 16px 19px;
+						background-color: rgb(255, 82, 33);
 					}
 					span {
 						color: white;
@@ -245,11 +254,11 @@
 				}
 			}
 			.detail {
-				flex: 3;
+				flex: 2;
 				width: 0;
 				background-color: #e60012;
 				color: white;
-				font-size: 16px;
+				font-size: 14px;
 				text-align: center;
 				line-height: 50px;
 			}

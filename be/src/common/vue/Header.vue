@@ -5,6 +5,9 @@
 		<input class="search" type="text" v-if="search" placeholder="请输入关键词" v-model="text" />
 		<span class="map" @click="mapfn">{{map}}</span>
 		<search v-if="searchShow" @closeSearchHandle="closeSearch"></search>
+		<div class="shares" v-if='isshare' @click="touchShaer">
+			<img src="../../../static/share2ad.png" />
+		</div>
 	</div>
 </template>
 
@@ -14,25 +17,21 @@
 		props: {
 			title: String,
 			map: String,
-			search: Boolean
+			search: Boolean,
+			isshare: {
+				type: Boolean,
+				default: false
+			}
 		},
 		methods: {
+			touchShaer() {
+				this.$emit('shares', 'yes')
+			},
 			back() {
-				//				var scrollY = localStorage.getItem('scrollY')
 				this.$router.back(-1)
-				//				setTimeout(() => {
-				//					window.scrollTo(0, scrollY)
-				//				}, 200)
 			},
 			mapfn() {
 				if(this.map === '搜索') {
-//					if(this.text === '') {
-//						this.$vux.alert.show({
-//							title: '提示',
-//							content: '请输入搜索内容'
-//						})
-//						return
-//					}
 					this.$http.get('getData/index.php?m=home&c=Form&a=infoList', {
 							params: {
 								seachdata: {
@@ -43,8 +42,6 @@
 							}
 						})
 						.then((res) => {
-//							console.log('搜索列表')
-//							console.log(res)
 							if(res.data.datastatus === 0) {
 								this.$vux.alert.show({
 									title: '提示',
@@ -79,14 +76,14 @@
 	.header-box {
 		width: 100%;
 		height: 44px;
-		background-color: #e70012;		
+		background-color: #e70012;
 		position: fixed;
 		top: 0;
 		left: 0;
 		box-shadow: 0 2px 2px rgba(0, 0, 0, 0.35);
 		display: flex;
 		align-items: center;
-		z-index: 2147483648;
+		z-index: 6;
 		.icon-fanhui {
 			color: white;
 			font-size: 20px;
@@ -95,6 +92,18 @@
 			text-align: center;
 			height: 44px;
 			line-height: 44px;
+		}
+		.shares {
+			position: absolute;
+			right: 0;
+			top: 0;
+			width: 44px;
+			padding: 10px;
+			box-sizing: border-box;
+			height: 44px;
+			img {
+				width: 100%;
+			}
 		}
 		.title {
 			text-align: center;

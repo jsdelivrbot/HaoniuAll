@@ -14,14 +14,14 @@
 							<img src="../../../static/indexicon2.png" />
 							<p>热门文章</p>
 						</router-link>
-						<!--<router-link to="/share-shopping" tag="div" class="item">
-					<img src="../../../static/indexicon3.png" />
-					<p>分享购</p>
-				</router-link>-->
-						<div class="item" @click="loadingOpen">
+						<router-link to="/fxgshop" tag="div" class="item">
 							<img src="../../../static/indexicon3.png" />
 							<p>分享购</p>
-						</div>
+						</router-link>
+						<!--<div class="item" @click="loadingOpen">
+							<img src="../../../static/indexicon3.png" />
+							<p>分享购</p>
+						</div>-->
 						<router-link to="/coupon" tag="div" class="item">
 							<img src="../../../static/indexicon4.png" />
 							<p>折扣券</p>
@@ -36,10 +36,10 @@
 							<img src="../../../static/indexicon6.png" />
 							<p>吃喝玩乐</p>
 						</router-link>
-						<router-link to="/homeProperty" tag="div" class="item">
+						<!--<router-link to="/homeProperty" tag="div" class="item">
 							<img src="../../../static/indexicon7.png" />
 							<p>房产家居</p>
-						</router-link>
+						</router-link>-->
 						<router-link to="/free" tag="div" class="item">
 							<img src="../../../static/indexicon8.png" />
 							<p>今日免单</p>
@@ -52,6 +52,10 @@
 							<img src="../../../static/indexicon10.png" />
 							<p>线下互动</p>
 						</router-link>
+						<div class="item" @click="loadingOpen">
+							<img src="../../../static/amusement-icon8.png" />
+							<p>更多</p>
+						</div>
 					</div>
 				</div>
 				<task-list :data="taskList" :tip="tip" :loadingShow="loadingShow"></task-list>
@@ -134,7 +138,7 @@
 			loadingOpen() {
 				this.$vux.alert.show({
 					title: '提示',
-					content: '敬请期待'
+					content: '敬情期待'
 				})
 			},
 			getData() {
@@ -199,7 +203,7 @@
 		padding-top: 54px;
 		.wrapper {
 			position: fixed;
-			top: 54px;
+			top: 49px;
 			bottom: 49px;
 			width: 100%;
 			overflow: hidden;

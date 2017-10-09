@@ -12,7 +12,7 @@
 					<!--<p class="content-text">
 						便当，让生活更惬意，是夫妻间爱意的表达，给自己的幸福感。
 					</p>-->
-				<!--<p class="cotent-footer">
+			<!--<p class="cotent-footer">
 						<span class="date">截止日期：</span>2017-8-22
 					</p>
 				</div>
@@ -23,8 +23,7 @@
 					</span>
 				</div>
 			</router-link>-->
-			<router-link :to="fullDetailUrl(item.id)" tag="li" class="border-1px"
-				v-for="item,index in data" :key="index">
+			<router-link :to="fullDetailUrl(item.id)" tag="li" class="border-1px" v-for="item,index in data" :key="index">
 				<div class="img">
 					<img :src="fullImgUrl(item.resp_img)">
 				</div>
@@ -80,7 +79,7 @@
 
 <style lang="less">
 	@import url("../../../static/less/mixin.less");
-	.hot-article-list-box{
+	.hot-article-list-box {
 		ul {
 			li {
 				padding: 0 12px;
@@ -106,6 +105,9 @@
 					}
 					.content-title {
 						font-size: 14px;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
 					}
 					.content-text {
 						font-size: 12px;

@@ -3,14 +3,14 @@
 		<div class="main">
 			<v-header title="修改个人资料"></v-header>
 			<div class="avatar">
-				<img :src="avatar" />
+				<img :src="avatar.link" />
 			</div>
 			<div class="avatar-btn">
-				<input type="file" value="test" style="background-color: white;" @change="getImgInfo" />
+				<input type="file" value="test" style="background-color: white;" @change="getImgInfo" ref="imgFile" />
 				<p>上传头像</p>
 			</div>
 			<group>
-				<cell title="账号" value="17755164120"></cell>
+				<cell title="账号" :value="phone"></cell>
 				<!--<cell title="昵称" value="默默"></cell>-->
 				<x-input title="昵称" type="text" v-model="username" style="font-size: 14px;" text-align="right" :show-clear="false"></x-input>
 				<!--<datetime title="出生年月" :min-year="1900" :max-year="2017" 
@@ -30,7 +30,7 @@
 				<cell is-link @click.native="isShow = true">
 					<span slot="title">
         			<span>性别</span> &nbsp;
-					<span style="color: #e60012; vertical-align: middle;">*</span>
+					<!--<span style="color: #e60012; vertical-align: middle;">*</span>-->
 					</span>
 					<span slot="value">
 						{{sex}}
@@ -39,7 +39,7 @@
 				<cell is-link @click.native="isShow = true">
 					<span slot="title">
         			<span>年龄区间</span> &nbsp;
-					<span style="color: #e60012; vertical-align: middle;">*</span>
+					<!--<span style="color: #e60012; vertical-align: middle;">*</span>-->
 					</span>
 					<span slot="value">
 						{{age}}
@@ -48,7 +48,7 @@
 				<cell is-link @click.native="isShow = true">
 					<span slot="title">
         			<span>行业</span> &nbsp;
-					<span style="color: #e60012; vertical-align: middle;">*</span>
+					<!--<span style="color: #e60012; vertical-align: middle;">*</span>-->
 					</span>
 					<span slot="value">
 						{{work}}
@@ -57,7 +57,7 @@
 				<cell is-link @click.native="isShow = true">
 					<span slot="title">
 	        			<span>兴趣爱好</span> &nbsp;
-					<span style="color: #e60012; vertical-align: middle;">*</span>
+					<!--<span style="color: #e60012; vertical-align: middle;">*</span>-->
 					</span>
 					<span slot="value" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; width: 200px;">
 						{{hobby}}
@@ -68,11 +68,11 @@
 				<br/> 资料越真实，广告的效果会越好，您的收益才会越高！
 			</p>
 		</div>
-		<div class="footer">
+		<div class="footer" @click="updateInfo">
 			完成
 		</div>
 		<transition name="slide">
-			<perfect-more @cancelShow="cancelShow" v-show="isShow" @save="save"></perfect-more>
+			<perfect-more @cancelShow="cancelShow" v-show="isShow" @save="save" :sex="sex" :age="age" :work="work" :hobby="hobby"></perfect-more>
 		</transition>
 	</div>
 </template>
@@ -118,45 +118,125 @@
 					this.hobby = chosenList[3].join(',')
 				}
 			},
-			getImgInfo(ev) {
-				var oFile = ev.target.files[0]
-				var reader = new FileReader()
-				console.log(oFile)
-				let $this = this
-				reader.onload = function() {
-					// 也可以用 window.URL.createObjectURL(this.result)
-					$this.avata = this.result;
+			getImgInfo() {
+				this.$vux.loading.show({
+					text: '正在读取图片'
+				})
+				const img = this.$refs.imgFile.files[0]
+				this.$refs.imgFile.value = ''
+				const formData = new FormData()
+				const config = {
+					headers: {
+						'Content-Type': 'multipart/form-data'
+					}
 				}
-//				reader.readAsDataURL(oFile)
+				formData.append('file', img)
+				this.$http.post('getData/index.php?m=home&c=Form&a=imgUpload', formData, config)
+					.then((res) => {
+						console.log(res)
+						if(res.data.datastatus === 1) {
+							this.avatar.link = localStorage.getItem('httpUrl') + res.data.data.link
+							this.avatar.img = res.data.data.img
+							this.updateAvatar(res.data.data.link)
+						}else {
+							this.$vux.toast.text(res.data.data.message)
+						}
+						this.$vux.loading.hide()
+					})
+			},
+			updateAvatar(src) {
+				this.$http.get('getData/index.php?m=home&c=Form&a=usercenter_ChangeAvatar', {
+					params: {
+						seachdata: {
+							avatar: this.avatar.img
+						}
+					}
+				}).then((res) => {
+					if(res.data.datastatus === 1) {
+						this.$vux.toast.text('上传成功')
+						localStorage.setItem('avatar', src)
+					}
+				})
+			},
+			updateInfo() {
+				this.$vux.loading.show({
+					text: '正在修改'
+				})
+				this.$http.get('getData/index.php?m=home&c=Form&a=usercenter_ChangeInfo', {
+					params: {
+						seachdata: {
+							nickname: this.username,
+							sex_type: this.sex,
+							age_area: this.age,
+							hy_area: this.work,
+							hbt_list: this.hobby
+						}
+					}
+				}).then((res) => {
+					this.$vux.loading.hide()
+					if(res.data.datastatus === 1) {
+						localStorage.setItem('sex_type', this.sex)
+						localStorage.setItem('age_area', this.age)
+						localStorage.setItem('hy_area', this.work)
+						localStorage.setItem('hbt_list', this.hobby)
+						localStorage.setItem('nickname', this.username)
+						this.$vux.toast.text('修改成功')
+						this.$router.go(-1)
+					} else {
+						this.$vux.toast.text(res.data.message)
+					}
+				})
 			}
+//			updateAll() {
+//				let $this = this
+//				this.$http.all([this.updateAvatar(), this.updateInfo()])
+//					.then(this.$http.spread(function(res1, res2) {
+//						if(res1.data.datastatus === 1 && res2.data.datastatus === 1) {
+//							localStorage.setItem('sex_type', $this.sex)
+//							localStorage.setItem('age_area', $this.age)
+//							localStorage.setItem('hy_area', $this.work)
+//							localStorage.setItem('hbt_list', $this.hobby)
+//							localStorage.setItem('avatar', $this.avatar.link)
+//							//							console.log(this)
+//							$this.$vux.toast.text('修改成功')
+//							$this.$router.back(-1)
+//						} else {
+//							$this.$vux.toast.text('上传失败')
+//						}
+//					}))
+//			}
 		},
 		data() {
 			return {
 				isShow: false,
-				sex: '请选择',
-				age: '请选择',
-				work: '请选择',
-				hobby: '请选择',
+				sex: localStorage.getItem('sex_type') || '请选择',
+				age: localStorage.getItem('age_area') || '请选择',
+				work: localStorage.getItem('hy_area') || '请选择',
+				hobby: localStorage.getItem('hbt_list') || '请选择',
 				username: localStorage.getItem('nickname'),
-				avata: ''
-			}
-		},
-		computed: {
-			avatar() {
-				if(!localStorage.getItem('avatar')) {
-					return '../../../../static/avatar.png'
-				} else {
-					return localStorage.getItem('httpUrl') + localStorage.getItem('avatar')
-				}
+				avatar: {
+					link: localStorage.getItem('httpUrl') + localStorage.getItem('avatar'),
+					img: ''
+				},
+				phone: localStorage.getItem('phone')
 			}
 		}
+		//		computed: {
+		//			avatar() {
+		//				if(!localStorage.getItem('avatar')) {
+		//					return '../../../../static/avatar.png'
+		//				} else {
+		//					return localStorage.getItem('httpUrl') + localStorage.getItem('avatar')
+		//				}
+		//			}
+		//		}
 	}
 </script>
 
 <style lang="less">
 	.perfect-box {
 		.main {
-			min-height: 100vh;
+			/*min-height: 100vh;*/
 			padding-top: 44px;
 			padding-bottom: 88px;
 			/*box-sizing: border-box;*/

@@ -114,6 +114,23 @@
 					})
 					return
 				}
+				let remark = {
+					adult: {
+						title: '成人票',
+						price: '￥' + this.adultPrice,
+						num: '×' + this.adult
+					},
+					children: {
+						title: '儿童票',
+						price: '￥' + this.childrenPrice,
+						num: '×' + this.children
+					},
+					free: {
+						title: '免费票',
+						price: '￥' + this.freePrice,
+						num: '×' + this.free
+					}
+				}
 				this.$http.get('getData/index.php?m=home&c=Form&a=infoJoin', {
 					params: {
 						seachdata: {
@@ -121,7 +138,8 @@
 							'username': this.username,
 							'phone': this.phone,
 							'action_type': 6,
-							'remark': '成人票:￥' + this.adultPrice + ',num:' + this.adult + ',儿童票:￥' + this.childrenPrice + ',num:' + this.children + ',免费票:￥' + this.freePrice + ',num:' + this.free
+							//							'remark': '成人票:￥' + this.adultPrice + ',num:' + this.adult + ',儿童票:￥' + this.childrenPrice + ',num:' + this.children + ',免费票:￥' + this.freePrice + ',num:' + this.free
+							'remark': JSON.stringify(remark)
 						}
 					}
 				}).then((res) => {

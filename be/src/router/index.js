@@ -6,6 +6,8 @@ import HomeIndex from '@/components/home/HomeIndex'
 import HomePosition from '@/components/home/HomePosition'
 import TaskGuide from '@/components/home/TaskGuide'
 import Service from '@/components/home/Service'
+
+import fxgshop from '@/components/shoppingMall/fxgshop'
 //搜索
 import Search from '@/common/vue/Search'
 //任务大厅
@@ -112,7 +114,8 @@ const router = new Router({
 				path: '/service',
 				component: Service
 			}]
-		}, {
+		},
+		{
 			path: '/task',
 			component: Task,
 			children: [{
@@ -261,7 +264,10 @@ const router = new Router({
 			component: Profit,
 			children: [{
 				path: '/',
-				component: ProfitIndex
+				component: ProfitIndex,
+				meta: {
+					requiresAuth: true
+				}
 			}, {
 				path: '/profit/ranking',
 				component: ProfitRanking
@@ -280,7 +286,15 @@ const router = new Router({
 		{
 			path: '/login',
 			component: Login
-		}, {
+		},
+		{
+			path: '/fxgshop',
+			component: fxgshop,
+			meta: {
+				requiresAuth: true
+			}
+		},
+		{
 			path: '/register',
 			component: Register
 		}, {

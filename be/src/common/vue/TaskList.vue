@@ -21,7 +21,7 @@
 				<img :src="fullImgUrl(item.resp_img)" />
 			</div>
 			<div class="content">
-				<span class="title">【今日推荐】</span>
+				<span class="title"></span>
 				<p class="main">{{item.article_title}}</p>
 				<!--<p class="count">投放量： 10000</p>-->
 				<p class="price">
@@ -109,10 +109,11 @@
 					/*height: 76px;*/
 					display: -webkit-box;
 					-webkit-box-orient: vertical;
-					-webkit-line-clamp: 3;
+					-webkit-line-clamp: 2;
 					overflow: hidden;
 					line-height: 16px;
-					height: 48px;
+					height: 32px;
+					margin: 6px 0 24px;
 				}
 				.count,.price {
 					font-size: 10px;

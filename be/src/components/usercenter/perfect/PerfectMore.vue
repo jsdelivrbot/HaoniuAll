@@ -54,6 +54,7 @@
 				listItem.currentIndex.push(listItem.children[listIndex])
 			},
 			currentMore(index, list) {
+//				console.log(this.list[index].currentIndex)
 				if(this.list[index].currentIndex.indexOf(list) === -1) {
 					return false
 				} else {
@@ -85,6 +86,26 @@
 				}
 				console.log(chosenList)
 				this.$emit('save', chosenList)
+			},
+			findCurrent(item, list) {
+				for (let i = 0; i < list.length; i++) {
+					if(item === list[i]) {
+						return i
+					}
+				}
+			},
+			findCurrentGroup(item, list) {
+				let arr = []
+				for (let i = 0; i < list.length; i++) {
+//					console.log(list[i])
+//					console.log(item)
+//					console.log(item.indexOf(list[i]))
+					if(item.indexOf(list[i]) >= 0) {
+						arr.push(list[i])
+					}
+				}
+//				console.log(arr)
+				return arr
 			}
 		},
 		data() {
@@ -115,6 +136,13 @@
 				}]
 			}
 		},
+		props: ['sex', 'age', 'work', 'hobby'],
+		created() {
+			this.list[0].currentIndex = this.findCurrent(this.sex, this.list[0].children)
+			this.list[1].currentIndex = this.findCurrent(this.age, this.list[1].children)
+			this.list[2].currentIndex = this.findCurrent(this.work, this.list[2].children)
+			this.list[3].currentIndex = this.findCurrentGroup(this.hobby, this.list[3].children)
+		},
 		computed: {
 			currentList() {
 				let current = []
@@ -133,7 +161,7 @@
 		width: 100%;
 		top: 0;
 		left: 0;
-		z-index: 2;
+		z-index: 10;
 		min-height: 100vh;
 		background-color: white;
 		box-sizing: border-box;
@@ -148,7 +176,7 @@
 			box-shadow: 0 2px 2px rgba(0, 0, 0, 0.35);
 			display: flex;
 			align-items: center;
-			z-index: 2;
+			z-index: 10;
 			.icon-fanhui {
 				color: white;
 				font-size: 20px;

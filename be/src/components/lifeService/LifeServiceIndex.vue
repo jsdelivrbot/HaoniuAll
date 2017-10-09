@@ -1,7 +1,7 @@
 <template>
 	<div class="life-service-index-box">
 		<v-header title="生活服务"></v-header>
-		<swiper :list="baseList" auto :aspect-ratio="1/4" :show-desc-mask="false" :loop="true" class="banner" dots-position="center"></swiper>
+		<swiper :list="baseList" auto :aspect-ratio="1/3" :show-desc-mask="false" :loop="true" class="banner" dots-position="center"></swiper>
 		<div class="list">
 			<ul class="clearfix">
 				<router-link :to="'/lifeService/in/' + item.id" tag="li" class="vux-1px"
@@ -70,7 +70,7 @@
 	.life-service-index-box {
 		padding-top: 44px;
 		.vux-slider {
-			margin-top: 10px;
+			margin-top: 5px;
 			.vux-indicator {
 				a {
 					.vux-icon-dot.active {

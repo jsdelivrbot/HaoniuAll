@@ -1,59 +1,55 @@
 <template>
 	<div class="profit-ranking-list-box">
 		<ul class="list">
-			<li>
-				<div class="label first"></div>
-				<div class="img">
-					<img src="../../../static/ranking4.png" />
-				</div>
-				<div class="name">胡一菲</div>
-				<div class="total">500.00元</div>
-			</li>
-			<li>
-				<div class="label second"></div>
-				<div class="img">
-					<img src="../../../static/ranking4.png" />
-				</div>
-				<div class="name">胡一菲</div>
-				<div class="total">500.00元</div>
-			</li>
-			<li>
-				<div class="label third"></div>
-				<div class="img">
-					<img src="../../../static/ranking4.png" />
-				</div>
-				<div class="name">胡一菲</div>
-				<div class="total">500.00元</div>
-			</li>
-			<li>
-				<div class="label">4</div>
-				<div class="img">
-					<img src="../../../static/ranking4.png" />
-				</div>
-				<div class="name">胡一菲</div>
-				<div class="total">500.00元</div>
-			</li>
-			<li>
-				<div class="label">5</div>
-				<div class="img">
-					<img src="../../../static/ranking4.png" />
-				</div>
-				<div class="name">胡一菲</div>
-				<div class="total">500.00元</div>
-			</li>
-			<li>
-				<div class="label">6</div>
-				<div class="img">
-					<img src="../../../static/ranking4.png" />
-				</div>
-				<div class="name">胡一菲</div>
-				<div class="total">500.00元</div>
-			</li>
+			<div v-for="(item, index) in list" :key="index">
+				<li v-if="index === 0">
+					<div class="label first"></div>
+					<div class="img">
+						<img :src="httpUrl + item.avatar" />
+					</div>
+					<div class="name">{{item.nickname}}</div>
+					<div class="total">{{item.credit1}}元</div>
+				</li>
+				<li v-if="index === 1">
+					<div class="label second"></div>
+					<div class="img">
+						<img :src="httpUrl + item.avatar" />
+					</div>
+					<div class="name">{{item.nickname}}</div>
+					<div class="total">{{item.credit1}}元</div>
+				</li>
+				<li v-if="index === 2">
+					<div class="label third"></div>
+					<div class="img">
+						<img :src="httpUrl + item.avatar" />
+					</div>
+					<div class="name">{{item.nickname}}</div>
+					<div class="total">{{item.credit1}}元</div>
+				</li>
+				<li v-if="index > 2">
+					<div class="label">{{parseInt(index) + 1}}</div>
+					<div class="img">
+						<img :src="httpUrl + item.avatar" />
+					</div>
+					<div class="name">{{item.nickname}}</div>
+					<div class="total">{{item.credit1}}元</div>
+				</li>
+			</div>
 		</ul>
 	</div>
 </template>
 
 <script>
+	export default {
+		props: {
+			list: Array
+		},
+		data() {
+			return {
+				httpUrl: localStorage.getItem('httpUrl')
+			}
+		}
+	}
 </script>
 
 <style lang="less">

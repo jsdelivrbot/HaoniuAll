@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta name="format-detection" content="telphone=no, email=no" />
 		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
 		<title>bee-enjoy</title>
 		<script>
@@ -13,9 +13,6 @@
 					recalc = function() {
 						var clientWidth = docEl.clientWidth;
 						if(!clientWidth) return;
-
-						//这里是假设在750px宽度设计稿的情况下，1rem = 40px；
-						//可以根据实际需要修改
 						docEl.style.fontSize = 40 * (clientWidth / 750) + 'px';
 					};
 				if(!doc.addEventListener) return;
@@ -29,6 +26,10 @@
 	<body>
 		<div id="app-box"></div>
 		<!-- built files will be auto injected -->
+		<script src="static/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
 	</body>
-	<script src="static/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+
 </html>

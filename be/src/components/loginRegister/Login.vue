@@ -36,7 +36,7 @@
 		</div>
 		<div class="otherway">
 			<img src="../../../static/login4.png" />
-			<img src="../../../static/login5.png" />
+			<img src="../../../static/login5.png" @click="otherLogin('weixin')" />
 		</div>
 	</div>
 </template>
@@ -44,10 +44,63 @@
 <script>
 	export default {
 		methods: {
+			otherLogin(selectLogin) {
+				let $this = this
+				this.$CotherLogin(selectLogin, function(res) {
+					console.log(JSON.stringify(res.userInfo))
+					let info = res.userInfo
+					$this.$http.get('/getData/index.php?m=home&c=Form&a=wecat_Login', {
+						params: {
+							seachdata: {
+								openid: info.openid,
+								nickname: info.nickname,
+								avatar: info.headimgurl,
+								city: info.city,
+								country: info.country
+							}
+						}
+					}).then(
+						(res) => {
+							if(res.data.result === 1) {
+								$this.$vux.alert.show({
+									title: '提示',
+									content: '登录成功',
+									time: 1000,
+									onHide() {
+//										console.log(res.data.data[0].ali_pay_phone)
+										localStorage.setItem('ali_pay_phone', res.data.data[0].ali_pay_phone)
+										localStorage.setItem('sex_type', res.data.data[0].sex_type || '')
+										localStorage.setItem('age_area', res.data.data[0].age_area || '')
+										localStorage.setItem('hy_area', res.data.data[0].hy_area || '')
+										localStorage.setItem('hbt_list', res.data.data[0].hbt_list || '')
+										sessionStorage.setItem('token', res.data.data[0].token)
+										$this.$http.defaults.headers.common['token'] = res.data.data[0].token
+										localStorage.setItem('avatar', res.data.data[0].avatar)
+										localStorage.setItem('mobile', res.data.data[0].mobile)
+										localStorage.setItem('nickname', res.data.data[0].nickname)
+										localStorage.setItem('openid', res.data.data[0].openid)
+										if($this.$route.query.redirect) {
+											$this.$router.replace($this.$route.query.redirect)
+										} else {
+											$this.$router.back(-1)
+										}
+									}
+								})
+							} else {
+								$this.$vux.alert.show({
+									title: '提示',
+									content: '登录失败'
+								})
+							}
+						}
+					)
+				})
+			},
 			back() {
 				this.$router.back(-1)
 			},
 			login() {
+//				alert(123)
 				if(String.trim(this.phone).length !== 11) {
 					this.$vux.alert.show({
 						title: '提示',
@@ -78,6 +131,12 @@
 								content: '登录成功',
 								time: 1000,
 								onHide() {
+									console.log(res.data.data[0].ali_pay_phone)
+									localStorage.setItem('ali_pay_phone', res.data.data[0].ali_pay_phone)
+									localStorage.setItem('sex_type', res.data.data[0].sex_type || '')
+									localStorage.setItem('age_area', res.data.data[0].age_area || '')
+									localStorage.setItem('hy_area', res.data.data[0].hy_area || '')
+									localStorage.setItem('hbt_list', res.data.data[0].hbt_list || '')
 									localStorage.setItem('phone', String.trim($this.phone))
 									localStorage.setItem('psw', $this.psw)
 									sessionStorage.setItem('token', res.data.data[0].token)

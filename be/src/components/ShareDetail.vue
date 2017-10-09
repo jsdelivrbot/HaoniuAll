@@ -2,36 +2,34 @@
 	<div class="share-detail-box">
 		<div class="guide" v-show="guideShow">
 			<p>
-				1.分享搭配朋友圈时，写点分享语可吸引阅读哦！<br/> 2.分享到微信之后，自己点击阅读也有收益！ <br/> 3.分享到微信群中，收益更多更快！
-				<br/>
+				1、分享到社交圈时,写点分享语可以吸引阅读哦!<br /> 
+				2、分享到社交圈之后，自己点击阅读也有收益！<br />
+				 3、分享到社交圈中，收益更快更多！	<br />
 			</p>
 			<div class="close" @click.stop="guideShow=false">
 				<img src="../../static/hot-article-colose.png" />
 			</div>
 		</div>
-		<div class="top-adv">
-			<swiper :list="topAdvList" auto :aspect-ratio="1/4" 
-				:show-desc-mask="false" :loop="true" class="banner"></swiper>
+		<div class="top-adv" v-if='topAdvList'>
+			<swiper :list="topAdvList" auto :aspect-ratio="1/3" :show-desc-mask="false" :loop="true" class="banner"></swiper>
 		</div>
 		<div class="content" v-html="content">
 		</div>
-		<share-btn :articleId="articleId" :article_rule_money="article_rule_money"></share-btn>
+		<share-btn :title='infos.article_title' :id='infos.id' :articleId="articleId" :article_rule_money="article_rule_money"></share-btn>
 		<div class="footer-adv">
 			<!--<div class="footer-adv-title">
 				<span>广告</span>
 			</div>-->
 			<div class="adv">
 				<!--<img src="../../../static/hot-article2.png" />-->
-				<swiper :list="footerAdvList" auto :aspect-ratio="1/4" 
-					:show-desc-mask="false" :loop="true" class="banner"></swiper>
+				<swiper :list="footerAdvList" auto :aspect-ratio="1/3" :show-desc-mask="false" :loop="true" class="banner"></swiper>
 			</div>
 		</div>
 		<div class="fix-adv" v-show="fixAdvShow">
 			<div class="fix-close" @click="cancelFixAdv">
 				&times;
 			</div>
-			<swiper :list="fixedAdvList" auto :aspect-ratio="1/4" 
-				:show-desc-mask="false" :loop="true"></swiper>
+			<swiper :list="fixedAdvList" auto :aspect-ratio="1/3" :show-desc-mask="false" :loop="true"></swiper>
 		</div>
 	</div>
 </template>
@@ -58,14 +56,15 @@
 				fixAdvShow: false,
 				content: '',
 				page_type: Number,
-				article_rule_money: ''
+				article_rule_money: '',
+				infos: {}
 			}
 		},
 		methods: {
-			handleScroll () {
+			handleScroll() {
 				this.fixAdvShow = window.scrollY <= document.documentElement.scrollHeight -
-				document.documentElement.clientHeight - 200 &&
-				window.scrollY >= 200
+					document.documentElement.clientHeight - 200 &&
+					window.scrollY >= 50
 			},
 			cancelFixAdv() {
 				window.removeEventListener('scroll', this.handleScroll)
@@ -75,93 +74,94 @@
 		mounted() {
 			window.addEventListener('scroll', this.handleScroll)
 		},
-		beforeDestroy () {
+		beforeDestroy() {
 			window.removeEventListener('scroll', this.handleScroll)
 		},
 		created() {
 			let httpUrl = localStorage.getItem('httpUrl')
 			//任务详情
 			this.$http.get('getData/index.php?m=home&c=Form&a=articleList', {
-				params: {
-					type: 2,
-					seachdata: {
-						id: this.$route.params.id
-					}
-				}
-			})
-			.then((res) => {
-				console.log('任务详情')
-				console.log(res)
-				this.content = res.data.data[0].article_content
-				this.page_type = res.data.data[0].page_type
-				this.article_rule_money = res.data.data[0].article_rule_money
-				//顶部
-				this.$http.get('getData/index.php?m=home&c=Form&a=bannerList', {
 					params: {
 						type: 2,
 						seachdata: {
-							position: 1,
-							page_type: this.page_type
+							id: this.$route.params.id
 						}
 					}
 				})
 				.then((res) => {
-					console.log('详情页轮播图顶部')
+					console.log('任务详情')
 					console.log(res)
-					let imgarr = res.data.data
-					for (let i = 0; i < imgarr.length; i++) {
-						this.topAdvList.push({
-							url: 'javascript:',
-							img: httpUrl + imgarr[i].banner_img,
-							title: imgarr[i].banner_title
+					this.infos = res.data.data[0]
+					this.content = res.data.data[0].article_content
+					this.page_type = res.data.data[0].page_type
+					this.article_rule_money = res.data.data[0].article_rule_money
+					//顶部
+					this.$http.get('getData/index.php?m=home&c=Form&a=bannerList', {
+							params: {
+								type: 2,
+								seachdata: {
+									position: 1,
+									page_type: this.page_type
+								}
+							}
 						})
-					}
-				})
-				//底部浮动图片
-				this.$http.get('getData/index.php?m=home&c=Form&a=bannerList', {
-					params: {
-						type: 2,
-						seachdata: {
-							position: 2,
-							page_type: this.page_type
-						}
-					}
-				})
-				.then((res) => {
-					console.log('详情页轮播图浮动')
-					console.log(res)
-					let imgarr = res.data.data
-					for (let i = 0; i < imgarr.length; i++) {
-						this.fixedAdvList.push({
-							url: 'javascript:',
-							img: httpUrl + imgarr[i].banner_img,
-							title: imgarr[i].banner_title
+						.then((res) => {
+							console.log('详情页轮播图顶部')
+							console.log(res)
+							let imgarr = res.data.data
+							for(let i = 0; i < imgarr.length; i++) {
+								this.topAdvList.push({
+									url: 'javascript:',
+									img: httpUrl + imgarr[i].banner_img,
+									title: imgarr[i].banner_title
+								})
+							}
 						})
-					}
-				})
-				//脚步图片
-				this.$http.get('getData/index.php?m=home&c=Form&a=bannerList', {
-					params: {
-						type: 2,
-						seachdata: {
-							position: 3,
-							page_type: this.page_type
-						}
-					}
-				})
-				.then((res) => {
-					console.log('详情页轮播图脚步')
-					console.log(res)
-					let imgarr = res.data.data
-					for (let i = 0; i < imgarr.length; i++) {
-						this.footerAdvList.push({
-							url: 'javascript:',
-							img: httpUrl + imgarr[i].banner_img,
-							title: imgarr[i].banner_title
+					//底部浮动图片
+					this.$http.get('getData/index.php?m=home&c=Form&a=bannerList', {
+							params: {
+								type: 2,
+								seachdata: {
+									position: 2,
+									page_type: this.page_type
+								}
+							}
 						})
-					}
+						.then((res) => {
+							console.log('详情页轮播图浮动')
+							console.log(res)
+							let imgarr = res.data.data
+							for(let i = 0; i < imgarr.length; i++) {
+								this.fixedAdvList.push({
+									url: 'javascript:',
+									img: httpUrl + imgarr[i].banner_img,
+									title: imgarr[i].banner_title
+								})
+							}
+						})
+					//脚步图片
+					this.$http.get('getData/index.php?m=home&c=Form&a=bannerList', {
+							params: {
+								type: 2,
+								seachdata: {
+									position: 3,
+									page_type: this.page_type
+								}
+							}
+						})
+						.then((res) => {
+							console.log('详情页轮播图脚步')
+							console.log(res)
+							let imgarr = res.data.data
+							for(let i = 0; i < imgarr.length; i++) {
+								this.footerAdvList.push({
+									url: 'javascript:',
+									img: httpUrl + imgarr[i].banner_img,
+									title: imgarr[i].banner_title
+								})
+							}
+						})
 				})
-			})
 		}
 	}
 </script>
@@ -170,34 +170,34 @@
 	@rem: 40rem;
 	.share-detail-box {
 		.guide {
-				height: 82px;
-				width: 100%;
-				background-color: #8B8B8B;
-				/*background-color: rgba(0, 0, 0, 0.4);*/
-				/*position: absolute;*/
-				/*top: 44px;*/
-				padding: 0 12px;
-				box-sizing: border-box;
-				p {
-					color: white;
-					font-size: 12px;
-					line-height: 24px;
-					float: left;
-				}
-				.close {
-					float: right;
-					width: 17px;
-					height: 17px;
-					margin-top: 20px;
-					padding: 12px;
-					margin-right: -12px;
-					img {
-						width: 100%;
-					}
+			height: 82px;
+			width: 100%;
+			background-color: #8B8B8B;
+			/*background-color: rgba(0, 0, 0, 0.4);*/
+			/*position: absolute;*/
+			/*top: 44px;*/
+			padding: 0 12px;
+			box-sizing: border-box;
+			p {
+				color: white;
+				font-size: 12px;
+				line-height: 24px;
+				float: left;
+			}
+			.close {
+				float: right;
+				width: 17px;
+				height: 17px;
+				margin-top: 20px;
+				padding: 12px;
+				margin-right: -12px;
+				img {
+					width: 100%;
 				}
 			}
+		}
 		.content {
-			padding: 24px 12px;
+			padding: 24px 6px;
 			background-color: white;
 		}
 		.footer-adv {
@@ -224,9 +224,10 @@
 			position: fixed;
 			bottom: 0;
 			width: 100%;
-			height: 145/@rem;
+			height: 250/@rem;
 			z-index: 3;
-			.vux-slider,.vux-swiper {
+			.vux-slider,
+			.vux-swiper {
 				height: 100% !important;
 			}
 			.fix-close {

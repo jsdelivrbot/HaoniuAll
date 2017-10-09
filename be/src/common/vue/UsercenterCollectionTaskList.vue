@@ -25,7 +25,7 @@
 					<!--<span class="category"></span>-->
 				</div>
 				<div class="delete" v-show="editting"
-					@click.stop="deleteItem(index)">
+					@click.stop="deleteItem(item.id, index)">
 					<img src="../../../static/usercenter/delete.png" />
 				</div>
 			</router-link>
@@ -48,8 +48,8 @@
 			}
 		},
 		methods: {
-			deleteItem(index) {
-				this.$emit('spliceList', index)
+			deleteItem(id, index) {
+				this.$emit('spliceList', id, index)
 //				this.list.splice(index, 1)
 			}
 		},

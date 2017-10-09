@@ -16,20 +16,20 @@
 		<div class="ranking-content">
 			<div class="ranking-title">
 				<div>
-					<span>10.00</span>元
+					<span>{{memberdata.user_credit1}}</span>元
 				</div>
 				<div class="img">
-					<img src="../../../static/usercenter/head2.png"/>
+					<img :src="avatar"/>
 				</div>
 				<div>
-					第<span>104</span>名
+					第<span>{{memberdata.user_rank}}</span>名
 				</div>
 			</div>
 			<tab active-color="#e60012" defaultColor="#707070">
-				<tab-item selected>区域排名</tab-item>
-				<tab-item>全省排名</tab-item>
+				<tab-item selected @on-item-click="getList('1')">区域排名</tab-item>
+				<tab-item @on-item-click="getList('2')">全省排名</tab-item>
 			</tab>
-			<profit-ranking-list></profit-ranking-list>
+			<profit-ranking-list :list="listData"></profit-ranking-list>
 		</div>
 	</div>
 </template>
@@ -47,12 +47,31 @@
 		},
 		data() {
 			return {
-				masterShow: false
+				masterShow: false,
+				avatar: localStorage.getItem('httpUrl') + localStorage.getItem('avatar'),
+				listData: [],
+				memberdata: {}
 			}
+		},
+		created() {
+			this.getList('1')
 		},
 		methods: {
 			showMaster() {
 				this.masterShow = true
+			},
+			getList(type) {
+				this.$http.get('getData/index.php?m=home&c=Form&a=areaRanking', {
+					params: {
+						seachdata: {
+							rank_type: type
+						}
+					}
+				}).then((res) => {
+					console.log(res)
+					this.listData = res.data.data
+					this.memberdata = res.data.memberdata
+				})
 			}
 		}
 	}
@@ -73,7 +92,7 @@
 			width: 100%;
 			height: 100%;
 			position: fixed;
-			z-index: 3;
+			z-index: 8;
 			left: 0;
 			top: 0;
 			background-color: rgba(0,0,0,0.4);
@@ -102,7 +121,7 @@
 			margin: -64px 12px 0;
 			height: 200px;
 			position: relative;
-			z-index: 2;
+			z-index: 7;
 			.ranking-title {
 				width: 100%;
 				height: 128px;

@@ -11,24 +11,24 @@
 			<img src="../../../static/profit.png" />
 			<div class="today">
 				<p class="first">今日收益（元）</p>
-				<p class="second">10元</p>
-				<p class="first">11个任务四次点击</p>
+				<p class="second">{{today_money}}元</p>
+				<!--<p class="first">11个任务四次点击</p>-->
 			</div>
 			<div class="all">
 				<div class="all-profit">
 					<p class="first">总收益（元）</p>
-					<p class="second">280.00</p>
+					<p class="second">{{all_money}}</p>
 				</div>
 				<div class="can-profit">
 					<p class="first">可提现（元）</p>
-					<p class="second">280.00</p>
+					<p class="second">{{credit1}}</p>
 				</div>
 			</div>
 		</div>
 		<div class="computed">
 			<p class="computed-title">收益估算</p>
 			<p class="computed-text">
-				坚持 <span>{{date}}</span>天，就可以赚 <span>150</span>元零花钱
+				坚持 <span>{{date}}</span>天，就可以赚 <span v-text="date*sy_yg"></span>元零花钱
 			</p>
 			<range v-model="data1" :min="0" :max="4" :rangeBarHeight="6" 
 				minHTML="<span></span>" maxHTML="<span></span>"></range>
@@ -53,10 +53,13 @@
 				<p>1.返佣奖励</p>
 				<p class="text">分享爱蜂享给好友，好友成功注册，即可获得200个兑换币；</p>
 				<p>2.额外奖励</p>
-				<p class="text">参与收益排名前三可获得丰厚大奖，具体详情<a>点击查看></a></p>
+				<p class="text">
+					参与收益排名前三可获得丰厚大奖
+					<!--，具体详情<a>点击查看></a>-->
+				</p>
 			</div>
 		</div>
-		<div class="btn">
+		<div class="btn" @click="getCash">
 			立即提现
 		</div>
 	</div>
@@ -68,6 +71,9 @@
 		methods: {
 			back() {
 				this.$router.back(-1)
+			},
+			getCash() {
+				this.$router.push('/usercenter/getCash')
 			}
 //			onChange() {
 //				console.log('test')
@@ -79,8 +85,23 @@
 		data() {
 			return {
 				data1: 2,
-				datearr: ['7', '10', '15', '20', '30']
+				datearr: ['7', '10', '15', '20', '30'],
+				all_money: '',
+				credit1: '',
+				today_money: '',
+				sy_yg: ''
 			}
+		},
+		created() {
+			this.$http.get('getData/index.php?m=home&c=Form&a=myShareMoney')
+				.then((res) => {
+					if(res.data.datastatus === 1) {
+						this.all_money = res.data.data.all_money
+						this.credit1 = res.data.data.credit1
+						this.today_money = res.data.data.today_money
+						this.sy_yg = res.data.data.sy_yg
+					}
+				})
 		},
 		computed: {
 			date() {

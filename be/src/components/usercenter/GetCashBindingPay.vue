@@ -4,21 +4,21 @@
 		<p class="top">
 			<img src="../../../static/usercenter/usercenter-pay.png" />
 		</p>
-		<group>
+		<!--<group>
 			<x-input title="姓名" placeholder="请输入您的姓名" style="font-size: 16px;"></x-input>
-		</group>
-		<group title="必须和支付宝账号姓名保持一致，否则会造成打款不成功">
-			<x-input title="帐号" placeholder="请输入您的支付宝帐号" style="font-size: 16px;"></x-input>
-			<x-input title="验证码" placeholder="请输入收到的验证码" style="font-size: 16px;">
-				<span slot="right" class="slot-right">
+		</group>-->
+		<group>
+			<x-input title="帐号" placeholder="请输入您的支付宝帐号" style="font-size: 16px;" v-model="phone"></x-input>
+			<x-input title="验证码" placeholder="请输入收到的验证码" style="font-size: 16px;" v-model="code" :show-clear="false">
+				<span slot="right" class="slot-right" @click="getCode">
 					获取验证码
 				</span>
 			</x-input>
 		</group>
 		<p class="detail">1.支付宝账号只能输1次，一经绑定不能更换</p>
-		<router-link to="/usercenter/getCashGo" tag="div" class="btn">
+		<div class="btn" @click="bind">
 			保存
-		</router-link>
+		</div>
 	</div>
 </template>
 
@@ -26,10 +26,75 @@
 	import Header from '@/common/vue/Header'
 	import { Group, XInput } from 'vux'
 	export default {
+		data() {
+			return {
+				phone: '',
+				code: '',
+				num: 0
+			}
+		},
 		components: {
 			'v-header': Header,
 			Group,
 			XInput
+		},
+		methods: {
+			getCode() {
+				if(this.num > 0) {
+					this.$vux.toast.text('请60秒以后再试')
+					return
+				}
+				if(this.phone.length !== 11) {
+					this.$vux.toast.text('手机号码格式错误')
+					return
+				}
+				this.num = 60
+				this.$http.get('getData/index.php?m=home&c=Form&a=usercenter_SendCode', {
+					params: {
+						seachdata: {
+							username: this.phone
+						}
+					}
+				}).then((res) => {
+					if(res.data.datastatus === 1) {
+						console.log(res)
+						this.$vux.toast.text('验证码发送成功')
+						setInterval(() => {
+							this.num = this.num - 1
+						}, 1000)
+					} else {
+						this.$vux.toast.text(res.data.message)
+					}
+				})
+			},
+			bind() {
+				if(this.phone.length !== 11) {
+					this.$vux.toast.text('手机号码格式错误')
+					return
+				}
+				if(this.code === '') {
+					this.$vux.toast.text('请输入验证码')
+					return
+				}
+				this.$http.get('getData/index.php?m=home&c=Form&a=usercenter_addalipayPhone', {
+					params: {
+						seachdata: {
+							phone: this.phone,
+							sendcode: this.code
+						}
+					}
+				}).then((res) => {
+					if(res.data.datastatus === 1) {
+						this.$vux.toast.text('支付宝绑定成功')
+						localStorage.setItem('ali_pay_phone', this.phone)
+						this.$router.replace('/usercenter/getCashGo')
+					} else {
+						this.$vux.toast.text(res.data.message)
+					}
+				})
+//				this.$vux.toast.text('支付宝绑定成功')
+//				this.$router.push('/usercenter/getCashGo')
+			}
 		}
 	}
 </script>

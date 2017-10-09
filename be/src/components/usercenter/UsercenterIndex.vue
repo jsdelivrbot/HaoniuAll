@@ -177,7 +177,7 @@
 				login: sessionStorage.getItem('token'),
 				path: this.$route.fullPath,
 				httpUrl: localStorage.getItem('httpUrl'),
-//				avatar: localStorage.getItem('avatar'),
+				//				avatar: localStorage.getItem('avatar'),
 				mobile: localStorage.getItem('mobile'),
 				nickname: localStorage.getItem('nickname')
 			}
@@ -186,8 +186,13 @@
 			avatar() {
 				if(!localStorage.getItem('avatar')) {
 					return '../../../../static/avatar.png'
-				}else {
-					return localStorage.getItem('httpUrl') + localStorage.getItem('avatar')
+				} else {
+					let res = localStorage.getItem('avatar').substring(0, 4)
+					if(res === 'http') {
+						return localStorage.getItem('avatar')
+					} else {
+						return localStorage.getItem('httpUrl') + localStorage.getItem('avatar')
+					}
 				}
 			}
 		}
