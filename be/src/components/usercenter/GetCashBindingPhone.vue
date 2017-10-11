@@ -12,6 +12,7 @@
 			<x-input title="验证码" placeholder="请输入收到的验证码" style="font-size: 16px;" v-model="code" :show-clear="false">
 				<span slot="right" class="slot-right" @click="getCode">
 					获取验证码
+					<span v-show="num > 0">({{num}})</span>
 				</span>
 			</x-input>
 			<div class="btn" @click="bind">
@@ -112,7 +113,8 @@
 			font-size: 16px;
 		}
 		.slot-right {
-			width: 69px;
+			/*width: 69px;*/
+			padding: 0 4px;
 			height: 24px;
 			line-height: 24px;
 			border-radius: 24px;

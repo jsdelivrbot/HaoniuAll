@@ -50,7 +50,7 @@
 		display: flex;
 		align-items: center;
 		box-sizing: border-box;
-		z-index: 2;
+		z-index: 4;
 		.city {
 			color: white;
 			font-size: 16px;

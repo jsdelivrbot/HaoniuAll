@@ -2,7 +2,7 @@
 	<div class="iframeBox">
 		<callback title="分享购" :isshare="are" @shares='close'></callback>
 		<div class="bg-color" v-if="showshare">
-			<div class="category">
+			<div class="categorycby">
 				<div class="row row1">
 					<div class="icon" @click="share('tm')">
 						<img src="../../../static/hot-article-category5.png" width="38px" />
@@ -153,7 +153,7 @@
 		background: rgba(0, 0, 0, 0.5);
 	}
 	
-	.category {
+	.categorycby {
 		background-color: #f0f0f0;
 		width: 100%;
 		height: 224px;

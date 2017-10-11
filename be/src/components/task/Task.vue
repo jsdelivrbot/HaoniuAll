@@ -4,11 +4,12 @@
 		<div class="master" @touchmove.prevent v-show="masterShow" @click="masterShow=!masterShow">
 			<div class="content">
 				<p>
-					1.热文打开后请阅读至少5秒钟；<br/> 2.每增加一次阅读得0.05元，最高得2元；
-					<br/> 3.自己分享并阅读可得0.05元；
-					<br/> 4.分享到朋友圈时，写点分享语可以吸引阅读哦；
-					<br/> 5.分享到微信后，自己点击阅读也有收益；
-					<br/> 6.分享到微信群中，收益更多更快。
+					1、打开任务阅读到最后领取佣金；<br/>
+					2、分享到社交圈，好友查看同样有收益；<br/>
+					3、任务打开后阅读至少6秒钟；<br/>
+					4、每增加一次阅读可得0.05元以上收益，最高可得20元；<br/>
+					5、自己分享并阅读也有相同收益；<br/>
+					6、分享到社交圈时，写点分享语可以吸引阅读哦。<br/>
 				</p>
 			</div>
 		</div>
@@ -48,13 +49,13 @@
 			width: 100%;
 			height: 100%;
 			position: fixed;
-			z-index: 3;
+			z-index: 10;
 			left: 0;
 			top: 0;
 			background-color: rgba(0, 0, 0, 0.4);
 			.content {
-				width: 600/@rem;
-				height: 300/@rem;
+				width: 640/@rem;
+				height: 340/@rem;
 				background-color: white;
 				position: absolute;
 				top: 50%;
@@ -70,6 +71,7 @@
 					margin-top: 16/@rem;
 					margin-bottom: 16/@rem;
 					margin-left: 40/@rem;
+					margin-right: 40/@rem;
 				}
 			}
 		}

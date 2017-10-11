@@ -52,7 +52,7 @@ sessionStorage.setItem('city', '')
 sessionStorage.setItem('cityPosition', '')
 sessionStorage.setItem('counties', '')
 
-FastClick.attach(document.body)
+//FastClick.attach(document.body)
 
 Vue.config.productionTip = false
 
@@ -64,30 +64,32 @@ new Vue({
 }).$mount('#app-box')
 
 //自动登录
-if(localStorage.getItem('phone') && localStorage.getItem('psw')) {
-	Vue.http.get('getData/index.php?m=home&c=Form&a=usercenter_Login', {
-			params: {
-				seachdata: {
-					'username': localStorage.getItem('phone'),
-					'password': localStorage.getItem('psw')
+if(!sessionStorage.getItem('token')) {
+	if(localStorage.getItem('phone') && localStorage.getItem('psw')) {
+		Vue.http.get('getData/index.php?m=home&c=Form&a=usercenter_Login', {
+				params: {
+					seachdata: {
+						'username': localStorage.getItem('phone'),
+						'password': localStorage.getItem('psw')
+					}
 				}
-			}
-		})
-		.then((res) => {
-			//			console.log(res.data.data[0].ali_pay_phone)
-			if(res.data.result === 1) {
-				sessionStorage.setItem('token', res.data.data[0].token)
-				localStorage.setItem('avatar', res.data.data[0].avatar)
-				localStorage.setItem('mobile', res.data.data[0].mobile)
-				localStorage.setItem('nickname', res.data.data[0].nickname)
-				localStorage.setItem('openid', res.data.data[0].openid)
-				localStorage.setItem('ali_pay_phone', res.data.data[0].ali_pay_phone)
-				localStorage.setItem('sex_type', res.data.data[0].sex_type || '')
-				localStorage.setItem('age_area', res.data.data[0].age_area || '')
-				localStorage.setItem('hy_area', res.data.data[0].hy_area || '')
-				localStorage.setItem('hbt_list', res.data.data[0].hbt_list || '')
-				Vue.http.defaults.headers.get['token'] = sessionStorage.getItem('token')
-			}
-			console.log(res)
-		})
+			})
+			.then((res) => {
+				//			console.log(res.data.data[0].ali_pay_phone)
+				if(res.data.result === 1) {
+					sessionStorage.setItem('token', res.data.data[0].token)
+					localStorage.setItem('avatar', res.data.data[0].avatar)
+					localStorage.setItem('mobile', res.data.data[0].mobile)
+					localStorage.setItem('nickname', res.data.data[0].nickname)
+					localStorage.setItem('openid', res.data.data[0].openid)
+					localStorage.setItem('ali_pay_phone', res.data.data[0].ali_pay_phone)
+					localStorage.setItem('sex_type', res.data.data[0].sex_type || '')
+					localStorage.setItem('age_area', res.data.data[0].age_area || '')
+					localStorage.setItem('hy_area', res.data.data[0].hy_area || '')
+					localStorage.setItem('hbt_list', res.data.data[0].hbt_list || '')
+					Vue.http.defaults.headers.get['token'] = sessionStorage.getItem('token')
+				}
+				console.log(res)
+			})
+	}
 }

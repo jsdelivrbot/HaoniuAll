@@ -35,7 +35,7 @@
 						便当，让生活更惬意，是夫妻间爱意的表达，给自己的幸福感。
 					</p>-->
 					<p class="cotent-footer">
-						<span class="date">截止日期：</span>2017-8-22
+						<span class="date">截止日期：</span>{{item.article_date_v}}
 					</p>
 				</div>
 				<div class="share">

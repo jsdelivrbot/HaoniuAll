@@ -62,21 +62,22 @@
 			this.$http.get('getData/index.php?m=home&c=Form&a=optionList', {
 					params: {
 						seachdata: {
-							'type_id': this.listId
+							'type_id': this.listId,
+							'city': sessionStorage.getItem('city')
 						}
 					}
 				})
 				.then((res) => {
-					console.log('选项列表')
-					console.log(res)
+//					console.log('选项列表')
+//					console.log(res)
 					this.tabList = res.data.data
 				})
 		},
 		methods: {
 			//选项结果
 			getData(res, searchData) {
-				console.log('选项结果')
-				console.log(res, searchData)
+//				console.log('选项结果')
+//				console.log(res, searchData)
 				this.searchData = searchData
 				this.searchData2 = ''
 				let $this = this
@@ -95,8 +96,8 @@
 				}, 20)
 			},
 			getSearchData(res, searchData) {
-				console.log('搜索结果')
-				console.log(res, searchData)
+//				console.log('搜索结果')
+//				console.log(res, searchData)
 				this.searchData = []
 				this.searchData2 = searchData
 				let $this = this

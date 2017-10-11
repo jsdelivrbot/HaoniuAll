@@ -58,7 +58,7 @@
 						</div>
 					</div>
 				</div>
-				<task-list :data="taskList" :tip="tip" :loadingShow="loadingShow"></task-list>
+				<task-list :data="taskList" :tip="tip" :loadingShow="loadingShow" :isIndex="true"></task-list>
 			</div>
 		</div>
 		<index-footer></index-footer>
@@ -101,11 +101,12 @@
 					let imgarr = res.data.data
 					for(let i = 0; i < imgarr.length; i++) {
 						this.baseList.push({
-							url: 'javascript:',
+							url: imgarr[i].link,
 							img: this.httpUrl + imgarr[i].banner_img,
 							title: imgarr[i].banner_title
 						})
 					}
+//					console.log(this.baseList)
 				})
 			//任务列表
 			this.$http.get('getData/index.php?m=home&c=Form&a=articleList', {

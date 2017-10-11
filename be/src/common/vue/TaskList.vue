@@ -15,7 +15,7 @@
 				</div>
 			</div>
 		</router-link>-->
-		<router-link :to="fullDetailUrl(item.id)" tag="div" class="item"
+		<router-link :to="fullDetailUrl(item.id, item.page_type)" tag="div" class="item"
 			v-for="item,index in data" :key="index">
 			<div class="img">
 				<img :src="fullImgUrl(item.resp_img)" />
@@ -28,9 +28,16 @@
 					剩余金额： 
 					<span class="price-red">{{item.article_rule_moneytotal}}</span>
 				</p>
-				<div class="share-btn">
-					<span class="share-price">￥{{item.article_rule_money}}</span>
-					<span class="share-go">去分享</span>
+				<div class="share-btn-wrapper">
+					<div class="share-btn">
+						<span class="share-price">￥{{item.article_rule_money}}</span>
+						<span class="share-go">去分享</span>
+					</div>
+					<span v-if="isIndex" class="page-type">
+						<!--{{item.page_type}}-->
+						<img src="../../../static/ren.png" v-if="item.page_type === '1'" />
+						<img src="../../../static/re.png" v-if="item.page_type === '2'" />
+					</span>
 				</div>
 			</div>
 		</router-link>
@@ -44,7 +51,8 @@
 		props: {
 			data: Array,
 			tip: String,
-			loadingShow: Boolean
+			loadingShow: Boolean,
+			isIndex: Boolean
 		},
 		data() {
 			return {
@@ -55,8 +63,12 @@
 			fullImgUrl(img) {
 				return this.httpUrl + img
 			},
-			fullDetailUrl(id) {
-				return '/task/detail/' + id
+			fullDetailUrl(id, type) {
+				if(type === '1') {
+					return '/task/detail/' + id
+				}else {
+					return '/hotArticle/detail/' + id
+				}
 			}
 		},
 		components: {
@@ -132,24 +144,41 @@
 						color: #e50b1b;
 					}
 				}
-				.share-btn{
-					height: 30px;
-					width: 114px;
-					background-color: #e70012;
-					margin-top: 6px;
-					color: white;
+				.share-btn-wrapper{
 					display: flex;
-					align-items: center;
-					span{
-						text-align: center;
-						height: 20px;
-						font-size: 14px;
-						&.share-price{
-							flex: 3;
-							border-right: 1px solid #cbb4b6;
+					.share-btn{
+						height: 30px;
+						width: 114px;
+						background-color: #e70012;
+						margin-top: 6px;
+						color: white;
+						display: flex;
+						align-items: center;
+						flex: 0 0 auto;
+						span{
+							text-align: center;
+							height: 20px;
+							font-size: 14px;
+							&.share-price{
+								flex: 3;
+								border-right: 1px solid #cbb4b6;
+							}
+							&.share-go{
+								flex: 3;
+							}
 						}
-						&.share-go{
-							flex: 3;
+					}
+					.page-type {
+						margin-top: 6px;
+						height: 30px;
+						line-height: 30px;
+						flex: 1;
+						text-align: center;
+						display: flex;
+						justify-content: flex-end;
+						img {
+							width: 30px;
+							height: 30px;
 						}
 					}
 				}

@@ -5,7 +5,7 @@
 				<li v-if="index === 0">
 					<div class="label first"></div>
 					<div class="img">
-						<img :src="httpUrl + item.avatar" />
+						<img :src="avatarSrc(item.avatar)" />
 					</div>
 					<div class="name">{{item.nickname}}</div>
 					<div class="total">{{item.credit1}}元</div>
@@ -13,7 +13,7 @@
 				<li v-if="index === 1">
 					<div class="label second"></div>
 					<div class="img">
-						<img :src="httpUrl + item.avatar" />
+						<img :src="avatarSrc(item.avatar)" />
 					</div>
 					<div class="name">{{item.nickname}}</div>
 					<div class="total">{{item.credit1}}元</div>
@@ -21,7 +21,7 @@
 				<li v-if="index === 2">
 					<div class="label third"></div>
 					<div class="img">
-						<img :src="httpUrl + item.avatar" />
+						<img :src="avatarSrc(item.avatar)" />
 					</div>
 					<div class="name">{{item.nickname}}</div>
 					<div class="total">{{item.credit1}}元</div>
@@ -29,7 +29,7 @@
 				<li v-if="index > 2">
 					<div class="label">{{parseInt(index) + 1}}</div>
 					<div class="img">
-						<img :src="httpUrl + item.avatar" />
+						<img :src="avatarSrc(item.avatar)" />
 					</div>
 					<div class="name">{{item.nickname}}</div>
 					<div class="total">{{item.credit1}}元</div>
@@ -47,6 +47,15 @@
 		data() {
 			return {
 				httpUrl: localStorage.getItem('httpUrl')
+			}
+		},
+		methods: {
+			avatarSrc(value) {
+				if(value.substring(0, 4) === 'http') {
+					return value
+				}else {
+					return this.httpUrl + value
+				}
 			}
 		}
 	}

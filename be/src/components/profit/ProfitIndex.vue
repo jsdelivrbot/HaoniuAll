@@ -62,11 +62,13 @@
 		<div class="btn" @click="getCash">
 			立即提现
 		</div>
+		<index-footer></index-footer>
 	</div>
 </template>
 
 <script>
 	import { Range } from 'vux'
+	import IndexFooter from '@/common/vue/IndexFooter'
 	export default {
 		methods: {
 			back() {
@@ -80,7 +82,8 @@
 //			}
 		},
 		components: {
-			Range
+			Range,
+			IndexFooter
 		},
 		data() {
 			return {
@@ -115,7 +118,7 @@
 	@rem: 40rem;
 	.profit-index-box {
 		padding-top: 44px;
-		padding-bottom: 49px;
+		padding-bottom: 64px;
 		.title {
 			width: 100%;
 			height: 44px;
@@ -271,9 +274,9 @@
 			font-size: 18px;
 			text-align: center;
 			line-height: 49px;
-			position: fixed;
-			left: 0;
-			bottom: 0;
+			/*position: fixed;*/
+			/*left: 0;*/
+			/*bottom: 0;*/
 		}
 	}
 </style>

@@ -65,12 +65,19 @@
 
 <script>
 	export default {
-		props: ['articleId', 'article_rule_money', 'title', 'id'],
+		props: ['articleId', 'article_rule_money', 'title', 'id', 'isChecked'],
 		data() {
 			return {
 				collected: false,
 				masterShow: false,
 				getted: false
+			}
+		},
+		created() {
+			console.log('isChecked')
+			console.log(this.isChecked)
+			if(this.isChecked === '1') {
+				this.getted = true
 			}
 		},
 		methods: {

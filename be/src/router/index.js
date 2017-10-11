@@ -6,8 +6,8 @@ import HomeIndex from '@/components/home/HomeIndex'
 import HomePosition from '@/components/home/HomePosition'
 import TaskGuide from '@/components/home/TaskGuide'
 import Service from '@/components/home/Service'
-
 import fxgshop from '@/components/shoppingMall/fxgshop'
+import Guide from '@/components/Guide'
 //搜索
 import Search from '@/common/vue/Search'
 //任务大厅
@@ -52,6 +52,7 @@ import BindingPhone from '@/components/usercenter/BindingPhone'
 import BindingPhoneNew from '@/components/usercenter/BindingPhoneNew'
 import AboutUs from '@/components/usercenter/AboutUs'
 import MyOrder from '@/components/usercenter/MyOrder'
+import ShoppingCar from '@/components/usercenter/ShoppingCar'
 
 //热门文章
 import HotArticle from '@/components/hotArticle/HotArticle'
@@ -103,7 +104,15 @@ const router = new Router({
 			component: Home,
 			children: [{
 				path: '/',
-				component: HomeIndex
+				component: HomeIndex,
+				beforeEnter: (to, from, next) => {
+					let newUser = localStorage.getItem('newUser')
+					if(!newUser) {
+						next('/guide')
+					}else {
+						next()
+					}
+				}
 			}, {
 				path: '/home/position',
 				component: HomePosition
@@ -114,6 +123,10 @@ const router = new Router({
 				path: '/service',
 				component: Service
 			}]
+		},
+		{
+			path: '/guide',
+			component: Guide
 		},
 		{
 			path: '/task',
@@ -390,6 +403,12 @@ const router = new Router({
 			}, {
 				path: '/usercenter/MyOrder',
 				component: MyOrder,
+				meta: {
+					requiresAuth: true
+				}
+			}, {
+				path: '/usercenter/ShoppingCar',
+				component: ShoppingCar,
 				meta: {
 					requiresAuth: true
 				}

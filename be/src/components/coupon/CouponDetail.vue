@@ -13,7 +13,7 @@
 			<div class="text">
 				<div class="text-content">
 					<p class="text-title">{{content.title}}</p>
-					<p class="text-position">{{content.address}}</p>
+					<p class="text-position">地址：{{content.address}}</p>
 				</div>
 				<a :href="'tel:' + content.phone" class="text-btn  vux-1px-l">
 					<img src="../../../static/coupon9.png" />
@@ -203,9 +203,9 @@
 					.text-position {
 						font-size: 12px;
 						color: #707070;
-						background: url(../../../static/coupon8.png) left top no-repeat;
+						/*background: url(../../../static/coupon8.png) left top no-repeat;*/
 						background-size: 15px 20px;
-						padding-left: 30px;
+						/*padding-left: 30px;*/
 					}
 				}
 				.text-btn {

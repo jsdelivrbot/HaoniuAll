@@ -50,7 +50,8 @@
 			this.$http.get('getData/index.php?m=home&c=Form&a=optionList', {
 					params: {
 						seachdata: {
-							'type_id': 5
+							'type_id': 5,
+							'city': sessionStorage.getItem('city')
 						}
 					}
 				})

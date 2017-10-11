@@ -1,6 +1,6 @@
 <template>
 	<div class="my-coupon-box">
-		<v-header title="优惠券" map="使用规则" @edit="showMaster"></v-header>
+		<v-header title="优惠券"></v-header>
 		<div class="tab-box">
 			<tab bar-active-color="#e60012" active-color="#e60012">
 				<tab-item selected @on-item-click="chooseAll">全部</tab-item>

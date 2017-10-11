@@ -88,6 +88,7 @@
 //						localStorage.setItem('httpUrl', 'http://afx.hfrjkf.cn/')
 						localStorage.setItem('httpUrl', 'http://aifengxiang.hfrjkf.cn/')
 						_this.$http.defaults.baseURL = localStorage.getItem('httpUrl')
+						localStorage.setItem('newUser', 'notNew')
 						sessionStorage.setItem('city', '')
 						sessionStorage.setItem('cityPosition', '')
 						sessionStorage.setItem('counties', '')

@@ -4,32 +4,32 @@
 			<p>
 				1、分享到社交圈时,写点分享语可以吸引阅读哦!<br /> 
 				2、分享到社交圈之后，自己点击阅读也有收益！<br />
-				 3、分享到社交圈中，收益更快更多！	<br />
+				3、分享到社交圈中，收益更快更多！	<br />
 			</p>
 			<div class="close" @click.stop="guideShow=false">
 				<img src="../../static/hot-article-colose.png" />
 			</div>
 		</div>
-		<div class="top-adv" v-if='topAdvList'>
-			<swiper :list="topAdvList" auto :aspect-ratio="1/3" :show-desc-mask="false" :loop="true" class="banner"></swiper>
+		<div class="top-adv" v-if='topAdvList.length !== 0'>
+			<swiper :list="topAdvList" auto :aspect-ratio="1/5" :show-desc-mask="false" :loop="true" class="banner"></swiper>
 		</div>
 		<div class="content" v-html="content">
 		</div>
-		<share-btn :title='infos.article_title' :id='infos.id' :articleId="articleId" :article_rule_money="article_rule_money"></share-btn>
-		<div class="footer-adv">
+		<share-btn :title='infos.article_title' :id='infos.id' :articleId="articleId" :article_rule_money="article_rule_money" :isChecked="isChecked" v-if="isChecked"></share-btn>
+		<div class="footer-adv" v-if="footerAdvList.length !== 0">
 			<!--<div class="footer-adv-title">
 				<span>广告</span>
 			</div>-->
 			<div class="adv">
 				<!--<img src="../../../static/hot-article2.png" />-->
-				<swiper :list="footerAdvList" auto :aspect-ratio="1/3" :show-desc-mask="false" :loop="true" class="banner"></swiper>
+				<swiper :list="footerAdvList" auto :aspect-ratio="1/5" :show-desc-mask="false" :loop="true" class="banner"></swiper>
 			</div>
 		</div>
-		<div class="fix-adv" v-show="fixAdvShow">
+		<div class="fix-adv" v-show="fixAdvShow" v-if="fixedAdvList.length !== 0">
 			<div class="fix-close" @click="cancelFixAdv">
 				&times;
 			</div>
-			<swiper :list="fixedAdvList" auto :aspect-ratio="1/3" :show-desc-mask="false" :loop="true"></swiper>
+			<swiper :list="fixedAdvList" auto :aspect-ratio="1/5" :show-desc-mask="false" :loop="true"></swiper>
 		</div>
 	</div>
 </template>
@@ -57,7 +57,8 @@
 				content: '',
 				page_type: Number,
 				article_rule_money: '',
-				infos: {}
+				infos: {},
+				isChecked: ''
 			}
 		},
 		methods: {
@@ -95,6 +96,8 @@
 					this.content = res.data.data[0].article_content
 					this.page_type = res.data.data[0].page_type
 					this.article_rule_money = res.data.data[0].article_rule_money
+					this.isChecked = res.data.data[0].is_checked
+//					console.log(this.isChecked)
 					//顶部
 					this.$http.get('getData/index.php?m=home&c=Form&a=bannerList', {
 							params: {

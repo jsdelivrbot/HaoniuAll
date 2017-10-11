@@ -20,7 +20,7 @@
 				</p>
 			</div>
 			<div class="position border-1px">
-				<p>{{content.address}}</p>
+				<p>地址：{{content.address}}</p>
 			</div>
 			<div class="tel">
 				<span class="number">{{content.phone}}</span>
@@ -115,7 +115,7 @@
 			/*height: 150px;*/
 			background-color: white;
 			.info-top {
-				padding: 0 12px;
+				padding: 0 12px 10px;
 				.border-1px(#e2e2e2);
 				.info-title {
 					font-size: 14px;
@@ -145,13 +145,14 @@
 			}
 			.position {
 				/*height: 44px;*/
-				background: url(../../../static/position.png) 12px center no-repeat;
+				/*background: url(../../../static/position.png) 12px center no-repeat;*/
 				background-size: 15px 20px;
 				font-size: 14px;
 				/*line-height: 44px;*/
 				.border-1px(#e2e2e2);
 				p {
-					margin-left: 47px;
+					/*margin-left: 47px;*/
+					margin-left: 12px;
 					margin-right: 12px;
 					padding: 10px 0;
 					/*white-space: nowrap;

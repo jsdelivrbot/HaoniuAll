@@ -10,7 +10,7 @@
 				<span class="name">联系电话：</span>
 				<input type="text" class="value" v-model="phone" />
 			</div>
-			<div class="choose vux-1px-b">
+			<div class="choose">
 				<div class="title">
 					<span class="category">选择票种</span>
 					<span class="count">选择数量</span>

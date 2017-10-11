@@ -30,7 +30,7 @@
 					</div>
 				</div>
 			</transition>
-			<div class="now vux-1px-b">
+			<div class="now vux-1px-b" @click="chooseNowPosition">
 				<span>当前城市：{{cityPosition}}</span>
 			</div>
 		</div>
@@ -82,6 +82,13 @@
 				sessionStorage.setItem('counties', item)
 				this.countiesnow = item
 				this.countiesShow = false
+				this.$router.push('/home')
+			},
+			chooseNowPosition() {
+				sessionStorage.setItem('city', this.cityPosition)
+				this.citynow = this.cityPosition
+				this.countiesnow = ''
+				sessionStorage.setItem('counties', '')
 			},
 			goSearch() {
 				this.searchCity = []

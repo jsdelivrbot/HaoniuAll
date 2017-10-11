@@ -1,13 +1,16 @@
 <template>
 	<div class="iframeBox">
-		<callback title="佣金商城"></callback>
+		<callback title="蜂购商城"></callback>
+		<index-footer></index-footer>
 	</div>
 </template>
 <script>
 	import callback from '@/common/vue/Header'
+	import IndexFooter from '@/common/vue/IndexFooter'
 	export default {
 		components: {
-			callback
+			callback,
+			IndexFooter
 		},
 		data() {
 			return {
@@ -27,7 +30,7 @@
 						id: 'news',
 						styles: {
 							top: '44px',
-							bottom: 0
+							bottom: '64px'
 						},
 						show: {
 							autoShow: true,
@@ -80,7 +83,7 @@
 		background: rgba(0, 0, 0, 0.5);
 	}
 	
-	.category {
+	.categorycby {
 		background-color: #f0f0f0;
 		width: 100%;
 		height: 224px;

@@ -55,7 +55,13 @@
 				//添加搜索条件
 				//				this.searchArr[index] = list[listindex].id
 				//				this.$set(this.searchArr, index, parseInt(list[listindex].id))
-				this.$set(this.searchArr, index, list[listindex].id)
+				this.$set(this.searchArr, index, [list[listindex].id])
+				this.searchArr[index].push(this.data[index].children[0].option_name)
+//				console.log(index)
+//				console.log(this.data)
+//				this.$set(this.typeNameArr, index, this.data[index].children[0].option_name)
+//				console.log(this.data[index].children[0].option_name)
+//				console.log(this.data[0].children[0].option_name)
 				//				console.log(this.searchArr)
 				//				console.log(this.searchData)
 				//请求数据
@@ -71,7 +77,7 @@
 					})
 					.then((res) => {
 						//this.listData = res.data.data
-						console.log(this.searchData)
+//						console.log(this.searchData)
 						this.$emit('getData', res, this.searchData)
 					})
 			}

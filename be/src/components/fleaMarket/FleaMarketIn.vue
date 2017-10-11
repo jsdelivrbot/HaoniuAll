@@ -62,7 +62,8 @@
 			this.$http.get('getData/index.php?m=home&c=Form&a=optionList', {
 					params: {
 						seachdata: {
-							'type_id': this.listId
+							'type_id': this.listId,
+							'city': sessionStorage.getItem('city')
 						}
 					}
 				})

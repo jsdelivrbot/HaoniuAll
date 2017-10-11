@@ -33,12 +33,12 @@
 			<p class="usernumber">{{mobile}}</p>
 		</div>
 		<div class="tab border-1px">
-			<router-link to="/usercenter/getCash" tag="div" class="item border-1px-right withdrawals">
+			<router-link to="/usercenter/ShoppingCar" tag="div" class="item border-1px-right withdrawals">
 				<div class="item-img">
-					<img src="../../../static/usercenter/withdrawals.png" />
+					<img src="../../../static/usercenter/gouwuche.png" />
 					<!--<badge text="1" v-if="login"></badge>-->
 				</div>
-				<p>提现管理</p>
+				<p>我的购物车</p>
 			</router-link>
 			<router-link to="/usercenter/MyOrder" tag="div" class="item border-1px-right order">
 				<div class="item-img">
@@ -64,12 +64,20 @@
         			<span style="font-size: 14px; line-height: 49px;">全部任务</span>
 				</span>
 			</cell>
-			<cell is-link link="usercenter/collection" style="height: 29px;">
+			<cell is-link link="/usercenter/collection" style="height: 29px;">
 				<div slot="icon" style="width: 26px; margin-right: 20px;">
 					<img slot="icon" width="25" src="../../../static/usercenter/icon2.png" style="vertical-align:middle; display: block; margin: auto;">
 				</div>
 				<span slot="title">
         			<span style="font-size: 14px; line-height: 49px;">任务收藏</span>
+				</span>
+			</cell>
+			<cell is-link link="/usercenter/getCash" style="height: 29px;">
+				<div slot="icon" style="width: 26px; margin-right: 20px;">
+					<img slot="icon" width="25" src="../../../static/usercenter/icon14.png" style="vertical-align:middle; display: block; margin: auto;">
+				</div>
+				<span slot="title">
+        			<span style="font-size: 14px; line-height: 49px;">提现管理</span>
 				</span>
 			</cell>
 			<cell is-link link="/usercenter/adress" style="height: 29px;">
@@ -380,7 +388,7 @@
 			}
 			.withdrawals {
 				img {
-					width: 26px;
+					width: 22px;
 					height: 22px;
 					margin: auto;
 				}
