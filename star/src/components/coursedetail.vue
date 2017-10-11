@@ -1,7 +1,6 @@
 <template>
-	<div class="course-detail" v-if='detailInfo.school'>
+	<div class="course-detail">
 		<topbar title='课程简介'></topbar>
-
 		<div style="display: none;">
 			<img class="previewer-demo-img" v-for="(item, index) in list" :src="item.src" width="100" @click="show(index)">
 		</div>
@@ -9,21 +8,23 @@
 			<previewer :list="list" ref="previewer" :options="options"></previewer>
 		</div>
 		<div class="course-info vux-1px-b">
-			<img :src="detailInfo.school.thumbnail" v-if='detailInfo.school' @click="show(0)" />
+			<img src="../../static/img/1498630391.png" />
+			<!--<img :src="detailInfo.school.thumbnail" @click="show(0)" />-->
 			<div>
 				<h2>{{detailInfo.name}}</h2>
 				<h1><em style="font-size: 15px; font-style: normal;margin-right: 2px;">¥</em>{{detailInfo.price}}</h1>
-				<p>开课时间:{{detailInfo.openDate}}</p>
-				<p>上课时间:{{detailInfo.openTime}}</p>
+				<p>开课时间:{{detailInfo.startDate}}</p>
+				<p>上课时间:{{detailInfo.startTime}}</p>
 			</div>
 		</div>
 		<div class="link">
 			<ul>
 				<li class="vux-1px-b">
-					<router-link :to='"/maps/"+detailInfo.school.coords'>
+					<router-link to='11'>
+						<!--<router-link :to='"/maps/"+detailInfo.school.coords'>-->
 						<img src="../../static/img/address.png" />
-						<span v-if="detailInfo.school">
-							{{detailInfo.school.address}}
+						<span>
+							{{detailInfo.addess}}
 						</span>
 						<div class="goto">
 							<img src="../../static/img/righticon.png" />
@@ -31,10 +32,10 @@
 					</router-link>
 				</li>
 				<li class="vux-1px-b">
-					<a :href="'tel:'+detailInfo.school.phoneNumber">
+					<a :href="'tel:'+detailInfo.tel">
 						<img src="../../static/img/phone.png" />
 						<span>
-							{{detailInfo.school.phoneNumber}}
+							{{detailInfo.tel}}
 						</span>
 						<div class="goto">
 							<img src="../../static/img/righticon.png" />
@@ -43,8 +44,7 @@
 				</li>
 			</ul>
 		</div>
-
-		<div class="intro-box" v-if='detailInfo.douAmount>0||detailInfo.couponId>0||detailInfo.discount>0'>
+		<!--<div class="intro-box" v-if='detailInfo.douAmount>0||detailInfo.couponId>0||detailInfo.discount>0'>
 			<div class="title vux-1px-b">
 				优惠活动
 			</div>
@@ -53,7 +53,7 @@
 				<p class="p">2.{{detailInfo.discount}}折优惠</p>
 				<p class="p" v-if='detailInfo.couponId>0'>3.{{detailInfo.coupon.name}}</p>
 			</div>
-		</div>
+		</div>-->
 
 		<div class="intro-box">
 			<div class="title vux-1px-b">
@@ -61,13 +61,12 @@
 			</div>
 			<p v-html="detailInfo.intro"></p>
 		</div>
-
 		<div class="link" style="margin: 5px 0;">
 			<ul>
 				<li class="vux-1px-tb">
-					<router-link :to='"/jigoudetail/"+detailInfo.companyName'>
+					<router-link :to='"/jigoudetail/"+detailInfo.schoolId'>
 						<span>
-							{{detailInfo.companyName}}
+							{{detailInfo.schoolName}}
 						</span>
 						<div class="goto">
 							<img src="../../static/img/righticon.png" />
@@ -77,7 +76,7 @@
 			</ul>
 		</div>
 
-		<div class="intro-box" style="padding-bottom: 0;margin-bottom: 10px;" v-if='pllist.length>0'>
+		<!--<div class="intro-box" style="padding-bottom: 0;margin-bottom: 10px;" v-if='pllist.length>0'>
 			<div class="title vux-1px-b">
 				课程评价
 			</div>
@@ -98,7 +97,7 @@
 				<span>查看全部评价</span>
 			</div>
 
-		</div>
+		</div>-->
 
 		<div class="static-footer vux-1px-t">
 			<ul>
@@ -108,26 +107,25 @@
 				<li v-if='detailInfo.watched' @click="collect()">
 					加入收藏
 				</li>
-				<li>
+				<!--<li>
 					<router-link :to='"/orderaffirm/"+urls' v-if='token && detailInfo.priced'>
 						我要报名
 					</router-link>
 					<a href="javascript:;" @click="nologin()" v-if='!token'>
 						我要报名
 					</a>
-
 					<a href="javascript:;" v-if='token && !detailInfo.priced' style="background: #d2d2d2;">
 						我要报名
 					</a>
-				</li>
-				<!--<li v-if='!detailInfo.priced'>
-					<router-link :to='"/orderaffirm/"+urls' v-if='token'>
+				</li>-->
+				<li v-if='!detailInfo.priced'>
+					<router-link :to='"/orderaffirm/"+id' v-if='token'>
 						我要报名
 					</router-link>
 					<a href="javascript:;" style="background: #eee;" @click="nologin()" v-if='!token'>
 						我要报名
 					</a>
-				</li>-->
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -166,7 +164,7 @@
 				token: sessionStorage.getItem('token'),
 				star: 3,
 				detailInfo: {},
-				urls: '',
+				id: '',
 				pllist: [],
 				pltotal: ''
 			}
@@ -174,12 +172,12 @@
 		activated() {
 			window.scrollTo(0, 0)
 			this.token = sessionStorage.getItem('token')
-			let props = this.$route.params.name.split(',')
-			this.urls = this.$route.params.name
-			console.log(props[0])
-			let urls = 'schoolName=' + props[0] + '&companyName=' + props[1] + '&name=' + props[2]
-			console.log(urls)
-			this.$http.get('/business/course/detail?' + urls).then(
+			this.id = this.$route.params.name
+			this.$http.get('/business/course/courseDetail', {
+				params: {
+					courseId: this.id
+				}
+			}).then(
 				(res) => {
 					this.detailInfo = res.data.obj
 					if(res.data.obj.school.nphotos >= 2) {
@@ -187,8 +185,19 @@
 					}
 				}
 			)
+			//			console.log(props[0])
+			//			let urls = 'schoolName=' + props[0] + '&companyName=' + props[1] + '&name=' + props[2]
+			//			console.log(urls)
+			//			this.$http.get('/business/course/detail?' + urls).then(
+			//				(res) => {
+			//					this.detailInfo = res.data.obj
+			//					if(res.data.obj.school.nphotos >= 2) {
+			//						this.getPhotos()
+			//					}
+			//				}
+			//			)
 
-			this.$http.get('/business/course/detailEvaluate?page=1&rows=1&' + urls).then(
+			this.$http.get('/business/course/detailEvaluate?page=1&rows=1&' + this.id).then(
 				(res) => {
 					if(res.data.result === 0) {
 						this.pllist = res.data.obj.result

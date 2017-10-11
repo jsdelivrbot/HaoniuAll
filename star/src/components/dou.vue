@@ -5,7 +5,7 @@
 			<img src="../../static/img/doudou.png" />
 			<span>{{total.ValidCurrency}}</span>
 			<em>转换豆</em>
-			<a href="http://wei.test.3721zh.com/">
+			<a :href="shopurl">
 				前往购物
 			</a>
 		</div>
@@ -27,8 +27,17 @@
 		data() {
 			return {
 				token: sessionStorage.getItem('token'),
-				total: ''
+				total: '',
+				shopurl: ''
 			}
+		},
+		mounted() {
+			this.$http.get('/user/dou/getShopUrl').then(
+				(res) => {
+					this.shopurl = res.data.obj
+				}
+			)
+			this.getall()
 		},
 		methods: {
 			getall() {
@@ -46,9 +55,6 @@
 					}
 				}, 100)
 			}
-		},
-		mounted() {
-			this.getall()
 		}
 	}
 </script>

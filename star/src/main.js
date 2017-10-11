@@ -66,10 +66,8 @@ Vue.use(BaiduMap, {
 Vue.http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 //Vue.http.defaults.headers.get['token'] = sessionStorage.getItem('token')
 Vue.http.defaults.headers.common['token'] = sessionStorage.getItem('token')
-//localStorage.setItem('localhttp', 'http://wx.dianke8.com/xxdk/app')
-//localStorage.setItem('localhttp', 'http://dev.dianke8.com:7000/xxdk/app')
-//Vue.http.defaults.baseURL = 'http://dev.dianke8.com:7000/xxdk/app'
-Vue.http.defaults.baseURL = 'http://wx.dianke8.com/xxdk/app'
+Vue.http.defaults.baseURL = 'http://192.168.1.121:8081/xingxingdianke/app'
+//Vue.http.defaults.baseURL = 'http://wx.dianke8.com/xxdk/app'
 const routes = [{
 		path: '/coursesort',
 		component: coursesort
