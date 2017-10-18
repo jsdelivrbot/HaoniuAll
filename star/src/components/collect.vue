@@ -58,7 +58,7 @@
 				}
 			)
 
-			this.$http.get('/user/watch/watchMyCompany', {
+			this.$http.get('/user/watch/watchMySchool', {
 				headers: {
 					token: sessionStorage.getItem('token')
 				}

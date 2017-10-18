@@ -9,7 +9,6 @@
 		</div>
 		<div class="course-info vux-1px-b">
 			<img src="../../static/img/1498630391.png" />
-			<!--<img :src="detailInfo.school.thumbnail" @click="show(0)" />-->
 			<div>
 				<h2>{{detailInfo.name}}</h2>
 				<h1><em style="font-size: 15px; font-style: normal;margin-right: 2px;">¥</em>{{detailInfo.price}}</h1>
@@ -20,8 +19,8 @@
 		<div class="link">
 			<ul>
 				<li class="vux-1px-b">
-					<router-link to='11'>
-						<!--<router-link :to='"/maps/"+detailInfo.school.coords'>-->
+					<!--<router-link to='11'>-->
+					<router-link :to='"/maps/"+detailInfo.longitude+","+detailInfo.latitude'>
 						<img src="../../static/img/address.png" />
 						<span>
 							{{detailInfo.addess}}
@@ -76,7 +75,7 @@
 			</ul>
 		</div>
 
-		<!--<div class="intro-box" style="padding-bottom: 0;margin-bottom: 10px;" v-if='pllist.length>0'>
+		<div class="intro-box" style="padding-bottom: 0;margin-bottom: 10px;" v-if='pllist.length>0'>
 			<div class="title vux-1px-b">
 				课程评价
 			</div>
@@ -92,12 +91,10 @@
 					<p>{{item.content}}</p>
 				</li>
 			</ul>
-
 			<div class="more" v-if='pltotal>1' @click="getmore()">
 				<span>查看全部评价</span>
 			</div>
-
-		</div>-->
+		</div>
 
 		<div class="static-footer vux-1px-t">
 			<ul>
@@ -197,7 +194,13 @@
 			//				}
 			//			)
 
-			this.$http.get('/business/course/detailEvaluate?page=1&rows=1&' + this.id).then(
+			this.$http.get('/business/course/detailEvaluate', {
+				params: {
+					courseId: this.id,
+					page: '1',
+					rows: '2'
+				}
+			}).then(
 				(res) => {
 					if(res.data.result === 0) {
 						this.pllist = res.data.obj.result
@@ -232,9 +235,13 @@
 				}
 			},
 			getmore() {
-				let props = this.$route.params.name.split(',')
-				let urls = 'schoolName=' + props[0] + '&companyName=' + props[1] + '&name=' + props[2]
-				this.$http.get('/business/course/detailEvaluate?page=1&rows=1000&' + urls).then(
+				this.$http.get('/business/course/detailEvaluate', {
+					params: {
+						courseId: this.id,
+						page: '1',
+						rows: '10'
+					}
+				}).then(
 					(res) => {
 						if(res.data.result === 0) {
 							this.pllist = res.data.obj.result
@@ -262,12 +269,9 @@
 					title: '提示',
 					content: '确定取消收藏吗?',
 					onConfirm() {
-						let props = $this.urls.split(',')
 						$this.$http.get('/user/watch/disWatchCourse', {
 							params: {
-								schoolName: props[0],
-								companyName: props[1],
-								courseName: props[2]
+								courseId: $this.id
 							}
 						}).then(
 							(res) => {
@@ -304,13 +308,9 @@
 					})
 					return false
 				}
-				let props = this.urls.split(',')
-
 				this.$http.get('/user/watch/watchCourse', {
 					params: {
-						schoolName: props[0],
-						companyName: props[1],
-						courseName: props[2]
+						courseId: this.id
 					}
 				}).then(
 					(res) => {
@@ -325,6 +325,11 @@
 		}
 	}
 </script>
+<style type="text/css">
+	.line {
+		display: none;
+	}
+</style>
 <style lang="less">
 	@import url("../../static/font/iconfont.css");
 	#star {

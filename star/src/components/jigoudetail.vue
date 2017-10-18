@@ -2,11 +2,10 @@
 	<div class="jigou-detail">
 		<topbar title='机构简介'></topbar>
 		<div class="jigou-info">
-			<img :src="detailInfo.logo" v-if='detailInfo.logo' />
-			<img src="../../static/img/wallhaven-307832.jpg" v-if='!detailInfo.logo' />
+			<img :src="detailInfo.coverUrl" v-if='detailInfo.coverUrl' />
 			<div class="center">
 				<h2>{{detailInfo.name}}</h2>
-				<p v-if='detailInfo.schools[0].distance'><em>最新授课点:</em>{{detailInfo.schools[0].distance.toFixed(2)}}公里</p>
+				<p><em>最新授课点:</em>{{detailInfo.distance}}公里</p>
 			</div>
 		</div>
 		<div class="intro-box">
@@ -17,19 +16,12 @@
 		</div>
 
 		<div class="intro-box" style="padding: 0;">
-			<div class="title vux-1px-b">
-				授课点
+			<div class="title vux-1px-b" style="margin: 0;">
+				课程列表
 			</div>
-			<div v-for='(item,index) in detailInfo.schools' class="vux-1px-b">
-				<cell is-link @click.native='clickshow(index)' class='skd' :arrow-direction="show==index ? 'up' : 'down'" :inline-desc='item.name+item.address'>
+			<div v-for='(item,index) in detailInfo.objectSome' class="vux-1px-b">
+				<cell is-link :link='"/coursedetail/"+item.id' @click.native='clickshow(index)' :inline-desc='item.name+item.addess'>
 				</cell>
-				<ul class="inside" v-show="show==index">
-					<li class="vux-1px-t" v-for='item2 in item.timetables'>
-						<router-link :to='"/coursedetail/"+item2.schoolName+","+item2.companyName+","+item2.name'>
-							{{item2.name}}
-						</router-link>
-					</li>
-				</ul>
 			</div>
 		</div>
 
@@ -83,9 +75,9 @@
 			window.scrollTo(0, 0)
 			this.token = sessionStorage.getItem('token')
 			this.detailId = this.$route.params.name
-			this.$http.get('/user/watch/companyDetail', {
+			this.$http.get('/user/watch/schoolDetail', {
 				params: {
-					name: this.detailId,
+					id: this.detailId,
 					longitude: localStorage.getItem('lng'),
 					latitude: localStorage.getItem('lat')
 				}
@@ -119,9 +111,9 @@
 					})
 					return false
 				}
-				this.$http.get('/user/watch/watchCompany', {
+				this.$http.get('/user/watch/watchSchool', {
 					params: {
-						companyName: $this.detailId
+						schoolId: $this.detailId
 					}
 				}).then(
 					(res) => {
@@ -151,9 +143,9 @@
 					title: '提示',
 					content: '确定取消收藏吗?',
 					onConfirm() {
-						$this.$http.get('/user/watch/disWatchCompany', {
+						$this.$http.get('/user/watch/disWatchSchool', {
 							params: {
-								companyName: $this.detailId
+								schoolId: $this.detailId
 							}
 						}).then(
 							(res) => {

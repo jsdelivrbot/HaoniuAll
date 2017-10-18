@@ -88,7 +88,7 @@
 
 			<swiper :options="swiperOption" ref="mySwiper" v-if='tj!=""'>
 				<swiper-slide v-for='(item,index) in tj' :key="index" class='swiper-contentBox'>
-					<router-link :to='"/coursedetail/"+item.target'>
+					<router-link :to='"/coursedetail/"+item.id'>
 						<div>
 							<img :src="item.postUrl" style="width: 100%;" />
 						</div>
@@ -109,82 +109,18 @@
 			</div>
 
 			<ul>
-				<router-link tag='li' :to='seacherText("英语")'>
-					<img src="~IMG/yingyu.png" />
-					<span>英语</span>
-				</router-link>
-				<router-link tag='li' to='/searchlist/cat=教辅$托班&target=k'>
-					<img src="~IMG/tuoban.png" />
-					<span>托班</span>
-				</router-link>
-				<router-link tag='li' to='/searchlist/cat=运动$运动其他$运动&target=k'>
-					<img src="~IMG/yundong.png" />
-					<span>运动</span>
-				</router-link>
-				<router-link tag='li' to='/searchlist/cat=艺术$舞蹈&target=k'>
-					<img src="~IMG/wudao.png" />
-					<span>舞蹈</span>
-				</router-link>
-				<router-link tag='li' to='/searchlist/cat=艺术$器乐&target=k'>
-					<img src="~IMG/yueqi.png" />
-					<span>器乐</span>
-				</router-link>
-				<router-link tag='li' to='/searchlist/cat=艺术$美术$绘画&target=k'>
-					<img src="~IMG/huihua.png" />
-					<span>绘画</span>
-				</router-link>
-				<router-link tag='li' to='/searchlist/cat=益智$潜能开发$逻辑思维&target=k'>
-					<img src="~IMG/luojisiwei.png" />
-					<span>逻辑思维</span>
-				</router-link>
-				<router-link tag='li' to='/searchlist/cat=益智$益智训练$棋类&target=k'>
-					<img src="~IMG/qilei.png" />
-					<span>棋类</span>
-				</router-link>
-				<router-link tag='li' to='/searchlist/cat=益智$科学$机器人&target=k'>
-					<img src="~IMG/jiqi.png" />
-					<span>机器人</span>
+				<router-link tag='li' :key='index' v-for='item in courseSort' :to="'/searchlist/cat='+item.someIdString">
+					<img :src="item.realUrl" />
+					<span>{{item.name}}</span>
 				</router-link>
 			</ul>
 			<div @click='mores = !mores' class="more" v-if='!mores'>
 				查看更多
 			</div>
 			<ul v-if='mores'>
-				<router-link tag='li' :to='seacherText("足球")'>
-					<img src='~IMG/足球@3x.png' />
-					<span>足球</span>
-				</router-link>
-				<router-link tag='li' :to='seacherText("幼小衔接班")'>
-					<img src='~IMG/幼小衔接班@3x.png' />
-					<span>幼小衔接班</span>
-				</router-link>
-				<router-link tag='li' :to='seacherText("看图说话")'>
-					<img src='~IMG/看图说话@3x.png' />
-					<span>看图说话</span>
-				</router-link>
-				<router-link tag='li' :to='seacherText("书法")'>
-					<img src='~IMG/书法@3x.png' />
-					<span>书法</span>
-				</router-link>
-				<router-link tag='li' :to='seacherText("表演")'>
-					<img src='~IMG/表演@3x.png' />
-					<span>表演</span>
-				</router-link>
-				<router-link tag='li' :to='seacherText("口才训练")'>
-					<img src='~IMG/口才训练@3x.png' />
-					<span>口才训练</span>
-				</router-link>
-				<router-link tag='li' :to='seacherText("亲子活动")'>
-					<img src='~IMG/亲子活动@3x.png' />
-					<span>亲子活动</span>
-				</router-link>
-				<router-link tag='li' :to='seacherText("益智训练")'>
-					<img src='~IMG/益智训练@3x.png' />
-					<span>益智训练</span>
-				</router-link>
-				<router-link tag='li' :to='seacherText("儿童早教")'>
-					<img src='~IMG/儿童早教@3x.png' />
-					<span>儿童早教</span>
+				<router-link tag='li' :key='index' v-for='(item,index) in courseSortMore' :to="'/searchlist/cat='+item.someIdString">
+					<img :src="item.realUrl" />
+					<span>{{item.name}}</span>
 				</router-link>
 			</ul>
 
@@ -219,6 +155,8 @@
 		},
 		data() {
 			return {
+				courseSort: '',
+				courseSortMore: '',
 				isloop: true,
 				list: [],
 				tj: [],
@@ -261,9 +199,17 @@
 			}
 		},
 		mounted() {
+			this.$http.get('/category/classification').then(
+				(res) => {
+					this.courseSort = res.data.obj
+					let id = this.courseSort[this.courseSort.length - 1].id
+					this.getmores(id)
+				}
+			)
 			this.$http.post('/business/course/recommend').then(
 				(res) => {
 					if(res.data.result === 0) {
+						console.log(res.data)
 						this.tj = res.data.obj
 						let $this = this
 						setTimeout(() => {
@@ -279,13 +225,24 @@
 					}
 				}
 			)
-			this.$http.get('/recommendArticles?page=1&rows=1000').then(
+			this.$http.get('/business/course/article').then(
 				(res) => {
-					this.newslist = res.data.obj.items
+					this.newslist = res.data.obj
 				}
 			)
 		},
 		methods: {
+			getmores(id) {
+				this.$http.get('/category/classification', {
+					params: {
+						id: id
+					}
+				}).then(
+					(res) => {
+						this.courseSortMore = res.data.obj
+					}
+				)
+			},
 			seacherText(res) {
 				let $this = this
 				let result = ''

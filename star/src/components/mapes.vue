@@ -7,8 +7,8 @@
 			</bm-marker>
 			<!--<bm-marker v-for='item in center'  :position="item" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
 			</bm-marker>-->
-			<bm-label v-for='item in center' :key='item' :offset="{width: -22, height: -50}" v-if='item.count>0&&item.opt==""' @click='chenalert(item.lng+","+item.lat+","+item.count)' :content='item.count+"课"' :position='item' :labelStyle="{backgroundColor:'rgba(0,0,0,0)',backgroundSize:'100% 100%',backgroundImage:'url(../../static/img/cionbg.png)',borderColor:' rgba(0,0,0,0) ',color: '#fff ',textAlign:'center ',lineHeight:'32px ',padding:'5px ',boxSize:'border-box ', fontSize : '12px ',left:'50px',width:'32px ',height:'39px ',top:'-50px '}" title='Hover me' />
-			<bm-label v-for='item in center' :key='item' :offset="{width: -22, height: -50}" v-if='item.count>0&&item.opt!==""' @click='chenalert(item.lng+","+item.lat+","+item.count)' :content='item.opt.substr(5,2)+"<br>"+item.count+"课"' :position='item' :labelStyle="{backgroundColor:'rgba(0,0,0,0)',backgroundSize:'100% 100%',backgroundImage:'url(../../static/img/cionbg.png)',borderColor:' rgba(0,0,0,0) ',color: '#fff ',textAlign:'center ',lineHeight:'16px ',padding:'5px ',boxSize:'border-box ', fontSize : '12px ',width:'32px ',height:'39px'}" title='Hover me' />
+			<bm-label v-for='item in center' :key='item' :offset="{width: -22, height: -50}" @click='chenalert(item.id)' v-if='item.size>0' :content='item.size+"课"' :position='getval(item)' :labelStyle="{backgroundColor:'rgba(0,0,0,0)',backgroundSize:'100% 100%',backgroundImage:'url(../../static/img/cionbg.png)',borderColor:' rgba(0,0,0,0) ',color: '#fff ',textAlign:'center ',lineHeight:'32px ',padding:'5px ',boxSize:'border-box ', fontSize : '12px ',left:'50px',width:'32px ',height:'39px ',top:'-50px '}" title='Hover me' />
+			<!--<bm-label v-for='item in center' :key='item' :offset="{width: -22, height: -50}"  @click='chenalert(item.lng+","+item.lat+","+item.count)' :content='item.opt.substr(5,2)+"<br>"+item.count+"课"' :position='getval(1)' :labelStyle="{backgroundColor:'rgba(0,0,0,0)',backgroundSize:'100% 100%',backgroundImage:'url(../../static/img/cionbg.png)',borderColor:' rgba(0,0,0,0) ',color: '#fff ',textAlign:'center ',lineHeight:'16px ',padding:'5px ',boxSize:'border-box ', fontSize : '12px ',width:'32px ',height:'39px'}" title='Hover me' />-->
 			<bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_LEFT" :locationIcon='stys' @locationSuccess='abcd' :showAddressBar="true" :autoLocation="true"></bm-geolocation>
 		</baidu-map>
 	</div>
@@ -20,7 +20,7 @@
 			center: {},
 			focus: {},
 			zoom: {
-				default: 10
+				default: 18
 			}
 		},
 		data() {
@@ -47,6 +47,13 @@
 			}
 		},
 		methods: {
+			getval(val) {
+				let result = {
+					lng: val.longitude,
+					lat: val.latitude
+				}
+				return result
+			},
 			abcd(a, b) {
 				this.sty = a.point
 				console.log(a.point)

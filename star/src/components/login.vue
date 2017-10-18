@@ -57,7 +57,7 @@
 			}
 			let openid = GetQueryString('openid')
 			this.openid = openid
-			if(this.openid === '') {
+			if(this.openid === '1') {
 				window.location.href = 'http://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0b68ce5e6fa1e14&redirect_uri=http://wx.dianke8.com/xxdk/app/weChat/pay/wxOpenid&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
 			}
 		},

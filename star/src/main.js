@@ -63,6 +63,7 @@ Vue.use(BaiduMap, {
 	ak: 'Z8Oh2BjN3e3a0bZ7EUoUYiY9fpNTFxtP'
 })
 
+localStorage.setItem('search', 'http://192.168.1.113:8080')
 Vue.http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 //Vue.http.defaults.headers.get['token'] = sessionStorage.getItem('token')
 Vue.http.defaults.headers.common['token'] = sessionStorage.getItem('token')

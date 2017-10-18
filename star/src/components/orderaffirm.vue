@@ -159,15 +159,19 @@
 				contactsPhone: '18297911147',
 				disabled: true,
 				list: JSON.parse(localStorage.getItem('childrenInfo')),
-				selectIndex: ''
+				selectIndex: '',
+				id: ''
 			}
 		},
 		activated() {
 			this.selectIndex = ''
 			this.select = ''
-			let props = this.$route.params.name.split(',')
-			let urls = 'schoolName=' + props[0] + '&companyName=' + props[1] + '&name=' + props[2]
-			this.$http.get('/business/course/detail?' + urls).then(
+			this.id = this.$route.params.name
+			this.$http.get('/business/course/courseDetail', {
+				params: {
+					courseId: this.id
+				}
+			}).then(
 				(res) => {
 					this.detailInfo = res.data.obj
 					this.oldmoney = this.detailInfo.price
@@ -194,14 +198,6 @@
 				}
 			},
 			topay() {
-				//				if(this.select <= 0) {
-				//					this.$vux.alert.show({
-				//						title: '提示',
-				//						content: '请选择优惠方式!'
-				//					})
-				//					return false
-				//				}
-
 				if(this.selectIndex === '') {
 					this.$vux.alert.show({
 						title: '提示',
@@ -212,17 +208,10 @@
 
 				let props = this.$route.params.name.split(',')
 				this.$http.get('/business/order/downOrder', {
-					headers: {
-						token: sessionStorage.getItem('token')
-					},
 					params: {
-						schoolName: props[0],
-						companyName: props[1],
-						name: props[2],
+						courseId: this.id,
 						type: this.select,
-						childId: this.selectIndex,
-						contacts: this.contacts,
-						contactsPhone: this.contactsPhone
+						childId: this.selectIndex
 					}
 				}).then(
 					(res) => {

@@ -4,13 +4,13 @@
 		<ul class="subject-text">
 			<li v-for='item in newslist' class="vux-1px-b">
 				<router-link :to='"/newsdetail/"+item.id'>
-					<img :src="item.thumb" />
+					<img :src="item.url" />
 					<div class="info">
 						<h2>{{item.title}}</h2>
 						<p>{{item.intro}}</p>
 						<span class="time">
-								{{item.updateTime}}
-							</span>
+							{{item.updateTime}}
+						</span>
 					</div>
 				</router-link>
 			</li>
@@ -33,20 +33,25 @@
 			}
 		},
 		mounted() {
-			this.$http.get('/recommendArticles?page=1&rows=1000').then(
+			this.$http.get('/business/course/article').then(
 				(res) => {
-					this.newslist = res.data.obj.items
-					console.log(res.data)
+					this.newslist = res.data.obj
 				}
 			)
+			//			this.$http.get('/recommendArticles?page=1&rows=1000').then(
+			//				(res) => {
+			//					this.newslist = res.data.obj.items
+			//					console.log(res.data)
+			//				}
+			//			)
 		}
 	}
 </script>
 <style lang="less">
-.news-list{
-	padding-top: 44px;
-	box-sizing: border-box;
-	.subject-text {
+	.news-list {
+		padding-top: 44px;
+		box-sizing: border-box;
+		.subject-text {
 			margin-top: 10px;
 			background: #fff;
 			height: auto;
@@ -95,5 +100,5 @@
 				}
 			}
 		}
-}
+	}
 </style>

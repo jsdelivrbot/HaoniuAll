@@ -1,7 +1,10 @@
 <template>
 	<div class="vaguesearch-box">
 		<div class="search-top vux-1px-b">
-			<div class="left" @click="select1=!select1">
+			<div class="out-img" @click="goback()">
+				<img src="../../static/img/Backicon@3x.png" />
+			</div>
+			<!--<div class="left" @click="select1=!select1">
 				<span v-if='iskecheng'>课程</span>
 				<span v-if='!iskecheng'>机构</span>
 				<img src="../../static/img/down3.png" />
@@ -9,7 +12,7 @@
 					<li class="vux-1px-b" @click="iskecheng=true">课程</li>
 					<li class="vux-1px-b" @click="iskecheng=false">机构</li>
 				</ul>
-			</div>
+			</div>-->
 
 			<div class="input">
 				<img src="../../static/img/iconsearch.png" />
@@ -51,18 +54,10 @@
 				</div>
 			</div>
 		</div>
-		<!--<courseList v-if='iskecheng&&hidebox==false&&searchval!==""' :data='list' :iscollect='1'></courseList>
-		<jigoulist v-if='!iskecheng&&hidebox==false&&searchval!==""' :list='jigoulist'></jigoulist>-->
 	</div>
 </template>
 <script>
-	import courseList from '../components/courselist'
-	import jigoulist from '../components/jigoulist'
 	export default {
-		components: {
-			courseList,
-			jigoulist
-		},
 		data() {
 			return {
 				localhttp: localStorage.getItem('localhttp'),
@@ -91,6 +86,9 @@
 			)
 		},
 		methods: {
+			goback() {
+				this.$router.back()
+			},
 			histroybtn(val) {
 				this.searchval = val
 				this.search()
@@ -99,22 +97,14 @@
 				localStorage.removeItem('histroy')
 				this.histroy = null
 			},
-			lod() {
-				this.$vux.loading.show({
-					text: '数据加载中...'
-				})
-			},
 			search() {
 				if(this.searchval === '') {
 					this.$vux.toast.text('请输入搜索的内容', 'center')
 					return false
 				}
-
 				let arr = []
 				let val = {}
 				val.name = this.searchval
-				console.log(this.histroy)
-
 				if(JSON.parse(localStorage.getItem('histroy'))) {
 					let loop = false
 					for(var i = 0; i < this.histroy.length; i++) {
@@ -135,45 +125,7 @@
 					localStorage.setItem('histroy', JSON.stringify(arr))
 				}
 				this.histroy = JSON.parse(localStorage.getItem('histroy'))
-				console.log(JSON.parse(localStorage.getItem('histroy')))
-
-//				this.hidebox = false
-				let targets = ''
-				let $this = this
-				if(this.iskecheng) {
-					targets = 'k'
-				} else {
-					targets = 'c'
-				}
-				this.lod()
-				this.list = []
-				this.jigoulist = []
-				this.$router.push('/searchlist/keyword=' + this.searchval + '&target=' + targets)
-				//				this.$http.get('/search', {
-				//					params: {
-				//						keyword: this.searchval,
-				//						target: targets,
-				//						page: '1',
-				//						rows: '1000',
-				//						type: 'list'
-				//					}
-				//				}).then(
-				//					(res) => {
-				//						this.$vux.loading.hide()
-				//						if(res.data.result === 0) {
-				//							if(res.data.obj.result.length === 0) {
-				//								this.hidebox = true
-				//								$this.$vux.toast.text('没有搜索到您想要的数据!', 'center')
-				//								return false
-				//							}
-				//							if(targets === 'k') {
-				//								$this.list = res.data.obj.result
-				//							} else {
-				//								$this.jigoulist = res.data.obj.result
-				//							}
-				//						}
-				//					}
-				//				)
+				this.$router.push('/searchlist/keyword=' + this.searchval)
 			}
 		}
 	}
@@ -243,11 +195,24 @@
 			display: flex;
 			background: #fff;
 			padding: 8px 15px;
+			padding-left: 0;
 			padding-right: 0;
 			box-sizing: border-box;
 			position: fixed;
 			top: 0;
 			z-index: 999;
+			.out-img {
+				width: 44px;
+				height: 28px;
+				text-align: center;
+				img {
+					display: block;
+					width: 10px;
+					margin: 5px auto;
+					/*margin: 13px auto;*/
+					height: 18px;
+				}
+			}
 			.left {
 				display: flex;
 				margin-right: 10px;

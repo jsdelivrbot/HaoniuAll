@@ -2,11 +2,11 @@
 	<div class="course-list">
 		<ul>
 			<li v-for='item in data' class="vux-1px-b">
-				<router-link :to='"/coursedetail/"+item.schoolName+","+item.companyName+","+item.name'>
-					<img :src="item.school.timetables[0].logo" v-if='item.school.timetables[0].logo' />
+				<router-link :to='"/coursedetail/"+item.id'>
+					<img :src="item.coverUrl" v-if='item.coverUrl' />
 					<div class="center">
 						<h2>{{item.name}}</h2>
-						<p>{{item.school.address}}</p>
+						<p>{{item.addess}}</p>
 					</div>
 					<div class="right">
 						<span class="money">
@@ -16,7 +16,7 @@
 							<!--<div>
 								<img src="../../static/img/address.png"/>
 							</div>-->
-							<em v-if='item.school.distance'>{{ Math.floor(item.school.distance*100)/100}}公里</em>
+							<em v-if='item.distance'>{{item.distance}}公里</em>
 						</div>
 					</div>
 				</router-link>
