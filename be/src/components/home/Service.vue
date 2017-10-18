@@ -32,6 +32,7 @@
 //	}, 200);
 	import Header from '@/common/vue/Header'
 	export default {
+		name: 'Service',
 		components: {
 			'v-header': Header
 		},

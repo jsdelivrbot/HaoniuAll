@@ -67,6 +67,7 @@
 			li {
 				display: flex;
 				height: 60px;
+				align-items: center; 
 				&:nth-child(odd) {
 					background-color: white;
 				}
@@ -76,6 +77,7 @@
 				.label {
 					flex: 0 0 54px;
 					width: 54px;
+					height: 60px;
 					font-size: 18;
 					color: #343434;
 					display: flex;
@@ -97,8 +99,12 @@
 				.img {
 					flex: 0 0 44px;
 					width: 44px;
+					height: 44px;
+					border-radius: 50%;
+					overflow: hidden;
 					display: flex;
 					align-items: center;
+					background-color: #999999;
 					img {
 						width: 100%;
 					}

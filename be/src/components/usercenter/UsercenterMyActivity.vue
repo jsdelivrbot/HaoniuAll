@@ -106,7 +106,7 @@
 							this._initScroll()
 						})
 					} else {
-						this.tip = '暂无优惠券'
+						this.tip = '暂无已报名活动'
 						this.loadingShow = false
 					}
 				})

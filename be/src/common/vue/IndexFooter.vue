@@ -1,23 +1,23 @@
 <template>
 	<div class="index-footer-box border-1px">
-		<router-link to="/home" class="item home" tag="div" exact>
+		<router-link replace to="/home" class="item home" tag="div" exact>
 			<!--<div class="home"></div>-->
 			<span class="text">首页</span>
 		</router-link>
-		<router-link to="/profit" class="item profit" tag="div">
+		<router-link replace to="/profit" class="item profit" tag="div">
 			<!--<div class="profit"></div>-->
 			<span class="text">我的收益</span>
 		</router-link>
-		<router-link to="/taskGuide" class="item" tag="div">
+		<router-link replace to="/taskGuide" class="item" tag="div">
 			<!--<div class="task"></div>-->
 			<div class="task"></div>
 			<span class="text">任务指南</span>
 		</router-link>
 		<router-link to="/shopping-mall" class="item commission" tag="div">
 			<!--<div class="commission"></div>-->
-			<span class="text">蜂购商城</span>
+			<span class="text">佣金商城</span>
 		</router-link>
-		<router-link to="/usercenter" class="item user" tag="div">
+		<router-link replace to="/usercenter" class="item user" tag="div">
 			<!--<div class="user"></div>-->
 			<span class="text">用户中心</span>
 		</router-link>

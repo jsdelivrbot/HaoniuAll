@@ -12,6 +12,7 @@
 			<x-input title="验证码" placeholder="请输入收到的验证码" style="font-size: 16px;" v-model="code" :show-clear="false">
 				<span slot="right" class="slot-right" @click="getCode">
 					获取验证码
+					<span v-show="num > 0">({{num}})</span>
 				</span>
 			</x-input>
 			<div class="btn" @click="bind">
@@ -30,7 +31,8 @@
 				phone: '',
 				code: '',
 				num: 0,
-				pay: localStorage.getItem('ali_pay_phone')
+				pay: localStorage.getItem('ali_pay_phone'),
+				setTimer: null
 			}
 		},
 		components: {
@@ -48,7 +50,7 @@
 					this.$vux.toast.text('手机号码格式错误')
 					return
 				}
-				this.num = 60
+				clearInterval(this.setTimer)
 				this.$http.get('getData/index.php?m=home&c=Form&a=usercenter_SendCode', {
 					params: {
 						seachdata: {
@@ -59,7 +61,8 @@
 					if(res.data.datastatus === 1) {
 						console.log(res)
 						this.$vux.toast.text('验证码发送成功')
-						setInterval(() => {
+						this.num = 60
+						this.setTimer = setInterval(() => {
 							this.num = this.num - 1
 						}, 1000)
 					}else {
@@ -108,7 +111,8 @@
 			font-size: 16px;
 		}
 		.slot-right {
-			width: 69px;
+			/*width: 69px;*/
+			padding: 0 4px;
 			height: 24px;
 			line-height: 24px;
 			border-radius: 24px;

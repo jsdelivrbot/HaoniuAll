@@ -1,7 +1,9 @@
 <template>
 	<div class="hot-article-box">
 		<v-header title="热门文章" map="任务说明" @edit="showMaster"></v-header>
-		<router-view></router-view>
+		<keep-alive include="hotArticleList">
+			<router-view></router-view>
+		</keep-alive>
 		<div class="master" @touchmove.prevent v-show="masterShow" @click="masterShow=!masterShow">
 			<div class="content">
 				<p>
@@ -20,6 +22,7 @@
 <script>
 	import Header from '@/common/vue/Header'
 	export default {
+		name: 'test',
 		components: {
 			'v-header': Header
 		},
@@ -49,18 +52,18 @@
 			width: 100%;
 			height: 100%;
 			position: fixed;
-			z-index: 3;
+			z-index: 10;
 			left: 0;
 			top: 0;
 			background-color: rgba(0,0,0,0.4);
 			.content {
 				width: 640/@rem;
-				height: 340/@rem;
+				min-height: 340/@rem;
 				background-color: white;
 				position: absolute;
 				top: 50%;
 				left: 50%;
-				margin-left: -300/@rem;
+				margin-left: -320/@rem;
 				margin-top: -150/@rem;
 				border-radius: 9px;
 				overflow-y: auto;

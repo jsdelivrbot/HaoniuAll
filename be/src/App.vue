@@ -6,34 +6,7 @@
 
 <script>
 	export default {
-		name: 'app',
-		data() {
-			return {
-				gps: ''
-			}
-		},
-		mounted() {
-			let $this = this
-			this.$CGPS(function(val) {
-				$this.gps = val
-				$this.getGps()
-			})
-		},
-		methods: {
-			getGps() {
-				this.$http.get('/getData/index.php?m=home&c=Form&a=getCityName&seachdata={"x":"' + this.gps.lat + '","y":"' + this.gps.lng + '"}').then(
-					(res) => {
-						if(res) {
-							sessionStorage.setItem('city', res.data.data.city)
-							sessionStorage.setItem('cityPosition', res.data.data.city)
-							sessionStorage.setItem('counties', res.data.data.county)
-						} else {
-							mui.toast('获取位置信息失败,请打开GPS!')
-						}
-					}
-				)
-			}
-		}
+		name: 'app'
 	}
 </script>
 

@@ -82,6 +82,7 @@ if(!sessionStorage.getItem('token')) {
 					localStorage.setItem('mobile', res.data.data[0].mobile)
 					localStorage.setItem('nickname', res.data.data[0].nickname)
 					localStorage.setItem('openid', res.data.data[0].openid)
+					localStorage.setItem('id', res.data.data[0].id)
 					localStorage.setItem('ali_pay_phone', res.data.data[0].ali_pay_phone)
 					localStorage.setItem('sex_type', res.data.data[0].sex_type || '')
 					localStorage.setItem('age_area', res.data.data[0].age_area || '')

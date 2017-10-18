@@ -3,7 +3,9 @@
 		<div class="main">
 			<v-header title="修改个人资料"></v-header>
 			<div class="avatar">
-				<img :src="avatar.link" />
+				<div>
+					<img :src="avatar.link" />
+				</div>
 			</div>
 			<div class="avatar-btn">
 				<input type="file" value="test" style="background-color: white;" @change="getImgInfo" ref="imgFile" />
@@ -71,9 +73,9 @@
 		<div class="footer" @click="updateInfo">
 			完成
 		</div>
-		<transition name="slide">
-			<perfect-more @cancelShow="cancelShow" v-show="isShow" @save="save" :sex="sex" :age="age" :work="work" :hobby="hobby"></perfect-more>
-		</transition>
+		<!--<transition name="slide">-->
+		<perfect-more @cancelShow="cancelShow" v-show="isShow" @save="save" :sex="sex" :age="age" :work="work" :hobby="hobby"></perfect-more>
+		<!--</transition>-->
 	</div>
 </template>
 
@@ -90,6 +92,28 @@
 			PopupPicker,
 			Datetime,
 			XInput
+		},
+		created() {
+			if(!localStorage.getItem('avatar')) {
+				this.avatar.link = '../../../../static/avatar.png'
+			} else {
+				let res = localStorage.getItem('avatar').substring(0, 4)
+				if(res === 'http') {
+					this.avatar.link = localStorage.getItem('avatar')
+				} else {
+					this.avatar.link = localStorage.getItem('httpUrl') + localStorage.getItem('avatar')
+				}
+			}
+		},
+		computed: {
+			phone() {
+				let mobile = localStorage.getItem('mobile')
+				if(!mobile || mobile === 'null') {
+					return ''
+				}else {
+					return mobile
+				}
+			}
 		},
 		methods: {
 			cancelShow() {
@@ -138,7 +162,7 @@
 							this.avatar.link = localStorage.getItem('httpUrl') + res.data.data.link
 							this.avatar.img = res.data.data.img
 							this.updateAvatar(res.data.data.link)
-						}else {
+						} else {
 							this.$vux.toast.text(res.data.data.message)
 						}
 						this.$vux.loading.hide()
@@ -155,6 +179,7 @@
 					if(res.data.datastatus === 1) {
 						this.$vux.toast.text('上传成功')
 						localStorage.setItem('avatar', src)
+						this.$router.back(-1)
 					}
 				})
 			},
@@ -187,24 +212,28 @@
 					}
 				})
 			}
-//			updateAll() {
-//				let $this = this
-//				this.$http.all([this.updateAvatar(), this.updateInfo()])
-//					.then(this.$http.spread(function(res1, res2) {
-//						if(res1.data.datastatus === 1 && res2.data.datastatus === 1) {
-//							localStorage.setItem('sex_type', $this.sex)
-//							localStorage.setItem('age_area', $this.age)
-//							localStorage.setItem('hy_area', $this.work)
-//							localStorage.setItem('hbt_list', $this.hobby)
-//							localStorage.setItem('avatar', $this.avatar.link)
-//							//							console.log(this)
-//							$this.$vux.toast.text('修改成功')
-//							$this.$router.back(-1)
-//						} else {
-//							$this.$vux.toast.text('上传失败')
-//						}
-//					}))
-//			}
+			//			updateAll() {
+			//				let $this = this
+			//				this.$http.all([this.updateAvatar(), this.updateInfo()])
+			//					.then(this.$http.spread(function(res1, res2) {
+			//						if(res1.data.datastatus === 1 && res2.data.datastatus === 1) {
+			//							localStorage.setItem('sex_type', $this.sex)
+			//							localStorage.setItem('age_area', $this.age)
+			//							localStorage.setItem('hy_area', $this.work)
+			//							localStorage.setItem('hbt_list', $this.hobby)
+			//							localStorage.setItem('avatar', $this.avatar.link)
+			//							//							console.log(this)
+			//							$this.$vux.toast.text('修改成功')
+			//							$this.$router.back(-1)
+			//						} else {
+			//							$this.$vux.toast.text('上传失败')
+			//						}
+			//					}))
+			//			}
+		},
+		beforeRouteLeave(to, from, next) {
+			this.$vux.loading.hide()
+			next()
 		},
 		data() {
 			return {
@@ -215,10 +244,9 @@
 				hobby: localStorage.getItem('hbt_list') || '请选择',
 				username: localStorage.getItem('nickname'),
 				avatar: {
-					link: localStorage.getItem('httpUrl') + localStorage.getItem('avatar'),
+					link: '',
 					img: ''
-				},
-				phone: localStorage.getItem('phone')
+				}
 			}
 		}
 		//		computed: {
@@ -246,9 +274,18 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				img {
+				&>div {
 					width: 100px;
 					height: 100px;
+					border-radius: 50%;
+					background-color: #999999;
+					overflow: hidden;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					img {
+						width: 100%;
+					}
 				}
 			}
 			.avatar-btn {

@@ -22,6 +22,9 @@
 					<!--<router-link to="/fleaMarket/release" tag="span" class="btn-item edit">
 						编辑
 					</router-link>-->
+					<span class="btn-item edit" @click="goEdit">
+						编辑
+					</span>
 				</div>
 			</div>
 		</router-link>
@@ -35,6 +38,7 @@
 	import Header from '@/common/vue/Header'
 	import { LoadMore } from 'vux'
 	export default {
+		name: 'FleaMarketMy',
 		data() {
 			return {
 				listInfo: [],
@@ -78,9 +82,15 @@
 							text: '删除成功!',
 							time: '1000'
 						})
-					}else {
+					} else {
 						this.$vux.toast.text(res.data.message)
 					}
+				})
+			},
+			goEdit() {
+				this.$vux.alert.show({
+					title: '提示',
+					content: '正在优化，敬请期待'
 				})
 			}
 		}

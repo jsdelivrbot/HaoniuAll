@@ -13,7 +13,9 @@
 				</p>
 			</div>
 		</div>
-		<router-view></router-view>
+		<keep-alive include="TaskList">
+			<router-view></router-view>
+		</keep-alive>
 	</div>
 </template>
 
@@ -55,12 +57,12 @@
 			background-color: rgba(0, 0, 0, 0.4);
 			.content {
 				width: 640/@rem;
-				height: 340/@rem;
+				min-height: 340/@rem;
 				background-color: white;
 				position: absolute;
 				top: 50%;
 				left: 50%;
-				margin-left: -300/@rem;
+				margin-left: -320/@rem;
 				margin-top: -150/@rem;
 				border-radius: 9px;
 				overflow-y: auto;

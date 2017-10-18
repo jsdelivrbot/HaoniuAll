@@ -37,6 +37,7 @@
 	import { Swiper, SwiperItem } from 'vux'
 	import FleaMarketList from '@/common/vue/FleaMarketList'
 	export default {
+		name: 'FleaMarketIndex',
 		components: {
 			'v-header': Header,
 			Swiper,

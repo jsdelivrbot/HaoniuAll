@@ -1,6 +1,8 @@
 <template>
 	<div class="coupon-box">
-		<router-view></router-view>
+		<keep-alive include="CouponList">
+			<router-view></router-view>
+		</keep-alive>
 	</div>
 </template>
 

@@ -109,7 +109,7 @@
 				align-items: center;
 			}
 			.tabItemBg {
-				background: url(../../../static/home-tab-icon.png) right bottom no-repeat;
+				background: url(../../../static/home-tab-icon.png) right 9px bottom no-repeat;
 				background-size: 6px 6px;
 			}
 		}

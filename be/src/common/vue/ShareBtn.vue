@@ -65,28 +65,32 @@
 
 <script>
 	export default {
-		props: ['articleId', 'article_rule_money', 'title', 'id', 'isChecked'],
+		props: ['articleId', 'article_rule_money', 'title', 'id', 'isChecked', 'shareImg'],
 		data() {
 			return {
 				collected: false,
 				masterShow: false,
-				getted: false
+				getted: false,
+				uid: localStorage.getItem('id'),
+				httpUrl: localStorage.getItem('httpUrl')
 			}
 		},
 		created() {
-			console.log('isChecked')
-			console.log(this.isChecked)
+//			console.log('isChecked')
+//			console.log(this.isChecked)
+//			console.log(this.shareImg)
 			if(this.isChecked === '1') {
 				this.getted = true
 			}
 		},
 		methods: {
 			share(selects) {
+				console.log(this.httpUrl + this.shareImg)
 				let opts = {
-					url: 'http://aifengxiang.hfrjkf.cn/app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=article&aid=' + this.id,
+					url: 'http://aifengxiang.hfrjkf.cn/app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=article&aid=' + this.id + '&uid=' + this.uid,
 					title: this.title.substring(0, 10) + '...',
 					content: this.title,
-					img: 'http://aifengxiang.hfrjkf.cn/logo.png'
+					img: this.httpUrl + this.shareImg
 				}
 				this.$CwxShare(selects, opts, function(res) {
 					if(res) {
@@ -148,6 +152,8 @@
 					})
 					return
 				}
+//				let token = this.$http.defaults.headers.common['token']
+//				alert(token)
 				this.$http.get('getData/index.php?m=home&c=Form&a=infoCollect', {
 					params: {
 						seachdata: {

@@ -45,34 +45,44 @@
 				are: true,
 				id: '',
 				showshare: false,
-				uid: localStorage.getItem('openid')
+				uid: localStorage.getItem('id')
 			}
 		},
 		mounted() {
 			let $this = this
-			mui.plusReady(function() {
-				if(plus.webview.getWebviewById('fxg') === null) {
-					mui.openWindow({
-						url: $this.httpUrl + 'app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=goods&groupid=1',
-						id: 'fxg',
-						styles: {
-							top: '44px',
-							bottom: 0
-						},
-						show: {
-							autoShow: true,
-							aniShow: 'slide-in-right'
-						},
-						waiting: {
-							autoShow: true,
-							title: '正在加载...'
-						}
-					})
+			let link
+			if($this.$route.query.url) {
+				let url = $this.$route.query.url
+				link = 'app/' + decodeURIComponent(url) + '&token=' + $this.token
+			} else {
+				link = 'app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=goods&groupid=1&token=' + $this.token
+			}
+			if(plus.webview.getWebviewById('fxg') === null) {
+				mui.openWindow({
+					url: $this.httpUrl + link,
+					id: 'fxg',
+					styles: {
+						top: '44px',
+						bottom: 0
+					},
+					show: {
+						autoShow: true,
+						aniShow: 'slide-in-right'
+					},
+					waiting: {
+						autoShow: true,
+						title: '正在加载...'
+					}
+				})
+			} else {
+				plus.webview.getWebviewById('fxg').zIndex = -1
+				let old = 'app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=goods&groupid=1&token=' + $this.token
+				if(link !== old) {
+					plus.webview.getWebviewById('fxg').loadURL($this.httpUrl + link)
 				} else {
-					plus.webview.getWebviewById('fxg').zIndex = -1
 					plus.webview.getWebviewById('fxg').show()
 				}
-			})
+			}
 		},
 		methods: {
 			share(selects) {
@@ -84,7 +94,7 @@
 						url: urls,
 						title: this.id.title,
 						content: this.id.content,
-						img: 'http://aifengxiang.hfrjkf.cn/logo.png'
+						img: this.id.img
 					}
 				} else {
 					urls = this.httpUrl + 'app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=goods&groupid=1'

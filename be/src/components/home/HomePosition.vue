@@ -44,6 +44,7 @@
 	import CitySearchList from '@/common/vue/CitySearchList'
 	import city from '../../../static/js/city.js'
 	export default {
+		name: 'HomePosition',
 		components: {
 			CityList,
 			CitySearchList

@@ -15,6 +15,7 @@
 <script>
 	import Header from '@/common/vue/Header'
 	export default {
+		name: 'AmusementIndexMore',
 		components: {
 			'v-header': Header
 		},

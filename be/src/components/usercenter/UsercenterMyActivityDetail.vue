@@ -29,7 +29,7 @@
 			</div>
 			<div class="tel">
 				<span class="number">{{content.phone}}</span>
-				<a :href="'tel:' + content.phone" class="dial">资讯热线</a>
+				<a :href="'tel:' + content.phone" class="dial">咨询热线</a>
 			</div>
 		</div>
 		<div class="person-info">

@@ -35,7 +35,7 @@
 			<p>第三方登录</p>
 		</div>
 		<div class="otherway">
-			<img src="../../../static/login4.png" />
+			<!--<img src="../../../static/login4.png" />-->
 			<img src="../../../static/login5.png" @click="otherLogin('weixin')" />
 		</div>
 	</div>
@@ -74,11 +74,15 @@
 										localStorage.setItem('hy_area', res.data.data[0].hy_area || '')
 										localStorage.setItem('hbt_list', res.data.data[0].hbt_list || '')
 										sessionStorage.setItem('token', res.data.data[0].token)
-										$this.$http.defaults.headers.common['token'] = res.data.data[0].token
+//										$this.$http.defaults.headers.common['token'] = sessionStorage.getItem('token')
+										$this.$http.defaults.headers.get['token'] = sessionStorage.getItem('token')
+//										let token = $this.$http.defaults.headers.get['token']
+//										alert(token)
 										localStorage.setItem('avatar', res.data.data[0].avatar)
 										localStorage.setItem('mobile', res.data.data[0].mobile)
 										localStorage.setItem('nickname', res.data.data[0].nickname)
 										localStorage.setItem('openid', res.data.data[0].openid)
+										localStorage.setItem('id', res.data.data[0].id)
 										localStorage.setItem('newUser', 'notNew')
 										if($this.$route.query.redirect) {
 											$this.$router.replace($this.$route.query.redirect)
@@ -149,6 +153,7 @@
 							localStorage.setItem('mobile', res.data.data[0].mobile)
 							localStorage.setItem('nickname', res.data.data[0].nickname)
 							localStorage.setItem('openid', res.data.data[0].openid)
+							localStorage.setItem('id', res.data.data[0].id)
 							localStorage.setItem('newUser', 'notNew')
 							if($this.$route.query.redirect) {
 								$this.$router.replace($this.$route.query.redirect)

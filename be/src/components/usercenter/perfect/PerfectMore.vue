@@ -243,6 +243,7 @@
 			bottom: 0;
 			height: 50px;
 			display: flex;
+			z-index: 2;
 			.item {
 				flex: 1;
 				width: 0;

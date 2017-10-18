@@ -1,25 +1,24 @@
 <template>
-	<div class="usercenter-task-list-box">
+	<div class="usercenter-share-task-list-box">
 		<ul>
-			<router-link :to="'/task/detail/' + item.article_detail.id" tag="li" class="border-1px" v-for="(item, index) in list"
+			<router-link :to="fullUrl(item.link)" tag="li" class="border-1px" v-for="(item, index) in list"
 				:key="index">
 				<div class="icon">
-					<img :src="httpUrl + item.article_detail.resp_img" />
+					<img :src="httpUrl + item.goods_detail.thumb" />
 				</div>
 				<div class="content">
 					<p class="firstrow">
-						<span class="title">【{{judgeDateText(item.date)}}】</span>
-						<span class="date-label">
-							<span class="date">{{item.begin_time | formDate}}~{{item.end_time | formDate}}</span>
-							<!--<span class="label">待推荐</span>-->
-						</span>
+						<span class="title">{{item.goods_detail.title}}</span>
+						<!--<span class="date-label">
+							<span class="date">开始日期：{{item.begin_time | formDate}}</span>
+						</span>-->
 					</p>
-					<p class="secondrow">
-						{{item.article_detail.article_title}}
-					</p>
+					<!--<p class="secondrow">
+						{{item.goods_detail.title}}
+					</p>-->
 					<p class="thirdrow">
-						<span>分享人数：{{item.article_share_num}}</span>
-						<span>获得佣金：{{item.article_share_money}}</span>
+						<span>分享人数：{{item.goods_share_num}}</span>
+						<span>获得佣金：{{item.goods_share_money}}</span>
 					</p>
 				</div>
 			</router-link>
@@ -45,12 +44,10 @@
 			LoadMore
 		},
 		methods: {
-			judgeDateText(value) {
-				if(value === 0) {
-					return '已过期'
-				} else {
-					return '进行中'
-				}
+			fullUrl(src) {
+				let link = encodeURIComponent(src)
+				link = '/fxgshop?url=' + link
+				return link
 			}
 		}
 	}
@@ -58,8 +55,7 @@
 
 <style lang="less">
 	@import url("../../../static/less/mixin.less");
-	.usercenter-task-list-box {
-		margin-top: 10px;
+	.usercenter-share-task-list-box {
 		ul {
 			li {
 				display: flex;
@@ -83,7 +79,7 @@
 					margin-left: 12px;
 					p {
 						font-size: 12px;
-						line-height: 16px;
+						line-height: 20px;
 						&.firstrow {
 							.title {
 								color: #e60012;

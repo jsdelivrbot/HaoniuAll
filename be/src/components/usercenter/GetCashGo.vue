@@ -50,7 +50,7 @@
 					this.$vux.toast.text('提现金额需为50的倍数')
 					return
 				}
-				this.$http.get('getData/index.php?m=home&c=Form&a=txList', {
+				this.$http.get('getData/index.php?m=home&c=Form&a=txsq', {
 					params: {
 						seachdata: {
 							tx_num: this.cash

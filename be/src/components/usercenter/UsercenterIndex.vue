@@ -3,8 +3,8 @@
 		<div class="header-unlogged" v-if="!login">
 			<div class="top-bar">
 				<div class="back">
-					<span class="iconfont icon-fanhui" @click="back"></span>
-					<span class="text">我</span>
+					<!--<span class="iconfont icon-fanhui" @click="back"></span>-->
+					<!--<span class="text">我</span>-->
 				</div>
 			</div>
 			<router-link to="/login" tag="div" class="login-btn">
@@ -17,10 +17,10 @@
 		<div class="header-logged" v-if="login">
 			<div class="master"></div>
 			<div class="top-bar clearfix">
-				<div class="back">
+				<!--<div class="back">
 					<span class="iconfont icon-fanhui" @click="back"></span>
 					<span class="text">我</span>
-				</div>
+				</div>-->
 				<router-link class="go" to="/usercenter/perfect" tag="div">
 					<span class="text">完善信息</span>
 					<span class="iconfont icon-gengduo"></span>
@@ -62,6 +62,14 @@
 				</div>
 				<span slot="title">
         			<span style="font-size: 14px; line-height: 49px;">全部任务</span>
+				</span>
+			</cell>
+			<cell is-link link="/usercenter/sharetask" style="height: 29px;">
+				<div slot="icon" style="width: 26px; margin-right: 20px;">
+					<img slot="icon" width="20" src="../../../static/usercenter/icon15.png" style="vertical-align:middle; display: block; margin: auto;">
+				</div>
+				<span slot="title">
+        			<span style="font-size: 14px; line-height: 49px;">分享购任务</span>
 				</span>
 			</cell>
 			<cell is-link link="/usercenter/collection" style="height: 29px;">
@@ -150,6 +158,7 @@
 				</span>
 			</cell>-->
 		</group>
+		<index-footer></index-footer>
 		<!--<x-button type="warn" style="margin-top: 20px; width: 90%;" @click.native="logout"
 			v-show="login">退出登录</x-button>-->
 	</div>
@@ -157,10 +166,12 @@
 
 <script>
 	import { Badge, Group, Cell, XButton } from 'vux'
+	import IndexFooter from '@/common/vue/IndexFooter'
 	export default {
+		name: 'UserCenterIndex',
 		methods: {
 			back() {
-				this.$router.back(-1)
+				this.$router.replace('/home')
 			},
 			logout() {
 				let _this = this
@@ -178,7 +189,8 @@
 			Badge,
 			Group,
 			Cell,
-			XButton
+			XButton,
+			IndexFooter
 		},
 		data() {
 			return {
@@ -188,6 +200,14 @@
 				//				avatar: localStorage.getItem('avatar'),
 				mobile: localStorage.getItem('mobile'),
 				nickname: localStorage.getItem('nickname')
+			}
+		},
+		created() {
+			if(!this.mobile || this.mobile === 'null') {
+				this.mobile = ''
+			}
+			if(!this.nickname || this.nickname === 'null') {
+				this.nickname = ''
 			}
 		},
 		computed: {
@@ -204,13 +224,23 @@
 				}
 			}
 		}
+//		beforeRouteEnter(to, from, next) {
+//			next(vm => {
+//				vm.login = sessionStorage.getItem('token')
+//				vm.path = vm.$route.fullPath
+//				vm.httpUrl = localStorage.getItem('httpUrl')
+//				//				avatar: localStorage.getItem('avatar')
+//				vm.mobile = localStorage.getItem('mobile')
+//				vm.nickname = localStorage.getItem('nickname')
+//			})
+//		}
 	}
 </script>
 
 <style lang="less">
 	@import url("../../../static/less/mixin.less");
 	.usercenter-box {
-		padding-bottom: 34px;
+		padding-bottom: 64px;
 		/*未登录状态*/
 		.header-unlogged {
 			width: 100%;
@@ -328,9 +358,17 @@
 				height: 80px;
 				width: 80px;
 				border-radius: 50%;
-				margin: -16px auto 0;
+				/*margin: -16px auto 0;*/
 				position: relative;
 				z-index: 2;
+				overflow: hidden;
+				left: 50%;
+				transform: translateX(-50%);
+				margin-top: -16px;
+				background-color: #999999;
+				display: flex;
+				justify-content: center;
+				align-items: center;
 				img {
 					width: 100%;
 				}

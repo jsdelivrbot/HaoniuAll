@@ -17,6 +17,7 @@
 	import BScroll from 'better-scroll'
 	import InteractionList from '@/common/vue/InteractionList'
 	export default {
+		name: 'InteractionIndex',
 		components: {
 			'v-header': Header,
 			Tab,
@@ -43,13 +44,16 @@
 				})
 				.then((res) => {
 					if(res.data.datastatus === 1) {
-						console.log('线下互动列表' + id)
-						console.log(res)
-						this.listData.push.apply(this.listData, res.data.data)
+//						console.log('线下互动列表' + id)
+//						console.log(res)
+//						this.listData.push.apply(this.listData, res.data.data)
+						this.listData = res.data.data
 						this.loadingShow = false
 						this.count = this.count + 12
 						this.$nextTick(() => {
 							this._initScroll(id)
+							this.loadingShow = false
+							this.tip = '上拉加载更多'
 						})
 					} else {
 						this.tip = '没有数据了'
@@ -99,7 +103,7 @@
 						this.tip = '上拉加载更多'
 						this.loadingShow = true
 						this.getListData(this.currentId)
-						console.log(pos)
+//						console.log(pos)
 					}
 				})
 			}

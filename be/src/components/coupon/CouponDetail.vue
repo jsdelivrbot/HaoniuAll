@@ -36,6 +36,7 @@
 	import { Swiper } from 'vux'
 	import FooterBtn from '@/common/vue/FooterBtn'
 	export default {
+		name: 'CouponDetail',
 		methods: {
 			back() {
 				this.$router.back(-1)

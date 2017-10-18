@@ -8,6 +8,7 @@ import TaskGuide from '@/components/home/TaskGuide'
 import Service from '@/components/home/Service'
 import fxgshop from '@/components/shoppingMall/fxgshop'
 import Guide from '@/components/Guide'
+import HomeDetail from '@/components/home/HomeDetail'
 //搜索
 import Search from '@/common/vue/Search'
 //任务大厅
@@ -34,6 +35,7 @@ import FleaMarketMy from '@/components/fleaMarket/FleaMarketMy'
 import Usercenter from '@/components/usercenter/Usercenter'
 import UsercenterIndex from '@/components/usercenter/UsercenterIndex'
 import UsercenterAlltask from '@/components/usercenter/task/UsercenterAlltask'
+import UsercenterSharetask from '@/components/usercenter/task/UsercenterSharetask'
 import UsercenterCollection from '@/components/usercenter/collection/UsercenterCollection'
 import Perfect from '@/components/usercenter/perfect/Perfect'
 import UsercenterAdress from '@/components/usercenter/adress/UsercenterAdress'
@@ -53,7 +55,6 @@ import BindingPhoneNew from '@/components/usercenter/BindingPhoneNew'
 import AboutUs from '@/components/usercenter/AboutUs'
 import MyOrder from '@/components/usercenter/MyOrder'
 import ShoppingCar from '@/components/usercenter/ShoppingCar'
-
 //热门文章
 import HotArticle from '@/components/hotArticle/HotArticle'
 import HotArticleIndex from '@/components/hotArticle/HotArticleIndex'
@@ -78,6 +79,7 @@ import MyCoupon from '@/components/coupon/MyCoupon'
 import LifeService from '@/components/lifeService/LifeService'
 import LifeServiceIndex from '@/components/lifeService/LifeServiceIndex'
 import LifeServiceIn from '@/components/lifeService/LifeServiceIn'
+import LifeServiceDetail from '@/components/lifeService/LifeServiceDetail'
 //线下互动
 import Interaction from '@/components/interaction/Interaction'
 import InteractionIndex from '@/components/interaction/InteractionIndex'
@@ -122,6 +124,12 @@ const router = new Router({
 			}, {
 				path: '/service',
 				component: Service
+			}, {
+				path: '/home/detail/:id',
+				component: HomeDetail
+			}, {
+				path: '/home/detail2/:id',
+				component: HomeDetail
 			}]
 		},
 		{
@@ -173,6 +181,9 @@ const router = new Router({
 			}, {
 				path: '/lifeService/in/:id',
 				component: LifeServiceIn
+			}, {
+				path: '/lifeService/detail/:id',
+				component: LifeServiceDetail
 			}]
 		},
 		//	{
@@ -335,6 +346,12 @@ const router = new Router({
 					requiresAuth: true
 				}
 			}, {
+				path: '/usercenter/sharetask',
+				component: UsercenterSharetask,
+				meta: {
+					requiresAuth: true
+				}
+			}, {
 				path: '/usercenter/collection',
 				component: UsercenterCollection,
 				meta: {
@@ -441,7 +458,7 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to, from) => {
 	//	localStorage.setItem('scrollY', window.scrollY)
 	//	console.log(window.scrollY)
-	window.scrollTo(0, 0)
+//	window.scrollTo(0, 0)
 })
 
 export default router

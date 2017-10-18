@@ -35,11 +35,12 @@
 						便当，让生活更惬意，是夫妻间爱意的表达，给自己的幸福感。
 					</p>-->
 					<p class="cotent-footer">
-						<span class="date">截止日期：</span>{{item.article_date_v}}
+						<span class="date">开始日期：</span>{{item.article_date_v}}
 					</p>
 				</div>
 				<div class="share">
-					￥{{item.article_rule_money}}
+					<span class="share-price" v-if="item.is_checked === '0'">￥{{item.article_rule_money}}</span>
+					<span class="share-price" style="color: #999999;" v-if="item.is_checked === '1'">已赚取</span>
 					<span class="go-share">
 						立即分享
 					</span>
@@ -53,6 +54,7 @@
 <script>
 	import { LoadMore } from 'vux'
 	export default {
+		name: 'hotArticleList',
 		props: {
 			data: Array,
 			tip: String,
@@ -152,7 +154,7 @@
 						background: url(../../../static/share.png) 4px center no-repeat;
 						background-size: 10px;
 						font-size: 10px;
-						line-height: 14px;
+						line-height: 16px;
 						padding-left: 12px;
 						box-sizing: border-box;
 					}

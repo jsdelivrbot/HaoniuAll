@@ -18,6 +18,7 @@
 	import Header from '@/common/vue/Header'
 	import { Group, XInput, XButton } from 'vux'
 	export default {
+		name: 'FreeSignUp',
 		components: {
 			'v-header': Header,
 			Group,

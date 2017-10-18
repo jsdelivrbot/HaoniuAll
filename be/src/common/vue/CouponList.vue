@@ -26,6 +26,7 @@
 <script>
 	import { LoadMore } from 'vux'
 	export default {
+		name: 'CouponList',
 		props: {
 			list: Array,
 			tip: String,

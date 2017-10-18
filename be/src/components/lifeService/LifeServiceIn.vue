@@ -3,7 +3,7 @@
 		<v-header :search="true" map="搜索" @getSearchData="getSearchData"></v-header>
 		<tab :data="tabList" :type_id="listId" @getData="getData"></tab>
 		<div ref="wrapper" class="wrapper">
-			<amusement-list :list="listData" :tip="tip" :loadingShow="loadingShow"></amusement-list>
+			<life-service-list :list="listData" :tip="tip" :loadingShow="loadingShow"></life-service-list>
 		</div>
 	</div>
 </template>
@@ -12,11 +12,12 @@
 	import Header from '@/common/vue/Header'
 	import Tab from '@/common/vue/Tab'
 	import BScroll from 'better-scroll'
-	import AmusementList from '@/common/vue/AmusementList'
+	import LifeServiceList from '@/common/vue/LifeServiceList'
 	export default {
+		name: 'LifeServiceIn',
 		components: {
 			'v-header': Header,
-			AmusementList,
+			LifeServiceList,
 			Tab
 		},
 		data() {
@@ -32,48 +33,67 @@
 			}
 		},
 		created() {
-			this.$http.get('getData/index.php?m=home&c=Form&a=infoList', {
-					params: {
-						seachdata: {
-							'type_id': this.listId,
-							'city': sessionStorage.getItem('city'),
-							'option_data': this.searchData,
-							'limit': this.count + ',12'
-						}
-					}
+			this.init()
+		},
+		beforeRouteEnter(to, from, next) {
+			if(from.fullPath === '/lifeService') {
+				next(vm => {
+					vm.listId = vm.$route.params.id
+					vm.listData = []
+					vm.tabList = []
+					vm.searchData = []
+					vm.searchData2 = ''
+					vm.count = 0
+					vm.tip = '加载中'
+					vm.loadingShow = true
+					vm.init()
 				})
-				.then((res) => {
-					if(res.data.datastatus === 1) {
-						console.log('生活服务列表')
-						console.log(res)
-						this.listData.push.apply(this.listData, res.data.data)
-						this.count = this.count + 12
-						this.$nextTick(() => {
-							this._initScroll()
-							this.loadingShow = false
-							this.tip = '上拉加载更多'
-						})
-					} else {
-						this.tip = '没有数据了'
-						this.loadingShow = false
-					}
-				})
-			//选项列表
-			this.$http.get('getData/index.php?m=home&c=Form&a=optionList', {
-					params: {
-						seachdata: {
-							'type_id': this.listId,
-							'city': sessionStorage.getItem('city')
-						}
-					}
-				})
-				.then((res) => {
-					console.log('选项列表')
-					console.log(res)
-					this.tabList = res.data.data
-				})
+			}
+			next()
 		},
 		methods: {
+			init() {
+				this.$http.get('getData/index.php?m=home&c=Form&a=infoList', {
+						params: {
+							seachdata: {
+								'type_id': this.listId,
+								'city': sessionStorage.getItem('city'),
+								'option_data': this.searchData,
+								'limit': this.count + ',12'
+							}
+						}
+					})
+					.then((res) => {
+						if(res.data.datastatus === 1) {
+							console.log('生活服务列表')
+							console.log(res)
+							this.listData.push.apply(this.listData, res.data.data)
+							this.count = this.count + 12
+							this.$nextTick(() => {
+								this._initScroll()
+								this.loadingShow = false
+								this.tip = '上拉加载更多'
+							})
+						} else {
+							this.tip = '没有数据了'
+							this.loadingShow = false
+						}
+					})
+				//选项列表
+				this.$http.get('getData/index.php?m=home&c=Form&a=optionList', {
+						params: {
+							seachdata: {
+								'type_id': this.listId,
+								'city': sessionStorage.getItem('city')
+							}
+						}
+					})
+					.then((res) => {
+						console.log('选项列表')
+						console.log(res)
+						this.tabList = res.data.data
+					})
+			},
 			//选项结果
 			getData(res, searchData) {
 				console.log('选项结果')

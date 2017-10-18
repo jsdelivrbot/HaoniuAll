@@ -83,6 +83,7 @@
 	import { Swiper } from 'vux'
 	import FooterBtn from '@/common/vue/FooterBtn'
 	export default {
+		name: 'AmusementDetail',
 		components: {
 			'v-header': Header,
 			Swiper,

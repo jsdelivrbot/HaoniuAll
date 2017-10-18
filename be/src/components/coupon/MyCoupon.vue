@@ -10,7 +10,7 @@
 		</div>
 		<div ref="wrapper" class="wrapper">
 			<div class="list">
-				<router-link to="" tag="div" class="item" v-for="(item, index) in listData" :key="index">
+				<router-link :to="'/coupon/detail/' + item.info_id" tag="div" class="item" v-for="(item, index) in listData" :key="index">
 					<div class="item-title vux-1px-b">
 						<p class="number">订单编号：{{item.info_detail.info_num}}</p>
 						<p class="label">{{judgeDateText(item.date)}}</p>

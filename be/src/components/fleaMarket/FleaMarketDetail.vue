@@ -61,6 +61,7 @@
 	import { Swiper } from 'vux'
 	import FooterBtn from '@/common/vue/FooterBtn'
 	export default {
+		name: 'FleaMarketDetail',
 		components: {
 			'v-header': Header,
 			Swiper,

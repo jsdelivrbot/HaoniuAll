@@ -1,5 +1,6 @@
 <template>
-	<div class="task-list-box">
+	<div class="home-list-box">
+		<v-header title="任务大厅" map="任务说明" @edit="showMaster"></v-header>
 		<!--<router-link to="/task/detail/1" tag="div" class="item">
 			<div class="img">
 				<img src="../../../static/task-list.jpg" />
@@ -29,7 +30,7 @@
 					<span class="price-red">{{item.article_rule_moneytotal}}</span>
 				</p>
 				<div class="share-btn-wrapper">
-					<div class="share-btn" :class="{shared:item.is_checked === '1'}">
+					<div class="share-btn">
 						<span class="share-price" v-if="item.is_checked === '0'">￥{{item.article_rule_money}}</span>
 						<span class="share-price" v-if="item.is_checked === '1'">已赚取</span>
 						<span class="share-go">去分享</span>
@@ -42,7 +43,7 @@
 				</div>
 			</div>
 		</router-link>
-		<router-link :to="fullDetailUrl2(item.id, item.page_type)" tag="div" class="item"
+		<router-link :to="fullDetailUrl(item.id, item.page_type)" tag="div" class="item"
 			v-for="item,index in data" :key="index" v-if="!isIndex">
 			<div class="img">
 				<img :src="fullImgUrl(item.resp_img)" />
@@ -74,6 +75,7 @@
 </template>
 
 <script>
+	import Header from '@/common/vue/Header'
 	import { LoadMore } from 'vux'
 	export default {
 		name: 'TaskList',
@@ -98,23 +100,17 @@
 				}else {
 					return '/home/detail2/' + id
 				}
-			},
-			fullDetailUrl2(id, type) {
-				if(type === '1') {
-					return '/task/detail/' + id
-				}else {
-					return '/task/detail/' + id
-				}
 			}
 		},
 		components: {
-			LoadMore
+			LoadMore,
+			'v-header': Header
 		}
 	}
 </script>
 
 <style lang="less">
-	.task-list-box {
+	.home-list-box {
 		padding: 0 12px 6px;
 		/*padding: 0 12px 64px;*/
 		box-sizing: border-box;
@@ -207,9 +203,6 @@
 								flex: 3;
 							}
 						}
-					}
-					.shared {
-						background-color: #999999;
 					}
 					.page-type {
 						margin-top: 6px;

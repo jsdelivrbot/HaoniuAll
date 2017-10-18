@@ -1,7 +1,6 @@
 <template>
 	<div class="iframeBox">
-		<callback title="蜂购商城"></callback>
-		<index-footer></index-footer>
+		<callback title="佣金商城"></callback>
 	</div>
 </template>
 <script>
@@ -25,12 +24,19 @@
 			let $this = this
 			mui.plusReady(function() {
 				if(plus.webview.getWebviewById('news') === null) {
+					let link
+					if($this.$route.query.url) {
+						let url = $this.$route.query.url
+						link = 'app/' + decodeURIComponent(url) + '&token=' + $this.token
+					}else {
+						link = 'app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=goods&token=' + $this.token
+					}
 					mui.openWindow({
-						url: $this.httpUrl + 'app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=goods&token=' + $this.token,
+						url: $this.httpUrl + link,
 						id: 'news',
 						styles: {
 							top: '44px',
-							bottom: '64px'
+							bottom: '0px'
 						},
 						show: {
 							autoShow: true,
@@ -122,6 +128,20 @@
 		height: 100vh;
 		width: 100vw;
 		overflow: hidden;
+		.title-shopping-mall {
+			width: 100%;
+			height: 44px;
+			background-color: #e70012;
+			position: fixed;
+			top: 0;
+			left: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 6;
+			color: white;
+			font-size: 18px;
+		}
 		.iframeContent {
 			width: 100%;
 			height: 100%;

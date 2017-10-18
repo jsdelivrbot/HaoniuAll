@@ -1,6 +1,7 @@
 <template>
 	<div class="task-guide-box">
-		<v-header :title="fullDate"></v-header>
+		<!--<v-header :title="fullDate"></v-header>-->
+		<div class="title">{{fullDate}}</div>
 	    <inline-calendar
 	    :render-month="renderMonth"
 	    hide-header
@@ -13,7 +14,7 @@
 	    <p class="guide-title">爱蜂享赚钱宝典</p>
 	    <p class="sub-title">要想富先读书，下载爱蜂享赚点零花钱</p>
 	    <div class="guide-tab-box vux-1px-tb">
-	    	<router-link to="/usercenter" class="guide-tab-item vux-1px-r" tag="div">
+	    	<div class="guide-tab-item vux-1px-r" tag="div" @click="toPerfect">
 	    		<div class="guide-content">
 	    			<div class="img-content">
 	    				<img src="../../../static/task-guide1.png" />
@@ -21,7 +22,7 @@
 	    			</div>
 	    			<p class="guide-text">只关注自己喜欢的</p>
 	    		</div>
-	    	</router-link>
+	    	</div>
 	    	<router-link to="/task" class="guide-tab-item" tag="div">
 	    		<div class="guide-content">
 	    			<div class="img-content">
@@ -41,6 +42,7 @@
 	import { InlineCalendar } from 'vux'
 	import IndexFooter from '@/common/vue/IndexFooter'
 	export default {
+		name: 'TaskGuide',
 		components: {
 			'v-header': Header,
 			InlineCalendar,
@@ -48,7 +50,8 @@
 		},
 		data() {
 			return {
-				weekList: ['日', '一', '二', '三', '四', '五', '六']
+				weekList: ['日', '一', '二', '三', '四', '五', '六'],
+				token: sessionStorage.getItem('token')
 			}
 		},
 		computed: {
@@ -68,6 +71,15 @@
 			renderMonth() {
 				return [this.year, this.month]
 			}
+		},
+		methods: {
+			toPerfect() {
+				if(this.token) {
+					this.$router.push('/usercenter/perfect')
+				}else {
+					this.$router.push('/login')
+				}
+			}
 		}
 	}
 </script>
@@ -80,6 +92,20 @@
 		box-sizing: border-box;
 		.header-box {
 			box-shadow: none!important;
+		}
+		.title {
+			width: 100%;
+			height: 44px;
+			background-color: #e70012;
+			position: fixed;
+			top: 0;
+			left: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 6;
+			color: white;
+			font-size: 18px;
 		}
 		.inline-calendar {
 			padding-top: 10px;

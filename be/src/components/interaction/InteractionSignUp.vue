@@ -52,6 +52,7 @@
 <script>
 	import Header from '@/common/vue/Header'
 	export default {
+		name: 'InteractionSignUp',
 		components: {
 			'v-header': Header
 		},

@@ -14,6 +14,7 @@
 	import BScroll from 'better-scroll'
 	import FreeList from '@/common/vue/FreeList'
 	export default {
+		name: 'FreeIndex',
 		components: {
 			'v-header': Header,
 			Tab,

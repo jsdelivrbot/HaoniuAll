@@ -47,13 +47,13 @@
 		<div class="btn">
 			<p @click="reg">注&nbsp;&nbsp;&nbsp;&nbsp;册</p>
 		</div>
-		<div class="slider">
+		<!--<div class="slider">
 			<p>第三方注册</p>
 		</div>
 		<div class="otherway">
 			<img src="../../../static/login4.png" />
 			<img src="../../../static/login5.png" />
-		</div>
+		</div>-->
 	</div>
 </template>
 

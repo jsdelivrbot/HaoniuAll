@@ -45,7 +45,8 @@
 				code: '',
 				psw: '',
 				pswAgin: '',
-				count: -1
+				count: -1,
+				mobile: localStorage.getItem('mobile')
 			}
 		},
 		watch: {
@@ -74,7 +75,13 @@
 					})
 					return
 				}
-				this.$http.get('getData/index.php?m=home&c=Form&a=usercenter_SendCode')
+				this.$http.get('getData/index.php?m=home&c=Form&a=usercenter_SendCode', {
+					params: {
+						seachdata: {
+							username: this.mobile
+						}
+					}
+				})
 					.then((res) => {
 						if(res.data.result === 1) {
 							this.count = 60

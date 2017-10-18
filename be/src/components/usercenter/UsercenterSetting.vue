@@ -92,6 +92,7 @@
 						sessionStorage.setItem('city', '')
 						sessionStorage.setItem('cityPosition', '')
 						sessionStorage.setItem('counties', '')
+						_this.$http.defaults.headers.get['token'] = ''
 //						_this.$router.replace('/usercenter')
 						_this.$router.back(-2)
 					}

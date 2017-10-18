@@ -67,7 +67,7 @@
 					.text {
 						flex: 0 0 125px;
 						width: 125px;
-						font-size: 14px;
+						font-size: 16px;
 						width: 200px;
 						word-break: break-all;
 						display: -webkit-box;

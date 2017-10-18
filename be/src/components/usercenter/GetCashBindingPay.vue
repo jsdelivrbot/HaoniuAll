@@ -8,6 +8,7 @@
 			<x-input title="姓名" placeholder="请输入您的姓名" style="font-size: 16px;"></x-input>
 		</group>-->
 		<group>
+			<x-input title="姓名" placeholder="务必正确输入您的姓名" style="font-size: 16px;" v-model="realname"></x-input>
 			<x-input title="帐号" placeholder="请输入您的支付宝帐号" style="font-size: 16px;" v-model="phone"></x-input>
 			<x-input title="验证码" placeholder="请输入收到的验证码" style="font-size: 16px;" v-model="code" :show-clear="false">
 				<span slot="right" class="slot-right" @click="getCode">
@@ -31,7 +32,9 @@
 			return {
 				phone: '',
 				code: '',
-				num: 0
+				num: 0,
+				setTimer: null,
+				realname: ''
 			}
 		},
 		components: {
@@ -49,7 +52,7 @@
 					this.$vux.toast.text('手机号码格式错误')
 					return
 				}
-				this.num = 60
+				clearInterval(this.setTimer)
 				this.$http.get('getData/index.php?m=home&c=Form&a=usercenter_SendCode', {
 					params: {
 						seachdata: {
@@ -60,7 +63,8 @@
 					if(res.data.datastatus === 1) {
 						console.log(res)
 						this.$vux.toast.text('验证码发送成功')
-						setInterval(() => {
+						this.num = 60
+						this.setTimer = setInterval(() => {
 							this.num = this.num - 1
 						}, 1000)
 					} else {
@@ -69,6 +73,10 @@
 				})
 			},
 			bind() {
+				if(this.realname === '') {
+					this.$vux.toast.text('请输入姓名')
+					return
+				}
 				if(this.phone.length !== 11) {
 					this.$vux.toast.text('手机号码格式错误')
 					return
@@ -80,6 +88,7 @@
 				this.$http.get('getData/index.php?m=home&c=Form&a=usercenter_addalipayPhone', {
 					params: {
 						seachdata: {
+							realname: this.realname,
 							phone: this.phone,
 							sendcode: this.code
 						}

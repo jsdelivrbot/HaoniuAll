@@ -37,6 +37,7 @@
 	import Header from '@/common/vue/Header'
 	import { Group, XInput, XTextarea, Cell, PopupPicker, XAddress, ChinaAddressV2Data, Value2nameFilter as value2name } from 'vux'
 	export default {
+		name: 'FleaMarketRelease',
 		components: {
 			'v-header': Header,
 			Group,
@@ -153,6 +154,10 @@
 //				return addressText
 //			}
 		},
+		beforeRouteLeave(to, from, next) {
+			this.$vux.loading.hide()
+			next()
+		},
 		methods: {
 			goMy() {
 				this.$router.push('/fleaMarket/my')
@@ -232,6 +237,7 @@
 					console.log(res)
 					if(res.data.datastatus === 1) {
 						this.$vux.toast.text('发布成功')
+						this.$router.replace('/fleaMarket/my')
 					} else {
 						this.$vux.toast.text(res.data.message)
 					}

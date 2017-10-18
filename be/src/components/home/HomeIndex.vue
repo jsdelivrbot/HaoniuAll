@@ -1,9 +1,13 @@
 <template>
 	<div class="index-box">
-		<index-header :city="city"></index-header>
+		<index-header :city="citys"></index-header>
 		<div ref="wrapper" class="wrapper">
 			<div>
-				<swiper :list="baseList" auto :aspect-ratio="2/5" :show-desc-mask="false" :loop="true" class="banner"></swiper>
+				<swiper auto :aspect-ratio="2/5" :show-desc-mask="false" :loop="true" class="banner">
+					<swiper-item v-for="(item, index) in baseList" :key="index" @click.native="goLink(item.url, item.link_type)">
+						<img :src="item.img" class="swiper-img" />
+					</swiper-item>
+				</swiper>
 				<div class="menu">
 					<div class="row">
 						<router-link to="/task" tag="div" class="item">
@@ -67,16 +71,18 @@
 
 <script>
 	import IndexHeader from '@/common/vue/IndexHeader'
-	import { Swiper } from 'vux'
+	import { Swiper, SwiperItem } from 'vux'
 	import BScroll from 'better-scroll'
 	import TaskList from '@/common/vue/TaskList'
 	import IndexFooter from '@/common/vue/IndexFooter'
 	export default {
+		name: 'HomeIndex',
 		components: {
 			'index-header': IndexHeader,
 			Swiper,
 			'task-list': TaskList,
-			'index-footer': IndexFooter
+			'index-footer': IndexFooter,
+			SwiperItem
 		},
 		data() {
 			return {
@@ -85,10 +91,30 @@
 				httpUrl: localStorage.getItem('httpUrl'),
 				count: 0,
 				tip: '上拉加载更多',
-				loadingShow: false
+				loadingShow: false,
+				gps: '',
+				city: sessionStorage.getItem('city')
 			}
 		},
+		activated() {
+			mui.plusReady(function() {
+				if(plus.webview.getWebviewById('news')=== null){
+					plus.webview.getWebviewById('news').hide()
+				}
+				if(plus.webview.getWebviewById('fxg')=== null){
+					plus.webview.getWebviewById('fxg').hide()
+				}
+			})
+		},
 		created() {
+			mui.plusReady(function() {
+				if(plus.webview.getWebviewById('news')=== null){
+					plus.webview.getWebviewById('news').hide()
+				}
+				if(plus.webview.getWebviewById('fxg')=== null){
+					plus.webview.getWebviewById('fxg').hide()
+				}
+			})
 			//轮播图
 			this.$http.get('getData/index.php?m=home&c=Form&a=bannerList', {
 					params: {
@@ -100,13 +126,25 @@
 					console.log(res)
 					let imgarr = res.data.data
 					for(let i = 0; i < imgarr.length; i++) {
+						let link
+						if(imgarr[i].link_type === '4') {
+							let src = encodeURIComponent(imgarr[i].link.substring(2))
+							//							console.log(src)
+							link = '/fxgshop?url=' + src
+						} else if(imgarr[i].link_type === '5') {
+							let src = encodeURIComponent(imgarr[i].link.substring(2))
+							link = '/shopping-mall?url=' + src
+						} else {
+							link = imgarr[i].link
+						}
 						this.baseList.push({
-							url: imgarr[i].link,
+							url: link,
 							img: this.httpUrl + imgarr[i].banner_img,
-							title: imgarr[i].banner_title
+							title: imgarr[i].banner_title,
+							link_type: imgarr[i].link_type
 						})
 					}
-//					console.log(this.baseList)
+					//					console.log(this.baseList)
 				})
 			//任务列表
 			this.$http.get('getData/index.php?m=home&c=Form&a=articleList', {
@@ -121,8 +159,8 @@
 				})
 				.then((res) => {
 					if(res.data.datastatus === 1) {
-						console.log('全部任务')
-						console.log(res)
+						//						console.log('全部任务')
+						//						console.log(res)
 						this.taskList.push.apply(this.taskList, res.data.data)
 						this.loadingShow = false
 						this.count = this.count + 12
@@ -135,12 +173,35 @@
 					}
 				})
 		},
+		mounted() {
+			let $this = this
+			this.$CGPS(function(val) {
+				$this.gps = val
+				$this.getGps()
+			})
+		},
 		methods: {
 			loadingOpen() {
 				this.$vux.alert.show({
 					title: '提示',
 					content: '敬情期待'
 				})
+			},
+			getGps() {
+				this.$http.get('/getData/index.php?m=home&c=Form&a=getCityName&seachdata={"x":"' + this.gps.lat + '","y":"' + this.gps.lng + '"}').then(
+					(res) => {
+						if(res) {
+							if(this.city === '') {
+								this.city = res.data.data.city
+							}
+							sessionStorage.setItem('city', res.data.data.city)
+							sessionStorage.setItem('cityPosition', res.data.data.city)
+							sessionStorage.setItem('counties', res.data.data.county)
+						} else {
+							mui.toast('获取位置信息失败,请打开GPS!')
+						}
+					}
+				)
 			},
 			getData() {
 				this.$http('getData/index.php?m=home&c=Form&a=articleList', {
@@ -155,8 +216,8 @@
 					})
 					.then((res) => {
 						if(res.data.datastatus === 1) {
-							console.log('全部任务')
-							console.log(res)
+							//							console.log('全部任务')
+							//							console.log(res)
 							this.taskList.push.apply(this.taskList, res.data.data)
 							this.loadingShow = false
 							this.count = this.count + 12
@@ -185,16 +246,30 @@
 						console.log(pos)
 					}
 				})
+			},
+			goLink(link, type) {
+				if(type === '1') {
+					plus.runtime.openURL(link)
+				} else {
+					this.$router.push(link)
+				}
 			}
 		},
 		computed: {
-			city() {
-				const city = sessionStorage.getItem('city')
-				if(city === '') {
+			citys() {
+				if(!this.city) {
 					return '全国'
 				}
-				return city
+				return this.city
 			}
+		},
+		beforeRouteEnter(to, from, next) {
+			if(from.fullPath === '/home/position') {
+				next(vm => {
+					vm.city = sessionStorage.getItem('city')
+				})
+			}
+			next()
 		}
 	}
 </script>
@@ -233,6 +308,9 @@
 					}
 				}
 			}
+		}
+		.swiper-img {
+			width: 100%;
 		}
 	}
 </style>

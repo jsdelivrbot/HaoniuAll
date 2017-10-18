@@ -1,6 +1,6 @@
 <template>
-	<div class="interaction-detail-box">
-		<v-header :title="title"></v-header>
+	<div class="life-service-detail-box">
+		<v-header :title="content.title"></v-header>
 		<swiper :list="imgList" :show-desc-mask="false" :loop="true" :aspect-ratio="3/5"></swiper>
 		<div class="home-info">
 			<div class="info-top border-1px">
@@ -8,28 +8,19 @@
 					{{content.title}}
 				</p>
 				<p class="info-price">
-					<span class="name">
-						报名费
-					</span>
-					<span class="value">
-						{{content.price}}{{content.company}}
-					</span>
+					人均{{content.price}}元
 				</p>
-				<p class="info-count">
-					<span class="name">
-						已报名
-					</span>
-					<span class="value">
-						{{content.virtual_part_num}}人
-					</span>
-				</p>
+				<!--<p class="info-label">
+					<span>物美价廉</span>
+					<span>服务好</span>
+				</p>-->
 			</div>
 			<div class="position border-1px">
 				<p>地址：{{content.address}}</p>
 			</div>
 			<div class="tel">
 				<span class="number">{{content.phone}}</span>
-				<a :href="'tel:' + content.phone" class="dial">资讯热线</a>
+				<a :href="'tel:' + content.phone" class="dial">立即拨打</a>
 			</div>
 		</div>
 		<div class="resources-info" v-for="(item, index) in detail" :key="index">
@@ -37,27 +28,53 @@
 				{{item.title}}
 			</p>
 			<div class="resources-content" v-html="item.content">
+				<!--<p>
+					<span class="name">服务设施：</span>
+					<span class="value">有wifi</span>
+				</p>
+				<p>
+					<span class="name">产权年限：</span>
+					<span class="value">70</span>
+				</p>
+				<p>
+					<span class="name">销售许可证：</span>
+					<span class="value">合房预售证第20150909号</span>
+				</p>
+				<p>
+					<span class="name">开盘时间：</span>
+					<span class="value">2016年04月14日</span>
+				</p>
+				<p>
+					<span class="name">交房时间：</span>
+					<span class="value">待定</span>
+				</p>-->
 			</div>
 		</div>
 		<!--<div class="detail-footer">
 			<div class="btn">
-				<div class="go-collect" v-if="!collected" @click="collect">
-					<span>收藏</span>
+				<div class="go-collect" @click="collect">
+					<span>点赞</span>
 				</div>
-				<div class="collected" v-if="collected" @click="collected=false">
-					<span>已收藏</span>
+				<div class="collected">
+					<span>已点赞</span>
 				</div>
-				<div class="go-share" @click="showMaster">
-					<span>分享</span>
+				<div class="go-share">
+					<span>评论</span>
 				</div>
 			</div>
-			<div class="detail" @click="signUp">
-				<p>
-					立即报名
-				</p>
+			<div class="detail">
+				<a :href="'tel:' + content.phone">
+					<p class="first">拨打电话：</p>
+					<p class="second">{{content.phone}}</p>
+				</a>
 			</div>
 		</div>-->
-		<footer-btn @detailHandle="detailHandle" :id="content.id">立即报名</footer-btn>
+		<footer-btn :id="content.id">
+			<a :href="'tel:' + content.phone" style="color: white">
+				<p class="first" style="line-height: 16px; margin: 8px 0 0 -40px; font-size: 12px;">拨打电话：</p>
+				<p class="second" style="line-height: 16px; font-size: 16px;">{{content.phone}}</p>
+			</a>
+		</footer-btn>
 	</div>
 </template>
 
@@ -66,17 +83,27 @@
 	import { Swiper } from 'vux'
 	import FooterBtn from '@/common/vue/FooterBtn'
 	export default {
-		name: 'InteractionDetail',
+		name: 'LifeServiceDetail',
 		components: {
 			'v-header': Header,
 			Swiper,
 			FooterBtn
 		},
+		data() {
+			return {
+				detailId: this.$route.params.id,
+				httpUrl: localStorage.getItem('httpUrl'),
+				content: {},
+				detail: [],
+				imgList: [],
+				collected: false
+			}
+		},
 		created() {
 			this.$http.get('getData/index.php?m=home&c=Form&a=infoList', {
 				params: {
 					seachdata: {
-						'id': this.$route.params.id
+						'id': this.detailId
 					}
 				}
 			}).then((res) => {
@@ -94,35 +121,8 @@
 				}
 			})
 		},
-		data() {
-			return {
-				httpUrl: localStorage.getItem('httpUrl'),
-				imgList: [],
-				masterShow: false,
-				collected: false,
-				content: {},
-				detail: []
-			}
-		},
-		computed: {
-			title() {
-				return '线下互动'
-			}
-		},
 		methods: {
-			detailHandle() {
-				this.$router.push('/interaction/signUp/' + this.content.id)
-			},
 			collect() {
-				if(!sessionStorage.getItem('token')) {
-					this.$router.push({
-						path: '/login',
-						query: {
-							redirect: this.$route.fullPath
-						}
-					})
-					return
-				}
 				this.collected = true
 			}
 		}
@@ -131,47 +131,39 @@
 
 <style lang="less">
 	@import url("../../../static/less/mixin.less");
-	.interaction-detail-box {
+	.life-service-detail-box {
 		padding-top: 54px;
 		padding-bottom: 70px;
 		.home-info {
+			/*height: 172px;*/
 			background-color: white;
 			.info-top {
-				padding: 0 12px;
+				padding: 6px;
 				.border-1px(#e2e2e2);
 				.info-title {
-					font-size: 14px;
-					height: 32px;
-					line-height: 32px;
+					font-size: 16px;
+					height: 34px;
+					line-height: 24px;
 					padding-top: 4px;
 					overflow: hidden;
 					text-overflow: ellipsis;
 					white-space: nowrap;
 				}
 				.info-price {
-					line-height: 18px;
-					display: flex;
-					.name {
-						font-size: 12px;
-						color: #707070;
-					}
-					.value {
-						font-size: 18px;
-						color: #e60012;
-						flex: 1;
-						width: 0;
-						padding-left: 4px;
-					}
+					line-height: 24px;
+					color: #f29318;
+					font-size: 14px;
 				}
-				.info-count {
-					line-height: 32px;
-					.name {
-						font-size: 12px;
-						color: #707070;
-					}
-					.value {
-						font-size: 12px;
-						color: #f39700;
+				.info-label {
+					font-size: 12px;
+					color: #707070;
+					line-height: 24px;
+					height: 24px;
+					margin-top: 4px;
+					span {
+						padding: 2px 4px;
+						border: 1px solid #707070;
+						border-radius: 6px;
 					}
 				}
 			}
@@ -231,7 +223,7 @@
 			}
 			.resources-content {
 				padding: 5px 12px;
-				p {
+				/*p {
 					font-size: 12px;
 					height: 22px;
 					line-height: 22px;
@@ -243,8 +235,68 @@
 						display: inline-block;
 						width: 77px;
 					}
-				}
+				}*/
 			}
 		}
+		/*.detail-footer {
+			display: flex;
+			width: 100%;
+			height: 50px;
+			background-color: white;
+			position: fixed;
+			left: 0;
+			bottom: 0;
+			.btn {
+				flex: 2;
+				width: 0;
+				background-color: #3d3d3d;
+				display: flex;
+				div {
+					flex: 1;
+					width: 0;
+					&.go-collect {
+						background: url(../../../static/home-icon1.png) center 8px no-repeat;
+						background-size: 18px 18px;
+					}
+					&.collected {
+						background: url(../../../static/hot-article-share-active.png) center 8px no-repeat;
+						background-size: 20px 20px;
+						display: none;
+					}
+					&.go-share {
+						background: url(../../../static/home-icon2.png) center 8px no-repeat;
+						background-size: 20px 20px;
+					}
+					span {
+						color: white;
+						text-align: center;
+						display: block;
+						font-size: 12px;
+						margin-top: 28px;
+					}
+				}
+			}
+			.detail {
+				flex: 3;
+				width: 0;
+				background-color: #e60012;
+				color: white;
+				text-align: center;
+				line-height: 16px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				a {
+					color: white;
+					.first {
+						font-size: 12px;
+						text-align: left;
+					}
+					.second {
+						font-size: 16px;
+					}
+				}
+			}
+		}*/
 	}
 </style>

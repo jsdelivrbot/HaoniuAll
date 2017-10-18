@@ -187,6 +187,7 @@
 	import { Swiper, SwiperItem } from 'vux'
 	import AmusementList from '@/common/vue/AmusementList'
 	export default {
+		name: 'AmusementIndex',
 		components: {
 			'v-header': Header,
 			Swiper,

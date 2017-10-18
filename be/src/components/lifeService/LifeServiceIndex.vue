@@ -18,6 +18,7 @@
 	import Header from '@/common/vue/Header'
 	import { Swiper } from 'vux'
 	export default {
+		name: 'LifeServiceIndex',
 		components: {
 			'v-header': Header,
 			Swiper

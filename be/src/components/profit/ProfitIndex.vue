@@ -1,7 +1,7 @@
 <template>
 	<div class="profit-index-box">
 		<div class="title">
-			<span class="iconfont icon-fanhui" @click="back"></span>
+			<!--<span class="iconfont icon-fanhui" @click="back"></span>-->
 			<span class="text">我的收益</span>
 			<router-link to="/profit/ranking" tag="div" class="rank">
 				<img src="../../../static/rank.png" />
@@ -30,8 +30,7 @@
 			<p class="computed-text">
 				坚持 <span>{{date}}</span>天，就可以赚 <span v-text="date*sy_yg"></span>元零花钱
 			</p>
-			<range v-model="data1" :min="0" :max="4" :rangeBarHeight="6" 
-				minHTML="<span></span>" maxHTML="<span></span>"></range>
+			<range v-model="data1" :min="0" :max="4" :rangeBarHeight="6" minHTML="<span></span>" maxHTML="<span></span>"></range>
 			<!--<div class="fictitiousDate">
 				<span @click="data1 = 0"></span>
 				<span @click="data1 = 1"></span>
@@ -43,7 +42,7 @@
 				<span @click="data1 = 0">7&nbsp;天</span>
 				<span @click="data1 = 1">10天</span>
 				<span @click="data1 = 2">15天</span>
-				<span @click="data1 = 3">20天</span>
+				<span @click="data1 = 3">25天</span>
 				<span @click="data1 = 4">30天</span>
 			</div>
 		</div>
@@ -72,14 +71,14 @@
 	export default {
 		methods: {
 			back() {
-				this.$router.back(-1)
+				this.$router.replace('/home')
 			},
 			getCash() {
 				this.$router.push('/usercenter/getCash')
 			}
-//			onChange() {
-//				console.log('test')
-//			}
+			//			onChange() {
+			//				console.log('test')
+			//			}
 		},
 		components: {
 			Range,
@@ -88,7 +87,7 @@
 		data() {
 			return {
 				data1: 2,
-				datearr: ['7', '10', '15', '20', '30'],
+				datearr: ['7', '10', '15', '25', '30'],
 				all_money: '',
 				credit1: '',
 				today_money: '',
@@ -140,6 +139,7 @@
 				color: white;
 				font-size: 16px;
 				vertical-align: top;
+				margin-left: 26px;
 			}
 			.rank {
 				flex: 1;
@@ -219,7 +219,7 @@
 				margin-top: 26/@rem;
 				.range-bar {
 					background: linear-gradient(to right, #f49900, #fdcf00);
-					.range-handle{
+					.range-handle {
 						width: 24px;
 						height: 24px;
 						border: 1px solid #f8b700;

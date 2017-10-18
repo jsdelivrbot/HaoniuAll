@@ -1,6 +1,6 @@
 <template>
-	<div class="amusement-list-box">
-		<router-link :to="'/amusement/detail/' + item.id" tag="div" class="item border-1px"
+	<div class="life-service-list-box">
+		<router-link :to="'/lifeService/detail/' + item.id" tag="div" class="item border-1px"
 			v-for="(item,index) in list" :key="index">
 			<div class="img">
 				<img :src="httpUrl + item.img">
@@ -32,7 +32,7 @@
 <script>
 	import { Rater, LoadMore } from 'vux'
 	export default {
-		name: 'AmusementList',
+		name: 'LifeServiceList',
 		components: {
 			Rater,
 			LoadMore
@@ -61,7 +61,7 @@
 
 <style lang="less">
 	@import url("../../../static/less/mixin.less");
-	.amusement-list-box {
+	.life-service-list-box {
 		/*margin-top: 10px;*/
 		.item {
 			height: 104px;

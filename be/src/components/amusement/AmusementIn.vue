@@ -14,6 +14,7 @@
 	import BScroll from 'better-scroll'
 	import AmusementList from '@/common/vue/AmusementList'
 	export default {
+		name: 'AmusementIn',
 		components: {
 			'v-header': Header,
 			AmusementList,
@@ -32,7 +33,27 @@
 			}
 		},
 		created() {
-			this.$http.get('getData/index.php?m=home&c=Form&a=infoList', {
+			this.init()
+		},
+		beforeRouteEnter(to, from, next) {
+			if(from.fullPath === '/amusement' || from.fullPath === '/amusement/more') {
+				next(vm => {
+					vm.listId = vm.$route.params.id
+					vm.listData = []
+					vm.tabList = []
+					vm.searchData = []
+					vm.count = 0
+					vm.tip = '加载中'
+					vm.loadingShow = true
+					vm.searchData2 = ''
+					vm.init()
+				})
+			}
+			next()
+		},
+		methods: {
+			init() {
+				this.$http.get('getData/index.php?m=home&c=Form&a=infoList', {
 						params: {
 							seachdata: {
 								'type_id': this.listId,
@@ -58,26 +79,25 @@
 							this.loadingShow = false
 						}
 					})
-			//选项列表
-			this.$http.get('getData/index.php?m=home&c=Form&a=optionList', {
-					params: {
-						seachdata: {
-							'type_id': this.listId,
-							'city': sessionStorage.getItem('city')
+				//选项列表
+				this.$http.get('getData/index.php?m=home&c=Form&a=optionList', {
+						params: {
+							seachdata: {
+								'type_id': this.listId,
+								'city': sessionStorage.getItem('city')
+							}
 						}
-					}
-				})
-				.then((res) => {
-//					console.log('选项列表')
-//					console.log(res)
-					this.tabList = res.data.data
-				})
-		},
-		methods: {
+					})
+					.then((res) => {
+						//					console.log('选项列表')
+						//					console.log(res)
+						this.tabList = res.data.data
+					})
+			},
 			//选项结果
 			getData(res, searchData) {
-//				console.log('选项结果')
-//				console.log(res, searchData)
+				//				console.log('选项结果')
+				//				console.log(res, searchData)
 				this.searchData = searchData
 				this.searchData2 = ''
 				let $this = this
@@ -96,8 +116,8 @@
 				}, 20)
 			},
 			getSearchData(res, searchData) {
-//				console.log('搜索结果')
-//				console.log(res, searchData)
+				//				console.log('搜索结果')
+				//				console.log(res, searchData)
 				this.searchData = []
 				this.searchData2 = searchData
 				let $this = this

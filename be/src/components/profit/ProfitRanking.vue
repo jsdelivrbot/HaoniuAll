@@ -4,12 +4,11 @@
 		<div class="master" @touchmove.prevent v-show="masterShow" @click="masterShow=!masterShow">
 			<div class="content">
 				<p>
-					1.热文打开后请阅读至少5秒钟；<br/>
-					2.每增加一次阅读得0.05元，最高得2元；<br/>
-					3.自己分享并阅读可得0.05元；<br/>
-					4.分享到朋友圈时，写点分享语可以吸引阅读哦；<br/>
-					5.分享到微信后，自己点击阅读也有收益；<br/>
-					6.分享到微信群中，收益更多更快。
+					1.热文打开后请阅读至少5秒钟；<br/> 2.每增加一次阅读得0.05元，最高得2元；
+					<br/> 3.自己分享并阅读可得0.05元；
+					<br/> 4.分享到朋友圈时，写点分享语可以吸引阅读哦；
+					<br/> 5.分享到微信后，自己点击阅读也有收益；
+					<br/> 6.分享到微信群中，收益更多更快。
 				</p>
 			</div>
 		</div>
@@ -19,7 +18,7 @@
 					<span>{{memberdata.user_credit1}}</span>元
 				</div>
 				<div class="img">
-					<img :src="avatar"/>
+					<img :src="avatar" />
 				</div>
 				<div>
 					第<span>{{memberdata.user_rank}}</span>名
@@ -48,9 +47,18 @@
 		data() {
 			return {
 				masterShow: false,
-				avatar: localStorage.getItem('httpUrl') + localStorage.getItem('avatar'),
 				listData: [],
 				memberdata: {}
+			}
+		},
+		computed: {
+			avatar() {
+				let avatar = localStorage.getItem('avatar')
+				if(avatar.substring(0, 4) === 'http') {
+					return avatar
+				} else {
+					return localStorage.getItem('httpUrl') + avatar
+				}
 			}
 		},
 		created() {
@@ -95,7 +103,7 @@
 			z-index: 8;
 			left: 0;
 			top: 0;
-			background-color: rgba(0,0,0,0.4);
+			background-color: rgba(0, 0, 0, 0.4);
 			.content {
 				width: 600/@rem;
 				height: 300/@rem;
@@ -134,9 +142,18 @@
 					flex: 1;
 					text-align: center;
 					font-size: 12px;
-					img {
-						width: 90px;
-						height: 90px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					&.img {
+						width: 96px;
+						height: 96px;
+						border-radius: 50%;
+						overflow: hidden;
+						flex: 0 0 96px;
+						img {
+							width: 100%;
+						}
 					}
 					span {
 						font-size: 16px;
@@ -147,7 +164,7 @@
 				height: 48px;
 				background-color: #f5f7fb;
 				.vux-tab-item {
-					font-size: 16px;	
+					font-size: 16px;
 				}
 			}
 		}
