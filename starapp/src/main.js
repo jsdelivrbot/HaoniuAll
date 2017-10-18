@@ -36,6 +36,7 @@ import resetusername from './components/usercenter/resetusername'
 import resetpassword from './components/usercenter/resetpassword'
 import compact from './components/usercenter/compact'
 import forget from './components/usercenter/forget'
+import doushop from './components/usercenter/doushop'
 
 //order
 import myOrder from './components/order/myorder'
@@ -113,16 +114,11 @@ Vue.use(BaiduMap, {
 })
 
 Vue.http.defaults.withCredentials = true
-localStorage.setItem('uploadUrl', 'http://wx.dianke8.com/xxdk/app')
-//Vue.http.defaults.baseURL = 'http://wx.dianke8.com/xxdk/app'
-Vue.http.defaults.baseURL = 'http://dev.dianke8.com:7000/xxdk/app'
+Vue.http.defaults.baseURL = 'http://wx.dianke8.com/xxdk/app'
+//Vue.http.defaults.baseURL = 'http://dev.dianke8.com:7000/xxdk/app'
 //Vue.http.defaults.baseURL = 'http://192.168.1.121:8080/xingxingdianke/app'
 Vue.http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-//Vue.http.defaults.headers.get['token'] = sessionStorage.getItem('token')
-//Vue.http.defaults.headers.post['token'] = sessionStorage.getItem('token')
 Vue.http.defaults.headers.common['token'] = sessionStorage.getItem('token')
-//import VueAwesomeSwiper from 'vue-awesome-swiper'
-//Vue.use(VueAwesomeSwiper)
 Vue.http.interceptors.response.use(function(response) {
 	return response
 }, function(error) {
@@ -137,6 +133,9 @@ const routes = [{
 	{
 		path: '/coursesort',
 		component: coursesort
+	}, {
+		path: '/doushop',
+		component: doushop
 	},
 	{
 		path: '/invitereg',

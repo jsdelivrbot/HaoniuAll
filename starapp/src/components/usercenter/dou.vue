@@ -5,9 +5,12 @@
 			<img src="../../../static/img/doudou.png" />
 			<span>{{total.ValidCurrency}}</span>
 			<em>转换豆</em>
-			<a href="http://wei.test.3721zh.com/">
+			<router-link to='/doushop'>
 				前往购物
-			</a>
+			</router-link>
+			<!--<a href="http://wei.test.3721zh.com/">
+				前往购物
+			</a>-->
 		</div>
 
 		<group>
@@ -30,6 +33,14 @@
 				total: ''
 			}
 		},
+		mounted() {
+			this.getall()
+			this.$http.get('/user/dou/getShopUrl').then(
+				(res) => {
+					console.log(res.data)
+				}
+			)
+		},
 		methods: {
 			getall() {
 				let $this = this
@@ -45,9 +56,6 @@
 					}
 				}, 100)
 			}
-		},
-		mounted() {
-			this.getall()
 		}
 	}
 </script>

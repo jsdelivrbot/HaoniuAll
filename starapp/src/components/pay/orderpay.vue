@@ -30,12 +30,12 @@
 				<em :class="{'active':selectPay==1}">
 				</em>
 			</li>
-			<li class="vux-1px-t" @click="selectPay=2">
+			<!--<li class="vux-1px-t" @click="selectPay=2">
 				<img src="../../../static/img/alipay.png" />
 				<span>支付宝支付</span>
 				<em :class="{'active':selectPay==2}">
 				</em>
-			</li>
+			</li>-->
 		</ul>
 		<div class="btn">
 			<x-button type="primary" style='margin-top: 35px; background: #84BEF3;' @click.native="alipay">支付</x-button>

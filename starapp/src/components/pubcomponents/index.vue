@@ -75,29 +75,18 @@
 				</swiper>
 			</div>
 		</div>
-		<!--<div style="height: 100px;overflow: hidden;">
-			<swiper :options="swiperOption3" ref="mySwiper2">
-				<swiper-slide v-for='(item,index) in newslist' :key="index" class='swiper-contentBox'>
-					<router-link tag='div' to='/newslist'>
-						{{item.title}}{{item.intro}}
-					</router-link>
-				</swiper-slide>
-			</swiper>
-		</div>-->
 
 		<div class="recommend">
 			<div class="title">
 				<div class="left">
 					<img src="../../../static/img/hottj.png" />
-					<!--<span>热门</span>
-					<em>推荐</em>-->
 				</div>
 				<router-link to='/tuijianlist' class="right">
 					<span>全部</span>
 				</router-link>
 			</div>
 
-			<swiper :options="swiperOption" ref="mySwiper" v-if='tj'>
+			<swiper :options="swiperOption" ref="mySwiper" v-if='tj!=""'>
 				<swiper-slide v-for='(item,index) in tj' :key="index" class='swiper-contentBox'>
 					<router-link :to='"/coursedetail/"+item.target'>
 						<div>
@@ -107,7 +96,6 @@
 					</router-link>
 				</swiper-slide>
 			</swiper>
-
 		</div>
 
 		<div class="course-sort">
@@ -211,16 +199,15 @@
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 	import km from '../../../static/km'
 	export default {
-		//		name: 'nokeep',
 		components: {
 			swiper,
 			swiperSlide
 		},
 		activated() {
-			//			this.tj = []
 			this.$http.post('/business/course/recommend').then(
 				(res) => {
 					if(res.data.result === 0) {
+						this.tj = []
 						this.tj = res.data.obj
 						let $this = this
 						setTimeout(() => {
@@ -247,7 +234,6 @@
 				},
 				swiperOption3: {
 					autoplayDisableOnInteraction: false,
-					//					pagination: '.swiper-pagination',
 					direction: 'vertical',
 					slidesPerView: 1,
 					autoplay: 3000,
@@ -258,17 +244,17 @@
 					autoplayDisableOnInteraction: false,
 					autoplay: 1000,
 					effect: 'coverflow',
-					height: 120,
+					height: 160,
 					loop: true,
-					slidesPerView: 3,
+					slidesPerView: 2,
 					centeredSlides: true,
 					paginationClickable: true,
-					spaceBetween: 30,
+					spaceBetween: 60,
 					coverflow: {
-						rotate: -15,
+						rotate: 0,
 						stretch: 0,
-						depth: 100,
-						modifier: 2,
+						depth: 40,
+						modifier: 10,
 						slideShadows: false
 					}
 				}
@@ -359,11 +345,12 @@
 		img {
 			display: block;
 			width: 100%;
+			border-radius: 4px;
 		}
 		span {
 			display: block;
 			color: #363636;
-			text-align: left;
+			text-align: center;
 			font-size: 12px;
 			height: 30px;
 			line-height: 30px;
@@ -478,7 +465,7 @@
 			.swiper-container {
 				width: 100%;
 				height: 300px;
-				margin: 20px auto;
+				margin-top: 2px;
 				margin-bottom: 10px;
 			}
 			.swiper-slide {
@@ -610,15 +597,12 @@
 		.sort {
 			height: auto;
 			background: #fff;
-			
-			.vux-1px-t:after{
+			.vux-1px-t:after {
 				border-color: #f5f5f5;
 			}
-			
-			.vux-1px-b:after{
+			.vux-1px-b:after {
 				border-color: #F0EFF5;
 			}
-			
 			.sort-list {
 				display: flex;
 				padding: 8px 4px;
