@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jifen.css" />
+		<link rel="stylesheet" type="text/css" href="css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="css/icon_font/iconfont.css" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<title>凌春商城</title>
+		<script>
+			var fun = function(doc, win) {
+				var docEl = doc.documentElement,
+					resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+					recalc = function() {
+						var clientWidth = docEl.clientWidth;
+						if(!clientWidth) return;
+						//这里是假设在1280px宽度设计稿的情况下，1rem = 40px；
+						//可以根据实际需要修改
+						docEl.style.fontSize = 40 * (clientWidth / 1280) + 'px';
+					};
+				if(!doc.addEventListener) return;
+				win.addEventListener(resizeEvt, recalc, false);
+				doc.addEventListener('DOMContentLoaded', recalc, false);
+			}
+			fun(document, window);
+		</script>
+	</head>
+
+	<body>
+		<div class="lunbo">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide"><img src="img/星空/4b07bec2d502127337ceeecec48dae6d.jpg" /></div>
+					<div class="swiper-slide"><img src="img/星空/5a8cf088aa439068f5ca9d20c0bc0ee8.jpg" /></div>
+					<div class="swiper-slide"><img src="img/星空/9deb3f434540ba3f816baa263c73d9c3.jpg" /></div>
+				</div>
+				<!-- 如果需要分页器 -->
+				<div class="swiper-pagination"></div>
+				<!-- 如果需要导航按钮 -->
+				<!--<div class="swiper-button-prev"></div>-->
+				<!--<div class="swiper-button-next"></div>-->
+				<!-- 如果需要滚动条 -->
+				<!--<div class="swiper-scrollbar"></div>-->
+			</div>
+		</div>
+		<div class="goods_wrapper">
+			<div class="goods_box">
+				<div class="goods">
+					<div class="goods_img">
+						<img src="img/goods/QQ截图20170517173550@2x.png" alt="" />
+					</div>
+					<div class="goods_title">
+						<h2>匡威帆布鞋</h2>
+					</div>
+					<div class="goods_desc">
+						<p><span class="iconfont icon-jifen"></span><span>100.00</span></p>
+						<button type="button" data-toggle="modal" data-target="#exampleModal">购买</button>
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+										<h4 class="modal-title" id="exampleModalLabel">请输入信息</h4>
+									</div>
+									<div class="modal-body">
+										<form>
+											<div class="form-group">
+												<label class="control-label">姓名:</label>
+												<input type="text" class="form-control" id="recipient-name">
+											</div>
+											<div class="form-group">
+												<label class="control-label">地址:</label>
+												<input type="text" class="form-control" id="recipient-name">
+											</div>
+											<!--<div class="form-group">
+												<label class="control-label">身份证号:</label>
+												<input type="number" class="form-control" id="recipient-name">
+											</div>-->
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+										<button type="button" class="btn btn-primary">保存</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="goods">
+					<div class="goods_img">
+						<img src="img/goods/QQ截图20170517173550@2x.png" alt="" />
+					</div>
+					<div class="goods_title">
+						<h2>匡威帆布鞋</h2>
+					</div>
+					<div class="goods_desc">
+						<p><span class="iconfont icon-jifen"></span><span>100.00</span></p>
+						<button type="button" data-toggle="modal" data-target="#exampleModal">购买</button>
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+										<h4 class="modal-title" id="exampleModalLabel">请输入信息</h4>
+									</div>
+									<div class="modal-body">
+										<form>
+											<div class="form-group">
+												<label class="control-label">姓名:</label>
+												<input type="text" class="form-control" id="recipient-name">
+											</div>
+											<div class="form-group">
+												<label class="control-label">地址:</label>
+												<input type="text" class="form-control" id="recipient-name">
+											</div>
+											<!--<div class="form-group">
+												<label class="control-label">身份证号:</label>
+												<input type="number" class="form-control" id="recipient-name">
+											</div>-->
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+										<button type="button" class="btn btn-primary">保存</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="goods_box">
+				<div class="goods">
+					<div class="goods_img">
+						<img src="img/goods/QQ截图20170517173550@2x.png" alt="" />
+					</div>
+					<div class="goods_title">
+						<h2>匡威帆布鞋</h2>
+					</div>
+					<div class="goods_desc">
+						<p><span class="iconfont icon-jifen"></span><span>100.00</span></p>
+						<button type="button" data-toggle="modal" data-target="#exampleModal">购买</button>
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+										<h4 class="modal-title" id="exampleModalLabel">请输入信息</h4>
+									</div>
+									<div class="modal-body">
+										<form>
+											<div class="form-group">
+												<label class="control-label">姓名:</label>
+												<input type="text" class="form-control" id="recipient-name">
+											</div>
+											<div class="form-group">
+												<label class="control-label">地址:</label>
+												<input type="text" class="form-control" id="recipient-name">
+											</div>
+											<!--<div class="form-group">
+												<label class="control-label">身份证号:</label>
+												<input type="number" class="form-control" id="recipient-name">
+											</div>-->
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+										<button type="button" class="btn btn-primary">保存</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="goods">
+					<div class="goods_img">
+						<img src="img/goods/QQ截图20170517173550@2x.png" alt="" />
+					</div>
+					<div class="goods_title">
+						<h2>匡威帆布鞋</h2>
+					</div>
+					<div class="goods_desc">
+						<p><span class="iconfont icon-jifen"></span><span>100.00</span></p>
+						<button type="button" data-toggle="modal" data-target="#exampleModal">购买</button>
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+										<h4 class="modal-title" id="exampleModalLabel">请输入信息</h4>
+									</div>
+									<div class="modal-body">
+										<form>
+											<div class="form-group">
+												<label class="control-label">姓名:</label>
+												<input type="text" class="form-control" id="recipient-name">
+											</div>
+											<div class="form-group">
+												<label class="control-label">地址:</label>
+												<input type="text" class="form-control" id="recipient-name">
+											</div>
+											<!--<div class="form-group">
+												<label class="control-label">身份证号:</label>
+												<input type="number" class="form-control" id="recipient-name">
+											</div>-->
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+										<button type="button" class="btn btn-primary">保存</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="goods_box">
+				<div class="goods">
+					<div class="goods_img">
+						<img src="img/goods/QQ截图20170517173550@2x.png" alt="" />
+					</div>
+					<div class="goods_title">
+						<h2>匡威帆布鞋</h2>
+					</div>
+					<div class="goods_desc">
+						<p><span class="iconfont icon-jifen"></span><span>100.00</span></p>
+						<button type="button" data-toggle="modal" data-target="#exampleModal">购买</button>
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+										<h4 class="modal-title" id="exampleModalLabel">请输入信息</h4>
+									</div>
+									<div class="modal-body">
+										<form>
+											<div class="form-group">
+												<label class="control-label">姓名:</label>
+												<input type="text" class="form-control" id="recipient-name">
+											</div>
+											<div class="form-group">
+												<label class="control-label">地址:</label>
+												<input type="text" class="form-control" id="recipient-name">
+											</div>
+											<!--<div class="form-group">
+												<label class="control-label">身份证号:</label>
+												<input type="number" class="form-control" id="recipient-name">
+											</div>-->
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+										<button type="button" class="btn btn-primary">保存</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="goods">
+					<div class="goods_img">
+						<img src="img/goods/QQ截图20170517173550@2x.png" alt="" />
+					</div>
+					<div class="goods_title">
+						<h2>匡威帆布鞋</h2>
+					</div>
+					<div class="goods_desc">
+						<p><span class="iconfont icon-jifen"></span><span>100.00</span></p>
+						<button type="button" data-toggle="modal" data-target="#exampleModal">购买</button>
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+										<h4 class="modal-title" id="exampleModalLabel">请输入信息</h4>
+									</div>
+									<div class="modal-body">
+										<form>
+											<div class="form-group">
+												<label class="control-label">姓名:</label>
+												<input type="text" class="form-control" id="recipient-name">
+											</div>
+											<div class="form-group">
+												<label class="control-label">地址:</label>
+												<input type="text" class="form-control" id="recipient-name">
+											</div>
+											<!--<div class="form-group">
+												<label class="control-label">身份证号:</label>
+												<input type="number" class="form-control" id="recipient-name">
+											</div>-->
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+										<button type="button" class="btn btn-primary">保存</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<ul>
+				<li>
+					<a href="index.html" class="active">
+						<i class="iconfont icon-shouye"></i>首页
+					</a>
+				</li>
+				<li>
+					<a href="jifen.html">
+						<i class="iconfont icon-jifen"></i>积分商城
+					</a>
+				</li>
+				<li>
+					<a href="">
+						<i class="iconfont icon-chakan"></i>新闻
+					</a>
+				</li>
+				<li>
+					<a href="personalCenter.html">
+						<i class="iconfont icon-wodejuhuasuan"></i>个人中心
+					</a>
+				</li>
+			</ul>
+		</div>
+	</body>
+	<script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var mySwiper = new Swiper('.swiper-container', {
+				direction: 'horizontal',
+				loop: true,
+				speed: 2000,
+				autoplay: 1000,
+				// 如果需要分页器
+				pagination: '.swiper-pagination',
+				// 如果需要前进后退按钮
+				//nextButton: '.swiper-button-next',
+				//prevButton: '.swiper-button-prev',
+				// 如果需要滚动条
+				//scrollbar: '.swiper-scrollbar',
+			})
+		})
+	</script>
+
+</html>

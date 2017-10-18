@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<title>Document</title>
+		<script>
+			var fun = function(doc, win) {
+				var docEl = doc.documentElement,
+					resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+					recalc = function() {
+						var clientWidth = docEl.clientWidth;
+						if(!clientWidth) return;
+						//这里是假设在1280px宽度设计稿的情况下，1rem = 40px；
+						//可以根据实际需要修改
+						docEl.style.fontSize = 40 * (clientWidth / 1280) + 'px';
+					};
+				if(!doc.addEventListener) return;
+				win.addEventListener(resizeEvt, recalc, false);
+				doc.addEventListener('DOMContentLoaded', recalc, false);
+			}
+			fun(document, window);
+		</script>
+	</head>
+
+	<body>
+		<!--头部内容-->
+		<div class="header">
+			<div class="title">
+				<div class="title_content">
+					<span class="middle middle1">189****9369</span>
+					<div class="middle middle2">
+						<img src="img/group1.png" alt="" style="width: 7.375rem;height: 7.375rem;" />
+						<img class="touxiang" src="img/group2.png" style="width: 5rem; height: 5rem;" />
+					</div>
+					<div class="middle middle3">
+						<span>学员</span>
+						<span class="xue_bg"><img style="background-color: lightblue; width: 1.975rem;height: 1.975rem; border-radius: 50%;"/></span>
+					</div>
+				</div>
+				<div class="slogan">
+					<p>携手团队&nbsp;&nbsp;共建卓然</p>
+				</div>
+			</div>
+		</div>
+		<!--中间三个tab-->
+		<div class="tab_wrapper">
+			<div class="tab">
+				<span></span>
+				<p></p>
+			</div>
+			<div class="tab">
+				<span></span>
+				<p></p>
+			</div>
+			<div class="tab">
+				<span></span>
+				<p></p>
+			</div>
+		</div>
+		<!--内容列表-->
+		<div class="content">
+			<div class="content_title">
+				<p>仙丹管理</p>
+			</div>
+			<div class="specific_content">
+				<div>
+					<img src="img/group4.png" alt="" />
+					<div class="desc">
+						<span>仙丹布局&nbsp;</span><span>0.00</span><span>仙丹</span>
+					</div>
+				</div>
+				<div>
+					<img src="img/group4.png" alt="" />
+					<div class="desc">
+						<span>仙丹布局&nbsp;</span><span>0.00</span><span>仙丹</span>
+					</div>
+				</div>
+				<div>
+					<img src="img/group4.png" alt="" />
+					<div class="desc">
+						<span>仙丹布局&nbsp;</span><span>0.00</span><span>仙丹</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="content">
+			<div class="content_title">
+				<p>仙丹管理</p>
+			</div>
+			<div class="specific_content">
+				<div>
+					<img src="img/group4.png" alt="" />
+					<div class="desc">
+						<span>仙丹布局&nbsp;</span><span>0.00</span><span>仙丹</span>
+					</div>
+				</div>
+				<div>
+					<img src="img/group4.png" alt="" />
+					<div class="desc">
+						<span>仙丹布局&nbsp;</span><span>0.00</span><span>仙丹</span>
+					</div>
+				</div>
+				<div>
+					<img src="img/group4.png" alt="" />
+					<div class="desc">
+						<span>仙丹布局&nbsp;</span><span>0.00</span><span>仙丹</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>基本网格布局</title>
+		<style type="text/css">
+			.dad{
+				width: 500px;
+				height: 500px;
+				display: flex;
+				background-color: red;
+			}
+			.son{
+				border: 1px solid black;
+				height: 50px;
+				flex-basis: 50%;
+				background-color: yellow;
+			}
+			.s1{
+				flex: 0 1 100px;
+			}
+			.s2{
+				flex: 1 1 auto;
+			}
+			.s3{
+				flex: 0 1 200px;
+			}
+		
+		</style>
+	</head>
+	<body>
+		<div class="dad">
+			<div class="son s1">我是固定的100px</div>
+			<div class="son s2">我是自适应的</div>
+			<div class="son s3">我是固定的200px</div>
+		</div>
+	</body>
+</html>

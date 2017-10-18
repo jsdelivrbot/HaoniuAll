@@ -1,0 +1,27 @@
+.pay {
+	width: 100%;
+}
+
+.icon {
+	border-radius: 65px;
+	width: 120px;
+	height: 120px;
+	background: url(../img/f238416aeb7c8df237aa1fd67cea5b13.jpg) no-repeat -27px -167px;
+	margin: 120px auto 20px;
+}
+
+.icon2 {
+	background: url(../img/f238416aeb7c8df237aa1fd67cea5b13.jpg) no-repeat -160px -167px;
+}
+
+.content {
+	width: 100px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.content p {
+	font-family: "微软雅黑";
+	font-size: 20px;
+	font-weight: bold;
+}

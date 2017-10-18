@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="box">
+			{{a | date}}
+		</div>
+	</body>
+	<script>
+		Vue.filter('date', function(input) {
+			var now = new Date(input);
+			return now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() +
+				' ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds()
+		});
+		var vm = new Vue({
+			data: {
+				a: Date.now()
+			},
+			methods: {
+
+			}
+		}).$mount('#box')
+	</script>
+
+</html>

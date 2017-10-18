@@ -1,0 +1,88 @@
+body {
+  padding-bottom: 4.5rem;
+  background: ghostwhite;
+  line-height: 1;
+  font-size: 2rem;
+}
+body .lunbo {
+  width: 100%;
+  height: 15rem;
+  background: red;
+}
+body .lunbo .swiper-container {
+  width: 100%;
+  height: 100%;
+  background: lightblue;
+}
+body .lunbo .swiper-container img {
+  width: 100%;
+  height: 100%;
+}
+body .goods_wrapper {
+  width: 100%;
+  margin-top: 5px;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+body .goods_wrapper .goods_box {
+  height: 19rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+body .goods_wrapper .goods_box .goods {
+  width: 14rem;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid gainsboro;
+}
+body .goods_wrapper .goods_box .goods .goods_img img {
+  width: 100%;
+}
+body .goods_wrapper .goods_box .goods .goods_title {
+  align-self: flex-start;
+}
+body .goods_wrapper .goods_box .goods .goods_title h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 1.4rem;
+  font-weight: normal;
+}
+body .goods_wrapper .goods_box .goods .goods_desc {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+body .goods_wrapper .goods_box .goods .goods_desc p {
+  font-size: 1.5rem;
+}
+body .goods_wrapper .goods_box .goods .goods_desc p .iconfont {
+  color: orangered;
+}
+body .goods_wrapper .goods_box .goods .goods_desc button {
+  margin: 0;
+  padding: 0;
+  background: orangered;
+  margin-right: 1rem;
+  width: 4rem;
+  height: 1.5rem;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+}
+h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 1.2rem;
+}
+.modal {
+  top: 12rem;
+}
+.close {
+  opacity: 1;
+}

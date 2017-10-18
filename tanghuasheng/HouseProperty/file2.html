@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="css/style2.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+	</head>
+
+	<body>
+		<p class="demo-title">常见广告切换</p>
+		<div id="pcSlide">
+			<div class="img pre-btn">
+				<img src="img/house/person.jpg" class="btn" /></div>
+			<div class="pre-load"><img src="/templets/default/images/pcSlide.png" /></div>
+			<iframe height="605" data-src="http://3.swiper.com.cn/demo/pcSlide/" width="100%"></iframe>
+		</div>
+
+		</div>
+		</div>
+		<div class="header">
+			<div class="header_content">
+				<div class="left">
+					<div>最新动态</div>
+					<div>户型介绍</div>
+					<div>楼盘优势</div>
+					<div>楼盘参数</div>
+				</div>
+				<div class="right">
+					<div class="tel">
+						<img src="img/house/phone2.png" />
+						<span>138-8888-8888</span>
+					</div>
+					<div class="right_text">预约看房</div>
+					<div class="right_text">领取红包</div>
+				</div>
+			</div>
+		</div>
+		<div class="content">
+			<div class="content_text">
+				<p class="text_1">
+					<span class="text_1_1">最新动态</span>
+					<span class="text_1_2">2017-09-27</span>
+				</p>
+				<p class="text_2">春天城市广场在售SOHO小户，面积46-102m²，智能装修交付，均价约7900</p>
+				<p class="text_3"></p>
+				<p class="text_4"></p>
+				<p class="text_5"></p>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var mySwiper = new Swiper('.pcSlide', {
+				direction: 'horizontal',
+				loop: true,
+				speed: 2000,
+				autoplay: 1000,
+				// 如果需要分页器
+				pagination: '.swiper-pagination',
+				autoplayDisableOnInteraction: false
+				// 如果需要前进后退按钮
+				//nextButton: '.swiper-button-next',
+				//prevButton: '.swiper-button-prev',
+				// 如果需要滚动条
+				//scrollbar: '.swiper-scrollbar',
+			})
+		})
+	</script>
+
+</html>

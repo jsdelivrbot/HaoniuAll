@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>圣杯布局</title>
+		<style type="text/css">
+			body {
+				display: flex;
+				flex-direction: column;
+			}
+			
+			header,
+			footer {
+				height: 50px;
+				background-color: red;
+			}
+			
+			section {
+				display: flex;
+			}
+			
+			nav {
+				width: 100px;
+				background-color: #aaa;
+				flex: 0 1 100px;
+				order: 2;
+			}
+			
+			.main {
+				width: 500px;
+				background-color: #ccc;
+				flex: 1 1 auto;
+			}
+			
+			.sidebar {
+				width: 200px;
+				background-color: #eee;
+				flex: 0 1 200px;
+				order: -1;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header>头部</header>
+		<section>
+			<nav>导航</nav>
+			<div class="main">
+				<p>我是来凑行数的</p>
+				<p>我是来凑行数的</p>
+				<p>我是来凑行数的</p>
+				<p>我是来凑行数的</p>
+				<p>我是来凑行数的</p>
+				<p>我是来凑行数的</p>
+				<p>我是来凑行数的</p>
+				<p>我是来凑行数的</p>
+				<p>我是来凑行数的</p>
+				<p>我是来凑行数的</p>
+				<p>我是来凑行数的</p>
+			</div>
+			<div class="sidebar">侧边栏</div>
+		</section>
+		<footer>底部</footer>
+	</body>
+
+</html>

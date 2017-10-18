@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/icon_font/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="css/border.css" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<title>首页</title>
+		<script>
+			var fun = function(doc, win) {
+				var docEl = doc.documentElement,
+					resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+					recalc = function() {
+						var clientWidth = docEl.clientWidth;
+						if(!clientWidth) return;
+						//这里是假设在1280px宽度设计稿的情况下，1rem = 40px；
+						//可以根据实际需要修改
+						docEl.style.fontSize = 40 * (clientWidth / 1280) + 'px';
+					};
+				if(!doc.addEventListener) return;
+				win.addEventListener(resizeEvt, recalc, false);
+				doc.addEventListener('DOMContentLoaded', recalc, false);
+			}
+			fun(document, window);
+		</script>
+	</head>
+
+	<body>
+		<div class="lunbo">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide"><img src="img/星空/0bcd28cc16e304372c010a5ed5c8e4e7.jpg" /></div>
+					<div class="swiper-slide"><img src="img/星空/0ce01a9846b6562f5def321ff3770919.jpg" /></div>
+					<div class="swiper-slide"><img src="img/星空/1d00f9523bcbfdf057797ce3fe6887dc.jpg" /></div>
+				</div>
+				<!-- 如果需要分页器 -->
+				<div class="swiper-pagination"></div>
+				<!-- 如果需要导航按钮 -->
+				<!--<div class="swiper-button-prev"></div>-->
+				<!--<div class="swiper-button-next"></div>-->
+				<!-- 如果需要滚动条 -->
+				<!--<div class="swiper-scrollbar"></div>-->
+			</div>
+		</div>
+		<div class="tab">
+			<ul>
+				<li>
+					<a href="personalCenter.html">
+						<img src="img/unameShop/1.png" />
+						<p>个人中心</p>
+					</a>
+				</li>
+				<li>
+					<a href="jifen.html">
+						<img src="img/unameShop/2.png" />
+						<p>积分商城</p>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="img/unameShop/3.png" />
+						<p>新闻</p>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="img/unameShop/4.png" />
+						<p>抽奖</p>
+					</a>
+				</li>
+				<!--<li><i class="iconfont icon-wodejuhuasuan"></i>个人中心</li>
+				<li><i class="iconfont icon-jifen"></i>积分商城</li>
+				<li><i class="iconfont icon-chakan"></i>新闻中心</li>
+				<li><i class="iconfont icon-shouye"></i>幸运抽奖</li>-->
+			</ul>
+		</div>
+		<div class="List_page">
+			<ul>
+				<li class="border-top-1px">
+					<div class="List_img"><img src="img/组-5@2x.png" /></div>
+					<div class="List_content">
+						<p class="title">列表标题大是大非</p>
+						<p class="List_concrete">该列表下的内容:与生命有关的事情，不是小事。惨痛教训面前，我们必须看清一点：如果一味陷入声讨与谩骂、麻木与悲观，不会从根本上解决问题，更不会令消逝的生命再回来。现在，我们更需要做得是，对生命的尊重。既尊重逝者的选择，更尊重生命本身。
+						</p>
+						<a href="#" style="text-align: left;">更多</a>
+					</div>
+				</li>
+				<li class="border-top-1px">
+					<div class="List_img"><img src="img/组-5@2x.png" /></div>
+					<div class="List_content">
+						<p class="title">列表标题大是大非</p>
+						<p class="List_concrete">该列表下的内容:与生命有关的事情，不是小事。惨痛教训面前，我们必须看清一点：如果一味陷入声讨与谩骂、麻木与悲观，不会从根本上解决问题，更不会令消逝的生命再回来。现在，我们更需要做得是，对生命的尊重。既尊重逝者的选择，更尊重生命本身。
+						</p>
+						<a href="#" style="text-align: left;">更多</a>
+					</div>
+				</li>
+				<li class="border-top-1px">
+					<div class="List_img"><img src="img/组-5@2x.png" /></div>
+					<div class="List_content">
+						<p class="title">列表标题大是大非</p>
+						<p class="List_concrete">该列表下的内容:与生命有关的事情，不是小事。惨痛教训面前，我们必须看清一点：如果一味陷入声讨与谩骂、麻木与悲观，不会从根本上解决问题，更不会令消逝的生命再回来。现在，我们更需要做得是，对生命的尊重。既尊重逝者的选择，更尊重生命本身。
+						</p>
+						<a href="#" style="text-align: left;">更多</a>
+					</div>
+				</li>
+				<li class="border-top-1px">
+					<div class="List_img"><img src="img/组-5@2x.png" /></div>
+					<div class="List_content">
+						<p class="title">列表标题大是大非</p>
+						<p class="List_concrete">该列表下的内容:与生命有关的事情，不是小事。惨痛教训面前，我们必须看清一点：如果一味陷入声讨与谩骂、麻木与悲观，不会从根本上解决问题，更不会令消逝的生命再回来。现在，我们更需要做得是，对生命的尊重。既尊重逝者的选择，更尊重生命本身。
+						</p>
+						<a href="#" style="text-align: left;">更多</a>
+					</div>
+				</li>
+				<li class="border-top-1px">
+					<div class="List_img"><img src="img/组-5@2x.png" /></div>
+					<div class="List_content">
+						<p class="title">列表标题大是大非</p>
+						<p class="List_concrete">该列表下的内容:与生命有关的事情，不是小事。惨痛教训面前，我们必须看清一点：如果一味陷入声讨与谩骂、麻木与悲观，不会从根本上解决问题，更不会令消逝的生命再回来。现在，我们更需要做得是，对生命的尊重。既尊重逝者的选择，更尊重生命本身。
+						</p>
+						<a href="#" style="text-align: left;">更多</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="footer">
+			<ul>
+
+				<li>
+					<a href="index.html" class="active">
+						<i class="iconfont icon-shouye"></i>首页
+					</a>
+				</li>
+				<li>
+					<a href="jifen.html">
+						<i class="iconfont icon-jifen"></i>积分商城
+					</a>
+				</li>
+				<li>
+					<a href="">
+						<i class="iconfont icon-chakan"></i>新闻
+					</a>
+				</li>
+				<li>
+					<a href="personalCenter.html">
+						<i class="iconfont icon-wodejuhuasuan"></i>个人中心
+					</a>
+				</li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var mySwiper = new Swiper('.swiper-container', {
+				direction: 'horizontal',
+				loop: true,
+				speed: 2000,
+				autoplay: 1000,
+				// 如果需要分页器
+				pagination: '.swiper-pagination',
+				// 如果需要前进后退按钮
+				//nextButton: '.swiper-button-next',
+				//prevButton: '.swiper-button-prev',
+				// 如果需要滚动条
+				//scrollbar: '.swiper-scrollbar',
+			})
+		})
+	</script>
+
+</html>

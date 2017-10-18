@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/style3.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<title>私教</title>
+	</head>
+
+	<body>
+		<!--lunbo-->
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide"><img src="img/s_img.jpg" /></div>
+				<div class="swiper-slide"><img src="img/d43f23e880d34ede478a861c08743a1f.jpg" /></div>
+				<div class="swiper-slide"><img src="img/e36f07b2439df75d5b3a547c5fea6a9d.jpg" /></div>
+			</div>
+			<!-- 如果需要分页器 -->
+			<div class="swiper-pagination"></div>
+			<!-- 如果需要导航按钮 -->
+			<!--<div class="swiper-button-prev"></div>-->
+			<!--<div class="swiper-button-next"></div>-->
+			<!-- 如果需要滚动条 -->
+			<!--<div class="swiper-scrollbar"></div>-->
+		</div>
+		<!--jianjie-->
+		<div class="jianjie">
+			<div class="pic">
+				<img src="img/s_img.jpg" />
+			</div>
+			<div class="jianjie_content">
+				<p class="p2">
+					<span class="jianjie_name">赵震东</span>
+					<span class="jiaolian">教练</span>
+					<span class="num">10</span>
+				</p>
+				<p class="slogen">人生总是逃避的话，眼神会先于生命失去光彩</p>
+			</div>
+		</div>
+		<!--jianjie2-->
+		<div class="jianjie2">
+			<div class="left">
+				<p><span class="jianjie2_title">个人简介</span></p>
+				<p>NSCA-CPT美国体能协会认证私人教练</p>
+				<p>AASFP亚洲体适能认证教练</p>
+				<p>亚洲运动健康管理学院AEHMC认证私人教练</p>
+				<p>亚洲健康管理与运动科学学院认证私人教练</p>
+				<p>中国红十字会现场急救CPR认证</p>
+			</div>
+			<div class="right">
+				<div class="phone">
+					<a href="tel:18261000726">
+						<img src="img/icon_phone.jpg" />
+					</a>
+				</div>
+			</div>
+		</div>
+		<!--tanceng-->
+
+	</body>
+
+</html>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var mySwiper = new Swiper('.swiper-container', {
+			direction: 'horizontal',
+			loop: true,
+			speed: 2000,
+			autoplay: 1000,
+			// 如果需要分页器
+			pagination: '.swiper-pagination',
+			// 如果需要前进后退按钮
+			//nextButton: '.swiper-button-next',
+			//prevButton: '.swiper-button-prev',
+			// 如果需要滚动条
+			//scrollbar: '.swiper-scrollbar',
+		})
+	})
+</script>
+<script type="text/javascript">
+</script>

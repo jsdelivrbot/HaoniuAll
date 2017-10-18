@@ -1,0 +1,168 @@
+body {
+  font-family: arial;
+}
+img {
+  display: block;
+}
+.img img {
+  width: 100%;
+}
+.content1 {
+  width: 100%;
+  height: 674px;
+}
+.content1 .content1_text {
+  width: 1200px;
+  height: 674px;
+  margin: 0 auto;
+}
+.content1 .content1_text .title {
+  width: 140px;
+  height: 200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.content1 .content1_text .title p {
+  height: 31px;
+  margin-top: 75px;
+  line-height: 31px;
+  text-align: center;
+  font-size: 31px;
+  font-weight: bold;
+  vertical-align: bottom;
+}
+.content1 .content1_text .title .line {
+  width: 40px;
+  height: 5px;
+  background-color: #269ee5;
+  margin: 0 auto;
+  margin-top: 12px;
+}
+.content1 .content1_text .text {
+  width: 1200px;
+  height: 474px;
+  margin: 0 auto;
+}
+.content1 .content1_text .text ul {
+  overflow: hidden;
+}
+.content1 .content1_text .text ul li {
+  width: 200px;
+  height: 100%;
+  overflow: hidden;
+  float: left;
+  margin-top: 20px;
+  margin-right: 50px;
+}
+.content1 .content1_text .text ul li img {
+  margin: 0 auto;
+}
+.content1 .content1_text .text ul li .p1 {
+  font-size: 22px;
+  margin: 18px 0;
+}
+.content1 .content1_text .text ul li .p2 {
+  font-size: 16px;
+  line-height: 30px;
+  color: #666666;
+}
+.content1 .content1_text .text ul li:last-child {
+  margin-right: 0;
+  float: right;
+}
+.text2 {
+  width: 100%;
+  height: 645px;
+  overflow: hidden;
+  background-color: #fafafa;
+}
+.text2 .content_text2 {
+  width: 480px;
+  height: 150px;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 95px;
+  overflow: hidden;
+}
+.text2 .content_text2 .p3 {
+  font-size: 33px;
+}
+.text2 .content_text2 .p4 {
+  margin-top: 26px;
+  font-size: 18px;
+}
+.text2 ul {
+  width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.text2 ul li {
+  float: left;
+  margin-right: 66px;
+}
+.text2 ul li:last-child {
+  margin-right: 0;
+  float: right;
+}
+.conta {
+  width: 100%;
+  height: 444px;
+}
+.conta .conta_content {
+  width: 1200px;
+  height: 444px;
+  margin: 0 auto;
+  padding: 50px 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.conta .conta_content .conta_title {
+  font-size: 33px;
+  margin-left: 27px;
+  margin-bottom: 36px;
+}
+.conta .conta_content .conta_imgAndText {
+  width: 1200px;
+  height: 255px;
+}
+.conta .conta_content .conta_imgAndText .conta_img {
+  float: left;
+  margin-right: 125px;
+}
+.conta .conta_content .conta_imgAndText .conta_img_right_content {
+  width: 600px;
+  height: 255px;
+  float: left;
+  overflow: hidden;
+}
+.conta .conta_content .conta_imgAndText .conta_img_right_content .conta_Text {
+  display: block;
+  font-size: 16px;
+  line-height: 28px;
+  margin-bottom: 44px;
+}
+.conta .conta_content .conta_imgAndText .conta_img_right_content p {
+  width: 400px;
+  height: 40px;
+  line-height: 40px;
+  color: #5a5a5a;
+  margin: 0 auto;
+}
+.conta .conta_content .conta_imgAndText .conta_img_right_content p img {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  margin-top: 2px;
+  margin-right: 20px;
+}
+.conta .conta_content .conta_imgAndText .conta_img_right_content p span {
+  display: inline-block;
+  vertical-align: super;
+  font-size: 15px;
+}
+.conta .conta_content .conta_imgAndText .fuhao {
+  font-size: 150px;
+  color: #269EE5;
+  float: left;
+  vertical-align: top;
+}

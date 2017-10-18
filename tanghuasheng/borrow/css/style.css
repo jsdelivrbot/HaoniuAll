@@ -1,0 +1,192 @@
+body {
+	width: 100%;
+	height: auto;
+}
+
+.beijing {
+	width: 1265px;
+	height: 1770px;
+	background-color: #dddddd;
+	margin: 0 auto;
+}
+
+.beijing .part1 {
+	width: 1265px;
+	height: 340px;
+	background-color: white;
+}
+
+.beijing .part2 {
+	width: 1265px;
+	height: 521px;
+	background-color: white;
+	margin-top: 10px;
+}
+
+.beijing .part3 {
+	width: 1265px;
+	height: 240px;
+	background-color: #9acd32;
+	margin-top: 10px;
+}
+
+.beijing .part4 {
+	width: 1265px;
+	height: 640px;
+	background-color: white;
+	margin-top: 10px;
+}
+
+.beijing .part4_1 {
+	height: 454px;
+	background-color: #aaaaaa;
+}
+
+.beijing .part4_2 {
+	height: 78px;
+	background-color: #5dc499;
+}
+
+.part1 .left {
+	width: 500px;
+	float: left;
+}
+
+.part1 .right {
+	width: 500px;
+	float: right;
+}
+
+.part1 .mid {
+	width: 200px;
+	height: 200px;
+	background: red;
+	margin: 0 auto;
+}
+
+.part1 a {
+	width: 50%;
+	list-style: none;
+	text-decoration: none;
+	color: #DDDDDD;
+	font-size: 22px;
+	text-align: center;
+	float: left;
+	margin-top: 50px;
+}
+
+.p1 {
+	width: 170px;
+	height: 40px;
+	margin: 0 auto;
+	font-size: 28px;
+	color: black;
+	text-align: center;
+	margin-top: 40px;
+	font-weight: bold;
+	list-style: none;
+}
+
+.p2 {
+	margin: 0 auto;
+	text-align: center;
+	font-size: 14px;
+	line-height: 14px;
+}
+
+.box ul {
+	width: 1165px;
+	height: 277px;
+	margin: 120px auto;
+}
+
+.box li {
+	width: 291px;
+	height: 277px;
+	float: left;
+	text-align: center;
+}
+
+.box ul h4 {
+	font-size: 26px;
+	font-weight: bold;
+}
+
+.part3 p {
+	font-size: 20px;
+	color: blue;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 50px;
+}
+
+.part3 ul {
+	width: 330px;
+	height: 30px;
+	border: 2px solid #AAAAAA;
+	background-color: #DDDDDD;
+	margin: 10px auto;
+}
+
+.part3 li {
+	width: 31px;
+	height: 28px;
+	float: left;
+	background-color: #DDDDDD;
+	border: 1px solid #AAAAAA;
+}
+
+.intr {
+	width: 900px;
+	height: 240px;
+	margin: 70px auto;
+}
+
+.intr div {
+	float: left;
+}
+
+.intr .info .adr {
+	width: 510px;
+	height: 240px;
+}
+
+.intr .info .adr ul {
+	margin-top: 10px;
+}
+
+.intr .info .adr ul li {
+	font-size: 16px;
+	line-height: 20px;
+	margin: 60px;
+}
+
+.intr .info .adr ul li span {
+	width: 20px;
+	height: 20px;
+}
+
+.intr .info .map {
+	width: 390px;
+	height: 240px;
+	background: url(../img/map_600e62f.png) no-repeat;
+	background-position: 100%;
+}
+
+.part4_2 p {
+	text-align: center;
+}
+.part4_2 img{
+	margin-top: 10px;
+}
+
+/*公共样式*/
+
+.jiantou {
+	width: 0;
+	height: 0;
+	border-left: 30px solid transparent;
+	border-right: 30px solid transparent;
+	border-top: 30px solid #adff2f;
+	margin: 0 auto;
+}

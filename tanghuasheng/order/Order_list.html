@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>订单列表</title>
+	</head>
+
+	<body>
+		<ul>
+			<li>
+
+				<img src="read_message.png" style="width: 20px; height: 20px;" />
+				<div class="li">
+					<div class="up">
+						<span class="order_title">订单列表类型以及状态</span>
+						<span class="order_time" style="font-size: 12px; color: #a2a2a2;">03-22&nbsp;04:32</span>
+					</div>
+					<div class="down">
+						<span>订单号：</span><span>20170322001201</span>
+					</div>
+				</div>
+			</li>
+
+		</ul>
+	</body>
+
+	<style type="text/css" lang="less">
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+		}
+		
+		ul {
+			width: 100%;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		
+		li {
+			width: 100%;
+			height: 61px;
+			box-sizing: border-box;
+			padding: 15px 12px 8px;
+			border-bottom: 1px solid #eeeeee;
+			display: flex;
+			flex-flow: row nowrap;
+			/*background-color: pink;*/
+			justify-content: space-between;
+			align-items: center;
+		}
+		
+		.li {
+			width: 92%;
+			display: flex;
+			flex-flow: column nowrap;
+			justify-content: space-between;
+		}
+		
+		.up {
+			font-size: 14px;
+			/*background-color: lightgoldenrodyellow;*/
+			display: flex;
+			justify-content: space-between;
+		}
+		
+		.down {
+			font-size: 12px;
+			color: #a2a2a2;
+			/*background-color: lightskyblue;*/
+		}
+	</style>
+
+</html>

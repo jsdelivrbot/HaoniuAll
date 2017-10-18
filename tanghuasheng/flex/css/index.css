@@ -1,0 +1,232 @@
+*{
+	box-sizing: border-box;
+}
+a {
+	text-decoration: none;
+}
+
+section,
+header,
+footer {
+	width: 100%;
+}
+
+
+/*顶部*/
+
+.top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 32px;
+	background-color: #fffcec;
+	color: #fbb700;
+	padding: 0 12px;
+}
+
+header {
+	display: flex;
+	background-color: #ff4683;
+	color: white;
+	font-size: 16px;
+	justify-content: space-between;
+	align-items: center;
+	height: 44px;
+}
+
+header a {
+	opacity: 0.6;
+	color: #fff;
+}
+
+header h3 {
+	flex: 1 1 auto;
+	align-self: stretch;
+	background: url(../img/百度糯米.png) center center no-repeat;
+	background-size: 78px auto;
+	text-indent: -99999px;
+}
+
+.search {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+	background-color: #f1f1f1;
+}
+
+.search form {
+	margin: auto 5px;
+	flex: 1 1 auto;
+	background-color: #fff;
+	height: 20px;
+	border: 1px solid #ddd;
+	border-radius: 15px;
+	padding: 5px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.search form input {
+	flex: 1 1 auto;
+	border: none;
+	font-size: 14px;
+	padding: 0 5px;
+}
+
+.search form button {
+	background: url(../img/btn.png) center center no-repeat;
+	width: 20px;
+	border: none;
+	background-size: 12px;
+	text-indent: -9999px;
+}
+
+.categroy {}
+
+.categroy li {
+	display: flex;
+	justify-content: space-around;
+	padding: 5px 0;
+}
+
+.categroy a {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.categroy li a img {
+	width: 40px;
+}
+
+.top10 {
+	display: flex;
+}
+
+.top10 .top10txtbox {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	white-space: nowrap;
+}
+
+.top10 .top10txtbox h4 {
+	color: #222;
+	margin-bottom: 10px;
+}
+
+.top10 .top10txtbox p {
+	color: #888;
+	margin: 5px 0;
+}
+
+.top10 .top10txtbox .timecount {
+	color: #ee4339;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.top10 .top10imgbox {
+	flex: 1 1 auto;
+}
+
+.top10 .top10imgbox img {
+	width: 100%;
+}
+
+.guessfav {}
+
+.guessfav .section-title {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.guessfav li {
+	border-bottom: 1px solid #ddd;
+}
+
+.guessfav li a {
+	display: flex;
+}
+
+.guessfav li a img {
+	width: 120px;
+}
+
+.guessfav .imgbox {
+	margin-right: 20px;
+	flex: 0 0 120px;
+}
+
+.guessfav .txtbox {
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.guessfav .txtbox h5 {
+	color: #222;
+	margin: 0;
+	font-size: 16px;
+}
+
+.guessfav .txtbox .desc {
+	color: #888;
+	font-size: 12px;
+}
+
+.guessfav .txtbox .newprice {
+	color: #FF4683;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.guessfav .txtbox .privilega {
+	border: 1px solid #FF4683;
+	border-radius: 3px;
+	color: #FF4683;
+	margin-right: auto;
+	margin-left: 5px;
+}
+
+.guessfav .txtbox .price {
+	display: flex;
+}
+
+.guessfav .txtbox .price del {
+	margin-left: 5px;
+}
+
+footer{
+	display: flex;
+	flex-direction: column;
+	padding: 15px 10px;
+	color: #636363;
+	height: 150px;
+}
+footer .navinfo{
+	display: flex;
+	justify-content: space-between;
+}
+footer .navinfo a{
+	display: inline-block;
+	border: 1px solid #ccc;
+	padding: 2px 5px;
+	margin-left: 5px;
+	border-radius: 3px;
+}
+footer .link{
+	display: flex;
+	justify-content: space-between;
+	margin: 10px 0;
+}
+footer .copyright,.record{
+	margin: 10px ;
+	text-align: center;
+}
+img {
+	width: 100%;
+}

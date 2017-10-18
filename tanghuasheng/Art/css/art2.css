@@ -1,0 +1,65 @@
+.tab {
+  width: 100%;
+  height: 1.5rem;
+  padding: 0 0.75rem;
+  box-sizing: border-box;
+  background: -webkit-linear-gradient(#fefefe, #e9e9e9);
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(#fefefe, #e9e9e9);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(#fefefe, #e9e9e9);
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(#fefefe, #e9e9e9);
+}
+.tab ul {
+  width: 100%;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  display: flex;
+  justify-content: space-around;
+}
+.tab ul li {
+  font-size: 0.7rem;
+}
+.swiper-wrapper {
+  width: 100%;
+}
+.swiper-wrapper img {
+  width: 100%;
+}
+.imgStyle1 {
+  width: 100%;
+}
+.imgStyle1 img {
+  width: 100%;
+}
+.imgStyle2 {
+  width: 100%;
+  padding: 0 0.2rem;
+  box-sizing: border-box;
+  display: flex;
+}
+.imgStyle2 .img {
+  flex: 1;
+  margin: 0 0.05rem;
+}
+.imgStyle2 .img img {
+  width: 100%;
+}
+.imgStyle3 {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0 0.2rem;
+  box-sizing: border-box;
+  display: flex;
+}
+.imgStyle3 .img {
+  flex: 1;
+  margin: 0 0.05rem;
+}
+.imgStyle3 .img img {
+  width: 100%;
+}
+.imgStyle3 .img p {
+  font-size: 0.175rem;
+}

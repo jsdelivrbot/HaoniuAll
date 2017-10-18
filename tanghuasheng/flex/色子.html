@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			.dad {
+				width: 400px;
+				height: 400px;
+				background-color: white;
+				border-radius: 10%;
+				box-shadow: 5px 5px 5px 5px #eee;
+				display: flex;
+				margin: 10px;
+			}
+			
+			.son {
+				width: 100px;
+				height: 100px;
+				border-radius: 50%;
+				background-color: black;
+			}
+			
+			.one {
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.two {
+				justify-content: space-around;
+				align-items: center;
+			}
+			
+			.three {
+				justify-content: space-around;
+				align-items: center;
+			}
+			
+			.three div:first-child {
+				align-self: flex-start;
+			}
+			
+			.three div:last-child {
+				align-self: flex-end;
+			}
+			
+			.four {
+				flex-direction: column;
+				justify-content: space-around;
+			}
+			
+			.four>div {
+				display: flex;
+				justify-content: space-around;
+			}
+			
+			.five {
+				flex-direction: column;
+				justify-content: space-around;
+			}
+			
+			.five>div {
+				display: flex;
+				justify-content: space-around;
+			}
+			
+			.six {
+				flex-direction: column;
+				justify-content: space-around;
+			}
+			
+			.six>div {
+				display: flex;
+				justify-content: space-around;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="dad one">
+			<div class="son"></div>
+		</div>
+		<div class="dad two">
+			<div class="son"></div>
+			<div class="son"></div>
+		</div>
+		<div class="dad three">
+			<div class="son"></div>
+			<div class="son"></div>
+			<div class="son"></div>
+		</div>
+		<div class="dad four">
+			<div>
+				<div class="son"></div>
+				<div class="son"></div>
+			</div>
+			<div>
+				<div class="son"></div>
+				<div class="son"></div>
+			</div>
+		</div>
+		<div class="dad five">
+			<div>
+				<div class="son"></div>
+				<div class="son"></div>
+			</div>
+			<div>
+				<div class="son"></div>
+			</div>
+			<div>
+				<div class="son"></div>
+				<div class="son"></div>
+			</div>
+		</div>
+		<div class="dad six">
+			<div>
+				<div class="son"></div>
+				<div class="son"></div>
+			</div>
+			<div>
+				<div class="son"></div>
+				<div class="son"></div>
+			</div>
+			<div>
+				<div class="son"></div>
+				<div class="son"></div>
+			</div>
+		</div>
+	</body>
+
+</html>

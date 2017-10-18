@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.dad{
+				width: 500px;
+				height: 500px;
+				background-color: gray;
+				display: flex;
+				flex-direction: column;
+			}
+			.son{
+				width: 400px;
+				height: 400px;
+				background-color: yellow;
+			}
+			.s1{
+				background-color: red;
+				flex-shrink: 0;
+			}
+			.s2{
+				order: 2;
+				flex-shrink: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="dad">
+			<div class="son s1">1</div>
+			<div class="son s2">2</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>HTML标签过滤</title>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="box">
+			<input type="text" v-model="msg | filterHTML" />
+			<br />
+			<div v-html="msg"></div>
+		</div>
+	</body>
+	<script>
+		Vue.filter('filterHTML', {
+			read: function() { //model>view
+				return input.replace(/<[^<]+>/g + '');
+			},
+			write: function(val) { //view>model
+				console.log(val)
+			}
+		});
+		window.onload = function() {
+			var vm = new Vue({
+				el: '#box',
+				data: {
+					msg: '<strong>welcome</strong>'
+				};
+			});
+		};
+	</script>
+
+</html>
