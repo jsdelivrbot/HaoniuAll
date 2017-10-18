@@ -1,18 +1,18 @@
 <template>
 	<div class="register-vehicle-box">
 		<v-header title="注册车辆" :iconShow="false"></v-header>
-		<group>
-			<x-input title="车牌号码:" :required="true" v-model="cart_badge_no">
-				<span slot="right" style="color: #63bffe;">*必填</span>
+		<group style="margin-left: -15px;">
+			<x-input title="车牌号码:" :required="true" :border-intent="false" v-model="cart_badge_no">
+				<span slot="right" style="color: #63bffe; font-size: 14px;">*必填</span>
 			</x-input>
-			<x-input title="司机姓名:" :required="true" v-model="realname" :max="25">
-				<span slot="right" style="color: #63bffe;">*必填</span>
+			<x-input title="司机姓名:" :required="true" :border-intent="false" v-model="realname" :max="25">
+				<span slot="right" style="color: #63bffe; font-size: 14px;">*必填</span>
 			</x-input>
 			<x-input title="手机号码:" :required="true" v-model="mobile_no" type="number" :max="11">
-				<span slot="right" style="color: #63bffe;">*必填</span>
+				<span slot="right" style="color: #63bffe; font-size: 14px;">*必填</span>
 			</x-input>
 		</group>
-		<group>
+		<group style="margin-left: -15px;" labelWidth="65px">
 			<selector title="车型：" :options="categoryList1" v-model="axle" placeholder="拖挂及游轮"></selector>
 			<selector title=" " :options="categoryList2" v-model="supplyofgoods" placeholder="货箱结构"></selector>
 			<selector title=" " :options="categoryList3" v-model="corps" placeholder="特殊功能"></selector>
@@ -38,19 +38,23 @@
 		<div class="choose-img">
 			<div class="row">
 				<div class="item" v-show="carframe64 !== ''">
-					<img :src="carframe64" />
+					<div class="img">
+						<img :src="carframe64" />
+					</div>
 					<p>车辆门头照</p>
 					<span @click="carframe64 = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
 				</div>
 				<div class="item" v-show="carframe64 === ''">
-					<div class="add vux-1px img">
+					<div class="add vux-1px">
 						<x-icon type="ios-plus-empty" size="60"></x-icon>
 						<input type="file" @change="carframeChange" ref="carframe" />
 					</div>
 					<p>车辆门头照</p>
 				</div>
 				<div class="item" v-show="car64 !== ''">
-					<img :src="car64" />
+					<div class="img">
+						<img :src="car64" />
+					</div>
 					<p>车身照</p>
 					<span @click="car64 = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
 				</div>
@@ -62,7 +66,9 @@
 					<p>车身照</p>
 				</div>
 				<div class="item" v-show="rtc64 !== ''">
-					<img :src="rtc64" />
+					<div class="img">
+						<img :src="rtc64" />
+					</div>
 					<p>道路运输证</p>
 					<span @click="rtc64 = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
 				</div>
@@ -76,7 +82,9 @@
 			</div>
 			<div class="row">
 				<div class="item" v-show="tqc64 !== ''">
-					<img :src="tqc64" />
+					<div class="img">
+						<img :src="tqc64" />
+					</div>
 					<p>运输从业资格证</p>
 					<span @click="tqc64 = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
 				</div>
@@ -88,7 +96,9 @@
 					<p>运输从业资格证</p>
 				</div>
 				<div class="item" v-show="permit64 !== ''">
-					<img :src="permit64" />
+					<div class="img">
+						<img :src="permit64" />
+					</div>
 					<p>行驶证</p>
 					<span @click="permit64 = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
 				</div>
@@ -100,7 +110,9 @@
 					<p>行驶证</p>
 				</div>
 				<div class="item" v-show="vfi64 !== ''">
-					<img :src="vfi64" />
+					<div class="img">
+						<img :src="vfi64" />
+					</div>
 					<p>机动车强制保险</p>
 					<span @click="vfi64 = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
 				</div>
@@ -194,6 +206,9 @@
 		},
 		methods: {
 			toNum(value) {
+				if(value === '') {
+					return ''
+				}
 				return parseFloat(value).toString()
 			},
 			deleM(value) {
@@ -260,6 +275,9 @@
 				reader.readAsDataURL(img)
 			},
 			upDataImg1() {
+				if(this.carframename === '') {
+					return
+				}
 				return this.$http.post('waybill/html/post/v1/sign_img_upload?token=' + this.token, {
 					data: {
 						file_stream: this.carframe64,
@@ -271,6 +289,9 @@
 				})
 			},
 			upDataImg2() {
+				if(this.carname === '') {
+					return
+				}
 				return this.$http.post('waybill/html/post/v1/sign_img_upload?token=' + this.token, {
 					data: {
 						file_stream: this.car64,
@@ -282,6 +303,9 @@
 				})
 			},
 			upDataImg3() {
+				if(this.rtcname === '') {
+					return
+				}
 				return this.$http.post('waybill/html/post/v1/sign_img_upload?token=' + this.token, {
 					data: {
 						file_stream: this.rtc64,
@@ -293,6 +317,9 @@
 				})
 			},
 			upDataImg4() {
+				if(this.tqcname === '') {
+					return
+				}
 				return this.$http.post('waybill/html/post/v1/sign_img_upload?token=' + this.token, {
 					data: {
 						file_stream: this.tqc64,
@@ -304,6 +331,9 @@
 				})
 			},
 			upDataImg5() {
+				if(this.permitname === '') {
+					return
+				}
 				return this.$http.post('waybill/html/post/v1/sign_img_upload?token=' + this.token, {
 					data: {
 						file_stream: this.permit64,
@@ -315,6 +345,9 @@
 				})
 			},
 			upDataImg6() {
+				if(this.vfiname === '') {
+					return
+				}
 				return this.$http.post('waybill/html/post/v1/sign_img_upload?token=' + this.token, {
 					data: {
 						file_stream: this.vfi64,
@@ -339,8 +372,21 @@
 					this.$vux.toast.text('请输入司机姓名')
 					return
 				}
-				if(this.mobile_no === '') {
-					this.$vux.toast.text('请输入手机号码')
+				//				if(this.mobile_no === '') {
+				//					this.$vux.toast.text('请输入手机号码')
+				//					return
+				//				}
+				let pattern2 = /^(1[38][0-9]|15[0-35-9]|14[579]|17[0135678])[0-9]{8}$/
+				if(!pattern2.test(this.mobile_no)) {
+					this.$vux.toast.text('手机号不正确，请重新输入')
+					return
+				}
+				if(this.cart_height.length > 8) {
+					this.$vux.toast.text('车高字符超出最大长度')
+					return
+				}
+				if(this.cart_width.length > 8) {
+					this.$vux.toast.text('车宽字符超出最大长度')
 					return
 				}
 				this.loading = true
@@ -387,6 +433,9 @@
 <style lang="less">
 	.register-vehicle-box {
 		padding-top: 44px;
+		.weui-cell__hd {
+			padding-left: 15px;
+		}
 		.current-option {
 			display: flex;
 			padding: 10px 0 10px 120px;
@@ -425,8 +474,16 @@
 					margin: 0 8%;
 					position: relative;
 					font-size: 0;
-					img {
+					.img {
 						width: 100%;
+						height: 16.224vw;
+						overflow: hidden;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						img {
+							width: 100%;
+						}
 					}
 					p {
 						text-align: center;
@@ -454,6 +511,9 @@
 						display: flex;
 						align-items: center;
 						justify-content: center;
+						/*svg {
+							width: 95%;
+						}*/
 						.vux-x-icon {
 							fill: #C7C7C7;
 						}

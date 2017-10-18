@@ -1,5 +1,5 @@
 <template>
-	<div class="offer-detail-box">
+	<div class="offer-detail-box" v-show="isComplete">
 		<v-header title="报价详情"></v-header>
 		<div class="wapper">
 			<pull-to :bottom-load-method="getData" :bottom-config="{failText: '没有更多信息'}">
@@ -82,7 +82,8 @@
 							交易次数
 							<img src="../../../static/image/paixu-gao@2x.png" v-show="offer_sort === '1'" />
 							<img src="../../../static/image/paixu-di@2x.png" v-show="offer_sort === '0'" />
-						</div>|
+						</div>
+						<div class="line vux-1px-r"></div>
 						<div class="item" @click="priceSort">
 							价格
 							<img src="../../../static/image/paixu-gao@2x.png" v-show="price_sort === '1'" />
@@ -93,7 +94,7 @@
 						<div class="item vux-1px-b" v-for="(item, index) in listData" :key="index">
 							<div class="first">
 								<p>
-									<span>{{item.car_badge_no}}，{{item.driver_name}}，{{item.mobile_no}}</span>
+									<span>{{item.cart_badge_no}}，{{item.driver_name}}，{{item.mobile_no}}</span>
 									<img src="../../../static/image/1@2x.png" v-if="index === 0" />
 									<img src="../../../static/image/2@2x.png" v-if="index === 1" />
 									<img src="../../../static/image/3@2x.png" v-if="index === 2" />
@@ -110,7 +111,7 @@
 							</div>
 							<div class="third">
 								当前位置：{{item.cur_position}}
-								<span class="btn" @click="transaction(item.offer_id)">
+								<span class="btn" @click="transaction(item.offer_id)" v-if="$power('DIS_NSEND_VQUO_CONFI_BTN')">
 									确认成交
 								</span>
 							</div>
@@ -130,6 +131,7 @@
 	export default {
 		data() {
 			return {
+				isComplete: false,
 				detailShow: false,
 				dispatch_id: this.$route.params.id,
 				dispatch_detail: {},
@@ -148,10 +150,15 @@
 			LoadMore
 		},
 		created() {
+			this.$vux.loading.show({
+				text: '加载中'
+			})
 			this.$http.get('dispatch/html/get/v1/dispatch_detail/' + this.dispatch_id + '?token=' + this.token)
 				.then((res) => {
 					//					console.log(res)
 					this.dispatch_detail = res.data.data.dispatch_detail
+					this.$vux.loading.hide()
+					this.isComplete = true
 				})
 			this.initList()
 		},
@@ -224,11 +231,11 @@
 						$this.$vux.loading.show({
 							text: '正在取消'
 						})
-						$this.$http.post('dispatch/html/put/v1/offer_cancel/' + $this.dispatch_id + '?token=' + this.token)
+						$this.$http.post('dispatch/html/put/v1/offer_cancel/' + $this.dispatch_id + '?token=' + $this.token)
 							.then((res) => {
 								$this.$vux.loading.hide()
 								console.log(res)
-								if(res.data.result.reCode === 0) {
+								if(res.data.result.reCode === '0') {
 									$this.$vux.toast.show({
 										text: '取消成功'
 									})
@@ -247,8 +254,11 @@
 				this.$http.post('dispatch/html/put/v1/offer_deal/' + id + '?token=' + this.token)
 					.then((res) => {
 						console.log(res)
-						if(res.data.result.reCode === 0) {
-							this.vux.toast.text('确认成交成功')
+						if(res.data.result.reCode === '0') {
+							this.$vux.toast.text('确认成交成功')
+							setTimeout(() => {
+								this.$router.push('/DiaoDu')
+							}, 500)
 						} else {
 							this.$vux.toast.text(res.data.result.reInfo)
 						}
@@ -360,6 +370,7 @@
 				color: #999999;
 				line-height: 40px;
 				background-color: white;
+				align-items: center;
 				.item {
 					width: 0;
 					flex: 1;
@@ -372,6 +383,13 @@
 						width: 10px;
 						height: 16px;
 						margin-left: 8px;
+					}
+				}
+				.line {
+					height: 26px;
+					&.vux-1px-r:after {
+						color: #999999;
+						border-right: 1px solid #999999;
 					}
 				}
 			}
@@ -392,6 +410,7 @@
 							img {
 								width: 26px;
 								height: 34px;
+								margin-top: -10px;
 							}
 						}
 					}

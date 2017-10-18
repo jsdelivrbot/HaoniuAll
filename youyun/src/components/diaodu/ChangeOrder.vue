@@ -1,11 +1,11 @@
 <template>
-	<div class="vehicle-info-box">
-		<v-header title="运单修改" :iconShow="true"></v-header>
+	<div class="vehicle-info-box" v-show="isComplete">
+		<v-header title="运单修改"></v-header>
 		<group>
-			<x-input title="承运车辆：" :value="formInfo.driver_name + '，' + formInfo.cart_badge_no + '，' + formInfo.mobile_no" :disabled="true"></x-input>
+			<x-input title="承运车辆：" :value="formInfo.driver_name + ',' + formInfo.cart_badge_no + ',' + formInfo.mobile_no" :disabled="true" label-width="88px"></x-input>
 		</group>
 		<group label-width="102px">
-			<x-input title="运单号:" placeholder="请输入运单号" v-model="formInfo.waybill_no"></x-input>
+			<x-input title="运单号:" placeholder="请输入运单号" v-model="formInfo.waybill_no" label-width="88px"></x-input>
 			<!--<x-input title="装货地:" placeholder="请输入装货地" :required="true">
 				<span slot="right" style="color: #63bffe;">*必填</span>
 			</x-input>-->
@@ -30,13 +30,13 @@
 		</group>
 		<group label-width="102px">
 			<x-input title="货物名称：" placeholder="请输入货物名称" v-model="goods_name"></x-input>
-			<x-input title="货物数量：" placeholder="请输入货物数量" v-model="goods_num"></x-input>
+			<x-input title="货物数量：" placeholder="请输入货物数量" v-model="goods_num" type="number"></x-input>
 			<!--<x-input title="货物单位：" placeholder="请输入货物数量单位" v-model="unit"></x-input>-->
 			<selector title="货物单位" :options="unitsList" v-model="unit" placeholder="请选择货物数量单位"></selector>
-			<x-input title="运输单价：" placeholder="请输入运输单价" v-model="unit_price"></x-input>
-			<x-input title="运单总价：" placeholder="请输入运单总价" v-model="total_price"></x-input>
-			<x-input title="预付款：" placeholder="请输入预付款" v-model="prepayments"></x-input>
-			<x-input title="回单押金：" placeholder="请输入回单押金" v-model="back_fee"></x-input>
+			<x-input title="运输单价：" placeholder="请输入运输单价" v-model="unit_price" type="number"></x-input>
+			<x-input title="运单总价：" placeholder="请输入运单总价" v-model="total_price" type="number"></x-input>
+			<x-input title="预付款：" placeholder="请输入预付款" v-model="prepayments" type="number"></x-input>
+			<x-input title="回单押金：" placeholder="请输入回单押金" v-model="back_fee" type="number"></x-input>
 			<div class="selector vux-1px-t">
 				<selector title="项目名称" :options="optionsList" v-model="optionValueKey" placeholder="请选择项目">
 				</selector>
@@ -64,7 +64,12 @@
 				token: sessionStorage.getItem('token'),
 				waybill_id: this.$route.params.id,
 				loading: false,
-				formInfo: {},
+				formInfo: {
+					driver_name: '',
+					cart_badge_no: '',
+					mobile_no: '',
+					waybill_no: ''
+				},
 				//表单信息
 				beginValue: [],
 				endValue: [],
@@ -78,7 +83,8 @@
 				prepayments: '',
 				back_fee: '',
 				unitsList: ['吨', '方'],
-				unitKey: ''
+				unitKey: '',
+				isComplete: false
 			}
 		},
 		computed: {
@@ -116,6 +122,9 @@
 			Datetime
 		},
 		created() {
+			this.$vux.loading.show({
+				text: '加载中'
+			})
 			this.$http.get('waybill/html/get/v1/waybill_detail/' + this.waybill_id + '?token=' + this.token)
 				.then((res) => {
 					console.log(res)
@@ -128,7 +137,14 @@
 						this.total_price = this.formInfo.total_price
 						this.prepayments = this.formInfo.prepayments
 						this.back_fee = this.formInfo.back_fee
+						this.qy_time = this.formInfo.qy_time
+						this.optionValueKey = this.formInfo.project_id
+						this.back_fee = this.formInfo.back_fee
+						this.beginValue = [this.formInfo.begin_province_code, this.formInfo.begin_city_code, this.formInfo.begin_county_code]
+						this.endValue = [this.formInfo.end_province_code, this.formInfo.end_city_code, this.formInfo.end_county_code]
 					}
+					this.$vux.loading.hide()
+					this.isComplete = true
 				})
 			this.$http.get('pub/html/get/v1/projects?token=' + this.token).then((res) => {
 				//				console.log(res)
@@ -171,6 +187,10 @@
 				}
 				if(this.optionValueKey === '') {
 					this.$vux.toast.text('请选择项目名称')
+					return
+				}
+				if(parseFloat(this.prepayments) + parseFloat(this.back_fee) > this.total_price) {
+					this.$vux.toast.text('回单押金+预付款 不可大于运单总价')
 					return
 				}
 				if(this.unit === '吨') {

@@ -12,7 +12,7 @@
 		<div class="wapper" v-show="currentList === 1">
 			<pull-to :top-load-method="refresh1" :bottom-load-method="getData1" :bottom-config="{failText: '没有更多信息'}">
 				<div class="list">
-					<router-link :to="'/OfferDetail/' + item.dispatch_id" tag="div" class="item type1" v-for="(item, index) in listData1" :key="index">
+					<router-link :to="toOfferDetail(item.dispatch_id)" tag="div" class="item type1" v-for="(item, index) in listData1" :key="index">
 						<p class="row">
 							<span class="text">发布时间：{{item.created_time}}</span>
 							<span class="type" v-if="item.offer_state === '0'">采价中</span>
@@ -24,9 +24,9 @@
 						</p>
 						<p class="row">
 							<span class="text">货物名称：{{item.goods_name}}</span>
-							<img src="../../../static/image/fang@2x.png" v-if="item.offer_type === '1'" />
-							<img src="../../../static/image/che@2x.png" v-if="item.offer_type === '2'" />
-							<img src="../../../static/image/dun@2x.png" v-if="item.offer_type === '0'" />
+							<img src="../../../static/image/fang@2x.png" v-if="item.unit === '方'" />
+							<img src="../../../static/image/che@2x.png" v-if="item.unit === '车'" />
+							<img src="../../../static/image/dun@2x.png" v-if="item.unit === '吨'" />
 						</p>
 						<p class="row">
 							<span class="text">{{item.begin_address}} 至 {{item.end_address}}</span>
@@ -98,10 +98,10 @@
 						</p>
 						<p class="row">
 							<span class="text">运单号：{{item.waybill_no}}</span>
-							<span class="time">用时：{{item.cost_time}}</span>
+							<span class="time" v-if="item.data_type !== '1'">用时：{{item.cost_time}}</span>
 						</p>
 						<p class="row">
-							<span class="text">{{item.car_badge_no}}，{{item.driver_name}}，{{item.mobile_no}}</span>
+							<span class="text">{{item.cart_badge_no}}，{{item.driver_name}}，{{item.mobile_no}}</span>
 							<span class="time" v-if="item.data_type === '0'">调度建单</span>
 							<span class="time" v-if="item.data_type === '1'">快速建单</span>
 						</p>
@@ -109,16 +109,16 @@
 							<span class="text">{{item.begin_address}} 至 {{item.end_address}}</span>
 						</p>
 						<p class="footer vux-1px-t">
-							<span class="vux-1px-r current" @click="qiyun(item.waybill_id)">起运</span>
-							<router-link :to="'/ChangeOrder/' + item.waybill_id" class="vux-1px-r" tag="span">修改</router-link>
-							<span @click="cancel(item.waybill_id)">取消发车</span>
+							<span class="vux-1px-r current" @click="qiyun(item.waybill_id)" v-if="$power('DIS_YSEND_DEP_BTN')">起运</span>
+							<router-link :to="'/ChangeOrder/' + item.waybill_id" class="vux-1px-r" tag="span" v-if="$power('DIS_YSEND_MODBILL_BTN')">修改</router-link>
+							<span @click="cancel(item.waybill_id)" v-if="$power('DIS_YSEND_REMDEP_BTN')">取消发车</span>
 						</p>
 					</div>
 					<load-more :show-loading="showLoading2" :tip="tip2" background-color="#f1eff2" v-show="listData2.length === 0"></load-more>
 				</div>
 			</pull-to>
 		</div>
-		<router-link to="/FastDispatch" tag="div" class="btn">
+		<router-link to="/FastDispatch" tag="div" class="btn" v-if="$power('DIS_RSHUNT_BTN')">
 			快速<br /> 调车
 		</router-link>
 	</div>
@@ -164,6 +164,7 @@
 			}
 			this.init1()
 			this.init2()
+			window.myvue.$initDiaoDu = this
 		},
 		methods: {
 			goSearch(text) {
@@ -176,11 +177,20 @@
 					this.init2()
 				}
 			},
+			toOfferDetail(id) {
+				if(this.$power('DIS_NSEND_VQUO_BTN')) {
+					return '/OfferDetail/' + id
+				}else {
+					return ''
+				}
+			},
 			tab1() {
 				this.currentList = 1
+				this.init1()
 			},
 			tab2() {
 				this.currentList = 2
+				this.init2()
 			},
 			init1() {
 				this.total_pages1 = 0
@@ -197,7 +207,7 @@
 						data_type: this.data_type
 					}
 				}).then((res) => {
-					//				console.log(res)
+					console.log(res)
 					if(res.data.result.reCode === '0') {
 						this.listData1 = res.data.data.dispatch_list
 						this.total_pages1 = res.data.data.total_pages
@@ -222,7 +232,7 @@
 						data_type: this.data_type
 					}
 				}).then((res) => {
-					console.log(res)
+//					console.log(res)
 					if(res.data.result.reCode === '0') {
 						this.listData2 = res.data.data.dispatch_list
 						this.total_pages2 = res.data.data.total_pages
@@ -330,9 +340,11 @@
 					onConfirm() {
 						$this.$http.post('dispatch/html/put/v1/start_shipment/' + id + '?token=' + $this.token)
 							.then((res) => {
-								if(res.data.result.reCode === 0) {
+								if(res.data.result.reCode === '0') {
 									$this.$vux.toast.text('起运成功')
 									$this.init2()
+//									$this.$router.go(0)
+//									$this.currentList = 2
 								} else {
 									$this.$vux.toast.text(res.data.result.reInfo)
 								}
@@ -349,9 +361,10 @@
 					onConfirm() {
 						$this.$http.post('dispatch/html/put/v1/cancel_depart/' + id + '?token=' + $this.token)
 							.then((res) => {
-								if(res.data.result.reCode === 0) {
+								if(res.data.result.reCode === '0') {
 									$this.$vux.toast.text('取消成功')
 									$this.init2()
+//									this.$router.go(0)
 								} else {
 									$this.$vux.toast.text(res.data.result.reInfo)
 								}
@@ -415,6 +428,8 @@
 					.time {
 						font-size: 12px;
 						color: #646464;
+						flex: 0 0 auto;
+						display: block;
 					}
 					.category {
 						font-size: 14px;
@@ -490,8 +505,8 @@
 			line-height: 20px;
 			position: fixed;
 			right: 24px;
-			bottom: 68px;
-			box-shadow: 0 2px 5px #888888;
+			bottom: 24px;
+			box-shadow: 0 0px 9px #888888;
 		}
 	}
 </style>

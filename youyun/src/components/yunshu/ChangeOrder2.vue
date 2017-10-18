@@ -1,11 +1,11 @@
 <template>
-	<div class="vehicle-info-box">
+	<div class="vehicle-info-box" v-show="isComplete">
 		<v-header title="运单修改"></v-header>
-		<group>
-			<x-input title="承运车辆：" :value="formInfo.driver_name + '，' + formInfo.cart_badge_no + '，' + formInfo.mobile_no" :disabled="true"></x-input>
+		<group style="margin-top: -20px;">
+			<x-input title="承运车辆:" :value="formInfo.driver_name + ',' + formInfo.cart_badge_no + ',' + formInfo.mobile_no" :disabled="true" label-width="88px"></x-input>
 		</group>
-		<group label-width="102px">
-			<x-input title="运单号:" placeholder="请输入运单号" v-model="formInfo.waybill_no"></x-input>
+		<group label-width="102px" style="margin-top: -9px;">
+			<x-input title="运单号:" placeholder="请输入运单号" v-model="formInfo.waybill_no" label-width="88px"></x-input>
 			<!--<x-input title="装货地:" placeholder="请输入装货地" :required="true">
 				<span slot="right" style="color: #63bffe;">*必填</span>
 			</x-input>-->
@@ -28,7 +28,7 @@
 				<!--<p class="label">*必选</p>-->
 			</div>
 		</group>
-		<group label-width="102px">
+		<group label-width="102px" style="margin-top: -9px;">
 			<x-input title="货物名称：" placeholder="请输入货物名称" v-model="goods_name"></x-input>
 			<x-input title="货物数量：" placeholder="请输入货物数量" v-model="goods_num"></x-input>
 			<!--<x-input title="货物单位：" placeholder="请输入货物数量单位" v-model="unit"></x-input>-->
@@ -64,7 +64,12 @@
 				token: sessionStorage.getItem('token'),
 				waybill_id: this.$route.params.id,
 				loading: false,
-				formInfo: {},
+				formInfo: {
+					driver_name: '',
+					cart_badge_no: '',
+					mobile_no: '',
+					waybill_no: ''
+				},
 				//表单信息
 				beginValue: [],
 				endValue: [],
@@ -78,7 +83,8 @@
 				back_fee: '',
 				unitsList: ['吨', '方'],
 				unit: '吨',
-				unitKey: ''
+				unitKey: '',
+				isComplete: false
 			}
 		},
 		computed: {
@@ -116,6 +122,9 @@
 			Datetime
 		},
 		created() {
+			this.$vux.loading.show({
+				text: '加载中'
+			})
 			this.$http.get('waybill/html/get/v1/waybill_detail/' + this.waybill_id + '?token=' + this.token)
 				.then((res) => {
 					console.log(res)
@@ -125,22 +134,24 @@
 						this.goods_num = this.formInfo.goods_num
 						if(this.formInfo.unit === '') {
 							this.unit = '吨'
-						}else {
+						} else {
 							this.unit = this.formInfo.unit
 						}
 						this.unit_price = this.formInfo.unit_price
 						this.total_price = this.formInfo.total_price
 						this.prepayments = this.formInfo.prepayments
 						this.back_fee = this.formInfo.back_fee
-//						this.$set(this.beginValue, 0, this.formInfo.begin_province_code)
-//						this.beginValue = [this.formInfo.begin_province_code, this.formInfo.begin_city_code, this.formInfo.begin_county_code]
-//						this.beginValue = [110000, 110000, 110000]
-//						this.endValue = [this.formInfo.end_province_code, this.formInfo.end_city_code, this.formInfo.end_county_code]
-//						console.log(this.beginValue)
-//						console.log(this.beginValueText)
+						//						this.$set(this.beginValue, 0, this.formInfo.begin_province_code)
+						this.beginValue = [this.formInfo.begin_province_code, this.formInfo.begin_city_code, this.formInfo.begin_county_code]
+						//						this.beginValue = [110000, 110000, 110000]
+						this.endValue = [this.formInfo.end_province_code, this.formInfo.end_city_code, this.formInfo.end_county_code]
+						//						console.log(this.beginValue)
+						//						console.log(this.beginValueText)
 						this.qy_time = this.formInfo.qy_time
 						this.optionValueKey = this.formInfo.project_id
 					}
+					this.$vux.loading.hide()
+					this.isComplete = true
 				})
 			this.$http.get('pub/html/get/v1/projects?token=' + this.token).then((res) => {
 				//				console.log(res)
@@ -152,7 +163,7 @@
 		},
 		methods: {
 			create() {
-//				console.log(this.optionValueKey.toString() === this.optionsList[0].key)
+				//				console.log(this.optionValueKey.toString() === this.optionsList[0].key)
 				if(this.beginValue.length === 0) {
 					this.$vux.toast.text('请选择发货地')
 					return

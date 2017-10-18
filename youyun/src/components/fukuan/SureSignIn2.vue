@@ -70,7 +70,7 @@
 					if(res.data.result.reCode === '0') {
 						this.$vux.toast.text('提交成功')
 						setTimeout(() => {
-							this.$router.push('/OrderDetail/' + this.waybill_id)
+							this.$router.replace('/OrderDetail/' + this.waybill_id)
 						}, 500)
 					}else {
 						this.$vux.toast.text(res.data.result.reInfo)

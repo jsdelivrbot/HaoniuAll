@@ -16,6 +16,9 @@
 			title: String,
 			iconShow: Boolean
 		},
+		created() {
+			window.myvue.$initInput = this
+		},
 		methods: {
 			back() {
 				if(this.$route.query.goindex === 'true') {
@@ -26,6 +29,9 @@
 			},
 			search() {
 				this.$emit('goSearch', this.text)
+			},
+			initData() {
+				this.text = ''
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 <template>
-	<div class="order-detail-box">
+	<div class="order-detail-box" v-show="isComplete">
 		<v-header title="运单详情"></v-header>
-		<div class="item go-rater" v-if="info.star === '' && info.state !== '1'">
+		<div class="item go-rater" v-if="raterShow">
 			<p @click="masterShow = true">您还没评价，请前往评价！ >></p>
 		</div>
 		<div class="item" v-if="info.star !== ''">
@@ -14,7 +14,11 @@
 			<p>运单号：{{info.waybill_no}}</p>
 			<p>建单时间：{{info.created_time}}</p>
 			<p>项目名称：{{info.project_name}}</p>
-			<p>{{info.goods_name}}，{{info.goods_num}}{{info.goods_unit}}</p>
+			<p>
+				<span v-if="info.goods_name">{{info.goods_name}},</span>
+				<span v-if="info.goods_num">{{info.goods_num}}</span>
+				<span v-if="info.goods_num">{{info.unit}}</span>
+			</p>
 			<p>{{info.begin_address}} 至 {{info.end_address}}</p>
 		</div>
 		<div class="item">
@@ -24,11 +28,11 @@
 			<p>当前位置：{{info.cur_position}}</p>
 		</div>
 		<div class="footer">
-			<p class="vux-1px-r" @click="ydLocation(info.mobile_no, waybill_id)">
+			<p class="vux-1px-r" @click="ydLocation(info.driver_name, info.mobile_no, info.cart_badge_no, waybill_id)" v-if="$power('TRA_BILLDET_LOC_BTN')">
 				<img src="../../../static/image/jingquedingwei@2x.png" width="13px" height="16px" />
 				<span>精确定位</span>
 			</p>
-			<p @click="ydTrack(waybill_id)">
+			<p @click="ydTrack(info.driver_name, info.mobile_no, info.cart_badge_no, waybill_id)" v-if="$power('TRA_BILLDET_HISTRAT_BTN')">
 				<img src="../../../static/image/lishiguiji@2x.png" width="16px" height="16px" />
 				<span>历史轨迹</span>
 			</p>
@@ -53,14 +57,14 @@
 			<p>预计到货时间：{{info.predict_end_time}}</p>
 			<p>
 				实际到货时间：{{info.real_end_time}}
-				<span class="label2" @click="signInDetail">查看签收详情</span>
+				<span class="label2" @click="signInDetail" v-if="$power('TRA_BILLDET_SIGNDET_BTN')">查看签收详情</span>
 			</p>
 			<p>签收时间：{{info.sign_time}}</p>
 		</div>
-		<div class="btn" v-if="info.state === '1'" @click="receive(info.waybill_id)">
+		<div class="btn" v-if="info.state === '1'" @click="receive(info.waybill_id)" v-show="$power('TRA_BILLDET_CONARR_BTN')">
 			确认到货
 		</div>
-		<div class="btn" v-if="info.state === '2'" @click="signIn">
+		<div class="btn" v-if="info.state === '2'" @click="signIn" v-show="$power('TRA_BILLDET_CONREC_BTN')">
 			确认签收
 		</div>
 		<div class="master" v-show="masterShow">
@@ -69,7 +73,7 @@
 				<div class="rater">
 					<rater :font-size="30" style="margin-top: 10px;" v-model="rater"></rater>
 				</div>
-				<textarea v-model="content"></textarea>
+				<textarea v-model="content" :max="64"></textarea>
 				<x-icon type="ios-close-empty" size="40" @click="closeMaster"></x-icon>
 				<div class="content-btn" @click="evaluation">
 					完成评价
@@ -102,10 +106,14 @@
 	export default {
 		data() {
 			return {
+				isComplete: false,
 				masterShow: false,
 				token: sessionStorage.getItem('token'),
 				waybill_id: this.$route.params.id,
-				info: {},
+				info: {
+					star: '',
+					state: '1'
+				},
 				rater: 0,
 				content: '',
 				masterShow2: false,
@@ -114,25 +122,38 @@
 				signDetail: {}
 			}
 		},
+		computed: {
+			raterShow() {
+				return this.info.star === '' && this.info.state !== '1'
+			}
+		},
 		components: {
 			'v-header': Header,
 			Rater
 		},
 		created() {
-			this.$http.get('waybill/html/get/v1/waybill_detail/' + this.waybill_id + '?token=' + this.token)
-				.then((res) => {
-					//					console.log(res)
-					this.info = res.data.data
-				})
-			this.$http.get('waybill/html/get/v1/evaluation_detail/' + this.waybill_id + '?token=' + this.token)
-				.then((res) => {
-					console.log(res)
-					this.evaluationInfo = res.data.data
-				})
+			this.$vux.loading.show({
+				text: '加载中'
+			})
+			this.init()
 		},
 		methods: {
+			init() {
+				this.$http.get('waybill/html/get/v1/waybill_detail/' + this.waybill_id + '?token=' + this.token)
+					.then((res) => {
+						//					console.log(res)
+						this.info = res.data.data
+					})
+				this.$http.get('waybill/html/get/v1/evaluation_detail/' + this.waybill_id + '?token=' + this.token)
+					.then((res) => {
+						console.log(res)
+						this.evaluationInfo = res.data.data
+						this.$vux.loading.hide()
+						this.isComplete = true
+					})
+			},
 			signIn() {
-				this.$router.push('/SureSignIn2/' + this.waybill_id)
+				this.$router.replace('/SureSignIn2/' + this.waybill_id)
 			},
 			signInDetail() {
 				this.$http.get('waybill/html/get/v1/sign_detail/' + this.waybill_id + '?token=' + this.token)
@@ -154,15 +175,19 @@
 			toNumber(value) {
 				return parseInt(value)
 			},
-			ydLocation(num, id) {
-				window.android.ydLocation(num, id)
+			ydLocation(name, mobile, cart, id) {
+				window.android.ydLocation(name, mobile, cart, id)
 			},
-			ydTrack(id) {
-				window.android.ydTrack(id)
+			ydTrack(name, mobile, cart, id) {
+				window.android.ydTrack(name, mobile, cart, id)
 			},
 			evaluation() {
 				if(this.rater === 0) {
 					this.$vux.toast.text('打个分吧')
+					return
+				}
+				if(this.content.length > 64) {
+					this.$vux.toast.text('评价内容超出最大长度限制')
 					return
 				}
 				this.$http.post('waybill/html/post/v1/evaluation?token=' + this.token, {
@@ -175,9 +200,8 @@
 				}).then((res) => {
 					if(res.data.result.reCode === '0') {
 						this.$vux.toast.text('评价成功')
-						setTimeout(() => {
-							this.$router.go(0)
-						}, 500)
+						this.masterShow = false
+						this.init()
 					} else {
 						this.$vux.toast.text(res.data.result.reInfo)
 					}
@@ -194,7 +218,11 @@
 							.then((res) => {
 								console.log(res)
 								if(res.data.result.reCode === '0') {
-									$this.masterShow = true
+									//									$this.masterShow = true
+									$this.$vux.toast.text('确认收货成功')
+									setTimeout(() => {
+										$this.$router.replace('/Yunshu')
+									}, 500)
 								} else {
 									$this.$vux.toast.text(res.data.result.reInfo)
 								}

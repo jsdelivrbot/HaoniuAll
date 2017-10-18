@@ -4,10 +4,12 @@
 		<div class="tab">
 			<div class="item" @click="showDistancePicker = true">
 				距离
-			</div>|
+			</div>
+			<span class="line vux-1px-r"></span>
 			<div class="item" @click="showLengthPicker = true">
 				车长
-			</div>|
+			</div>
+			<span class="line vux-1px-r"></span>
 			<div class="item" @click="cartegoryPicker = true">
 				车型
 			</div>
@@ -75,7 +77,6 @@
 	//	import PullTo from 'vue-pull-to'
 	import PullTo from '@/components/base/PullTo/vue-pull-to'
 	import { LoadMore, PopupPicker } from 'vux'
-
 	export default {
 		data() {
 			return {
@@ -131,26 +132,22 @@
 					name: '1000km',
 					value: '1000',
 					parent: 0
-				}, {
-					name: '1500km',
-					value: '1500',
-					parent: 0
 				}],
 				showDistancePicker: false,
 				showLengthPicker: false,
 				lengthData: [],
 				lengthListBase: [{
-						name: '3.3km',
+						name: '3.3m',
 						value: '3.3',
 						parent: 0
 					},
 					{
-						name: '3.5km',
+						name: '3.5m',
 						value: '3.5',
 						parent: 0
 					},
 					{
-						name: '3.8km',
+						name: '3.8m',
 						value: '3.8',
 						parent: 0
 					},
@@ -260,157 +257,157 @@
 						parent: 0
 					},
 					{
-						name: '9.2km',
+						name: '9.2m',
 						value: '9.2',
 						parent: 0
 					},
 					{
-						name: '9.6km',
+						name: '9.6m',
 						value: '9.6',
 						parent: 0
 					},
 					{
-						name: '9.8km',
+						name: '9.8m',
 						value: '9.8',
 						parent: 0
 					},
 					{
-						name: '10km',
+						name: '10m',
 						value: '10',
 						parent: 0
 					},
 					{
-						name: '11km',
+						name: '11m',
 						value: '11',
 						parent: 0
 					},
 					{
-						name: '12.5km',
+						name: '12.5m',
 						value: '12.5',
 						parent: 0
 					},
 					{
-						name: '13km',
+						name: '13m',
 						value: '13',
 						parent: 0
 					},
 					{
-						name: '13.5km',
+						name: '13.5m',
 						value: '13.5',
 						parent: 0
 					},
 					{
-						name: '14km',
+						name: '14m',
 						value: '14',
 						parent: 0
 					},
 					{
-						name: '14.5km',
+						name: '14.5m',
 						value: '14.5',
 						parent: 0
 					},
 					{
-						name: '15km',
+						name: '15m',
 						value: '15',
 						parent: 0
 					},
 					{
-						name: '15.5km',
+						name: '15.5m',
 						value: '15.5',
 						parent: 0
 					},
 					{
-						name: '16km',
+						name: '16m',
 						value: '16.5',
 						parent: 0
 					},
 					{
-						name: '17km',
+						name: '17m',
 						value: '17',
 						parent: 0
 					},
 					{
-						name: '17.5km',
+						name: '17.5m',
 						value: '17.5',
 						parent: 0
 					},
 					{
-						name: '18km',
+						name: '18m',
 						value: '18',
 						parent: 0
 					},
 					{
-						name: '19.5km',
+						name: '19.5m',
 						value: '19.5',
 						parent: 0
 					},
 					{
-						name: '20km',
+						name: '20m',
 						value: '20',
 						parent: 0
 					},
 					{
-						name: '20.5km',
+						name: '20.5m',
 						value: '20.5',
 						parent: 0
 					},
 					{
-						name: '20.6km',
+						name: '20.6m',
 						value: '20.6',
 						parent: 0
 					},
 					{
-						name: '20.8km',
+						name: '20.8m',
 						value: '20.8',
 						parent: 0
 					},
 					{
-						name: '21.5km',
+						name: '21.5m',
 						value: '21.5',
 						parent: 0
 					},
 					{
-						name: '21.6km',
+						name: '21.6m',
 						value: '21.6',
 						parent: 0
 					},
 					{
-						name: '21.8km',
+						name: '21.8m',
 						value: '21.8',
 						parent: 0
 					},
 					{
-						name: '22.5km',
+						name: '22.5m',
 						value: '22.5',
 						parent: 0
 					},
 					{
-						name: '22.6km',
+						name: '22.6m',
 						value: '22.6',
 						parent: 0
 					},
 					{
-						name: '22.8km',
+						name: '22.8m',
 						value: '22.8',
 						parent: 0
 					},
 					{
-						name: '30.5km',
+						name: '30.5m',
 						value: '30.5',
 						parent: 0
 					},
 					{
-						name: '31.5km',
+						name: '31.5m',
 						value: '31.5',
 						parent: 0
 					},
 					{
-						name: '32km',
+						name: '32m',
 						value: '32',
 						parent: 0
 					},
 					{
-						name: '32.5km',
+						name: '32.5m',
 						value: '32.5',
 						parent: 0
 					}
@@ -445,6 +442,7 @@
 						}
 					}
 				}
+				distanceListBase.splice(distanceListBase.length - 1, 1)
 				//				distanceList.push(distanceListBase)
 				distanceList = distanceList.concat(distanceListBase)
 				//				console.log(distanceList)
@@ -476,6 +474,8 @@
 		},
 		created() {
 			this.initData()
+			window.myvue.$initYunLi = this
+//			console.log(window.myvue.$initYunLi.initData)
 		},
 		methods: {
 			emptDistance(closeType) {
@@ -532,7 +532,7 @@
 				console.log(this.distanceData)
 				let num = parseInt(this.distanceData[0])
 				this.min_distance = num.toString()
-				if(this.min_distance === '1500') {
+				if(this.min_distance === '1000') {
 					this.max_distance = ''
 				} else {
 					let num2 = parseInt(this.distanceData[1])
@@ -547,7 +547,7 @@
 				if(this.min_cart_length === '32.5') {
 					this.max_cart_length = ''
 				} else {
-					let num2 = parseInt(this.lengthData[1])
+					let num2 = parseFloat(this.lengthData[1])
 					this.max_cart_length = num2.toString()
 				}
 				this.initData()
@@ -566,12 +566,13 @@
 			},
 			router(path1, path2, num, id, item) {
 				let item2 = JSON.stringify(item)
-//				console.log(item)
+				//				console.log(item)
 				window.android.YLSelectDialog(path1, path2, num, id, item2)
 				//				window.location.hash = path1
 				//				window.myvue._router.push(path1)
 				//				this.$router.push(path1)
 				//				window.goRoute()
+//				this.$router.go(0)
 			},
 			yunliDeleItem(id) {
 				//				this.$http.get('driver/html/get/v1/driver_delete/' + id + '?token=' + this.token)
@@ -585,7 +586,13 @@
 				//							this.$vux.toast.text(res.data.result.reInfo)
 				//						}
 				//					})
-				window.yunliDeleItem(id)
+				this.$vux.confirm.show({
+					title: '提示',
+					content: '确认删除？',
+					onConfirm() {
+						window.yunliDeleItem(id)
+					}
+				})
 			},
 			//刷新
 			refresh(loaded) {
@@ -663,14 +670,23 @@
 			color: #999999;
 			line-height: 40px;
 			z-index: 2;
+			display: flex;
+			align-items: center;
 			.item {
 				width: 0;
 				flex: 1;
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				font-size: 14px;
+				font-size: 15px;
 				color: #646464;
+			}
+			.line {
+				height: 26px;
+				&.vux-1px-r:after {
+					color: #999999;
+					border-right: 1px solid #999999;
+				}
 			}
 		}
 		.wapper {
@@ -730,8 +746,8 @@
 			line-height: 20px;
 			position: fixed;
 			right: 24px;
-			bottom: 68px;
-			box-shadow: 0 2px 5px #888888;
+			bottom: 24px;
+			box-shadow: 0 0px 9px #888888;
 		}
 		.vux-popup-picker-select {
 			span {

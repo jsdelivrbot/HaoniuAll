@@ -34,18 +34,18 @@
 							</div>
 						</router-link>
 						<div class="footer" v-if="item.state === '1'">
-							<router-link :to="'/ChangeOrder2/' + item.waybill_id" class="vux-1px-r current" tag="span">修改</router-link>
-							<span class="vux-1px-r" @click="receive(item.waybill_id)">确认到货</span>
-							<span @click="record(item.waybill_id)">操作记录</span>
+							<router-link :to="'/ChangeOrder2/' + item.waybill_id" class="vux-1px-r current" tag="span" v-if="$power('TRA_ONPASS_MODBILL_BTN')">修改</router-link>
+							<span class="vux-1px-r" @click="receive(item.waybill_id)" v-if="$power('TRA_ONPASS_CONARR_BTN')">确认到货</span>
+							<span @click="record(item.waybill_id)" v-if="$power('TRA_ONPASS_OPEREC_BTN')">操作记录</span>
 						</div>
 						<div class="footer" v-if="item.state === '2'">
-							<router-link :to="'/SureSignIn2/' + item.waybill_id" tag="span" class="vux-1px-r current">确认签收</router-link>
-							<router-link :to="'/OrderDetail/' + item.waybill_id" tag="span" class="vux-1px-r" v-if="item.star === ''">评价</router-link>
-							<span @click="record(item.waybill_id)">操作记录</span>
+							<router-link :to="'/SureSignIn2/' + item.waybill_id" tag="span" class="vux-1px-r current" v-if="$power('TRA_ARR_CONREC_BTN')">确认签收</router-link>
+							<router-link :to="'/OrderDetail/' + item.waybill_id" tag="span" class="vux-1px-r" v-if="item.star === ''" v-show="$power('TRA_ARR_EVA_BTN')">评价</router-link>
+							<span @click="record(item.waybill_id)" v-if="$power('TRA_ARR_OPEREC_BTN')">操作记录</span>
 						</div>
 						<div class="footer" v-if="item.state === '3'">
 							<router-link :to="'/OrderDetail/' + item.waybill_id" tag="span" class="vux-1px-r current" v-if="item.star === ''">评价</router-link>
-							<span @click="record(item.waybill_id)">操作记录</span>
+							<span @click="record(item.waybill_id)" v-if="$power('TRA_SIGN_OPEREC_BTN')">操作记录</span>
 						</div>
 					</div>
 					<load-more :show-loading="showLoading" :tip="tip" background-color="#f1eff2" v-show="listData.length === 0"></load-more>
@@ -68,6 +68,7 @@
 						<p class="row">改前：{{item.update_begin}}</p>
 						<p class="row">改后：{{item.update_end}}</p>
 					</div>
+					<p v-if="recordCount === '0'">未查询到操作记录</p>
 				</div>
 				<x-icon type="ios-close-empty" size="40" @click="closeMaster"></x-icon>
 			</div>
@@ -138,7 +139,8 @@
 				showLoading: true,
 				total_pages: 0,
 				masterShow: false,
-				recordList: []
+				recordList: [],
+				recordCount: ''
 			}
 		},
 		components: {
@@ -148,6 +150,7 @@
 		},
 		created() {
 			this.initData(1)
+			window.myvue.$initYunshu = this
 		},
 		methods: {
 			goSearch(text) {
@@ -255,7 +258,9 @@
 								console.log(res)
 								if(res.data.result.reCode === '0') {
 									$this.$vux.toast.text('确认到货成功')
-									$this.init()
+									setTimeout(() => {
+										$this.initData(1)
+									}, 500)
 								} else {
 									$this.$vux.toast.text(res.data.result.reInfo)
 								}
@@ -268,9 +273,16 @@
 			},
 			record(id) {
 				this.masterShow = true
+				this.recordList = []
 				this.$http.get('waybill/html/get/v1/record_list/' + id + '?token=' + this.token)
 					.then((res) => {
 						console.log(res)
+						if(res.data.data.record_count === 0) {
+							this.recordCount = '0'
+//							console.log(this.recordCount)
+						}else {
+							this.recordCount = ''
+						}
 						this.recordList = res.data.data.record_list
 					})
 			}
@@ -387,6 +399,7 @@
 				.in-content {
 					max-height: 54vh;
 					overflow-y: auto;
+					margin: 0 15px;
 				}
 				p {
 					font-size: 14px;
@@ -398,7 +411,7 @@
 					.row {
 						display: flex;
 						justify-content: space-between;
-						padding: 0 15px;
+						/*padding: 0 15px;*/
 						.time {
 							margin-left: 10px;
 						}

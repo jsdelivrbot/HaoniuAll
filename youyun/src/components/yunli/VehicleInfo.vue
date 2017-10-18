@@ -8,7 +8,7 @@
 			<x-input title="司机姓名:" :required="true" v-model="fileInfo.realname" :max="25">
 				<span slot="right" style="color: #63bffe;">*必填</span>
 			</x-input>
-			<x-input title="手机号码:" :required="true" v-model="fileInfo.mobile_no" type="number" :max="11">
+			<x-input title="手机号码:" :required="true" v-model="fileInfo.mobile_no" type="number" :max="11" disabled>
 				<span slot="right" style="color: #63bffe;">*必填</span>
 			</x-input>
 			<x-input title="身份证号码:" :required="true" v-model="fileInfo.id_card">
@@ -38,15 +38,25 @@
 			</x-input>
 			<selector title="吨位：" :options="weightList" v-model="fileInfo.cart_tonnage" placeholder="选择吨位"></selector>
 			<x-input title="容积：" type="number" label-width="105px" v-model="fileInfo.cart_volume" :max="8">
-				<span slot="right">m³</span>
+				<span slot="right">方</span>
 			</x-input>
 		</group>
+		<div>
+			<x-dialog v-model="show" class="dialog-demo">
+				<div class="img-box">
+					<img :src="showPhote" style="max-width:60%">
+				</div>
+				<div @click="show=false">
+					<span class="vux-close"></span>
+				</div>
+			</x-dialog>
+		</div>
 		<div class="choose-img">
 			<div class="row">
 				<div class="item" v-show="carframe64 !== ''">
-					<img :src="carframe64" />
+					<img :src="carframe64" @click="previewPhone(carframe64)" />
 					<p>车辆门头照</p>
-					<span @click="carframe64 = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
+					<span @click="carframe64 = '';fileInfo.carframe_photo = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
 				</div>
 				<div class="item" v-show="carframe64 === ''">
 					<div class="add vux-1px img">
@@ -56,9 +66,9 @@
 					<p>车辆门头照</p>
 				</div>
 				<div class="item" v-show="car64 !== ''">
-					<img :src="car64" />
+					<img :src="car64" @click="previewPhone(car64)" />
 					<p>车身照</p>
-					<span @click="car64 = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
+					<span @click="car64 = '';fileInfo.car_photo = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
 				</div>
 				<div class="item" v-show="car64 === ''">
 					<div class="add vux-1px">
@@ -68,9 +78,9 @@
 					<p>车身照</p>
 				</div>
 				<div class="item" v-show="rtc64 !== ''">
-					<img :src="rtc64" />
+					<img :src="rtc64" @click="previewPhone(rtc64)" />
 					<p>道路运输证</p>
-					<span @click="rtc64 = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
+					<span @click="rtc64 = '';fileInfo.rtc_photo = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
 				</div>
 				<div class="item" v-show="rtc64 === ''">
 					<div class="add vux-1px">
@@ -82,9 +92,9 @@
 			</div>
 			<div class="row">
 				<div class="item" v-show="tqc64 !== ''">
-					<img :src="tqc64" />
+					<img :src="tqc64" @click="previewPhone(tqc64)" />
 					<p>运输从业资格证</p>
-					<span @click="tqc64 = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
+					<span @click="tqc64 = '';fileInfo.tqc_photo = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
 				</div>
 				<div class="item" v-show="tqc64 === ''">
 					<div class="add vux-1px">
@@ -94,9 +104,9 @@
 					<p>运输从业资格证</p>
 				</div>
 				<div class="item" v-show="permit64 !== ''">
-					<img :src="permit64" />
+					<img :src="permit64" @click="previewPhone(permit64)" />
 					<p>行驶证</p>
-					<span @click="permit64 = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
+					<span @click="permit64 = '';fileInfo.driving_permit_photo = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
 				</div>
 				<div class="item" v-show="permit64 === ''">
 					<div class="add vux-1px">
@@ -106,9 +116,9 @@
 					<p>行驶证</p>
 				</div>
 				<div class="item" v-show="vfi64 !== ''">
-					<img :src="vfi64" />
+					<img :src="vfi64" @click="previewPhone(vfi64)" />
 					<p>机动车强制保险</p>
-					<span @click="vfi64 = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
+					<span @click="vfi64 = '';fileInfo.vfi_photo = ''"><x-icon type="ios-close-empty" size="30"></x-icon></span>
 				</div>
 				<div class="item" v-show="vfi64 === ''">
 					<div class="add vux-1px">
@@ -131,7 +141,7 @@
 
 <script>
 	import Header from '@/components/base/Header'
-	import { Group, XInput, Cell, Selector, Spinner } from 'vux'
+	import { Group, XInput, Cell, Selector, Spinner, XDialog } from 'vux'
 	export default {
 		data() {
 			return {
@@ -188,7 +198,9 @@
 				permittype: '',
 				vfi64: '',
 				vfiname: '',
-				vfitype: ''
+				vfitype: '',
+				show: false,
+				showPhote: ''
 			}
 		},
 		components: {
@@ -197,78 +209,134 @@
 			XInput,
 			Cell,
 			Selector,
-			Spinner
+			Spinner,
+			XDialog
 		},
 		created() {
 			let fileInfoString = sessionStorage.getItem('fileInfo')
 			this.fileInfo = JSON.parse(fileInfoString)
+			this.fileInfo.cart_length = this.fileInfo.cart_length + 'm'
+			this.fileInfo.cart_tonnage = this.fileInfo.cart_tonnage + '吨'
+			this.carframe64 = this.fileInfo.carframe_photo
+			this.car64 = this.fileInfo.car_photo
+			this.rtc64 = this.fileInfo.rtc_photo
+			this.tqc64 = this.fileInfo.tqc_photo
+			this.permit64 = this.fileInfo.driving_permit_photo
+			this.vfi64 = this.fileInfo.vfi_photo
 			//			console.log(this.fileInfo)
 		},
 		methods: {
+			previewPhone(src) {
+				this.show = true
+				this.showPhote = src
+			},
 			toNum(value) {
 				return parseFloat(value).toString()
 			},
 			carframeChange() {
 				const img = this.$refs.carframe.files[0]
-				const reader = new FileReader()
-				reader.onload = (e) => {
-					this.carframe64 = e.target.result
+				lrz(img, {quality: 0.6}).then((rst) => {
+					this.carframe64 = rst.base64
 					this.carframename = img.name
 					this.carframetype = img.type
-				}
-				reader.readAsDataURL(img)
+				})
+//				const reader = new FileReader()
+//				reader.onload = (e) => {
+//					this.carframe64 = e.target.result
+//					this.carframename = img.name
+//					this.carframetype = img.type
+//				}
+//				reader.readAsDataURL(img)
 			},
 			carChange() {
 				const img = this.$refs.car.files[0]
-				const reader = new FileReader()
-				reader.onload = (e) => {
-					this.car64 = e.target.result
+				lrz(img, {quality: 0.6}).then((rst) => {
+					this.car64 = rst.base64
 					this.carname = img.name
 					this.cartype = img.type
-				}
-				reader.readAsDataURL(img)
+				})
+//				const reader = new FileReader()
+//				reader.onload = (e) => {
+//					this.car64 = e.target.result
+//					this.carname = img.name
+//					this.cartype = img.type
+//				}
+//				reader.readAsDataURL(img)
 			},
 			rtcChange() {
 				const img = this.$refs.rtc.files[0]
-				const reader = new FileReader()
-				reader.onload = (e) => {
-					this.rtc64 = e.target.result
+				lrz(img, {quality: 0.6}).then((rst) => {
+					this.rtc64 = rst.base64
 					this.rtcname = img.name
 					this.rtctype = img.type
-				}
-				reader.readAsDataURL(img)
+				})
+//				const reader = new FileReader()
+//				reader.onload = (e) => {
+//					this.rtc64 = e.target.result
+//					this.rtcname = img.name
+//					this.rtctype = img.type
+//				}
+//				reader.readAsDataURL(img)
 			},
 			tqcChange() {
 				const img = this.$refs.tqc.files[0]
-				const reader = new FileReader()
-				reader.onload = (e) => {
-					this.tqc64 = e.target.result
+				lrz(img, {quality: 0.6}).then((rst) => {
+					this.tqc64 = rst.base64
 					this.tqcname = img.name
 					this.tqctype = img.type
-				}
-				reader.readAsDataURL(img)
+				})
+//				const reader = new FileReader()
+//				reader.onload = (e) => {
+//					this.tqc64 = e.target.result
+//					this.tqcname = img.name
+//					this.tqctype = img.type
+//				}
+//				reader.readAsDataURL(img)
 			},
 			permitChange() {
 				const img = this.$refs.permit.files[0]
-				const reader = new FileReader()
-				reader.onload = (e) => {
-					this.permit64 = e.target.result
+				lrz(img, {quality: 0.6}).then((rst) => {
+					this.permit64 = rst.base64
 					this.permitname = img.name
 					this.permittype = img.type
-				}
-				reader.readAsDataURL(img)
+				})
+//				const reader = new FileReader()
+//				reader.onload = (e) => {
+//					this.permit64 = e.target.result
+//					this.permitname = img.name
+//					this.permittype = img.type
+//				}
+//				reader.readAsDataURL(img)
 			},
 			vfiChange() {
 				const img = this.$refs.vfi.files[0]
-				const reader = new FileReader()
-				reader.onload = (e) => {
-					this.vfi64 = e.target.result
+				lrz(img, {quality: 0.6}).then((rst) => {
+					this.vfi64 = rst.base64
 					this.vfiname = img.name
 					this.vfitype = img.type
-				}
-				reader.readAsDataURL(img)
+				})
+//				const reader = new FileReader()
+//				reader.onload = (e) => {
+//					this.vfi64 = e.target.result
+//					this.vfiname = img.name
+//					this.vfitype = img.type
+//				}
+//				reader.readAsDataURL(img)
 			},
 			upDataImg1() {
+//				var update = this.$http.create()
+//				update.interceptors.request.use(function(config) {
+//					let params = config.data.data
+//					if(params.file_name === '') {
+//						return
+//					}
+//					return config
+//				}, function(err) {
+//					return Promise.reject(err)
+//				})
+				if(this.carframename === '') {
+					return
+				}
 				return this.$http.post('waybill/html/post/v1/sign_img_upload?token=' + this.token, {
 					data: {
 						file_stream: this.carframe64,
@@ -280,6 +348,9 @@
 				})
 			},
 			upDataImg2() {
+				if(this.carname === '') {
+					return
+				}
 				return this.$http.post('waybill/html/post/v1/sign_img_upload?token=' + this.token, {
 					data: {
 						file_stream: this.car64,
@@ -291,6 +362,9 @@
 				})
 			},
 			upDataImg3() {
+				if(this.rtcname === '') {
+					return
+				}
 				return this.$http.post('waybill/html/post/v1/sign_img_upload?token=' + this.token, {
 					data: {
 						file_stream: this.rtc64,
@@ -302,6 +376,9 @@
 				})
 			},
 			upDataImg4() {
+				if(this.tqcname === '') {
+					return
+				}
 				return this.$http.post('waybill/html/post/v1/sign_img_upload?token=' + this.token, {
 					data: {
 						file_stream: this.tqc64,
@@ -313,6 +390,9 @@
 				})
 			},
 			upDataImg5() {
+				if(this.permitname === '') {
+					return
+				}
 				return this.$http.post('waybill/html/post/v1/sign_img_upload?token=' + this.token, {
 					data: {
 						file_stream: this.permit64,
@@ -324,6 +404,9 @@
 				})
 			},
 			upDataImg6() {
+				if(this.vfiname === '') {
+					return
+				}
 				return this.$http.post('waybill/html/post/v1/sign_img_upload?token=' + this.token, {
 					data: {
 						file_stream: this.vfi64,
@@ -335,6 +418,10 @@
 				})
 			},
 			complete() {
+				if(this.fileInfo.service_state === '1' || this.fileInfo.service_state === '2') {
+					this.$vux.toast.text('请先注册')
+					return
+				}
 				if(this.fileInfo.cart_badge_no === '') {
 					this.$vux.toast.text('请输入车牌号码')
 					return
@@ -348,10 +435,16 @@
 					this.$vux.toast.text('请输入司机姓名')
 					return
 				}
-				if(this.fileInfo.mobile_no === '') {
-					this.$vux.toast.text('请输入手机号码')
+				let pattern2 = /^(1[38][0-9]|15[0-35-9]|14[579]|17[0135678])[0-9]{8}$/
+				//				console.log(pattern.test(str))
+				if(!pattern2.test(this.fileInfo.mobile_no)) {
+					this.$vux.toast.text('手机号不正确，请重新输入')
 					return
 				}
+				//				if(this.fileInfo.mobile_no === '') {
+				//					this.$vux.toast.text('请输入手机号码')
+				//					return
+				//				}
 				if(this.fileInfo.id_card.length !== 18) {
 					this.$vux.toast.text('身份证号码格式有误')
 					return
@@ -388,7 +481,8 @@
 							if(res.data.result.reCode === '0') {
 								this.$vux.toast.text('提交成功')
 								setTimeout(() => {
-									this.$router.push('/FileVehicle/' + this.my_driver_id)
+									//									this.$router.push('/FileVehicle/' + this.my_driver_id)
+									this.$router.back(-1)
 								}, 500)
 							} else {
 								this.$vux.toast.text(res.data.result.reInfo)
@@ -401,6 +495,7 @@
 </script>
 
 <style lang="less">
+	@import '~vux/src/styles/close';
 	.vehicle-info-box {
 		padding-top: 44px;
 		.current-option {
@@ -499,6 +594,27 @@
 		}
 		.disabled {
 			background-color: #999999;
+		}
+		.dialog-demo {
+			.weui-dialog {
+				border-radius: 8px;
+				padding-bottom: 8px;
+			}
+			.dialog-title {
+				line-height: 30px;
+				color: #666;
+			}
+			.img-box {
+				height: 350px;
+				overflow: hidden;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.vux-close {
+				margin-top: 8px;
+				margin-bottom: 8px;
+			}
 		}
 	}
 </style>

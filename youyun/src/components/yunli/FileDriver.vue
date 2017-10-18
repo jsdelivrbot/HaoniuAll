@@ -34,7 +34,10 @@
 		</div>
 		<group label-width="119px" style="margin-top: -1.17647059em;">
 			<x-input title="身份证号：" :value="fileInfo.id_card" disabled></x-input>
-			<x-input title="期望流向：" :value="fileInfo.direction_name" disabled></x-input>
+			<!--<x-input title="期望流向：" :value="fileInfo.direction_name" disabled></x-input>-->
+			<cell title="期望流向：" value-align="left">
+				<p style="color: black;">{{fileInfo.direction_name}}</p>
+			</cell>
 		</group>
 		<group label-width="119px">
 			<x-input title="收款人姓名：" :value="fileInfo.pay_name" disabled></x-input>
@@ -44,14 +47,14 @@
 			<x-input title="开户手机：" :value="fileInfo.pay_mobile" disabled></x-input>
 			<x-input title="开户城市：" :value="fileInfo.bank_city" disabled></x-input>
 		</group>
-		<router-link :to="'/DriverInfo/' + my_driver_id" tag="div" class="btn">
+		<router-link :to="'/DriverInfo/' + my_driver_id" tag="div" class="btn" v-if="$power('CAP_TRAARCH_DRINFO_BTN')">
 		</router-link>
 	</div>
 </template>
 
 <script>
 	import Header from '@/components/base/Header'
-	import { Group, XInput, Swiper, SwiperItem } from 'vux'
+	import { Group, XInput, Swiper, SwiperItem, Cell } from 'vux'
 	export default {
 		data() {
 			return {
@@ -67,7 +70,8 @@
 			Swiper,
 			Group,
 			XInput,
-			SwiperItem
+			SwiperItem,
+			Cell
 		},
 		created() {
 			this.$http.get('driver/html/get/v1/driver_record/' + this.my_driver_id + '?token=' + this.token)
@@ -81,15 +85,14 @@
 						img: this.fileInfo.id_card_reverse_photo,
 						title: '身份证反面照片'
 					}, {
-						img: this.fileInfo.driving_permit_photo,
-						title: '行驶证照片'
-					}, {
 						img: this.fileInfo.driver_licence_photo,
 						title: '驾驶证照片'
 					}, {
 						img: this.fileInfo.contract_photo,
 						title: '合同文件'
 					})
+					let fileInfo = JSON.stringify(this.fileInfo)
+					sessionStorage.setItem('fileInfo', fileInfo)
 				})
 		},
 		methods: {
@@ -133,8 +136,8 @@
 					align-items: center;
 					justify-content: center;
 					img {
-						width: 63.9vw;
-						height: 33.6vw;
+						/*width: 63.9vw;*/
+						max-height: 33.6vw;
 						border-radius: 8px;
 					}
 					p {
@@ -177,7 +180,7 @@
 			border-radius: 50%;
 			position: fixed;
 			right: 24px;
-			bottom: 68px;
+			bottom: 24px;
 		}
 	}
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<div class="file-vehicle-box">
+	<div class="file-vehicle-box" v-show="isComplete">
 		<v-header title="运力档案"></v-header>
 		<group>
 			<x-input title="车牌号码：" :value="fileInfo.cart_badge_no" disabled></x-input>
@@ -34,7 +34,10 @@
 				</div>
 			</div>
 			<group label-width="60px">
-				<x-input title="车型：" :value="fileInfo.cart_type" disabled></x-input>
+				<!--<x-input title="车型：" :value="fileInfo.cart_type" disabled></x-input>-->
+				<cell title="车型：" value-align="left">
+					<p style="color: black;">{{fileInfo.cart_type}}</p>
+				</cell>
 				<x-input title="车长：" :value="fileInfo.cart_length + '米'" disabled></x-input>
 				<x-input title="车宽：" :value="fileInfo.cart_width + '米'" disabled></x-input>
 				<x-input title="车高：" :value="fileInfo.cart_height + '米'" disabled></x-input>
@@ -46,22 +49,33 @@
 			<img src="../../../static/image/zanwu@2x.png" />
 			<p>当前暂无任何信息</p>
 		</div>
-		<router-link :to="'/VehicleInfo/' + my_driver_id" tag="div" class="btn">
+		<router-link :to="'/VehicleInfo/' + my_driver_id" tag="div" class="btn" v-if="$power('CAP_TRAARCH_TRUINFO_BTN')">
 		</router-link>
 	</div>
 </template>
 
 <script>
 	import Header from '@/components/base/Header'
-	import { Group, XInput, Swiper, SwiperItem } from 'vux'
+	import { Group, XInput, Swiper, SwiperItem, Cell } from 'vux'
 	export default {
 		data() {
 			return {
+				isComplete: true,
 				baseList: [],
 				masterShow: true,
 				my_driver_id: this.$route.params.id,
 				token: sessionStorage.getItem('token'),
-				fileInfo: {},
+				fileInfo: {
+					cart_badge_no: '',
+					realname: '',
+					mobile_no: '',
+					cart_type: '',
+					cart_width: '',
+					cart_length: '',
+					cart_height: '',
+					cart_tonnage: '',
+					cart_volume: ''
+				},
 				baseList2: [{
 					url: 'javascript:',
 					img: 'https://static.vux.li/demo/1.jpg',
@@ -83,9 +97,13 @@
 			Swiper,
 			SwiperItem,
 			Group,
-			XInput
+			XInput,
+			Cell
 		},
 		created() {
+			this.$vux.loading.show({
+				text: '加载中'
+			})
 			this.$http.get('driver/html/get/v1/driver_record/' + this.my_driver_id + '?token=' + this.token)
 				.then((res) => {
 					console.log(res)
@@ -108,7 +126,12 @@
 					}, {
 						img: this.fileInfo.vfi_photo,
 						title: '机动车强制保险'
+					}, {
+						img: this.fileInfo.driving_permit_photo,
+						title: '行驶证照片'
 					})
+					this.$vux.loading.hide()
+					this.isComplete = true
 				})
 		},
 		methods: {
@@ -152,8 +175,8 @@
 					align-items: center;
 					justify-content: center;
 					img {
-						width: 63.9vw;
-						height: 33.6vw;
+						/*width: 63.9vw;*/
+						max-height: 33.6vw;
 						border-radius: 8px;
 					}
 					p {
@@ -213,7 +236,7 @@
 			border-radius: 50%;
 			position: fixed;
 			right: 24px;
-			bottom: 68px;
+			bottom: 24px;
 			background: url(../../../static/image/kacheziliaoxiugai@2x.png) center no-repeat;
 			background-size: 80px 80px;
 		}

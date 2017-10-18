@@ -1,7 +1,7 @@
 <template>
 	<div class="fast-dispatch-box">
 		<v-header title="快速调车" :iconShow="true" @history="goHistory"></v-header>
-		<group label-width="102px">
+		<group label-width="102px" style="margin-top: -20px;">
 			<!--<x-input title="装货地：" placeholder="请选择装货地"></x-input>-->
 			<x-address title="装货地" :list="addressData" placeholder="请选择装货地" value-text-align="left" v-model="beginValue" @on-hide="test"></x-address>
 			<!--<x-input title="卸货地：" placeholder="请选择卸货地"></x-input>-->
@@ -11,9 +11,9 @@
 			<selector title="项目名称" :options="optionsList" v-model="optionValue" placeholder="选择项目" @on-change="test2">
 			</selector>
 		</group>
-		<group>
-			<x-input title="货物名称：" placeholder="请输入货物名称" v-model="goods_name"></x-input>
-			<x-input title="货物数量：" placeholder="请输入货物数量" v-model="goods_num" type="number"></x-input>
+		<group labelWidth="102px">
+			<x-input title="货物名称" placeholder="请输入货物名称" v-model="goods_name"></x-input>
+			<x-input title="货物数量" placeholder="请输入货物数量" v-model="goods_num" type="number"></x-input>
 			<selector title="车型要求" :options="categoryList" v-model="cart_type" placeholder="请选择车型">
 			</selector>
 			<!--<x-input title="车型要求：" placeholder="请输入车型要求" v-model="cart_type"></x-input>-->
@@ -24,16 +24,35 @@
 		<group>
 			<cell title="货源时效：">
 				<checker default-item-class="item" selected-item-class="item-selected" v-model="goods_aging">
-					<checker-item value="12小时">12小时</checker-item>
-					<checker-item value="24小时">24小时</checker-item>
-					<checker-item value="36小时">36小时</checker-item>
+					<div class="check">
+						<checker-item value="12小时"></checker-item>
+						<span class="checker-text" @click="goods_aging = '12小时'">12小时</span>
+					</div>
+					<div class="check">
+						<checker-item value="24小时"></checker-item>
+						<span class="checker-text" @click="goods_aging = '24小时'">24小时</span>
+					</div>
+					<div class="check">
+						<checker-item value="36小时"></checker-item>
+						<span class="checker-text" @click="goods_aging = '36小时'">36小时</span>
+					</div>
 				</checker>
 			</cell>
 			<cell title="报价方式：">
 				<checker default-item-class="item" selected-item-class="item-selected" v-model="offer_type" @on-change="test2">
 					<!--<checker-item value="按车">按车</checker-item>-->
-					<checker-item value="0">按吨</checker-item>
-					<checker-item value="1">按方</checker-item>
+					<div class="check">
+						<checker-item value="0"></checker-item>
+						<span class="checker-text" @click="offer_type = '0'">按吨</span>
+					</div>
+					<div class="check">
+						<checker-item value="1"></checker-item>
+						<span class="checker-text" @click="offer_type = '1'">按方</span>
+					</div>
+					<div class="check">
+						<checker-item value="2"></checker-item>
+						<span class="checker-text" @click="offer_type = '2'">按车</span>
+					</div>
 				</checker>
 			</cell>
 			<x-textarea title="货源描述：" v-model="goods_description"></x-textarea>
@@ -183,10 +202,10 @@
 					this.$vux.toast.text('请选择报价方式')
 					return
 				}
-				if(this.goods_description === '') {
-					this.$vux.toast.text('请填写货源描述')
-					return
-				}
+//				if(this.goods_description === '') {
+//					this.$vux.toast.text('请填写货源描述')
+//					return
+//				}
 				if(this.optionValue === '') {
 					this.$vux.toast.text('请选择项目名称')
 					return
@@ -220,7 +239,7 @@
 				}).then((res) => {
 					console.log(res)
 					this.loading = false
-					if(res.data.result.reCode === 0) {
+					if(res.data.result.reCode === '0') {
 						this.$vux.toast.text('调车成功')
 						setTimeout(() => {
 							this.$router.push('/DiaoDu')
@@ -237,7 +256,24 @@
 <style lang="less">
 	.fast-dispatch-box {
 		padding-top: 45px;
-		.item {
+		.weui-label {
+			font-size: 13px;
+		}
+		.vux-datetime {
+			p {
+				font-size: 13px;
+			}
+		}
+		.vux-label {
+			font-size: 13px;
+		}
+		.vux-cell-primary {
+			font-size: 13px;
+		}
+		.weui-cell__bd {
+			font-size: 13px;
+		}
+		/*.item {
 			width: 64px;
 			height: 26px;
 			line-height: 26px;
@@ -250,7 +286,35 @@
 		.item-selected {
 			background: #ffffff url(../../../static/image/selected.png) no-repeat right bottom;
 			border-color: #ff4a00;
+		}*/
+		.vux-checker-box {
+			display: flex;
+			.check {
+				margin-left: 12px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
 		}
+		.item {
+				width: 14px;
+				height: 14px;
+				background-color: #f4f2f5;
+				border: 1px solid #a3a3a3;
+				border-radius: 50%;
+				margin-right: 6px;
+			}
+			.item-selected {
+				width: 16px;
+				height: 16px;
+				background: url(../../../static/image/xuanzhong.png) left top no-repeat;
+				background-size: 16px 16px;
+				border: none;
+			}
+			.checker-text {
+				font-size: 13px;
+				line-height: 24px;
+			}
 		.btn {
 			width: 68%;
 			height: 36px;

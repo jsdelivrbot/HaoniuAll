@@ -62,7 +62,7 @@
 				line-height: 0;
 			}
 			.text-back {
-				font-size: 16px;
+				font-size: 15px;
 			}
 		}
 		.header-title {
