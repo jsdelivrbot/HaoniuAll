@@ -1,36 +1,27 @@
 <template>
 	<div class="jigou-detail">
-		<topbar title='机构简介'></topbar>
+		<topbar title='授课点简介'></topbar>
 		<div class="jigou-info">
-			<div class="img">
-				<img :src="detailInfo.logo" v-if='detailInfo.logo' />
-			</div>
-			<div class="center-box">
+			<img :src="detailInfo.coverUrl" v-if='detailInfo.coverUrl' />
+			<div class="detail_center">
 				<h2>{{detailInfo.name}}</h2>
-				<p v-if='detailInfo.schools[0].distance'><em>最新授课点:</em>{{detailInfo.schools[0].distance.toFixed(2)}}米</p>
+				<p><em>最新授课点:</em>{{detailInfo.distance}}公里</p>
 			</div>
 		</div>
 		<div class="intro-box">
 			<div class="title vux-1px-b">
 				机构介绍
 			</div>
-			<p>{{detailInfo.intro}}</p>
+			<p v-html='detailInfo.intro'></p>
 		</div>
 
 		<div class="intro-box" style="padding: 0;">
-			<div class="title vux-1px-b">
-				授课点
+			<div class="title vux-1px-b" style="margin: 0;">
+				课程列表
 			</div>
-			<div v-for='(item,index) in detailInfo.schools' class="vux-1px-b">
-				<cell is-link @click.native='clickshow(index)' class='skd' :arrow-direction="show==index ? 'up' : 'down'" :inline-desc='item.name+item.address'>
+			<div v-for='(item,index) in detailInfo.objectSome' class="vux-1px-b">
+				<cell is-link :link='"/coursedetail/"+item.id' @click.native='clickshow(index)' :inline-desc='item.name+item.addess'>
 				</cell>
-				<ul class="inside" v-show="show==index">
-					<li class="vux-1px-t" v-for='item2 in item.timetables'>
-						<router-link :to='"/coursedetail/"+item2.schoolName+","+item2.companyName+","+item2.name'>
-							{{item2.name}}
-						</router-link>
-					</li>
-				</ul>
 			</div>
 		</div>
 
@@ -53,11 +44,11 @@
 		</div>
 
 		<!--<div class="collect" >
-				<img src="../../../static/img/../../static/img/collect.png" />
+				<img src="../../static/img/collect.png" />
 			</div>
 
 			<div class="collect" >
-				<img src="../../../static/img/../../static/img/collect2.png" />
+				<img src="../../static/img/collect2.png" />
 			</div>-->
 
 	</div>
@@ -65,8 +56,8 @@
 <script>
 	import { Cell, CellBox, Group } from 'vux'
 	import topbar from '@/components/callback'
+
 	export default {
-		name: 'nokeep',
 		components: {
 			topbar,
 			Cell,
@@ -81,13 +72,13 @@
 				token: ''
 			}
 		},
-		mounted() {
+		activated() {
 			window.scrollTo(0, 0)
 			this.token = sessionStorage.getItem('token')
 			this.detailId = this.$route.params.name
-			this.$http.get('/user/watch/companyDetail', {
+			this.$http.get('/user/watch/schoolDetail', {
 				params: {
-					name: this.detailId,
+					id: this.detailId,
 					longitude: localStorage.getItem('lng'),
 					latitude: localStorage.getItem('lat')
 				}
@@ -96,6 +87,7 @@
 					if(res.data.result === 0) {
 						this.detailInfo = res.data.obj
 					}
+					console.log(res.data.obj)
 				}
 			)
 		},
@@ -109,6 +101,7 @@
 			},
 			collect() {
 				let $this = this
+				console.log(this.token)
 				if(this.token === null) {
 					this.$vux.alert.show({
 						title: '提示',
@@ -119,9 +112,9 @@
 					})
 					return false
 				}
-				this.$http.get('/user/watch/watchCompany', {
+				this.$http.get('/user/watch/watchSchool', {
 					params: {
-						companyName: $this.detailId
+						schoolId: $this.detailId
 					}
 				}).then(
 					(res) => {
@@ -129,11 +122,13 @@
 							$this.$vux.toast.text('收藏成功!', 'center')
 							$this.detailInfo.watched = false
 						}
+						console.log(res.data)
 					}
 				)
 			},
 			nocollect() {
 				let $this = this
+				console.log(this.token)
 				if(this.token === null) {
 					this.$vux.alert.show({
 						title: '提示',
@@ -149,15 +144,19 @@
 					title: '提示',
 					content: '确定取消收藏吗?',
 					onConfirm() {
-						$this.$http.get('/user/watch/disWatchCompany', {
+						$this.$http.get('/user/watch/disWatchSchool', {
 							params: {
-								companyName: $this.detailId
+								schoolId: $this.detailId
 							}
 						}).then(
 							(res) => {
 								$this.detailInfo.watched = true
+								console.log(res.data)
 							}
 						)
+					},
+					onCancel() {
+						console.log('plugin confirm')
 					}
 				})
 			}
@@ -213,18 +212,12 @@
 			box-sizing: border-box;
 			background: #fff;
 			height: 112px;
-			.img {
+			img {
 				width: 120px;
 				height: 80px;
 				margin-right: 10px;
-				img {
-					width: 100%;
-					height: 100%;
-					display: block;
-				}
 			}
-			.center-box {
-				height: 80px;
+			.detail_center {
 				flex: 1;
 				overflow: hidden;
 				h2 {

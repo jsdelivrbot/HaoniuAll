@@ -1,0 +1,61 @@
+{
+  "_args": [
+    [
+      "vue-video-player@3.1.4",
+      "C:\\Users\\chenbowen\\Desktop\\vux\\starapp"
+    ]
+  ],
+  "_from": "vue-video-player@3.1.4",
+  "_id": "vue-video-player@3.1.4",
+  "_inBundle": false,
+  "_integrity": "sha1-cAmwbc7EObPqZFGDIX0xTL8NN/0=",
+  "_location": "/vue-video-player",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "vue-video-player@3.1.4",
+    "name": "vue-video-player",
+    "escapedName": "vue-video-player",
+    "rawSpec": "3.1.4",
+    "saveSpec": null,
+    "fetchSpec": "3.1.4"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "http://registry.npm.taobao.org/vue-video-player/download/vue-video-player-3.1.4.tgz",
+  "_spec": "3.1.4",
+  "_where": "C:\\Users\\chenbowen\\Desktop\\vux\\starapp",
+  "author": {
+    "name": "Surmon",
+    "email": "surmon@foxmail.com",
+    "url": "http://surmon.me"
+  },
+  "bugs": {
+    "url": "https://github.com/surmon-china/vue-video-player/issues"
+  },
+  "dependencies": {
+    "video.js": "^5.11.7"
+  },
+  "description": "Video Player component for Vue2",
+  "homepage": "https://github.com/surmon-china/vue-video-player#readme",
+  "keywords": [
+    "vue-video-player",
+    "vue.js video player",
+    "vue.js video",
+    "vue videojs",
+    "vue.js player"
+  ],
+  "license": "GPL",
+  "main": "index.js",
+  "name": "vue-video-player",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/surmon-china/vue-video-player.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "3.1.4"
+}

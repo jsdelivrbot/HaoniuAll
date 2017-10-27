@@ -1,0 +1,70 @@
+{
+  "_args": [
+    [
+      "vue-dplayer@0.0.3",
+      "C:\\Users\\chenbowen\\Desktop\\vux\\starapp"
+    ]
+  ],
+  "_from": "vue-dplayer@0.0.3",
+  "_id": "vue-dplayer@0.0.3",
+  "_inBundle": false,
+  "_integrity": "sha1-rJuIJ21N1dwlNB4CKa336p59pLU=",
+  "_location": "/vue-dplayer",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "vue-dplayer@0.0.3",
+    "name": "vue-dplayer",
+    "escapedName": "vue-dplayer",
+    "rawSpec": "0.0.3",
+    "saveSpec": null,
+    "fetchSpec": "0.0.3"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "http://registry.npm.taobao.org/vue-dplayer/download/vue-dplayer-0.0.3.tgz",
+  "_spec": "0.0.3",
+  "_where": "C:\\Users\\chenbowen\\Desktop\\vux\\starapp",
+  "author": {
+    "name": "sinchang",
+    "email": "sinchangwen@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/sinchang/vue-dplayer/issues"
+  },
+  "dependencies": {
+    "dplayer": "^1.5.0",
+    "vue-github-badge": "^1.0.0"
+  },
+  "description": "A Vue 2.x video player component based on DPlayer",
+  "devDependencies": {
+    "vbuild": "^6.0.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/sinchang/vue-dplayer#readme",
+  "keywords": [
+    "vue",
+    "component",
+    "player"
+  ],
+  "license": "MIT",
+  "main": "dist/Vue-DPlayer.js",
+  "name": "vue-dplayer",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sinchang/vue-dplayer.git"
+  },
+  "scripts": {
+    "build": "npm run build:cjs && npm run build:umd",
+    "build:cjs": "vbuild -c vbuild.component.js --format cjs",
+    "build:example": "vbuild -c vbuild.example.js",
+    "build:umd": "vbuild -c vbuild.component.js --format umd",
+    "example": "vbuild -c vbuild.example.js -d",
+    "test": "echo lol"
+  },
+  "version": "0.0.3"
+}

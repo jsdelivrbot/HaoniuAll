@@ -1,0 +1,49 @@
+{
+  "_from": "bmaplib.lushu@^1.0.5",
+  "_id": "bmaplib.lushu@1.0.5",
+  "_inBundle": false,
+  "_integrity": "sha1-q4muWZrpNnU2w4+JtRQeC7RUdtg=",
+  "_location": "/bmaplib.lushu",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "bmaplib.lushu@^1.0.5",
+    "name": "bmaplib.lushu",
+    "escapedName": "bmaplib.lushu",
+    "rawSpec": "^1.0.5",
+    "saveSpec": null,
+    "fetchSpec": "^1.0.5"
+  },
+  "_requiredBy": [
+    "/vue-baidu-map"
+  ],
+  "_resolved": "http://registry.npm.taobao.org/bmaplib.lushu/download/bmaplib.lushu-1.0.5.tgz",
+  "_shasum": "ab89ae599ae9367536c38f89b5141e0bb45476d8",
+  "_spec": "bmaplib.lushu@^1.0.5",
+  "_where": "C:\\Users\\chenbowen\\Desktop\\vux\\starapp\\node_modules\\vue-baidu-map",
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/Dafrok/BMapLib.LuShu/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A library of Baidu Map JS API",
+  "homepage": "https://github.com/Dafrok/BMapLib.LuShu#readme",
+  "keywords": [
+    "baidu",
+    "baidu-map",
+    "lushu"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "bmaplib.lushu",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dafrok/BMapLib.LuShu.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.5"
+}

@@ -5,7 +5,7 @@
 				搜索科目、机构、课程
 			</span>
 			<router-link tag='div' to='/searchlist/cat=&target=k'>
-				<img src="../../../static/img/ditu@3x.png" />
+				<img src="~IMG/ditu@3x.png" />
 				<em>地图</em>
 			</router-link>
 		</div>
@@ -29,33 +29,33 @@
 
 		<div class="sort">
 			<ul class="sort-list vux-1px-t  vux-1px-b">
-				<router-link tag='li' to='/searchlist/cat=教辅&target=k'>
+				<router-link tag='li' to='/searchlist/cat=16'>
 					<div>
-						<img src="../../../static/img/newsort3.png" />
+						<img src="~IMG/newsort3.png" />
 					</div>
 					<span>教辅</span>
 				</router-link>
-				<router-link tag='li' to='/searchlist/cat=综合素质&target=k'>
+				<router-link tag='li' to='/searchlist/cat=281'>
 					<div>
 						<img src="~IMG/newsort4.png" />
 					</div>
 					<span>综合素质</span>
 				</router-link>
-				<router-link tag='li' to='/searchlist/cat=运动&target=k'>
+				<router-link tag='li' to='/searchlist/cat=196'>
 					<div>
-						<img src="../../../static/img/newsort5.png" />
+						<img src="~IMG/newsort5.png" />
 					</div>
 					<span>运动</span>
 				</router-link>
-				<router-link tag='li' to='/searchlist/cat=益智&target=k'>
+				<router-link tag='li' to='/searchlist/cat=249'>
 					<div>
-						<img src="../../../static/img/newsort1.png" />
+						<img src="~IMG/newsort1.png" />
 					</div>
 					<span>益智</span>
 				</router-link>
-				<router-link tag='li' to='/searchlist/cat=艺术&target=k'>
+				<router-link tag='li' to='/searchlist/cat=80'>
 					<div>
-						<img src="../../../static/img/newsort2.png" />
+						<img src="~IMG/newsort2.png" />
 					</div>
 					<span>艺术</span>
 				</router-link>
@@ -63,7 +63,7 @@
 
 			<div class="hot-text" v-if='newslist[0]'>
 				<router-link to='/newslist'>
-					<img src="../../../static/img/remenwenzhang@3x.png" />
+					<img src="~IMG/remenwenzhang@3x.png" />
 				</router-link>
 
 				<swiper :options="swiperOption3" ref="mySwiper2" style='margin: 0;'>
@@ -77,20 +77,20 @@
 		</div>
 
 		<div class="recommend">
-			<div class="title">
+			<div class="title" v-once>
 				<div class="left">
-					<img src="../../../static/img/hottj.png" />
+					<img src="~IMG/hottj.png" />
 				</div>
 				<router-link to='/tuijianlist' class="right">
 					<span>全部</span>
 				</router-link>
 			</div>
 
-			<swiper :options="swiperOption" ref="mySwiper" v-if='tj!=""'>
+			<swiper :options="swiperOption" ref="mySwiper">
 				<swiper-slide v-for='(item,index) in tj' :key="index" class='swiper-contentBox'>
-					<router-link :to='"/coursedetail/"+item.target'>
+					<router-link :to='"/coursedetail/"+item.id'>
 						<div>
-							<img :src="item.postUrl" style="width: 100%;" />
+							<img :src="item.coverUrl" style="width: 100%;" />
 						</div>
 						<span>{{item.name.substring(0,6)}}</span>
 					</router-link>
@@ -101,7 +101,7 @@
 		<div class="course-sort">
 			<div class="title">
 				<div class="left">
-					<img src="../../../static/img/hotsort.png" />
+					<img src="~IMG/hotsort.png" />
 				</div>
 				<router-link to='/coursesort' class="right">
 					<span>全部</span>
@@ -109,82 +109,18 @@
 			</div>
 
 			<ul>
-				<router-link tag='li' :to='seacherText("英语")'>
-					<img src="../../../static/img/yingyu.png" />
-					<span>英语</span>
-				</router-link>
-				<router-link tag='li' to='/searchlist/cat=教辅$托班&target=k'>
-					<img src="../../../static/img/tuoban.png" />
-					<span>托班</span>
-				</router-link>
-				<router-link tag='li' to='/searchlist/cat=运动$运动其他$运动&target=k'>
-					<img src="../../../static/img/yundong.png" />
-					<span>运动</span>
-				</router-link>
-				<router-link tag='li' to='/searchlist/cat=艺术$舞蹈&target=k'>
-					<img src="../../../static/img/wudao.png" />
-					<span>舞蹈</span>
-				</router-link>
-				<router-link tag='li' to='/searchlist/cat=艺术$器乐&target=k'>
-					<img src="../../../static/img/yueqi.png" />
-					<span>器乐</span>
-				</router-link>
-				<router-link tag='li' to='/searchlist/cat=艺术$美术$绘画&target=k'>
-					<img src="../../../static/img/huihua.png" />
-					<span>绘画</span>
-				</router-link>
-				<router-link tag='li' to='/searchlist/cat=益智$潜能开发$逻辑思维&target=k'>
-					<img src="../../../static/img/luojisiwei.png" />
-					<span>逻辑思维</span>
-				</router-link>
-				<router-link tag='li' to='/searchlist/cat=益智$益智训练$棋类&target=k'>
-					<img src="../../../static/img/qilei.png" />
-					<span>棋类</span>
-				</router-link>
-				<router-link tag='li' to='/searchlist/cat=益智$科学$机器人&target=k'>
-					<img src="../../../static/img/jiqi.png" />
-					<span>机器人</span>
+				<router-link tag='li' :key='index' v-for='(item,index) in courseSort' :to="'/searchlist/cat='+item.someIdString">
+					<img :src="item.realUrl" />
+					<span>{{item.name}}</span>
 				</router-link>
 			</ul>
 			<div @click='mores = !mores' class="more" v-if='!mores'>
 				查看更多
 			</div>
 			<ul v-if='mores'>
-				<router-link tag='li' :to='seacherText("足球")'>
-					<img src='../../../static/img/足球@3x.png' />
-					<span>足球</span>
-				</router-link>
-				<router-link tag='li' :to='seacherText("幼小衔接班")'>
-					<img src='../../../static/img/幼小衔接班@3x.png' />
-					<span>幼小衔接班</span>
-				</router-link>
-				<router-link tag='li' :to='seacherText("看图说话")'>
-					<img src='../../../static/img/看图说话@3x.png' />
-					<span>看图说话</span>
-				</router-link>
-				<router-link tag='li' :to='seacherText("书法")'>
-					<img src='../../../static/img/书法@3x.png' />
-					<span>书法</span>
-				</router-link>
-				<router-link tag='li' :to='seacherText("表演")'>
-					<img src='../../../static/img/表演@3x.png' />
-					<span>表演</span>
-				</router-link>
-				<router-link tag='li' :to='seacherText("口才训练")'>
-					<img src='../../../static/img/口才训练@3x.png' />
-					<span>口才训练</span>
-				</router-link>
-				<router-link tag='li' :to='seacherText("亲子活动")'>
-					<img src='../../../static/img/亲子活动@3x.png' />
-					<span>亲子活动</span>
-				</router-link>
-				<router-link tag='li' :to='seacherText("益智训练")'>
-					<img src='../../../static/img/益智训练@3x.png' />
-					<span>益智训练</span>
-				</router-link>
-				<router-link tag='li' :to='seacherText("儿童早教")'>
-					<img src='../../../static/img/儿童早教@3x.png' />
-					<span>儿童早教</span>
+				<router-link tag='li' v-for='(item,index) in courseSortMore' :key='index' :to="'/searchlist/cat='+item.someIdString">
+					<img :src="item.realUrl" />
+					<span>{{item.name}}</span>
 				</router-link>
 			</ul>
 
@@ -197,28 +133,15 @@
 
 <script>
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
-	import km from '../../../static/km'
 	export default {
 		components: {
 			swiper,
 			swiperSlide
 		},
-		activated() {
-			this.$http.post('/business/course/recommend').then(
-				(res) => {
-					if(res.data.result === 0) {
-						this.tj = []
-						this.tj = res.data.obj
-						let $this = this
-						setTimeout(() => {
-							$this.swiperOption.autoplay = 3000
-						}, 0)
-					}
-				}
-			)
-		},
 		data() {
 			return {
+				courseSort: '',
+				courseSortMore: '',
 				isloop: true,
 				list: [],
 				tj: [],
@@ -238,17 +161,18 @@
 					slidesPerView: 1,
 					autoplay: 3000,
 					spaceBetween: 8,
+					paginationClickable: true,
 					loop: true
 				},
 				swiperOption: {
 					autoplayDisableOnInteraction: false,
-					autoplay: 1000,
+					autoplay: 3000,
 					effect: 'coverflow',
+					initialSlide: 3,
 					height: 160,
 					loop: true,
 					slidesPerView: 2,
 					centeredSlides: true,
-					paginationClickable: true,
 					spaceBetween: 60,
 					coverflow: {
 						rotate: 0,
@@ -261,14 +185,21 @@
 			}
 		},
 		mounted() {
+			this.$http.get('/category/classification').then(
+				(res) => {
+					this.courseSort = res.data.obj
+					let id = this.courseSort[this.courseSort.length - 1].id
+					this.getmores(id)
+				}
+			)
 			this.$http.post('/business/course/recommend').then(
 				(res) => {
 					if(res.data.result === 0) {
 						this.tj = res.data.obj
 						let $this = this
-						setTimeout(() => {
-							$this.swiperOption.autoplay = 3000
-						}, 0)
+						//						setTimeout(() => {
+						//							$this.swiperOption.autoplay = 3000
+						//						}, 1000)
 					}
 				}
 			)
@@ -279,48 +210,23 @@
 					}
 				}
 			)
-			this.$http.get('/recommendArticles?page=1&rows=1000').then(
+			this.$http.get('/business/course/article').then(
 				(res) => {
-					this.newslist = res.data.obj.items
+					this.newslist = res.data.obj
 				}
 			)
 		},
 		methods: {
-			seacherText(res) {
-				let $this = this
-				let result = ''
-				km.map(function(item, index) {
-					var arr = []
-					arr.push(item)
-					let a = arr.filter((p) => {
-						return p.name === res
-					})
-					if(a.length > 0) {
-						result += arr[0].name
-						$this.searchtxt(arr[0].parent, function(data, parent) {
-							if(data !== '') {
-								result = data + '$' + result
-								$this.searchtxt(parent, function(datas, parent) {
-									result = datas + '$' + result
-								})
-							}
-						})
+			getmores(id) {
+				this.$http.get('/category/classification', {
+					params: {
+						id: id
 					}
-				})
-				result = '/searchlist/cat=' + result + '&target=k'
-				return result
-			},
-			searchtxt(res, cb) {
-				km.map(function(item, index) {
-					var arr = []
-					arr.push(item)
-					let a = arr.filter((p) => {
-						return p.value === res
-					})
-					if(a.length > 0) {
-						cb(arr[0].name, arr[0].parent)
+				}).then(
+					(res) => {
+						this.courseSortMore = res.data.obj
 					}
-				})
+				)
 			},
 			search() {
 				this.$router.push('/vaguesearch')
@@ -462,6 +368,7 @@
 			margin-top: 10px;
 			height: auto;
 			background: #fff;
+			min-height: 180px;
 			.swiper-container {
 				width: 100%;
 				height: 300px;
@@ -639,7 +546,7 @@
 			.hot-text {
 				width: 100%;
 				display: flex;
-				padding: 9px 12px;
+				padding: 9px 15px;
 				box-sizing: border-box;
 				height: 52px;
 				overflow: hidden;
@@ -648,16 +555,19 @@
 					height: auto !important;
 				}
 				*/
+				>.swiper-container {
+					width: 100%;
+				}
 				img {
 					position: absolute;
 					top: 9px;
-					left: 9px;
+					left: 15px;
 					width: 34px;
 					height: 34px;
 				}
 				.div {
 					flex: 1;
-					padding-left: 42px;
+					padding-left: 45px;
 					padding-right: 15px;
 					box-sizing: border-box;
 					color: #666;

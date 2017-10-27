@@ -1,7 +1,6 @@
 <template>
 	<div class="order-affirm" v-if='detailInfo'>
 		<topbar title='订单确认'></topbar>
-
 		<div class="order-info">
 			<h2>商品清单</h2>
 			<div>
@@ -46,14 +45,12 @@
 						<span></span>
 						<em>{{detailInfo.coupon.name}}</em>
 					</checker-item>
-					<checker-item value="1" v-if='!detailInfo.discount==0'>
+					<checker-item value="1" v-if='detailInfo.discount!=0'>
 						<span></span>
 						<em>{{detailInfo.discount}}折优惠</em>
 					</checker-item>
 				</checker>
-
-				<p style="font-size: 14px;color: #666;text-align: right;">优惠金额: <em style="font-style: normal;color: #ffa019;">¥{{(oldmoney -detailInfo.price).toFixed(1)}}</em> </p>
-
+				<p style="font-size: 14px;color: #666;text-align: right;">优惠金额: <em style="font-style: normal;color: #ffa019;">¥{{oldmoney -detailInfo.price}}</em> </p>
 			</div>
 		</div>
 
@@ -63,6 +60,13 @@
 				¥{{detailInfo.price}}
 			</em>
 		</div>
+		<!--<group title="联系人信息" v-if='token'>
+			<x-input title="姓名" text-align='right' disabled :placeholder="contacts">
+			</x-input>
+			<x-input title="手机号" text-align='right' disabled :placeholder="contactsPhone">
+			</x-input>
+		</group>-->
+
 		<div class="select-children">
 			<h2>选择上课的子女</h2>
 			<ul class="vux-1px-t" v-if='list!==""'>
@@ -70,8 +74,8 @@
 					<div class="left-info">
 						<div>
 							<h2>{{item.name}}</h2>
-							<img src="../../../static/img/girl.png" v-if='item.gender ===1' />
-							<img src="../../../static/img/boy.png" v-if='item.gender ===0' />
+							<img src="~IMG/girl.png" v-if='item.gender ===1' />
+							<img src="~IMG/boy.png" v-if='item.gender ===0' />
 							<em></em>
 						</div>
 						<p>
@@ -88,7 +92,7 @@
 			<div class="btn-addchildren vux-1px-b" v-if='list!==""'>
 				<router-link tag='div' to='/addchildreninfo'>
 					<em></em>
-					<img src="../../../static/img/addicon3.png" />
+					<img src="~IMG/addicon3.png" />
 					<p>
 						添加子女信息
 					</p>
@@ -100,7 +104,7 @@
 				<h3>您尚未填写任何子女信息</h3>
 				<router-link tag='div' to='/addchildreninfo'>
 					<em></em>
-					<img src="../../../static/img/addicon.png" />
+					<img src="~IMG/addicon.png" />
 					<p>
 						添加子女信息
 					</p>
@@ -109,12 +113,6 @@
 			</div>
 
 		</div>
-		<!--<group title="联系人信息" v-if='token'>
-			<x-input title="姓名" text-align='right' disabled :placeholder="contacts">
-			</x-input>
-			<x-input title="手机号" text-align='right' disabled :placeholder="contactsPhone">
-			</x-input>
-		</group>-->
 		<div class="no-login" v-if='!token'>
 			<p>您尚未登录,无法提交订单</p>
 			<router-link to='/login'>
@@ -161,14 +159,17 @@
 				contactsPhone: '',
 				disabled: true,
 				list: JSON.parse(localStorage.getItem('childrenInfo')),
-				selectIndex: ''
+				selectIndex: '',
+				id: ''
 			}
 		},
 		mounted() {
-//			this.list = JSON.parse(localStorage.getItem('childrenInfo'))
-			let props = this.$route.params.name.split(',')
-			let urls = 'schoolName=' + props[0] + '&companyName=' + props[1] + '&name=' + props[2]
-			this.$http.get('/business/course/detail?' + urls).then(
+			this.id = this.$route.params.name
+			this.$http.get('/business/course/courseDetail', {
+				params: {
+					courseId: this.id
+				}
+			}).then(
 				(res) => {
 					this.detailInfo = res.data.obj
 					this.oldmoney = this.detailInfo.price
@@ -194,13 +195,6 @@
 				}
 			},
 			topay() {
-				//				if(this.select <= 0) {
-				//					this.$vux.alert.show({
-				//						title: '提示',
-				//						content: '请选择优惠方式!'
-				//					})
-				//					return false
-				//				}
 				if(this.selectIndex === '') {
 					this.$vux.alert.show({
 						title: '提示',
@@ -211,17 +205,10 @@
 
 				let props = this.$route.params.name.split(',')
 				this.$http.get('/business/order/downOrder', {
-					headers: {
-						token: sessionStorage.getItem('token')
-					},
 					params: {
-						schoolName: props[0],
-						companyName: props[1],
-						name: props[2],
+						courseId: this.id,
 						type: this.select,
-						childId: this.selectIndex,
-						contacts: this.contacts,
-						contactsPhone: this.contactsPhone
+						childId: this.selectIndex
 					}
 				}).then(
 					(res) => {
@@ -348,7 +335,7 @@
 				.right-info {
 					overflow: hidden;
 					.active {
-						background: url(../../../static/img/selectround2.png) no-repeat center;
+						background: url(~IMG/selectround2.png) no-repeat center;
 						background-size: 100% auto;
 					}
 					div {
@@ -357,7 +344,7 @@
 						height: 20px;
 						/*padding: 2px 0;*/
 						text-align: center;
-						background: url(../../../static/img/selectround.png) no-repeat center;
+						background: url(~IMG/selectround.png) no-repeat center;
 						background-size: 100% auto;
 					}
 				}
@@ -428,6 +415,55 @@
 							width: 14px;
 							height: 14px;
 						}
+					}
+					span:last-child {
+						margin-bottom: 15px;
+					}
+				}
+			}
+			.course-info {
+				margin-top: 10px;
+				padding: 15px;
+				box-sizing: border-box;
+				background: #fff;
+				font-size: 14px;
+				color: #666;
+				padding-bottom: 10px;
+				p {
+					margin-bottom: 5px;
+				}
+			}
+		}
+		.wait1 {
+			/*background: #000;*/
+			margin-top: 10px;
+			padding-bottom: 0;
+			.linkman {
+				padding: 0 15px;
+				/*height: 74px;*/
+				box-sizing: border-box;
+				height: auto;
+				overflow: hidden;
+				background: #fff;
+				p {
+					font-size: 15px;
+					color: #333;
+					padding: 15px 0;
+					/*line-height: 37px;*/
+				}
+				div {
+					color: #666;
+					height: auto;
+					/*line-height: 37px;*/
+					/*display: flex;*/
+					span {
+						display: block;
+						/*flex: 1;*/
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						font-size: 14px;
+						margin-bottom: 10px;
 					}
 					span:last-child {
 						margin-bottom: 15px;

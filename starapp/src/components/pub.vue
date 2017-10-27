@@ -32,15 +32,16 @@
 			let $this = this
 			this.$CGPS(function(res) {
 				if(res) {
-					$this.$http.get('/coordinate', {
+					$this.$http.get('/user/watch/getBaiduCoordinate', {
 						params: {
-							lng: res.lng,
-							lat: res.lat
+							longitude: res.coords.longitude,
+							latitude: res.coords.latitude,
+							type: '3'
 						}
 					}).then(
 						(res) => {
-							localStorage.setItem('lat', res.data.lat)
-							localStorage.setItem('lng', res.data.lng)
+							localStorage.setItem('lat', res.data.obj.latitude)
+							localStorage.setItem('lng', res.data.obj.longitude)
 						}
 					)
 				} else {
@@ -50,15 +51,12 @@
 			this.getChildrenInfo()
 			document.addEventListener('plusready', function() {
 				plus.push.addEventListener('click', function(msg) {
-					alert('进入Click事件')
 					var vData = JSON.stringify(msg)
 					alert(vData)
 					switch(msg.payload) {
 						case 'LocalMSG':
-							//							alert('点击本地创建消息启动：')
 							break
 						default:
-							//							alert('点击离线推送消息启动：')
 							break
 					}
 					plus.ui.alert(msg.content)

@@ -2,14 +2,11 @@
 	<div class="jigou-list">
 		<ul>
 			<li v-for='item in list' class="vux-1px-b">
-				<router-link :to='"/jigoudetail/"+item.name'>
-					<img :src="item.logo" v-if='item.logo' />
-					<img :src="item.schools[0].thumbnail" v-if='!item.logo' />
-					<!--<img src="../../../static/img/../../static/img/wallhaven-307832.jpg" v-if='!item.logo' />-->
-					<div class="center-jigou">
+				<router-link :to='"/jigoudetail/"+item.id'>
+					<img :src="item.coverUrl" v-if='item.coverUrl' />
+					<div class="jigou_center">
 						<h2>{{item.name}}</h2>
-						<p>{{item.intro}}</p>
-						<!--<div>{{item.intro.length>30?item.intro.substring(0,34)+'...':item.intro}}</div>-->
+						<p v-html="item.intro">{{item.intro}}</p>
 					</div>
 				</router-link>
 			</li>
@@ -56,6 +53,7 @@
 				padding-right: 15px;
 				box-sizing: border-box;
 				a {
+					width: 100%;
 					display: flex;
 					overflow: hidden;
 				}
@@ -65,7 +63,7 @@
 					display: block;
 					margin-right: 10px;
 				}
-				.center-jigou {
+				.jigou_center {
 					flex: 1;
 					overflow: hidden;
 					h2 {
@@ -78,8 +76,8 @@
 						overflow: hidden;
 						white-space: nowrap;
 					}
-					p,
-					div {
+					>p,
+					>div {
 						/*display: flex;*/
 						display: -webkit-box;
 						width: 100%;

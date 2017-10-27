@@ -62,8 +62,10 @@
 				let $this = this
 				var loading = plus.nativeUI.showWaiting()
 				this.$CotherLogin(0, function(res) {
+					console.log(JSON.stringify(res))
 					$this.$http.get('/weixin/partyLoginWeixin', {
 						params: {
+							uuid: res.userInfo.unionid,
 							openId: res.userInfo.openid,
 							headImgUrl: res.userInfo.headimgurl,
 							nickName: res.userInfo.nickname

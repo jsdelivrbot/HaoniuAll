@@ -1,21 +1,11 @@
 <template>
 	<div class="vaguesearch-box">
 		<div class="search-top vux-1px-b">
-			<div class="goback" @click="goback">
-				<img src="../../../static/img/outleft.png" />
+			<div class="out-img" @click="goback()">
+				<img src="~IMG/Backicon@3x.png" />
 			</div>
-			<div class="left" @click="select1=!select1">
-				<span v-if='iskecheng'>课程</span>
-				<span v-if='!iskecheng'>机构</span>
-				<img src="../../../static/img/down3.png" />
-				<ul v-show="select1">
-					<li class="vux-1px-b" @click="iskecheng=true">课程</li>
-					<li class="vux-1px-b" @click="iskecheng=false">机构</li>
-				</ul>
-			</div>
-
 			<div class="input">
-				<img src="../../../static/img/iconsearch.png" />
+				<img src="~IMG/iconsearch.png" />
 				<input type="search" v-model="searchval" name="" @keyup.enter="search" id="" value="" placeholder="请输入您想要搜索的内容" />
 			</div>
 			<span @click="search(1)">搜索</span>
@@ -75,17 +65,13 @@
 			this.$http.get('/hotKeyword').then(
 				(res) => {
 					this.hottxt = res.data.obj
+					console.log(res.data)
 				}
 			)
 		},
 		methods: {
 			goback() {
-				if(sessionStorage.getItem('goback')) {
-					this.$router.back(-1)
-				} else {
-					alert(sessionStorage.getItem('goback'))
-					this.$router.push('/pub/home')
-				}
+				this.$router.back()
 			},
 			histroybtn(val) {
 				this.searchval = val
@@ -95,21 +81,14 @@
 				localStorage.removeItem('histroy')
 				this.histroy = null
 			},
-			lod() {
-				this.$vux.loading.show({
-					text: '数据加载中...'
-				})
-			},
 			search() {
 				if(this.searchval === '') {
 					this.$vux.toast.text('请输入搜索的内容', 'center')
 					return false
 				}
-
 				let arr = []
 				let val = {}
 				val.name = this.searchval
-
 				if(JSON.parse(localStorage.getItem('histroy'))) {
 					let loop = false
 					for(var i = 0; i < this.histroy.length; i++) {
@@ -130,18 +109,7 @@
 					localStorage.setItem('histroy', JSON.stringify(arr))
 				}
 				this.histroy = JSON.parse(localStorage.getItem('histroy'))
-				//				this.hidebox = false
-				let targets = ''
-				let $this = this
-				if(this.iskecheng) {
-					targets = 'k'
-				} else {
-					targets = 'c'
-				}
-				this.lod()
-				this.list = []
-				this.jigoulist = []
-				this.$router.push('/searchlist/keyword=' + this.searchval + '&target=' + targets)
+				this.$router.push('/searchlist/keyword=' + this.searchval)
 			}
 		}
 	}
@@ -211,24 +179,22 @@
 			display: flex;
 			background: #fff;
 			padding: 8px 15px;
+			padding-left: 0;
 			padding-right: 0;
-			padding-left: 44px;
 			box-sizing: border-box;
 			position: fixed;
 			top: 0;
 			z-index: 999;
-			>.goback {
-				position: absolute;
-				top: 0;
-				left: 0;
+			.out-img {
 				width: 44px;
-				height: 44px;
-				line-height: 45px;
+				height: 28px;
 				text-align: center;
-				vertical-align: middle;
 				img {
-					display: inline-block;
-					width: 18px;
+					display: block;
+					width: 10px;
+					margin: 5px auto;
+					/*margin: 13px auto;*/
+					height: 18px;
 				}
 			}
 			.left {

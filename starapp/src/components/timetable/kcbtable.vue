@@ -102,9 +102,6 @@
 		},
 		activated() {
 			this.childrenList = JSON.parse(localStorage.getItem('childrenInfo'))
-			if(this.childrenList !== null) {
-				this.getTimeline()
-			}
 			if(this.$route.params.id >= 0) {
 				this.getTimeline(this.$route.params.id)
 			}

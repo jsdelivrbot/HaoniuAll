@@ -1,0 +1,76 @@
+{
+  "_args": [
+    [
+      "array-filter@http://registry.npm.taobao.org/array-filter/download/array-filter-1.0.0.tgz",
+      "C:\\Users\\chenbowen\\Desktop\\vux\\starapp"
+    ]
+  ],
+  "_from": "array-filter@http://registry.npm.taobao.org/array-filter/download/array-filter-1.0.0.tgz",
+  "_id": "array-filter@http://registry.npm.taobao.org/array-filter/download/array-filter-1.0.0.tgz",
+  "_inBundle": false,
+  "_integrity": "sha1-uveeYubvTCpMC4MSMtr/7CUfnYM=",
+  "_location": "/array-filter",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "remote",
+    "raw": "array-filter@http://registry.npm.taobao.org/array-filter/download/array-filter-1.0.0.tgz",
+    "name": "array-filter",
+    "escapedName": "array-filter",
+    "rawSpec": "http://registry.npm.taobao.org/array-filter/download/array-filter-1.0.0.tgz",
+    "saveSpec": "http://registry.npm.taobao.org/array-filter/download/array-filter-1.0.0.tgz",
+    "fetchSpec": "http://registry.npm.taobao.org/array-filter/download/array-filter-1.0.0.tgz"
+  },
+  "_requiredBy": [
+    "/vux"
+  ],
+  "_spec": "http://registry.npm.taobao.org/array-filter/download/array-filter-1.0.0.tgz",
+  "_where": "C:\\Users\\chenbowen\\Desktop\\vux\\starapp",
+  "author": {
+    "name": "Julian Gruber",
+    "email": "mail@juliangruber.com",
+    "url": "http://juliangruber.com"
+  },
+  "bugs": {
+    "url": "https://github.com/juliangruber/array-filter/issues"
+  },
+  "dependencies": {},
+  "description": "Array#filter for older browsers.",
+  "devDependencies": {
+    "tape": "~2.3.2"
+  },
+  "homepage": "https://github.com/juliangruber/array-filter",
+  "keywords": [
+    "array",
+    "filter",
+    "browser",
+    "html",
+    "browserify"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "array-filter",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/juliangruber/array-filter.git"
+  },
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "testling": {
+    "files": "test/*.js",
+    "browsers": [
+      "ie/8..latest",
+      "firefox/17..latest",
+      "firefox/nightly",
+      "chrome/22..latest",
+      "chrome/canary",
+      "opera/12..latest",
+      "opera/next",
+      "safari/5.1..latest",
+      "ipad/6.0..latest",
+      "iphone/6.0..latest",
+      "android-browser/4.2..latest"
+    ]
+  },
+  "version": "http://registry.npm.taobao.org/array-filter/download/array-filter-1.0.0.tgz"
+}

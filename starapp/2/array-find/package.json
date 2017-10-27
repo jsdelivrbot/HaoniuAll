@@ -1,0 +1,60 @@
+{
+  "_args": [
+    [
+      "array-find@http://registry.npm.taobao.org/array-find/download/array-find-1.0.0.tgz",
+      "C:\\Users\\chenbowen\\Desktop\\vux\\starapp"
+    ]
+  ],
+  "_from": "array-find@http://registry.npm.taobao.org/array-find/download/array-find-1.0.0.tgz",
+  "_id": "array-find@http://registry.npm.taobao.org/array-find/download/array-find-1.0.0.tgz",
+  "_inBundle": false,
+  "_integrity": "sha1-bI4obRHtdoMn+OYuzuhzU8o+eLg=",
+  "_location": "/array-find",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "remote",
+    "raw": "array-find@http://registry.npm.taobao.org/array-find/download/array-find-1.0.0.tgz",
+    "name": "array-find",
+    "escapedName": "array-find",
+    "rawSpec": "http://registry.npm.taobao.org/array-find/download/array-find-1.0.0.tgz",
+    "saveSpec": "http://registry.npm.taobao.org/array-find/download/array-find-1.0.0.tgz",
+    "fetchSpec": "http://registry.npm.taobao.org/array-find/download/array-find-1.0.0.tgz"
+  },
+  "_requiredBy": [
+    "/vux"
+  ],
+  "_spec": "http://registry.npm.taobao.org/array-find/download/array-find-1.0.0.tgz",
+  "_where": "C:\\Users\\chenbowen\\Desktop\\vux\\starapp",
+  "author": {
+    "name": "Stefan Duberg",
+    "email": "stefanduberg@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/stefanduberg/array-find/issues"
+  },
+  "description": "ES6 Array.find ponyfill. Return the first array element which satisfies a testing function.",
+  "devDependencies": {
+    "tape": "^4.0.0"
+  },
+  "homepage": "https://github.com/stefanduberg/array-find",
+  "keywords": [
+    "array",
+    "find",
+    "ponyfill",
+    "polyfill",
+    "es6",
+    "es2015",
+    "es 2015"
+  ],
+  "license": "MIT",
+  "main": "find.js",
+  "name": "array-find",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stefanduberg/array-find.git"
+  },
+  "scripts": {
+    "test": "tape ./test.js"
+  },
+  "version": "http://registry.npm.taobao.org/array-find/download/array-find-1.0.0.tgz"
+}

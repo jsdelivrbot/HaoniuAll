@@ -1,0 +1,98 @@
+{
+  "_args": [
+    [
+      "follow-redirects@http://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.0.0.tgz",
+      "C:\\Users\\chenbowen\\Desktop\\vux\\starapp"
+    ]
+  ],
+  "_from": "follow-redirects@http://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.0.0.tgz",
+  "_id": "follow-redirects@http://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.0.0.tgz",
+  "_inBundle": false,
+  "_integrity": "sha1-jjQpjL0uF28lTv/sdaHHjMhJ/Tc=",
+  "_location": "/follow-redirects",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "remote",
+    "raw": "follow-redirects@http://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.0.0.tgz",
+    "name": "follow-redirects",
+    "escapedName": "follow-redirects",
+    "rawSpec": "http://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.0.0.tgz",
+    "saveSpec": "http://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.0.0.tgz",
+    "fetchSpec": "http://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.0.0.tgz"
+  },
+  "_requiredBy": [
+    "/axios"
+  ],
+  "_spec": "http://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.0.0.tgz",
+  "_where": "C:\\Users\\chenbowen\\Desktop\\vux\\starapp",
+  "author": {
+    "name": "Olivier Lalonde",
+    "email": "olalonde@gmail.com",
+    "url": "http://www.syskall.com"
+  },
+  "bugs": {
+    "url": "https://github.com/olalonde/follow-redirects/issues"
+  },
+  "contributors": [
+    {
+      "name": "James Talmage",
+      "email": "james@talmage.io"
+    },
+    {
+      "name": "Ruben Verborgh",
+      "email": "ruben@verborgh.org",
+      "url": "https://ruben.verborgh.org/"
+    }
+  ],
+  "dependencies": {
+    "debug": "^2.2.0"
+  },
+  "description": "HTTP and HTTPS modules that follow redirects.",
+  "devDependencies": {
+    "bluebird": "^3.4.0",
+    "concat-stream": "^1.5.0",
+    "coveralls": "^2.11.2",
+    "express": "^4.13.0",
+    "mocha": "^3.1.2",
+    "nyc": "^8.3.1",
+    "xo": "^0.17.0"
+  },
+  "files": [
+    "index.js",
+    "create.js",
+    "http.js",
+    "https.js"
+  ],
+  "homepage": "https://github.com/olalonde/follow-redirects",
+  "keywords": [
+    "http",
+    "https",
+    "url",
+    "redirect",
+    "client",
+    "location",
+    "utility"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "follow-redirects",
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/olalonde/follow-redirects.git"
+  },
+  "scripts": {
+    "test": "xo && BLUEBIRD_DEBUG=1 nyc mocha"
+  },
+  "version": "http://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.0.0.tgz",
+  "xo": {
+    "envs": [
+      "mocha"
+    ]
+  }
+}

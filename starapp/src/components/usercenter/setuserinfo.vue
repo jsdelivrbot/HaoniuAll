@@ -113,8 +113,7 @@
 							quality: 80,
 							overwrite: true
 						}, function(e) {
-							//							var server = 'http://dev.dianke8.com:7000/xxdk/app/user/uploadPath'
-							var server = localStorage.getItem('uploadUrl') + '/user/uploadPath'
+							var server = $this.$http.defaults.baseURL + '/user/uploadPath'
 							var wt = plus.nativeUI.showWaiting()
 							var task = plus.uploader.createUpload(server, {
 								method: 'post'
@@ -122,7 +121,6 @@
 								if(status === 200) {
 									wt.close()
 									$this.imgs(JSON.parse(t.responseText).obj)
-									//									$this.imgs('http://192.168.1.121:8080/xingxingdianke//file/picture/20170821173832817385.jpg')
 								} else {
 									alert('上传失败：' + status)
 									wt.close()

@@ -103,7 +103,6 @@
 				)
 			},
 			iphoneUpload(event) {
-				alert(event.target.files[0].size)
 				let file = event.target.files[0]
 				let param = new FormData()
 				param.append('file', file, file.name)

@@ -1,0 +1,53 @@
+{
+  "_from": "bmaplib.heatmap@^1.0.1",
+  "_id": "bmaplib.heatmap@1.0.1",
+  "_inBundle": false,
+  "_integrity": "sha1-MNs2t7QgvQ4EmHkuMZzFcDctvv4=",
+  "_location": "/bmaplib.heatmap",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "bmaplib.heatmap@^1.0.1",
+    "name": "bmaplib.heatmap",
+    "escapedName": "bmaplib.heatmap",
+    "rawSpec": "^1.0.1",
+    "saveSpec": null,
+    "fetchSpec": "^1.0.1"
+  },
+  "_requiredBy": [
+    "/vue-baidu-map"
+  ],
+  "_resolved": "http://registry.npm.taobao.org/bmaplib.heatmap/download/bmaplib.heatmap-1.0.1.tgz",
+  "_shasum": "30db36b7b420bd0e0498792e319cc570372dbefe",
+  "_spec": "bmaplib.heatmap@^1.0.1",
+  "_where": "C:\\Users\\chenbowen\\Desktop\\vux\\starapp\\node_modules\\vue-baidu-map",
+  "author": {
+    "name": "Dafrok",
+    "email": "o.o@mug.dog"
+  },
+  "bugs": {
+    "url": "https://github.com/Dafrok/BMapLib.Heatmap/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "## Installation",
+  "homepage": "https://github.com/Dafrok/BMapLib.Heatmap#readme",
+  "keywords": [
+    "baidu",
+    "map",
+    "baidu-map",
+    "heatmap"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "bmaplib.heatmap",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dafrok/BMapLib.Heatmap.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.1"
+}

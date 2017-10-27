@@ -24,7 +24,7 @@
 			this.$vux.loading.show({
 				text: '数据加载中.....'
 			})
-			this.$http.get('/getActicles', {
+			this.$http.get('/business/course/articleDetail', {
 				params: {
 					id: this.id
 				}
@@ -32,7 +32,7 @@
 				(res) => {
 					this.$vux.loading.hide()
 					this.isshow = true
-					this.newsdetail = res.data.obj
+					this.newsdetail = res.data.obj.content
 				}
 			)
 		}

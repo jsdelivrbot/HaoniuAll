@@ -75,7 +75,7 @@
 	</div>
 
 	<div class="wait" v-if='token'>
-		<div class="linkman">
+		<div class="linkman" v-if='detailInfo!==""'>
 			<p>上课子女信息</p>
 			<div>
 				<span><em>姓名:</em>{{detailInfo.children.name}}

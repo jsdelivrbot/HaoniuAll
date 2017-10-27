@@ -4,7 +4,7 @@
 		<ul class="subject-text" v-if='newslist'>
 			<li v-for='item in newslist' class="vux-1px-b">
 				<router-link :to='"/newsdetail/"+item.id'>
-					<img :src="item.thumb" />
+					<img :src="item.url" />
 					<div class="info">
 						<h2>{{item.title}}</h2>
 						<p>{{item.intro}}</p>
@@ -32,9 +32,9 @@
 			}
 		},
 		mounted() {
-			this.$http.get('/recommendArticles?page=1&rows=1000').then(
+			this.$http.get('/business/course/article').then(
 				(res) => {
-					this.newslist = res.data.obj.items
+					this.newslist = res.data.obj
 				}
 			)
 		}

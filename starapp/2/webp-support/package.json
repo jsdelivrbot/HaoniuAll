@@ -1,0 +1,45 @@
+{
+  "_args": [
+    [
+      "webp-support@http://registry.npm.taobao.org/webp-support/download/webp-support-1.0.3.tgz",
+      "C:\\Users\\chenbowen\\Desktop\\vux\\starapp"
+    ]
+  ],
+  "_from": "webp-support@http://registry.npm.taobao.org/webp-support/download/webp-support-1.0.3.tgz",
+  "_id": "webp-support@http://registry.npm.taobao.org/webp-support/download/webp-support-1.0.3.tgz",
+  "_inBundle": false,
+  "_integrity": "sha1-3Sr3Y3WPpQniBBl0CSC3fCL/PF0=",
+  "_location": "/webp-support",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "remote",
+    "raw": "webp-support@http://registry.npm.taobao.org/webp-support/download/webp-support-1.0.3.tgz",
+    "name": "webp-support",
+    "escapedName": "webp-support",
+    "rawSpec": "http://registry.npm.taobao.org/webp-support/download/webp-support-1.0.3.tgz",
+    "saveSpec": "http://registry.npm.taobao.org/webp-support/download/webp-support-1.0.3.tgz",
+    "fetchSpec": "http://registry.npm.taobao.org/webp-support/download/webp-support-1.0.3.tgz"
+  },
+  "_requiredBy": [
+    "/vux"
+  ],
+  "_spec": "http://registry.npm.taobao.org/webp-support/download/webp-support-1.0.3.tgz",
+  "_where": "C:\\Users\\chenbowen\\Desktop\\vux\\starapp",
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/vux-components/webp-support/issues"
+  },
+  "description": "",
+  "homepage": "https://github.com/vux-components/webp-support#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "name": "webp-support",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vux-components/webp-support.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "http://registry.npm.taobao.org/webp-support/download/webp-support-1.0.3.tgz"
+}

@@ -109,6 +109,9 @@
 							height: 20px;
 							line-height: 18px;
 							font-weight: normal;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							white-space: nowrap;
 						}
 						p {
 							font-size: 13px;
@@ -138,6 +141,7 @@
 						}
 					}
 					.right {
+						max-width: 80px;
 						width: 80px;
 						height: 60px;
 						flex: 1;

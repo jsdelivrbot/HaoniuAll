@@ -7,7 +7,7 @@
 					课程
 				</li>
 				<li :class="[tabbar==2?'active':'']" @click="change(2)">
-					机构
+					授课点
 				</li>
 			</ul>
 		</div>
@@ -57,7 +57,7 @@
 					}
 				)
 
-				this.$http.get('/user/watch/watchMyCompany', {
+				this.$http.get('/user/watch/watchMySchool', {
 					headers: {
 						token: sessionStorage.getItem('token')
 					}

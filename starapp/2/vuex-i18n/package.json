@@ -1,0 +1,85 @@
+{
+  "_args": [
+    [
+      "vuex-i18n@1.6.0",
+      "C:\\Users\\chenbowen\\Desktop\\vux\\starapp"
+    ]
+  ],
+  "_from": "vuex-i18n@1.6.0",
+  "_id": "vuex-i18n@1.6.0",
+  "_inBundle": false,
+  "_integrity": "sha1-c40GBoNh2FRR5cRn2LJkKqe/BOs=",
+  "_location": "/vuex-i18n",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "vuex-i18n@1.6.0",
+    "name": "vuex-i18n",
+    "escapedName": "vuex-i18n",
+    "rawSpec": "1.6.0",
+    "saveSpec": null,
+    "fetchSpec": "1.6.0"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "http://registry.npm.taobao.org/vuex-i18n/download/vuex-i18n-1.6.0.tgz",
+  "_spec": "1.6.0",
+  "_where": "C:\\Users\\chenbowen\\Desktop\\vux\\starapp",
+  "author": {
+    "name": "Ramon Saccilotto",
+    "email": "tikiatua@gmail.com",
+    "url": "https://github.com/tikiatua"
+  },
+  "bugs": {
+    "url": "https://github.com/dkfbasel/vuex-i18n/issues"
+  },
+  "contributors": [
+    {
+      "name": "Vu Duong",
+      "email": "info@spotlit.de",
+      "url": "https://github.com/vuduo"
+    },
+    {
+      "name": "ktquez",
+      "email": "ktquez@gmail.com",
+      "url": "https://github.com/ktquez"
+    }
+  ],
+  "description": "Easy localization for vue-components using vuex as data store",
+  "devDependencies": {
+    "babel-plugin-external-helpers": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-es2015-rollup": "^1.2.0",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-commonjs": "^5.0.5",
+    "rollup-plugin-uglify": "^1.0.1"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "files": [
+    "dist",
+    "test"
+  ],
+  "homepage": "https://github.com/dkfbasel/vuex-i18n#readme",
+  "keywords": [
+    "localization",
+    "translation",
+    "vuex",
+    "vue",
+    "i18n"
+  ],
+  "license": "MIT",
+  "main": "dist/vuex-i18n.min.js",
+  "name": "vuex-i18n",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dkfbasel/vuex-i18n.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.6.0"
+}

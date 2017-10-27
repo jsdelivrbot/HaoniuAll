@@ -2,21 +2,18 @@
 	<div class="course-list">
 		<ul>
 			<li v-for='item in data' class="vux-1px-b">
-				<router-link :to='"/coursedetail/"+item.schoolName+","+item.companyName+","+item.name'>
-					<img :src="item.school.timetables[0].logo" v-if='item.school.thumbnail' />
-					<div class="course-center">
+				<router-link :to='"/coursedetail/"+item.id'>
+					<img :src="item.coverUrl" v-if='item.coverUrl' />
+					<div class="info_centers">
 						<h2>{{item.name}}</h2>
-						<p>{{item.school.address}}</p>
+						<p>{{item.addess}}</p>
 					</div>
 					<div class="right">
 						<span class="money">
 							<em>¥</em>{{item.price}}
 						</span>
 						<div class="address">
-							<!--<div>
-								<img src="../../../static/img/../../static/img/address.png"/>
-							</div>-->
-							<em v-if='item.school.distance'>{{ Math.floor(item.school.distance*100)/100}}公里</em>
+							<em v-if='item.distance>=0'>{{item.distance.toFixed(0)}}公里</em>
 						</div>
 					</div>
 				</router-link>
@@ -70,7 +67,7 @@
 					display: block;
 					margin-right: 10px;
 				}
-				.course-center {
+				.info_centers {
 					flex: 1;
 					overflow: hidden;
 					h2 {
@@ -118,11 +115,10 @@
 						height: 20px;
 						margin-top: 10px;
 						line-height: 24px;
-						background: url(../../../static/img/address.png) no-repeat left;
+						background: url(~IMG/address.png) no-repeat left;
 						background-size: 13px;
 						background-position: 3px 0px;
 						text-indent: 18px;
-						overflow: hidden;
 						/*div {
 							flex: 1;
 							line-height: 40px;
@@ -141,9 +137,9 @@
 							color: #999;
 							font-style: normal;
 							font-size: 13px;
+							overflow: hidden;
 							text-overflow: ellipsis;
 							white-space: nowrap;
-							overflow: hidden;
 						}
 					}
 				}

@@ -1,55 +1,48 @@
 <template>
 	<div class="course-detail">
 		<topbar title='课程简介'></topbar>
-		<div class="course-info vux-1px-b">
-			<img :src="detailInfo.school.thumbnail" @click="show(0)" v-if='detailInfo.school' />
-			<div>
-				<h2>{{detailInfo.name}}</h2>
-				<h1><em style="font-size: 15px; font-style: normal;margin-right: 2px;">¥</em>{{detailInfo.price}}</h1>
-				<p>开课时间:{{detailInfo.openDate}}</p>
-				<p>上课时间:{{detailInfo.openTime}}</p>
-			</div>
+		<!--<div style="display: none;">
+			<img class="previewer-demo-img" v-for="(item, index) in list" :src="item.src" width="100" @click="show(index)">
 		</div>
 		<div v-transfer-dom>
 			<previewer :list="list" ref="previewer" :options="options"></previewer>
+		</div>-->
+		<div class="course-info vux-1px-b">
+			<img :src="detailInfo.coverUrl" />
+			<div>
+				<h2>{{detailInfo.name}}</h2>
+				<h1><em style="font-size: 15px; font-style: normal;margin-right: 2px;">¥</em>{{detailInfo.price}}</h1>
+				<p>开课时间:{{detailInfo.startDate}}</p>
+				<p>上课时间:{{detailInfo.startTime}}</p>
+			</div>
 		</div>
-		<div class="link" v-if='detailInfo.school'>
+		<div class="link">
 			<ul>
 				<li class="vux-1px-b">
-					<router-link :to='"/maps/"+detailInfo.school.coords' v-if='detailInfo.school'>
-						<img src="../../../static/img/address.png" />
-						<span v-if="detailInfo.school">
-							{{detailInfo.school.address}}
+					<!--<router-link to='11'>-->
+					<router-link :to='"/maps/"+detailInfo.longitude+","+detailInfo.latitude'>
+						<img src="~IMG/address.png" />
+						<span>
+							{{detailInfo.addess}}
 						</span>
 						<div class="goto">
-							<img src="../../../static/img/righticon.png" />
+							<img src="~IMG/righticon.png" />
 						</div>
 					</router-link>
 				</li>
 				<li class="vux-1px-b">
-					<a :href="'tel:'+detailInfo.school.phoneNumber">
-						<img src="../../../static/img/phone.png" />
+					<a :href="'tel:'+detailInfo.tel">
+						<img src="~IMG/phone.png" />
 						<span>
-							{{detailInfo.school.phoneNumber}}
+							{{detailInfo.tel}}
 						</span>
 						<div class="goto">
-							<img src="../../../static/img/righticon.png" />
+							<img src="~IMG/righticon.png" />
 						</div>
 					</a>
 				</li>
 			</ul>
 		</div>
-
-		<!--<div class="intro-box">
-			<div class="title vux-1px-b">
-				优惠活动
-			</div>
-			<div class="couponlist">
-				<p class="p">1.购买可以获得{{detailInfo.douAmount}}转换豆(等值{{detailInfo.douAmount}}人民币)</p>
-				<p class="p" v-if='detailInfo.coupon.name'>2.{{detailInfo.coupon.name}}</p>
-			</div>
-			<p>以上优惠二选一</p>
-		</div>-->
 
 		<div class="intro-box" v-if='detailInfo.douAmount>0||detailInfo.couponId>0||detailInfo.discount>0'>
 			<div class="title vux-1px-b">
@@ -66,18 +59,17 @@
 			<div class="title vux-1px-b">
 				课程内容
 			</div>
-			<div v-html="detailInfo.intro"></div>
+			<p v-html="detailInfo.intro"></p>
 		</div>
-
 		<div class="link" style="margin: 5px 0;">
 			<ul>
 				<li class="vux-1px-tb">
-					<router-link :to='"/jigoudetail/"+detailInfo.companyName'>
+					<router-link :to='"/jigoudetail/"+detailInfo.schoolId'>
 						<span>
-							{{detailInfo.companyName}}
+							{{detailInfo.schoolName}}
 						</span>
 						<div class="goto">
-							<img src="../../../static/img/righticon.png" />
+							<img src="~IMG/righticon.png" />
 						</div>
 					</router-link>
 				</li>
@@ -100,11 +92,9 @@
 					<p>{{item.content}}</p>
 				</li>
 			</ul>
-
 			<div class="more" v-if='pltotal>1' @click="getmore()">
 				<span>查看全部评价</span>
 			</div>
-
 		</div>
 
 		<div class="static-footer vux-1px-t">
@@ -115,26 +105,25 @@
 				<li v-if='detailInfo.watched' @click="collect()">
 					加入收藏
 				</li>
-				<li>
+				<!--<li>
 					<router-link :to='"/orderaffirm/"+urls' v-if='token && detailInfo.priced'>
 						我要报名
 					</router-link>
 					<a href="javascript:;" @click="nologin()" v-if='!token'>
 						我要报名
 					</a>
-
 					<a href="javascript:;" v-if='token && !detailInfo.priced' style="background: #d2d2d2;">
 						我要报名
 					</a>
-				</li>
-				<!--<li v-if='!detailInfo.priced'>
-					<router-link :to='"/orderaffirm/"+urls' v-if='token'>
+				</li>-->
+				<li v-if='!detailInfo.priced'>
+					<router-link :to='"/orderaffirm/"+id' v-if='token'>
 						我要报名
 					</router-link>
 					<a href="javascript:;" style="background: #eee;" @click="nologin()" v-if='!token'>
 						我要报名
 					</a>
-				</li>-->
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -152,43 +141,41 @@
 			Rater,
 			Previewer
 		},
+		beforeRouteLeave(to, from, next) {
+			this.$destroy()
+			next()
+		},
 		data() {
 			return {
 				token: sessionStorage.getItem('token'),
 				star: 3,
-				options: {
-				},
 				detailInfo: {},
-				urls: '',
+				id: '',
 				pllist: [],
-				pltotal: '',
-				list: []
+				pltotal: ''
 			}
 		},
 		mounted() {
 			window.scrollTo(0, 0)
-			if(this.urls === this.$route.params.name) {
-				return false
-			} else {
-				this.$vux.loading.show({
-					text: '数据加载中...'
-				})
-			}
 			this.token = sessionStorage.getItem('token')
-			let props = this.$route.params.name.split(',')
-			this.urls = this.$route.params.name
-			let urls = 'schoolName=' + props[0] + '&companyName=' + props[1] + '&name=' + props[2]
-			this.$http.get('/business/course/detail?' + urls).then(
+			this.id = this.$route.params.name
+			this.$http.get('/business/course/courseDetail', {
+				params: {
+					courseId: this.id
+				}
+			}).then(
 				(res) => {
-					this.$vux.loading.hide()
-					if(res.data.obj.school.nphotos >= 2) {
-						this.getPhotos()
-					}
 					this.detailInfo = res.data.obj
 				}
 			)
 
-			this.$http.get('/business/course/detailEvaluate?page=1&rows=1&' + urls).then(
+			this.$http.get('/business/course/detailEvaluate', {
+				params: {
+					courseId: this.id,
+					page: '1',
+					rows: '2'
+				}
+			}).then(
 				(res) => {
 					if(res.data.result === 0) {
 						this.pllist = res.data.obj.result
@@ -199,39 +186,30 @@
 		},
 		methods: {
 			show(index) {
-				this.$refs.previewer.show(index)
-			},
-			getPhotos() {
-				let props = this.$route.params.name.split(',')
-				this.$http.get('/business/course/schoolPic', {
-					params: {
-						companyName: props[1],
-						schoolName: props[0]
-					}
-				}).then(
-					(res) => {
-						for(var i = 0; i < res.data.obj.length; i++) {
-							let arr = {}
-							arr.src = res.data.obj[i]
-							this.list.push(arr)
-						}
-					}
-				)
+				if(this.detailInfo.school.nphotos >= 2) {
+					this.$refs.previewer.show(index)
+				}
 			},
 			getmore() {
-				let props = this.$route.params.name.split(',')
-				let urls = 'schoolName=' + props[0] + '&companyName=' + props[1] + '&name=' + props[2]
-				this.$http.get('/business/course/detailEvaluate?page=1&rows=1000&' + urls).then(
+				this.$http.get('/business/course/detailEvaluate', {
+					params: {
+						courseId: this.id,
+						page: '1',
+						rows: '10'
+					}
+				}).then(
 					(res) => {
 						if(res.data.result === 0) {
 							this.pllist = res.data.obj.result
 							this.pltotal = 0
 						}
+						console.log(res.data)
 					}
 				)
 			},
 			nocollect() {
 				let $this = this
+				console.log(this.token)
 				if(this.token === null) {
 					this.$vux.alert.show({
 						title: '提示',
@@ -247,18 +225,19 @@
 					title: '提示',
 					content: '确定取消收藏吗?',
 					onConfirm() {
-						let props = $this.urls.split(',')
 						$this.$http.get('/user/watch/disWatchCourse', {
 							params: {
-								schoolName: props[0],
-								companyName: props[1],
-								courseName: props[2]
+								courseId: $this.id
 							}
 						}).then(
 							(res) => {
 								$this.detailInfo.watched = true
+								console.log(res.data)
 							}
 						)
+					},
+					onCancel() {
+						console.log('plugin confirm')
 					}
 				})
 			},
@@ -274,6 +253,7 @@
 			},
 			collect() {
 				let $this = this
+				console.log(this.token)
 				if(this.token === null) {
 					this.$vux.alert.show({
 						title: '提示',
@@ -284,13 +264,9 @@
 					})
 					return false
 				}
-				let props = this.urls.split(',')
-
 				this.$http.get('/user/watch/watchCourse', {
 					params: {
-						schoolName: props[0],
-						companyName: props[1],
-						courseName: props[2]
+						courseId: this.id
 					}
 				}).then(
 					(res) => {
@@ -298,6 +274,7 @@
 							$this.$vux.toast.text('收藏成功!', 'center')
 							$this.detailInfo.watched = false
 						}
+						console.log(res.data)
 					}
 				)
 			}
@@ -305,8 +282,6 @@
 	}
 </script>
 <style lang="less">
-	/*@import url("../../../static/font/iconfont.css");*/
-	
 	#star {
 		a {
 			width: 20px !important;

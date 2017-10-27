@@ -1,7 +1,7 @@
 <template>
 	<div class="tuiguangma">
 		<topbar title='我的推广码' isshare='true' @sharealert='share()'></topbar>
-		<img :src="'http://wx.dianke8.com/xxdk/static/qrCode/'+img" v-if='img'>
+		<img :src="img" v-if='img'>
 		<div class="intro">
 			<h2 class="title">
 				使用说明
@@ -54,7 +54,7 @@
 					url: 'http://wx.dianke8.com/?username=' + $this.username + '#/tuiguangma',
 					title: '星星点课',
 					content: '快来成为星星点课会员吧，立即获得更多优惠少儿课程!',
-					img: 'http://dev.dianke8.com:7000/xxdk/logo/123.png'
+					img: 'http://wx.dianke8.com/xxdk/logo/123.png'
 				}
 				this.$CwxShare(shareName, opt, function(res) {
 					if(res) {

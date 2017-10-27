@@ -1,0 +1,52 @@
+{
+  "_args": [
+    [
+      "qr.js@http://registry.npm.taobao.org/qr.js/download/qr.js-0.0.0.tgz",
+      "C:\\Users\\chenbowen\\Desktop\\vux\\starapp"
+    ]
+  ],
+  "_from": "qr.js@http://registry.npm.taobao.org/qr.js/download/qr.js-0.0.0.tgz",
+  "_id": "qr.js@http://registry.npm.taobao.org/qr.js/download/qr.js-0.0.0.tgz",
+  "_inBundle": false,
+  "_integrity": "sha1-ys6GOG9ZoNuAUPqQ2baw6IoeNk8=",
+  "_location": "/qr.js",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "remote",
+    "raw": "qr.js@http://registry.npm.taobao.org/qr.js/download/qr.js-0.0.0.tgz",
+    "name": "qr.js",
+    "escapedName": "qr.js",
+    "rawSpec": "http://registry.npm.taobao.org/qr.js/download/qr.js-0.0.0.tgz",
+    "saveSpec": "http://registry.npm.taobao.org/qr.js/download/qr.js-0.0.0.tgz",
+    "fetchSpec": "http://registry.npm.taobao.org/qr.js/download/qr.js-0.0.0.tgz"
+  },
+  "_requiredBy": [
+    "/vux"
+  ],
+  "_spec": "http://registry.npm.taobao.org/qr.js/download/qr.js-0.0.0.tgz",
+  "_where": "C:\\Users\\chenbowen\\Desktop\\vux\\starapp",
+  "author": {
+    "name": "Roman Shtylman",
+    "email": "shtylman@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/shtylman/qr.js/issues"
+  },
+  "description": "qrcode encoding in javascript",
+  "homepage": "https://github.com/shtylman/qr.js#readme",
+  "keywords": [
+    "qrcode",
+    "qr"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "qr.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/shtylman/qr.js.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "http://registry.npm.taobao.org/qr.js/download/qr.js-0.0.0.tgz"
+}

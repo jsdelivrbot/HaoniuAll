@@ -62,20 +62,19 @@ export default {
 			Vue.prototype.$CGPS = function(callback) {
 				var val = false
 				mui.plusReady(function() {
-					plus.geolocation.getCurrentPosition(geoInf, function(e) {
-						callback(val)
+					plus.geolocation.getCurrentPosition(function(position) {
+						val = {
+							lng: position.coords.longitude,
+							lat: position.coords.latitude
+						}
+						callback(position)
+						console.log(JSON.stringify(position))
+					}, function(e) {
+						callback(false)
 					}, {
-						geocode: false
-					})
+						provider: 'baidu'
+					});
 				})
-
-				function geoInf(position) {
-					val = {
-						lng: position.coords.longitude,
-						lat: position.coords.latitude
-					}
-					callback(val)
-				}
 			},
 			Vue.prototype.$CgetCID = function(callback) {
 				var cid = ''
