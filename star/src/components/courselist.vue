@@ -13,10 +13,7 @@
 							<em>¥</em>{{item.price}}
 						</span>
 						<div class="address">
-							<!--<div>
-								<img src="../../static/img/address.png"/>
-							</div>-->
-							<em v-if='item.distance'>{{item.distance}}公里</em>
+							<em v-if='item.distance>=0'>{{item.distance.toFixed(0)}}公里</em>
 						</div>
 					</div>
 				</router-link>
@@ -140,6 +137,9 @@
 							color: #999;
 							font-style: normal;
 							font-size: 13px;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							white-space: nowrap;
 						}
 					}
 				}

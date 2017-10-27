@@ -55,6 +55,7 @@
 				repwd: '',
 				nickname: '',
 				openid: '',
+				unionid: '',
 				headUrl: '',
 				codetxt: ' 发送验证码  ',
 				time: 0,
@@ -69,6 +70,7 @@
 				return ''
 			}
 			this.openid = GetQueryString('openid')
+			this.unionid = GetQueryString('unionid')
 			this.headUrl = GetQueryString('headimgurl')
 		},
 		methods: {
@@ -177,6 +179,7 @@
 
 				this.$http.get('/register', {
 					params: {
+						unionid: this.unionid,
 						phone: this.iphone,
 						password: this.repwd,
 						phoneCode: this.code,
@@ -190,6 +193,7 @@
 						let $this = this
 						if(res.data.result === 0) {
 							localStorage.removeItem('username')
+							localStorage.setItem('loginunionid', this.unionid)
 							localStorage.setItem('loginname', this.iphone)
 							localStorage.setItem('loginpwd', this.repwd)
 							localStorage.setItem('loginopenid', this.openid)

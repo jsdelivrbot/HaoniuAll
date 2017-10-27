@@ -9,7 +9,7 @@
 			<x-textarea placeholder='分享你的购买心得' v-model='content' style='color: #666;font-size: 14px;' :height="120"></x-textarea>
 		</group>
 
-		<div class="button">
+		<div class="button" style="margin-top: 30px;">
 			<button @click="submit">
 				提交评价
 			</button>

@@ -2,7 +2,7 @@
 	<div class="tuiguangma">
 		<topbar title='我的推广码'></topbar>
 		<!--<img src="../../static/img/timg.jpg" />-->
-		<img :src="'http://wx.dianke8.com/xxdk/static/qrCode/'+img" v-if='img'>
+		<img :src="img" v-if='img'>
 		<div class="intro">
 			<h2 class="title">
 				使用说明

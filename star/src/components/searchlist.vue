@@ -80,9 +80,6 @@
 			sessionStorage.setItem('searchpath', from.path)
 			next()
 		},
-		beforeRouteLeave(to, from, next) {
-			next()
-		},
 		activated() {
 			if(sessionStorage.getItem('searchpath') === '/pub/home' || sessionStorage.getItem('searchpath') === '/vaguesearch' || sessionStorage.getItem('searchpath') === '/coursesort') {
 				let arr = querystring.parse(this.$route.params.name)
@@ -105,7 +102,7 @@
 					text: '数据加载中...'
 				})
 				this.ismaps = ''
-				this.$http.get('http://192.168.1.113:8080/company/search/index', {
+				this.$http.get(localStorage.getItem('search') + '/company/search/index', {
 					params: {
 						keyword: this.searchdata.keyword,
 						category: this.searchdata.category,
@@ -122,7 +119,7 @@
 					(res) => {
 						this.$vux.loading.hide()
 						this.ismaps = 'mapes'
-						this.zooms = 10
+						this.zooms = 12
 						this.resultData = res.data
 						this.tabbar = 0
 					}
@@ -147,7 +144,6 @@
 				this.searchall()
 			},
 			search3() {
-				this.onfocus = ''
 				if(this.tabbar <= 0) {
 					return false
 				}
@@ -176,10 +172,13 @@
 		data() {
 			return {
 				resultData: '',
-				onfocus: '',
-				zooms: 12,
+				onfocus: {
+					lng: localStorage.getItem('lng'),
+					lat: localStorage.getItem('lat')
+				},
+				zooms: 14,
 				truenull: false,
-				maporList: 'list',
+				maporList: 'map',
 				searchdata: {
 					keyword: '',
 					category: '',
@@ -198,8 +197,7 @@
 				old: [],
 				maplist: [],
 				val: '',
-				ismaps: '',
-				localhttp: localStorage.getItem('localhttp'),
+				ismaps: 'mapes',
 				tabbar: '0',
 				selectvalue2: [],
 				selectvalue3: [],

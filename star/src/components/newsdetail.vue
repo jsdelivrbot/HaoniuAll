@@ -13,7 +13,6 @@
 		},
 		data() {
 			return {
-				localhttp: localStorage.getItem('localhttp'),
 				newsdetail: '',
 				id: '',
 				isshow: false
@@ -23,15 +22,14 @@
 			window.scrollTo(0, 0)
 			this.isshow = false
 			this.id = this.$route.params.id
-			this.$http.get('/getActicles', {
+			this.$http.get('/business/course/articleDetail', {
 				params: {
 					id: this.id
 				}
 			}).then(
 				(res) => {
 					this.isshow = true
-					this.newsdetail = res.data.obj
-					console.log(res.data.obj)
+					this.newsdetail = res.data.obj.content
 				}
 			)
 		}

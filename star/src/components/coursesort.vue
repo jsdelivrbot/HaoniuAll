@@ -42,7 +42,6 @@
 	</div>
 </template>
 <script>
-	import km from '../../static/km'
 	export default {
 		data() {
 			return {

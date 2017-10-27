@@ -29,31 +29,31 @@
 
 		<div class="sort">
 			<ul class="sort-list vux-1px-t  vux-1px-b">
-				<router-link tag='li' to='/searchlist/cat=教辅&target=k'>
+				<router-link tag='li' to='/searchlist/cat=16'>
 					<div>
 						<img src="~IMG/newsort3.png" />
 					</div>
 					<span>教辅</span>
 				</router-link>
-				<router-link tag='li' to='/searchlist/cat=综合素质&target=k'>
+				<router-link tag='li' to='/searchlist/cat=281'>
 					<div>
 						<img src="~IMG/newsort4.png" />
 					</div>
 					<span>综合素质</span>
 				</router-link>
-				<router-link tag='li' to='/searchlist/cat=运动&target=k'>
+				<router-link tag='li' to='/searchlist/cat=196'>
 					<div>
 						<img src="~IMG/newsort5.png" />
 					</div>
 					<span>运动</span>
 				</router-link>
-				<router-link tag='li' to='/searchlist/cat=益智&target=k'>
+				<router-link tag='li' to='/searchlist/cat=249'>
 					<div>
 						<img src="~IMG/newsort1.png" />
 					</div>
 					<span>益智</span>
 				</router-link>
-				<router-link tag='li' to='/searchlist/cat=艺术&target=k'>
+				<router-link tag='li' to='/searchlist/cat=80'>
 					<div>
 						<img src="~IMG/newsort2.png" />
 					</div>
@@ -77,7 +77,7 @@
 		</div>
 
 		<div class="recommend">
-			<div class="title">
+			<div class="title" v-once>
 				<div class="left">
 					<img src="~IMG/hottj.png" />
 				</div>
@@ -86,11 +86,11 @@
 				</router-link>
 			</div>
 
-			<swiper :options="swiperOption" ref="mySwiper" v-if='tj!=""'>
+			<swiper :options="swiperOption" ref="mySwiper">
 				<swiper-slide v-for='(item,index) in tj' :key="index" class='swiper-contentBox'>
 					<router-link :to='"/coursedetail/"+item.id'>
 						<div>
-							<img :src="item.postUrl" style="width: 100%;" />
+							<img :src="item.coverUrl" style="width: 100%;" />
 						</div>
 						<span>{{item.name.substring(0,6)}}</span>
 					</router-link>
@@ -109,7 +109,7 @@
 			</div>
 
 			<ul>
-				<router-link tag='li' :key='index' v-for='item in courseSort' :to="'/searchlist/cat='+item.someIdString">
+				<router-link tag='li' :key='index' v-for='(item,index) in courseSort' :to="'/searchlist/cat='+item.someIdString">
 					<img :src="item.realUrl" />
 					<span>{{item.name}}</span>
 				</router-link>
@@ -118,7 +118,7 @@
 				查看更多
 			</div>
 			<ul v-if='mores'>
-				<router-link tag='li' :key='index' v-for='(item,index) in courseSortMore' :to="'/searchlist/cat='+item.someIdString">
+				<router-link tag='li' v-for='(item,index) in courseSortMore' :key='index' :to="'/searchlist/cat='+item.someIdString">
 					<img :src="item.realUrl" />
 					<span>{{item.name}}</span>
 				</router-link>
@@ -133,25 +133,10 @@
 
 <script>
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
-	import km from '../../static/km'
 	export default {
 		components: {
 			swiper,
 			swiperSlide
-		},
-		activated() {
-			this.$http.post('/business/course/recommend').then(
-				(res) => {
-					if(res.data.result === 0) {
-						this.tj = []
-						this.tj = res.data.obj
-						let $this = this
-						setTimeout(() => {
-							$this.swiperOption.autoplay = 3000
-						}, 0)
-					}
-				}
-			)
 		},
 		data() {
 			return {
@@ -176,17 +161,18 @@
 					slidesPerView: 1,
 					autoplay: 3000,
 					spaceBetween: 8,
+					paginationClickable: true,
 					loop: true
 				},
 				swiperOption: {
 					autoplayDisableOnInteraction: false,
-					autoplay: 1000,
+					autoplay: 3000,
 					effect: 'coverflow',
+					initialSlide: 3,
 					height: 160,
 					loop: true,
 					slidesPerView: 2,
 					centeredSlides: true,
-					paginationClickable: true,
 					spaceBetween: 60,
 					coverflow: {
 						rotate: 0,
@@ -209,12 +195,7 @@
 			this.$http.post('/business/course/recommend').then(
 				(res) => {
 					if(res.data.result === 0) {
-						console.log(res.data)
 						this.tj = res.data.obj
-						let $this = this
-						setTimeout(() => {
-							$this.swiperOption.autoplay = 3000
-						}, 0)
 					}
 				}
 			)
@@ -242,42 +223,6 @@
 						this.courseSortMore = res.data.obj
 					}
 				)
-			},
-			seacherText(res) {
-				let $this = this
-				let result = ''
-				km.map(function(item, index) {
-					var arr = []
-					arr.push(item)
-					let a = arr.filter((p) => {
-						return p.name === res
-					})
-					if(a.length > 0) {
-						result += arr[0].name
-						$this.searchtxt(arr[0].parent, function(data, parent) {
-							if(data !== '') {
-								result = data + '$' + result
-								$this.searchtxt(parent, function(datas, parent) {
-									result = datas + '$' + result
-								})
-							}
-						})
-					}
-				})
-				result = '/searchlist/cat=' + result + '&target=k'
-				return result
-			},
-			searchtxt(res, cb) {
-				km.map(function(item, index) {
-					var arr = []
-					arr.push(item)
-					let a = arr.filter((p) => {
-						return p.value === res
-					})
-					if(a.length > 0) {
-						cb(arr[0].name, arr[0].parent)
-					}
-				})
 			},
 			search() {
 				this.$router.push('/vaguesearch')
@@ -419,6 +364,7 @@
 			margin-top: 10px;
 			height: auto;
 			background: #fff;
+			min-height: 180px;
 			.swiper-container {
 				width: 100%;
 				height: 300px;
@@ -605,6 +551,9 @@
 					height: auto !important;
 				}
 				*/
+				>.swiper-container {
+					width: 100%;
+				}
 				img {
 					position: absolute;
 					top: 9px;

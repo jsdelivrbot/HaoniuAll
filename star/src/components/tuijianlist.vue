@@ -14,34 +14,26 @@
 		},
 		data() {
 			return {
-				localhttp: localStorage.getItem('localhttp'),
 				course: []
 			}
 		},
 		mounted() {
-			this.$http.get('/search', {
+			this.$http.get('/business/course/recommend', {
 				params: {
-					target: 'k',
-					dist: '3',
 					lng: localStorage.getItem('lng'),
-					lat: localStorage.getItem('lat'),
-					page: '1',
-					rows: '100',
-					style: '1',
-					type: 'list'
+					lat: localStorage.getItem('lat')
 				}
 			}).then(
 				(res) => {
-					this.course = res.data.obj.result
-					console.log(res.data)
+					this.course = res.data.obj
 				}
 			)
 		}
 	}
 </script>
 <style lang="less">
-.tuijianlist{
-	padding-top: 50px;
-	box-sizing: border-box;
-}
+	.tuijianlist {
+		padding-top: 50px;
+		box-sizing: border-box;
+	}
 </style>

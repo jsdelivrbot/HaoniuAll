@@ -7,7 +7,7 @@
 					课程
 				</li>
 				<li :class="[tabbar==2?'active':'']" @click="change(2)">
-					机构
+					授课点
 				</li>
 			</ul>
 		</div>
@@ -36,7 +36,6 @@
 		data() {
 			return {
 				tabbar: 1,
-				localhttp: localStorage.getItem('localhttp'),
 				token: sessionStorage.getItem('token'),
 				course: [],
 				jigou: [],
@@ -45,10 +44,10 @@
 		},
 		mounted() {
 			let $this = this
-
 			this.$http.get('/user/watch/watchMyCourse', {
-				headers: {
-					token: sessionStorage.getItem('token')
+				params: {
+					lng: localStorage.getItem('lng'),
+					lat: localStorage.getItem('lat')
 				}
 			}).then(
 				(res) => {
@@ -59,8 +58,9 @@
 			)
 
 			this.$http.get('/user/watch/watchMySchool', {
-				headers: {
-					token: sessionStorage.getItem('token')
+				params: {
+					lng: localStorage.getItem('lng'),
+					lat: localStorage.getItem('lat')
 				}
 			}).then(
 				(res) => {

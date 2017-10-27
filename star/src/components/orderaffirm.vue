@@ -150,13 +150,12 @@
 		},
 		data() {
 			return {
-				localhttp: localStorage.getItem('localhttp'),
 				token: sessionStorage.getItem('token'),
 				select: '',
 				detailInfo: [],
 				oldmoney: '',
-				contacts: '俞强',
-				contactsPhone: '18297911147',
+				contacts: '',
+				contactsPhone: '',
 				disabled: true,
 				list: JSON.parse(localStorage.getItem('childrenInfo')),
 				selectIndex: '',
@@ -185,6 +184,8 @@
 					console.log(res.data)
 				}
 			)
+
+			this.list = JSON.parse(localStorage.getItem('childrenInfo'))
 		},
 		methods: {
 			selectfn(val) {

@@ -1,14 +1,14 @@
 <template>
 	<div class="course-detail">
 		<topbar title='课程简介'></topbar>
-		<div style="display: none;">
+		<!--<div style="display: none;">
 			<img class="previewer-demo-img" v-for="(item, index) in list" :src="item.src" width="100" @click="show(index)">
 		</div>
 		<div v-transfer-dom>
 			<previewer :list="list" ref="previewer" :options="options"></previewer>
-		</div>
+		</div>-->
 		<div class="course-info vux-1px-b">
-			<img src="../../static/img/1498630391.png" />
+			<img :src="detailInfo.coverUrl" />
 			<div>
 				<h2>{{detailInfo.name}}</h2>
 				<h1><em style="font-size: 15px; font-style: normal;margin-right: 2px;">¥</em>{{detailInfo.price}}</h1>
@@ -43,7 +43,7 @@
 				</li>
 			</ul>
 		</div>
-		<!--<div class="intro-box" v-if='detailInfo.douAmount>0||detailInfo.couponId>0||detailInfo.discount>0'>
+		<div class="intro-box" v-if='detailInfo.douAmount>0||detailInfo.couponId>0||detailInfo.discount>0'>
 			<div class="title vux-1px-b">
 				优惠活动
 			</div>
@@ -52,7 +52,7 @@
 				<p class="p">2.{{detailInfo.discount}}折优惠</p>
 				<p class="p" v-if='detailInfo.couponId>0'>3.{{detailInfo.coupon.name}}</p>
 			</div>
-		</div>-->
+		</div>
 
 		<div class="intro-box">
 			<div class="title vux-1px-b">
@@ -177,22 +177,8 @@
 			}).then(
 				(res) => {
 					this.detailInfo = res.data.obj
-					if(res.data.obj.school.nphotos >= 2) {
-						this.getPhotos()
-					}
 				}
 			)
-			//			console.log(props[0])
-			//			let urls = 'schoolName=' + props[0] + '&companyName=' + props[1] + '&name=' + props[2]
-			//			console.log(urls)
-			//			this.$http.get('/business/course/detail?' + urls).then(
-			//				(res) => {
-			//					this.detailInfo = res.data.obj
-			//					if(res.data.obj.school.nphotos >= 2) {
-			//						this.getPhotos()
-			//					}
-			//				}
-			//			)
 
 			this.$http.get('/business/course/detailEvaluate', {
 				params: {
@@ -225,7 +211,6 @@
 							arr.src = res.data.obj[i]
 							this.list.push(arr)
 						}
-						console.log(res.data)
 					}
 				)
 			},
@@ -391,7 +376,6 @@
 				line-height: 44px;
 				font-size: 15px;
 				color: #333;
-				/*margin-bottom: 10px;*/
 			}
 			.couponlist {
 				padding: 8px 0;
@@ -407,7 +391,6 @@
 				line-height: 24px;
 				color: #666;
 				padding-right: 15px;
-				/*margin-top: 6px;*/
 				box-sizing: border-box;
 			}
 			li {

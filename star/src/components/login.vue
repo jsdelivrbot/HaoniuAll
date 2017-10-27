@@ -39,7 +39,8 @@
 				localhttp: localStorage.getItem('localhttp'),
 				iphone: '',
 				pwd: '',
-				openid: ''
+				openid: '',
+				unionid: ''
 			}
 		},
 		beforeRouteEnter(to, from, next) {
@@ -57,7 +58,8 @@
 			}
 			let openid = GetQueryString('openid')
 			this.openid = openid
-			if(this.openid === '1') {
+			this.unionid = GetQueryString('unionid')
+			if(this.openid === '') {
 				window.location.href = 'http://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd0b68ce5e6fa1e14&redirect_uri=http://wx.dianke8.com/xxdk/app/weChat/pay/wxOpenid&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
 			}
 		},
@@ -65,6 +67,7 @@
 			login() {
 				this.$http.get('/login', {
 					params: {
+						uuid: this.unionid,
 						phone: this.iphone,
 						password: this.pwd,
 						openId: this.openid
@@ -75,8 +78,8 @@
 						if(res.data.result === 0) {
 							console.log(res.data)
 							sessionStorage.setItem('token', res.data.obj.token)
-							this.$http.defaults.headers.post['token'] = sessionStorage.getItem('token')
-							this.$http.defaults.headers.get['token'] = sessionStorage.getItem('token')
+							this.$http.defaults.headers.common['token'] = sessionStorage.getItem('token')
+							localStorage.setItem('loginunionid', this.unionid)
 							localStorage.setItem('loginname', this.iphone)
 							localStorage.setItem('loginpwd', this.pwd)
 							localStorage.setItem('loginopenid', this.openid)
@@ -85,7 +88,7 @@
 								this.$router.replace(sessionStorage.getItem('path'))
 								sessionStorage.removeItem('path')
 							} else {
-								window.location.href = '/#/pub/home'
+								this.$router.replace('/pub/home')
 							}
 						} else {
 							this.$vux.alert.show({

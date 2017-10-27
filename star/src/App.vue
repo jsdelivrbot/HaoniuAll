@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<!--<transition name="slide-left">-->
-		<keep-alive>
+		<keep-alive exclude='nokeep'>
 			<router-view class="child-view"></router-view>
 		</keep-alive>
 		<!--</transition>-->

@@ -2,14 +2,11 @@
 	<div class="jigou-list">
 		<ul>
 			<li v-for='item in list' class="vux-1px-b">
-				<router-link :to='"/jigoudetail/"+item.name'>
-					<img :src="item.logo" v-if='item.logo' />
-					<img :src="item.schools[0].thumbnail" v-if='!item.logo' />
-					<!--<img src="../../static/img/wallhaven-307832.jpg" v-if='!item.logo' />-->
+				<router-link :to='"/jigoudetail/"+item.id'>
+					<img :src="item.coverUrl" v-if='item.coverUrl' />
 					<div class="center">
 						<h2>{{item.name}}</h2>
 						<p>{{item.intro}}</p>
-						<!--<div>{{item.intro.length>30?item.intro.substring(0,34)+'...':item.intro}}</div>-->
 					</div>
 				</router-link>
 			</li>

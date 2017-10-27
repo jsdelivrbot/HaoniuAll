@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<!--<transition name="slide-right">-->
-		<router-view class="child-view"></router-view>
-		<!--</transition>-->
+		<keep-alive>
+			<router-view class="child-view"></router-view>
+		</keep-alive>
 		<v-footer></v-footer>
 	</div>
 </template>
@@ -29,6 +29,7 @@
 				}
 			}).then(
 				(res) => {
+					console.log(this.$wechat)
 					this.$wechat.config({
 						debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 						appId: res.data.obj.appid, // 必填，公众号的唯一标识
@@ -44,9 +45,16 @@
 					$this.$wechat.getLocation({
 						type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
 						success: function(res) {
-							localStorage.setItem('lat', res.latitude)
-							localStorage.setItem('lng', res.longitude)
-							console.log(localStorage.getItem('lat'))
+							$this.$http.get('/user/watch/getBaiduCoordinate', {
+								longitude: res.longitude,
+								latitude: res.latitude,
+								type: '1'
+							}).then(
+								(vaks) => {
+									localStorage.setItem('lat', vaks.data.obj.latitude)
+									localStorage.setItem('lng', vaks.data.obj.longitude)
+								}
+							)
 						}
 					})
 				}

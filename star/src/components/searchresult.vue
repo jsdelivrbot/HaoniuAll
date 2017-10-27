@@ -27,7 +27,7 @@
 						<div class="center">
 							<h2>{{item.courseName}}</h2>
 							<p>
-								上海市浦东新区康桥镇环桥路1280弄7#2018室上海市浦东新区康桥镇环桥路1280弄7#2018室上海市浦东新区康桥镇环桥路1280弄7#2018室
+								{{item.intro}}
 							</p>
 						</div>
 						<div class="right">

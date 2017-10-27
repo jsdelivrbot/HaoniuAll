@@ -5,16 +5,12 @@
 			</bm-marker>
 			<bm-marker :position="sty" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
 			</bm-marker>
-			<!--<bm-marker v-for='item in center'  :position="item" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
-			</bm-marker>-->
-			<bm-label v-for='item in center' :key='item' :offset="{width: -22, height: -50}" @click='chenalert(item.id)' v-if='item.size>0' :content='item.size+"课"' :position='getval(item)' :labelStyle="{backgroundColor:'rgba(0,0,0,0)',backgroundSize:'100% 100%',backgroundImage:'url(../../static/img/cionbg.png)',borderColor:' rgba(0,0,0,0) ',color: '#fff ',textAlign:'center ',lineHeight:'32px ',padding:'5px ',boxSize:'border-box ', fontSize : '12px ',left:'50px',width:'32px ',height:'39px ',top:'-50px '}" title='Hover me' />
-			<!--<bm-label v-for='item in center' :key='item' :offset="{width: -22, height: -50}"  @click='chenalert(item.lng+","+item.lat+","+item.count)' :content='item.opt.substr(5,2)+"<br>"+item.count+"课"' :position='getval(1)' :labelStyle="{backgroundColor:'rgba(0,0,0,0)',backgroundSize:'100% 100%',backgroundImage:'url(../../static/img/cionbg.png)',borderColor:' rgba(0,0,0,0) ',color: '#fff ',textAlign:'center ',lineHeight:'16px ',padding:'5px ',boxSize:'border-box ', fontSize : '12px ',width:'32px ',height:'39px'}" title='Hover me' />-->
+			<bm-label v-for='item in center' :key='item' :offset="{width: -22, height: -50}" @click='chenalert(item.id)' v-if='item.size>0' :content='item.size+"课"' :position='getval(item)' :labelStyle="{backgroundColor:'rgba(0,0,0,0)',backgroundSize:'100% 100%',backgroundImage:'url(../../static/img/cionbg.png)',borderColor:' rgba(0,0,0,0) ',color: '#fff ',textAlign:'center ',lineHeight:'32px ',padding:'5px ',boxSize:'border-box ', fontSize : '12px ',left:'50px',width:'32px ',height:'39px ',top:'-50px '}" />
 			<bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_LEFT" :locationIcon='stys' @locationSuccess='abcd' :showAddressBar="true" :autoLocation="true"></bm-geolocation>
 		</baidu-map>
 	</div>
 </template>
 <script>
-	//	import topbar from '../components/callback'
 	export default {
 		props: {
 			center: {},
@@ -66,8 +62,13 @@
 				map
 			}) {
 				if(this.focus !== '') {
-					this.centers.lng = this.focus.lng
-					this.centers.lat = this.focus.lat
+					if(this.focus.lng) {
+						this.centers.lng = this.focus.lng
+						this.centers.lat = this.focus.lat
+					} else {
+						this.centers.lng = 121.496209
+						this.centers.lat = 31.244657
+					}
 				} else {
 					this.centers.lng = 121.496209
 					this.centers.lat = 31.244657

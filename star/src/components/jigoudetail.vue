@@ -1,6 +1,6 @@
 <template>
 	<div class="jigou-detail">
-		<topbar title='机构简介'></topbar>
+		<topbar title='授课点简介'></topbar>
 		<div class="jigou-info">
 			<img :src="detailInfo.coverUrl" v-if='detailInfo.coverUrl' />
 			<div class="center">
@@ -12,7 +12,7 @@
 			<div class="title vux-1px-b">
 				机构介绍
 			</div>
-			<p>{{detailInfo.intro}}</p>
+			<div class="show_html" v-html="detailInfo.intro"></div>
 		</div>
 
 		<div class="intro-box" style="padding: 0;">
@@ -266,6 +266,17 @@
 				padding: 0 15px;
 				box-sizing: border-box;
 				min-height: 80px;
+			}
+			>.show_html {
+				font-size: 14px;
+				line-height: 24px;
+				color: #666;
+				padding: 0 15px;
+				box-sizing: border-box;
+				min-height: 80px;
+				img {
+					max-width: 100%;
+				}
 			}
 		}
 	}
