@@ -1,23 +1,23 @@
 <template>
 	<div class="fast-dispatch-box">
 		<v-header title="快速调车" :iconShow="true" @history="goHistory"></v-header>
-		<group label-width="102px" style="margin-top: -20px;">
+		<group label-width="85px" style="margin-top: -20px;">
 			<!--<x-input title="装货地：" placeholder="请选择装货地"></x-input>-->
-			<x-address title="装货地" :list="addressData" placeholder="请选择装货地" value-text-align="left" v-model="beginValue" @on-hide="test"></x-address>
+			<x-address title="装货地：" :list="addressData" placeholder="请选择装货地" value-text-align="left" v-model="beginValue" @on-hide="test"></x-address>
 			<!--<x-input title="卸货地：" placeholder="请选择卸货地"></x-input>-->
-			<x-address title="卸货地" :list="addressData" placeholder="请选择卸货地" value-text-align="left" v-model="endValue"></x-address>
+			<x-address title="卸货地：" :list="addressData" placeholder="请选择卸货地" value-text-align="left" v-model="endValue"></x-address>
 			<!--<x-input title="装车时间：" placeholder="请选择装车时间"></x-input>-->
-			<datetime v-model="time" value-text-align="left" placeholder="请选择装车时间" format="YYYY-MM-DD HH:mm" @on-change="change" title="装车时间" year-row="{value}年" month-row="{value}月" day-row="{value}日" hour-row="{value}点" minute-row="{value}分"></datetime>
-			<selector title="项目名称" :options="optionsList" v-model="optionValue" placeholder="选择项目" @on-change="test2">
+			<datetime v-model="time" value-text-align="left" placeholder="请选择装车时间" format="YYYY-MM-DD HH:mm" @on-change="change" title="装车时间：" year-row="{value}年" month-row="{value}月" day-row="{value}日" hour-row="{value}点" minute-row="{value}分"></datetime>
+			<selector title="项目名称：" :options="optionsList" v-model="optionValue" placeholder="选择项目" @on-change="test2">
 			</selector>
 		</group>
-		<group labelWidth="102px">
-			<x-input title="货物名称" placeholder="请输入货物名称" v-model="goods_name"></x-input>
-			<x-input title="货物数量" placeholder="请输入货物数量" v-model="goods_num" type="number"></x-input>
-			<selector title="车型要求" :options="categoryList" v-model="cart_type" placeholder="请选择车型">
+		<group labelWidth="85px">
+			<x-input title="货物名称：" placeholder="请输入货物名称" v-model="goods_name" :max="16"></x-input>
+			<x-input title="货物数量：" placeholder="请输入货物数量" v-model="goods_num" type="number" :max="10"></x-input>
+			<selector title="车型要求：" :options="categoryList" v-model="cart_type" placeholder="请选择车型">
 			</selector>
 			<!--<x-input title="车型要求：" placeholder="请输入车型要求" v-model="cart_type"></x-input>-->
-			<selector title="车长要求" :options="lengthList" v-model="cart_length" placeholder="请选择车长">
+			<selector title="车长要求：" :options="lengthList" v-model="cart_length" placeholder="请选择车长">
 			</selector>
 			<!--<x-input title="车长要求：" placeholder="请输入车长要求" v-model="cart_length"></x-input>-->
 		</group>
@@ -42,6 +42,10 @@
 				<checker default-item-class="item" selected-item-class="item-selected" v-model="offer_type" @on-change="test2">
 					<!--<checker-item value="按车">按车</checker-item>-->
 					<div class="check">
+						<checker-item value="2"></checker-item>
+						<span class="checker-text" @click="offer_type = '2'">按车</span>
+					</div>
+					<div class="check">
 						<checker-item value="0"></checker-item>
 						<span class="checker-text" @click="offer_type = '0'">按吨</span>
 					</div>
@@ -49,13 +53,9 @@
 						<checker-item value="1"></checker-item>
 						<span class="checker-text" @click="offer_type = '1'">按方</span>
 					</div>
-					<div class="check">
-						<checker-item value="2"></checker-item>
-						<span class="checker-text" @click="offer_type = '2'">按车</span>
-					</div>
 				</checker>
 			</cell>
-			<x-textarea title="货源描述：" v-model="goods_description"></x-textarea>
+			<x-textarea title="货源描述：" v-model="goods_description" :max="64" :show-counter="false"></x-textarea>
 		</group>
 		<div class="btn" @click="start" v-show="!loading">
 			开始调车
@@ -80,8 +80,8 @@
 				endValue: [],
 				token: sessionStorage.getItem('token'),
 				time: '',
-				goods_aging: '',
-				offer_type: '',
+				goods_aging: '12小时',
+				offer_type: '2',
 				goods_description: '',
 				goods_name: '',
 				goods_num: '',
@@ -89,15 +89,15 @@
 				cart_length: '',
 				loading: false,
 				categoryList: ['普通', '平板', '高低平板', '厢式', '封闭', '开项箱', '罐式', '集装箱', '自卸', '高栏', '轴线板', '满轮车', '框架板', '高低高板', '抽拉板', '簸箕板', '超低板', '高低板高栏', '笼子车', '叶片车'],
-				lengthList: ['4m', '4.2m', '4.3m', '4.5m', '4.8m', '5m',
-					'5.2m', '5.8m', '6m', '6.2m', '6.8m', '7m', '7.2m',
-					'7.4m', '7.6m', '7.7m', '7.8m', '8m', '8.2m', '8.6m',
-					'8.7m', '8.8m', '9m', '9.2m', '9.6m', '9.8m', '10m',
-					'11m', '12.5m', '13m', '13.5m', '14m', '14.5m', '15m',
-					'15.5m', '16m', '16.5m', '17m', '17.5m', '18m', '19.5m',
-					'20m', '20.5m', '20.6m', '20.8m', '21.5m', '21.6m',
-					'21.8m', '22.5m', '22.6m', '22.8m', '30.5m', '31m', '31.5m',
-					'32m', '32.5m', '3.3m', '3.5m', '3.8m'
+				lengthList: ['4米', '4.2米', '4.3米', '4.5米', '4.8米', '5米',
+					'5.2米', '5.8米', '6米', '6.2米', '6.8米', '7米', '7.2米',
+					'7.4米', '7.6米', '7.7米', '7.8米', '8米', '8.2米', '8.6米',
+					'8.7米', '8.8米', '9米', '9.2米', '9.6米', '9.8米', '10米',
+					'11米', '12.5米', '13米', '13.5米', '14米', '14.5米', '15米',
+					'15.5米', '16米', '16.5米', '17米', '17.5米', '18米', '19.5米',
+					'20米', '20.5米', '20.6米', '20.8米', '21.5米', '21.6米',
+					'21.8米', '22.5米', '22.6米', '22.8米', '30.5米', '31米', '31.5米',
+					'32米', '32.5米', '3.3米', '3.5米', '3.8米'
 				]
 			}
 		},
@@ -182,16 +182,32 @@
 					this.$vux.toast.text('请填写货物名称')
 					return
 				}
-				if(this.goods_num === '') {
-					this.$vux.toast.text('请填写货物数量')
+//				if(this.goods_num === '') {
+//					this.$vux.toast.text('请填写货物数量')
+//					return
+//				}
+				if(this.goods_num.length > 10) {
+					this.$vux.toast.text('货物数量最多可输入10个字符')
 					return
 				}
+				let pattern = /^([1-9][0-9]*)+(.[0-9]{1,2})?$/
+				if(!pattern.test(this.goods_num)) {
+					this.$vux.toast.text('货物数量仅支持输入数字和小数点后两位')
+					return
+				}
+//				let haveFloat = this.goods_num.toString().indexOf('.')
+//				if(haveFloat !== -1) {
+//					if(this.goods_num.toString().split('.')[1].length > 2) {
+//						this.$vux.toast.text('货物数量仅支持小数点后两位')
+//						return
+//					}
+//				}
 				if(this.cart_type === '') {
-					this.$vux.toast.text('请填写车型要求')
+					this.$vux.toast.text('请选择车型要求')
 					return
 				}
 				if(this.cart_length === '') {
-					this.$vux.toast.text('请填写车长要求')
+					this.$vux.toast.text('请选择车长要求')
 					return
 				}
 				if(this.goods_aging === '') {
@@ -202,10 +218,10 @@
 					this.$vux.toast.text('请选择报价方式')
 					return
 				}
-//				if(this.goods_description === '') {
-//					this.$vux.toast.text('请填写货源描述')
-//					return
-//				}
+				//				if(this.goods_description === '') {
+				//					this.$vux.toast.text('请填写货源描述')
+				//					return
+				//				}
 				if(this.optionValue === '') {
 					this.$vux.toast.text('请选择项目名称')
 					return
@@ -292,29 +308,30 @@
 			.check {
 				margin-left: 12px;
 				display: flex;
-				justify-content: center;
+				/*justify-content: center;*/
 				align-items: center;
+				width: 65px;
 			}
 		}
 		.item {
-				width: 14px;
-				height: 14px;
-				background-color: #f4f2f5;
-				border: 1px solid #a3a3a3;
-				border-radius: 50%;
-				margin-right: 6px;
-			}
-			.item-selected {
-				width: 16px;
-				height: 16px;
-				background: url(../../../static/image/xuanzhong.png) left top no-repeat;
-				background-size: 16px 16px;
-				border: none;
-			}
-			.checker-text {
-				font-size: 13px;
-				line-height: 24px;
-			}
+			width: 14px;
+			height: 14px;
+			background-color: #f4f2f5;
+			border: 1px solid #a3a3a3;
+			border-radius: 50%;
+			margin-right: 6px;
+		}
+		.item-selected {
+			width: 16px;
+			height: 16px;
+			background: url(../../../static/image/xuanzhong.png) left top no-repeat;
+			background-size: 16px 16px;
+			border: none;
+		}
+		.checker-text {
+			font-size: 13px;
+			line-height: 24px;
+		}
 		.btn {
 			width: 68%;
 			height: 36px;

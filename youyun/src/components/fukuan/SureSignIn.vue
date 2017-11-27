@@ -2,7 +2,7 @@
 	<div class="sure-sign-in-box">
 		<v-header title="确认签收"></v-header>
 		<div class="content" v-show="!img">
-			<p>您还未上传任何照片，点击下方按钮新增</p>
+			<p>您还未上传任何照片,点击下方按钮新增</p>
 			<div class="btn">
 				增加
 				<input type="file" @change="fileChanged" ref="file">

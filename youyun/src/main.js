@@ -5,20 +5,25 @@ import Vuex from 'vuex'
 import FastClick from 'fastclick'
 import App from './App'
 import router from '@/router'
-import { AjaxPlugin, ToastPlugin, LoadingPlugin, ConfirmPlugin } from 'vux'
+import { AjaxPlugin, ToastPlugin, LoadingPlugin, ConfirmPlugin, DatetimePlugin } from 'vux'
 import 'babel-polyfill'
 
 Vue.use(AjaxPlugin)
 Vue.use(LoadingPlugin)
 Vue.use(ToastPlugin)
 Vue.use(ConfirmPlugin)
+Vue.use(DatetimePlugin)
 Vue.use(Vuex)
 
 //let token = window.android.getToken()
 //window.android.toast(token)
 //sessionStorage.setItem('token', token)
 //sessionStorage.setItem('token', '58ACE8B5203D20E1B094AC6D964E6EEBE27C58AC3F638D4EC697E72D91409A10')
-sessionStorage.setItem('token', '5A539F0D49F35A23FFBEB577144EE8D1A4B4AE5788431793B348959B60085D7C')
+//sessionStorage.setItem('token', '38842684BAFBBD3E4D1B3F1A5F85980CFED6878A2445EA346B3069B1DCB4276D')
+//sessionStorage.setItem('token', 'AF14FDD70BC6457B6942B27D65A4FB9BEBDB9BEB7A931003AE9C9D48E8E6138D')
+//sessionStorage.setItem('token', '5A539F0D49F35A23FFBEB577144EE8D1A4B4AE5788431793B348959B60085D7C')
+sessionStorage.setItem('token', '0DC52E2AFF64B5BB6763A3E17AD2B825A91EFDB1BE4C1D870BBF5E8E3E215C1B')
+//sessionStorage.setItem('token', '1D7F9B7F8E4D2620B0CF54AB3AA7B82A00068B820BADBEB483843EBA27721DFC')
 
 Vue.http.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 Vue.http.defaults.headers.common['token'] = sessionStorage.getItem('token')
@@ -43,41 +48,50 @@ FastClick.attach(document.body)
 
 Vue.config.productionTip = false
 
-const store = new Vuex.Store({}) // 这里你可能已经有其他 module
+//权限方法
+let power = 'CAP_TRAARCH_DRINFO_BTN, CAP_TRAARCH_TRUINFO_BTN, DIS_RSHUNT_BTN, TRA_ONPASS_MODBILL_BTN, TRA_ONPASS_CONARR_BTN, TRA_ONPASS_OPEREC_BTN, TRA_ARR_CONREC_BTN, TRA_ARR_EVA_BTN, TRA_ARR_OPEREC_BTN, TRA_SIGN_OPEREC_BTN, TRA_BILLDET_SIGNDET_BTN, TRA_BILLDET_HISTRAT_BTN, TRA_BILLDET_LOC_BTN, TRA_BILLDET_CONARR_BTN, TRA_BILLDET_CONREC_BTN, DIS_YSEND_DEP_BTN, DIS_YSEND_MODBILL_BTN, DIS_YSEND_REMDEP_BTN, DIS_NSEND_VQUO_CONFI_BTN, DIS_NSEND_VQUO_BTN, FRE_APPLY_MODFRE_BTN, FRE_APPLY_APPLYFRE_BTN, FRE_APPLY_OPEREC_BTN, FRE_AUD_PASS_BTN, FRE_AUD_REJ_BTN, FRE_AUD_OPEREC_BTN, FRE_PAY_PAYME_BTN, FRE_PAY_OPEREC_BTN, FRE_PAY_ACCENTRY_BTN'
+//let power = window.android.getPower()
+//alert(power.indexOf('FRE_APPLY_APPLYFRE_BTN'))
+//sessionStorage.setItem('power', power)
+Vue.prototype.$power = function(value) {
+	if(power.indexOf(value) === -1) {
+		return false
+	} else {
+		return true
+	}
+}
 
-store.registerModule('vux', { // 名字自己定义
-	state: {
-		isLoading: false
-	},
-	mutations: {
-		updateLoadingStatus(state, payload) {
-			state.isLoading = payload.isLoading
+//判断是否是第一个路由
+Vue.prototype.$setgoindex = function() {
+	if(window.history.length <= 1) {
+		if(location.href.indexOf('?') === -1) {
+			window.location.href = location.href + '?goindex=true'
+		} else if(location.href.indexOf('?') !== -1 && location.href.indexOf('goindex') === -1) {
+			window.location.href = location.href + '&goindex=true'
 		}
 	}
-})
-
-//router.beforeEach(function(to, from, next) {
-//		alert('test')
-//	store.commit('updateLoadingStatus', {
-//		isLoading: true
-//	})
-//	next()
-//})
-router.afterEach(function(to) {
-	setTimeout(function() {
-		//		store.commit('updateLoadingStatus', {
-		//			isLoading: false
-		//		})
-		myvue.$vux.loading.hide()
-	}, 500)
-})
+}
 
 /* eslint-disable no-new */
 window.myvue = new Vue({
-	store,
 	router,
 	render: h => h(App)
 }).$mount('#app-box')
+
+router.beforeEach(function(to, from, next) {
+	//	store.commit('updateLoadingStatus', {
+	//		isLoading: true
+	//	})
+	myvue.$vux.loading.show({
+		text: '加载中'
+	})
+	next()
+})
+
+router.afterEach(function(to) {
+	myvue.$vux.loading.hide()
+	myvue.$vux.confirm.hide()
+})
 
 //调转路由
 window.goRoute = function(path) {
@@ -102,7 +116,7 @@ window.yunliDeleItem = function(id) {
 			if(res.data.result.reCode === '0') {
 				myvue.$vux.toast.text('删除成功')
 				setTimeout(() => {
-					myvue.$initYunLi.initData()
+					$initYunLi.initData()
 				}, 500)
 			} else {
 				myvue.$vux.toast.text(res.data.result.reInfo)
@@ -110,28 +124,4 @@ window.yunliDeleItem = function(id) {
 		})
 }
 
-//判断是否是第一个路由
-Vue.prototype.$setgoindex = function() {
-	//console.log(window.history.length)
-	if(window.history.length <= 1) {
-		if(location.href.indexOf('?') === -1) {
-			window.location.href = location.href + '?goindex=true'
-		} else if(location.href.indexOf('?') !== -1 && location.href.indexOf('goindex') === -1) {
-			window.location.href = location.href + '&goindex=true'
-		}
-	}
-}
-
 //console.log(myvue)
-
-//权限方法
-let power = 'CAP_TRAARCH_DRINFO_BTN, CAP_TRAARCH_TRUINFO_BTN, DIS_RSHUNT_BTN, TRA_ONPASS_MODBILL_BTN, TRA_ONPASS_CONARR_BTN, TRA_ONPASS_OPEREC_BTN, TRA_ARR_CONREC_BTN, TRA_ARR_EVA_BTN, TRA_ARR_OPEREC_BTN, TRA_SIGN_OPEREC_BTN, TRA_BILLDET_SIGNDET_BTN, TRA_BILLDET_HISTRAT_BTN, TRA_BILLDET_LOC_BTN, TRA_BILLDET_CONARR_BTN, TRA_BILLDET_CONREC_BTN, DIS_YSEND_DEP_BTN, DIS_YSEND_MODBILL_BTN, DIS_YSEND_REMDEP_BTN, DIS_NSEND_VQUO_CONFI_BTN, DIS_NSEND_VQUO_BTN'
-//let power = window.android.getPower()
-//sessionStorage.setItem('power', power)
-Vue.prototype.$power = function(value) {
-	if(power.indexOf(value) === -1) {
-		return false
-	} else {
-		return true
-	}
-}

@@ -1,100 +1,126 @@
 <template>
 	<div class="order-detail-box" v-show="isComplete">
 		<v-header title="运单详情"></v-header>
-		<div class="item go-rater" v-if="raterShow">
-			<p @click="masterShow = true">您还没评价，请前往评价！ >></p>
-		</div>
-		<div class="item" v-if="info.star !== ''">
-			<div class="rater">
-				<rater :value="toNumber(info.star)" :font-size="36" disabled></rater>
-				<p @click="masterShow2 = true">查看评价 >></p>
+
+		<div class="tab" v-if="fromFuKuan === '1'">
+			<div class="tab-item current">
+				运单信息
 			</div>
+			<span class="line vux-1px-r"></span>
+			<router-link :to="'/ChargeApply3/' + waybill_id + '?from_type=' + fromType" replace class="tab-item">
+				支付信息
+			</router-link>
 		</div>
-		<div class="item">
-			<p>运单号：{{info.waybill_no}}</p>
-			<p>建单时间：{{info.created_time}}</p>
-			<p>项目名称：{{info.project_name}}</p>
-			<p>
-				<span v-if="info.goods_name">{{info.goods_name}},</span>
-				<span v-if="info.goods_num">{{info.goods_num}}</span>
-				<span v-if="info.goods_num">{{info.unit}}</span>
-			</p>
-			<p>{{info.begin_address}} 至 {{info.end_address}}</p>
-		</div>
-		<div class="item">
-			<p>{{info.cart_badge_no}}，{{info.driver_name}}，{{info.mobile_no}}</p>
-			<p>{{info.cart_type}}，{{info.cart_length}}米</p>
-			<p>定位时间：{{info.last_cur_modified_time}}</p>
-			<p>当前位置：{{info.cur_position}}</p>
-		</div>
-		<div class="footer">
-			<p class="vux-1px-r" @click="ydLocation(info.driver_name, info.mobile_no, info.cart_badge_no, waybill_id)" v-if="$power('TRA_BILLDET_LOC_BTN')">
-				<img src="../../../static/image/jingquedingwei@2x.png" width="13px" height="16px" />
-				<span>精确定位</span>
-			</p>
-			<p @click="ydTrack(info.driver_name, info.mobile_no, info.cart_badge_no, waybill_id)" v-if="$power('TRA_BILLDET_HISTRAT_BTN')">
-				<img src="../../../static/image/lishiguiji@2x.png" width="16px" height="16px" />
-				<span>历史轨迹</span>
-			</p>
-		</div>
-		<div class="item onRoad" v-if="info.state === '1'">
-			<p>
-				发货时间：{{info.qy_time}}
-				<span class="label">在途中</span>
-			</p>
-			<p>预计到货时间：{{info.predict_end_time}}</p>
-		</div>
-		<div class="footer-on-road vux-1px-t" v-if="info.state === '1'">
-			全程<span class="red">{{info.mileage}}</span>公里，预计用时<span class="red">{{info.use_time}}</span>小时
-		</div>
-		<div class="item" v-if="info.state === '2'">
-			<p>发货时间：{{info.qy_time}}<span class="label">已到货</span></p>
-			<p>预计到货时间：{{info.predict_end_time}}</p>
-			<p>实际到货时间：{{info.real_end_time}}</p>
-		</div>
-		<div class="item" v-if="info.state === '3'">
-			<p>发货时间：{{info.qy_time}}<span class="label">已签收</span></p>
-			<p>预计到货时间：{{info.predict_end_time}}</p>
-			<p>
-				实际到货时间：{{info.real_end_time}}
-				<span class="label2" @click="signInDetail" v-if="$power('TRA_BILLDET_SIGNDET_BTN')">查看签收详情</span>
-			</p>
-			<p>签收时间：{{info.sign_time}}</p>
-		</div>
-		<div class="btn" v-if="info.state === '1'" @click="receive(info.waybill_id)" v-show="$power('TRA_BILLDET_CONARR_BTN')">
-			确认到货
-		</div>
-		<div class="btn" v-if="info.state === '2'" @click="signIn" v-show="$power('TRA_BILLDET_CONREC_BTN')">
-			确认签收
-		</div>
-		<div class="master" v-show="masterShow">
-			<div class="content">
-				<p>您已确认该订单已到达目的地，快来评价吧</p>
+
+		<div :class="{fromFuKuan: fromFuKuan === '1'}">
+			<div class="item go-rater" v-if="raterShow">
+				<p @click="masterShow = true">您还没评价,请前往评价！ >></p>
+			</div>
+
+			<div class="item" v-if="info.star !== ''">
 				<div class="rater">
-					<rater :font-size="30" style="margin-top: 10px;" v-model="rater"></rater>
-				</div>
-				<textarea v-model="content" :max="64"></textarea>
-				<x-icon type="ios-close-empty" size="40" @click="closeMaster"></x-icon>
-				<div class="content-btn" @click="evaluation">
-					完成评价
+					<rater :value="toNumber(info.star)" :font-size="36" disabled></rater>
+					<p @click="masterShow2 = true">查看评价 >></p>
 				</div>
 			</div>
-		</div>
-		<div class="master" v-show="masterShow2">
-			<div class="content">
-				<p>{{evaluationInfo.cart_badge_no}}，{{evaluationInfo.driver_name}}，{{evaluationInfo.mobile_no}}</p>
-				<div class="rater">
-					<rater :font-size="30" style="margin-top: 10px;" :value="toNumber(evaluationInfo.star)" disabled></rater>
-				</div>
-				<p>{{evaluationInfo.content}}</p>
-				<x-icon type="ios-close-empty" size="40" @click="closeMaster2"></x-icon>
+
+			<div class="item">
+				<p>运单号：{{info.waybill_no}}</p>
+				<p>建单时间：{{info.created_time}}</p>
+				<p>项目名称：{{info.project_name}}</p>
+				<p>
+					<span v-if="info.goods_name">{{info.goods_name}},</span>
+					<span v-if="info.goods_num">{{info.goods_num}}</span>
+					<span v-if="info.goods_num">{{info.unit}}</span>
+				</p>
+				<p>{{info.begin_address}} 至 {{info.end_address}}</p>
 			</div>
-		</div>
-		<div class="master" v-show="masterShow3">
-			<div class="content">
-				<img :src="signDetail.sign_img_url" class="signImg" />
-				<p>{{signDetail.sign_content}}</p>
-				<x-icon type="ios-close-empty" size="40" @click="closeMaster3"></x-icon>
+
+			<div class="item">
+				<p>{{info.cart_badge_no}},{{info.driver_name}},{{info.mobile_no}}</p>
+				<p>{{info.cart_type}},{{info.cart_length}}米</p>
+				<p>定位时间：{{info.last_cur_modified_time}}</p>
+				<p>当前位置：{{info.cur_position}}</p>
+			</div>
+
+			<div class="footer">
+				<p class="vux-1px-r" @click="ydLocation(info.driver_name, info.mobile_no, info.cart_badge_no, waybill_id)" v-if="$power('TRA_BILLDET_LOC_BTN')">
+					<img src="../../../static/image/jingquedingwei@2x.png" width="13px" height="16px" />
+					<span>精确定位</span>
+				</p>
+				<p @click="ydTrack(info.driver_name, info.mobile_no, info.cart_badge_no, waybill_id)" v-if="$power('TRA_BILLDET_HISTRAT_BTN')">
+					<img src="../../../static/image/lishiguiji@2x.png" width="16px" height="16px" />
+					<span>历史轨迹</span>
+				</p>
+			</div>
+
+			<div class="item onRoad" v-if="info.state === '1'">
+				<p>
+					发货时间：{{info.qy_time}}
+					<span class="label">在途中</span>
+				</p>
+				<p>预计到货时间：{{info.predict_end_time}}</p>
+			</div>
+
+			<div class="footer-on-road vux-1px-t" v-if="info.state === '1'">
+				全程<span class="red">{{info.mileage}}</span>公里,预计用时<span class="red">{{info.use_time}}</span>小时
+			</div>
+
+			<div class="item" v-if="info.state === '2'">
+				<p>发货时间：{{info.qy_time}}<span class="label">已到货</span></p>
+				<p>预计到货时间：{{info.predict_end_time}}</p>
+				<p>实际到货时间：{{info.real_end_time}}</p>
+			</div>
+
+			<div class="item" v-if="info.state === '3'">
+				<p>发货时间：{{info.qy_time}}<span class="label">已签收</span></p>
+				<p>预计到货时间：{{info.predict_end_time}}</p>
+				<p>
+					实际到货时间：{{info.real_end_time}}
+					<span class="label2" @click="signInDetail" v-if="$power('TRA_BILLDET_SIGNDET_BTN')" v-show="info.sign_time">查看签收详情</span>
+				</p>
+				<p>签收时间：{{info.sign_time}}</p>
+			</div>
+
+			<div class="btn" v-if="info.state === '1'" @click="receive(info.waybill_id)" v-show="$power('TRA_BILLDET_CONARR_BTN')">
+				确认到货
+			</div>
+
+			<div class="btn" v-if="info.state === '2'" @click="signIn" v-show="$power('TRA_BILLDET_CONREC_BTN')">
+				确认签收
+			</div>
+
+			<div class="master" v-show="masterShow">
+				<div class="content">
+					<p>您已确认该订单已到达目的地,快来评价吧</p>
+					<div class="rater">
+						<rater :font-size="30" style="margin-top: 10px;" v-model="rater"></rater>
+					</div>
+					<textarea v-model="content" :max="64"></textarea>
+					<x-icon type="ios-close-empty" size="40" @click="closeMaster"></x-icon>
+					<div class="content-btn" @click="evaluation">
+						完成评价
+					</div>
+				</div>
+			</div>
+
+			<div class="master" v-show="masterShow2">
+				<div class="content">
+					<p>{{evaluationInfo.cart_badge_no}},{{evaluationInfo.driver_name}},{{evaluationInfo.mobile_no}}</p>
+					<div class="rater">
+						<rater :font-size="30" style="margin-top: 10px;" :value="toNumber(evaluationInfo.star)" disabled></rater>
+					</div>
+					<p>{{evaluationInfo.content}}</p>
+					<x-icon type="ios-close-empty" size="40" @click="closeMaster2"></x-icon>
+				</div>
+			</div>
+
+			<div class="master" v-show="masterShow3">
+				<div class="content">
+					<img :src="signDetail.sign_img_url" class="signImg" />
+					<p>{{signDetail.sign_content}}</p>
+					<x-icon type="ios-close-empty" size="40" @click="closeMaster3"></x-icon>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -119,7 +145,9 @@
 				masterShow2: false,
 				evaluationInfo: {},
 				masterShow3: false,
-				signDetail: {}
+				signDetail: {},
+				fromFuKuan: this.$route.query.fromFuKuan,
+				fromType: this.$route.query.from_type
 			}
 		},
 		computed: {
@@ -148,8 +176,10 @@
 					.then((res) => {
 						console.log(res)
 						this.evaluationInfo = res.data.data
-						this.$vux.loading.hide()
-						this.isComplete = true
+						this.$nextTick(() => {
+							this.isComplete = true
+							this.$vux.loading.hide()
+						})
 					})
 			},
 			signIn() {
@@ -238,6 +268,40 @@
 	.order-detail-box {
 		padding-top: 45px;
 		padding-bottom: 40px;
+		.tab {
+			width: 100%;
+			height: 40px;
+			position: fixed;
+			top: 45px;
+			left: 0;
+			background-color: white;
+			display: flex;
+			align-items: center;
+			color: #999999;
+			line-height: 40px;
+			.tab-item {
+				width: 0;
+				flex: 1;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 15px;
+				color: #646464;
+				&.current {
+					color: #63bffe;
+				}
+			}
+			.line {
+				height: 26px;
+				&.vux-1px-r:after {
+					color: #999999;
+					border-right: 1px solid #999999;
+				}
+			}
+		}
+		.fromFuKuan {
+			margin-top: 50px;
+		}
 		.item {
 			margin: 10px 10px 0;
 			padding: 15px;

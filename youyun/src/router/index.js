@@ -1,223 +1,233 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+//付款
 
+import Reapply from '@/components/fukuan/Reapply'
+import InvoicePay from '@/components/fukuan/InvoicePay'
+import SureInvoice2 from '@/components/fukuan/SureInvoice2'
+import SureInvoice from '@/components/fukuan/SureInvoice'
+import RechargeRecord from '@/components/fukuan/RechargeRecord'
+import TransactionRecord from '@/components/fukuan/TransactionRecord'
+import PasswordManage from '@/components/fukuan/PasswordManage'
+import InvoiceManage from '@/components/fukuan/InvoiceManage'
+import ChargeAccount from '@/components/fukuan/ChargeAccount'
+import ChargeApply5 from '@/components/fukuan/ChargeApply5'
+import ChargeApply4 from '@/components/fukuan/ChargeApply4'
+import ChargeApply3 from '@/components/fukuan/ChargeApply3'
+import ManageBankCard from '@/components/fukuan/ManageBankCard'
+import ChooseBankCard from '@/components/fukuan/ChooseBankCard'
+import AddBankCard from '@/components/fukuan/AddBankCard'
+import Withdraw from '@/components/fukuan/Withdraw'
+import FuKuan from '@/components/fukuan/FuKuan'
+import RechargeWithdraw from '@/components/fukuan/RechargeWithdraw'
+import Recharge from '@/components/fukuan/Recharge'
+import SureSignIn from '@/components/fukuan/SureSignIn'
+import SureSignIn2 from '@/components/fukuan/SureSignIn2'
+import ChangeApply from '@/components/fukuan/ChangeApply'
+
+import Hello from '@/components/Hello'
+import AboutUs from '@/components/AboutUs'
+import VehicleInfo from '@/components/yunli/VehicleInfo'
+import FastCreate from '@/components/yunli/FastCreate'
+import Receipt from '@/components/yunli/Receipt'
+import DriverInfo from '@/components/yunli/DriverInfo'
+import ChangeCharge from '@/components/yunli/ChangeCharge'
+import YunLi from '@/components/yunli/YunLi'
+import FileDriver from '@/components/yunli/FileDriver'
+import FileVehicle from '@/components/yunli/FileVehicle'
+import Preview from '@/components/yunli/Preview'
+import RegisterVehicle from '@/components/yunli/RegisterVehicle'
+//FastDispatch diaodu
+
+import FastDispatch from '@/components/diaodu/FastDispatch'
+import OfferDetail from '@/components/diaodu/OfferDetail'
+import DiaoDu from '@/components/diaodu/DiaoDu'
+import ChangeOrder from '@/components/diaodu/ChangeOrder'
+
+//yunshu
+import OrderDetail from '@/components/yunshu/OrderDetail'
+import ChargeApply from '@/components/yunshu/ChargeApply'
+import ChargeApply2 from '@/components/yunshu/ChargeApply2'
+import Yunshu from '@/components/yunshu/Yunshu'
+import ChangeOrder2 from '@/components/yunshu/ChangeOrder2'
 Vue.use(Router)
-
 const router = new Router({
 	routes: [{
 			path: '/',
-			component: function(resolve) {
-				require(['@/components/Hello'], resolve)
-			}
+			component: Hello
 		},
 		//运力
 		{
 			path: '/VehicleInfo/:id',
-			component: function(resolve) {
-				require(['@/components/yunli/VehicleInfo'], resolve)
-			}
+			component: VehicleInfo
 		},
 		{
 			path: '/FastCreate/:id',
-			component: function(resolve) {
-				require(['@/components/yunli/FastCreate'], resolve)
-			}
+			component: FastCreate
 		},
 		{
 			path: '/Receipt/:id',
-			component: function(resolve) {
-				require(['@/components/yunli/Receipt'], resolve)
-			}
+			component: Receipt
 		},
 		{
 			path: '/DriverInfo/:id',
-			component: function(resolve) {
-				require(['@/components/yunli/DriverInfo'], resolve)
-			}
+			component: DriverInfo
 		},
 		{
-			path: '/ChangeCharge',
-			component: function(resolve) {
-				require(['@/components/yunli/ChangeCharge'], resolve)
-			}
+			path: '/ChangeCharge/:id',
+			component: ChangeCharge
 		},
 		{
 			path: '/YunLi',
-			component: function(resolve) {
-				require(['@/components/yunli/YunLi'], resolve)
-			}
+			component: YunLi
 		},
 		{
 			path: '/FileDriver/:id',
-			component: function(resolve) {
-				require(['@/components/yunli/FileDriver'], resolve)
-			}
+			component: FileDriver
 		},
 		{
 			path: '/FileVehicle/:id',
-			component: function(resolve) {
-				require(['@/components/yunli/FileVehicle'], resolve)
-			}
+			component: FileVehicle
 		},
 		{
 			path: '/Preview',
-			component: function(resolve) {
-				require(['@/components/yunli/Preview'], resolve)
-			}
+			component: Preview
 		},
 		{
 			path: '/RegisterVehicle',
-			component: function(resolve) {
-				require(['@/components/yunli/RegisterVehicle'], resolve)
-			}
+			component: RegisterVehicle
 		},
 		//调度
 		{
 			path: '/FastDispatch',
-			component: function(resolve) {
-				require(['@/components/diaodu/FastDispatch'], resolve)
-			}
+			component: FastDispatch
 		},
 		{
 			path: '/OfferDetail/:id',
-			component: function(resolve) {
-				require(['@/components/diaodu/OfferDetail'], resolve)
-			}
+			component: OfferDetail
 		},
 		{
 			path: '/DiaoDu',
-			component: function(resolve) {
-				require(['@/components/diaodu/DiaoDu'], resolve)
-			}
+			component: DiaoDu
 		},
 		{
 			path: '/ChangeOrder/:id',
-			component: function(resolve) {
-				require(['@/components/DiaoDu/ChangeOrder'], resolve)
-			}
+			component: ChangeOrder
 		},
 		//运输
 		{
 			path: '/OrderDetail/:id',
-			component: function(resolve) {
-				require(['@/components/yunshu/OrderDetail'], resolve)
-			}
+			component: OrderDetail
 		},
 		{
 			path: '/ChargeApply',
-			component: function(resolve) {
-				require(['@/components/yunshu/ChargeApply'], resolve)
-			}
+			component: ChargeApply
 		},
 		{
 			path: '/ChargeApply2',
-			component: function(resolve) {
-				require(['@/components/yunshu/ChargeApply2'], resolve)
-			}
+			component: ChargeApply2
 		},
 		{
 			path: '/Yunshu',
-			component: function(resolve) {
-				require(['@/components/yunshu/Yunshu'], resolve)
-			}
+			component: Yunshu
 		},
 		{
 			path: '/SureSignIn2/:id',
-			component: function(resolve) {
-				require(['@/components/fukuan/SureSignIn2'], resolve)
-			}
+			component: SureSignIn2
 		},
 		{
 			path: '/ChangeOrder2/:id',
-			component: function(resolve) {
-				require(['@/components/yunshu/ChangeOrder2'], resolve)
-			}
+			component: ChangeOrder2
 		},
 		//关于我们
 		{
 			path: '/AboutUs',
-			component: function(resolve) {
-				require(['@/components/AboutUs'], resolve)
-			}
+			component: AboutUs
 		},
 		//付款
 		{
 			path: '/SureSignIn',
-			component: function(resolve) {
-				require(['@/components/fukuan/SureSignIn'], resolve)
-			}
+			component: SureSignIn
 		},
 		{
 			path: '/Recharge',
-			component: function(resolve) {
-				require(['@/components/fukuan/Recharge'], resolve)
-			}
+			component: Recharge
 		},
 		{
 			path: '/RechargeWithdraw',
-			component: function(resolve) {
-				require(['@/components/fukuan/RechargeWithdraw'], resolve)
-			}
+			component: RechargeWithdraw
 		},
 		{
 			path: '/FuKuan',
-			component: function(resolve) {
-				require(['@/components/fukuan/FuKuan'], resolve)
-			}
+			component: FuKuan
 		},
 		{
 			path: '/Withdraw',
-			component: function(resolve) {
-				require(['@/components/fukuan/Withdraw'], resolve)
-			}
+			component: Withdraw
 		},
 		{
 			path: '/AddBankCard',
-			component: function(resolve) {
-				require(['@/components/fukuan/AddBankCard'], resolve)
-			}
+			component: AddBankCard
 		},
 		{
 			path: '/ChooseBankCard',
-			component: function(resolve) {
-				require(['@/components/fukuan/ChooseBankCard'], resolve)
-			}
+			component: ChooseBankCard
 		},
 		{
 			path: '/ManageBankCard',
-			component: function(resolve) {
-				require(['@/components/fukuan/ManageBankCard'], resolve)
-			}
+			component: ManageBankCard
 		},
 		{
-			path: '/ChargeApply3',
-			component: function(resolve) {
-				require(['@/components/fukuan/ChargeApply3'], resolve)
-			}
+			path: '/ChargeApply3/:id',
+			component: ChargeApply3
 		},
 		{
-			path: '/ChargeApply4',
-			component: function(resolve) {
-				require(['@/components/fukuan/ChargeApply4'], resolve)
-			}
+			path: '/ChargeApply4/:id',
+			component: ChargeApply4
 		},
 		{
-			path: '/ChargeApply5',
-			component: function(resolve) {
-				require(['@/components/fukuan/ChargeApply5'], resolve)
-			}
+			path: '/ChargeApply5/:id',
+			component: ChargeApply5
 		},
 		{
 			path: '/ChargeAccount',
-			component: function(resolve) {
-				require(['@/components/fukuan/ChargeAccount'], resolve)
-			}
+			component: ChargeAccount
 		},
 		{
 			path: '/InvoiceManage',
-			component: function(resolve) {
-				require(['@/components/fukuan/InvoiceManage'], resolve)
-			}
+			component: InvoiceManage
+		},
+		{
+			path: '/PasswordManage',
+			component: PasswordManage
+		},
+		{
+			path: '/TransactionRecord',
+			component: TransactionRecord
+		},
+		{
+			path: '/RechargeRecord',
+			component: RechargeRecord
+		},
+		{
+			path: '/SureInvoice/:id/:acount',
+			component: SureInvoice
+		},
+		{
+			path: '/SureInvoice2',
+			component: SureInvoice2
+		},
+		{
+			path: '/InvoicePay',
+			component: InvoicePay
+		},
+		{
+			path: '/Reapply/:id',
+			component: Reapply
+		},
+		{
+			path: '/ChangeApply/:id',
+			component: ChangeApply
 		}
 	]
 })

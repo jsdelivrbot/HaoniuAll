@@ -1,7 +1,7 @@
 <template>
 	<div class="receipt-box">
 		<v-header title="收款信息"></v-header>
-		<group label-width="110.5px">
+		<group label-width="95px">
 			<x-input title="收款人姓名:" placeholder="请输入姓名" v-model="pay_name" :max="25"></x-input>
 			<x-input title="收款银行:" placeholder="请输入银行名称" v-model="bank_name" :max="15"></x-input>
 			<x-input title="银行卡号:" placeholder="请输入银行卡号" v-model="driver_bank_no" type="number" :max="20"></x-input>
@@ -80,7 +80,7 @@
 			</div>
 		</div>
 		<div>
-			<x-dialog v-model="show" class="dialog-demo">
+			<x-dialog v-model="show" class="dialog-demo6">
 				<div class="img-box">
 					<img :src="showPhote" style="max-width:60%">
 				</div>
@@ -352,7 +352,7 @@
 //					}
 					let pattern2 = /^(1[38][0-9]|15[0-35-9]|14[579]|17[0135678])[0-9]{8}$/
 					if(!pattern2.test(this.pay_mobile)) {
-						this.$vux.toast.text('手机号不正确，请重新输入')
+						this.$vux.toast.text('手机号不正确,请重新输入')
 						return
 					}
 					if(this.driver_bank_no === '') {
@@ -413,6 +413,9 @@
 <style lang="less">
 	.receipt-box {
 		padding-top: 45px;
+		.weui-cell {
+			font-size: 13px;
+		}
 		.choose-img {
 			width: 100%;
 			background-color: white;
@@ -444,7 +447,7 @@
 				}
 				p {
 					text-align: center;
-					font-size: 12px;
+					font-size: 13px;
 					color: #646464;
 					margin-top: 4px;
 				}
@@ -488,7 +491,7 @@
 		.disabled {
 			background-color: #999999;
 		}
-		.dialog-demo {
+		.dialog-demo6 {
 			.weui-dialog {
 				border-radius: 8px;
 				padding-bottom: 8px;

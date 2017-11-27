@@ -15,7 +15,8 @@
 			<div class="tab vux-1px-b">
 				<div class="item current">
 					卡车档案
-				</div>|
+				</div>
+				<span class="line vux-1px-r"></span>
 				<div class="item" @click="goRoute">
 					司机档案
 				</div>
@@ -38,11 +39,21 @@
 				<cell title="车型：" value-align="left">
 					<p style="color: black;">{{fileInfo.cart_type}}</p>
 				</cell>
-				<x-input title="车长：" :value="fileInfo.cart_length + '米'" disabled></x-input>
-				<x-input title="车宽：" :value="fileInfo.cart_width + '米'" disabled></x-input>
-				<x-input title="车高：" :value="fileInfo.cart_height + '米'" disabled></x-input>
-				<x-input title="吨位：" :value="fileInfo.cart_tonnage + '吨'" disabled></x-input>
-				<x-input title="容积：" :value="fileInfo.cart_volume + '方'" disabled></x-input>
+				<cell title="车长：" value-align="left">
+					<span style="color: black" v-if="fileInfo.cart_length">{{fileInfo.cart_length}}米</span>
+				</cell>
+				<cell title="车宽：" value-align="left">
+					<span style="color: black" v-if="fileInfo.cart_width">{{fileInfo.cart_width}}米</span>
+				</cell>
+				<cell title="车高：" value-align="left">
+					<span style="color: black" v-if="fileInfo.cart_height">{{fileInfo.cart_height}}米</span>
+				</cell>
+				<cell title="吨位：" value-align="left">
+					<span style="color: black" v-if="fileInfo.cart_tonnage">{{fileInfo.cart_tonnage}}吨</span>
+				</cell>
+				<!--<cell title="容积：" value-align="left">
+					<span style="color: black" v-if="fileInfo.cart_volume">{{fileInfo.cart_volume}}方</span>
+				</cell>-->
 			</group>
 		</div>
 		<div class="nothing">
@@ -130,8 +141,10 @@
 						img: this.fileInfo.driving_permit_photo,
 						title: '行驶证照片'
 					})
-					this.$vux.loading.hide()
-					this.isComplete = true
+					this.$nextTick(() => {
+						this.isComplete = true
+						this.$vux.loading.hide()
+					})
 				})
 		},
 		methods: {
@@ -145,11 +158,15 @@
 <style lang="less">
 	.file-vehicle-box {
 		padding: 45px 10px;
+		.weui-cell {
+			font-size: 13px;
+		}
 		.tab {
 			width: 100%;
 			height: 40px;
 			background-color: white;
 			display: flex;
+			align-items: center;
 			color: #999999;
 			line-height: 40px;
 			margin-top: 20px;
@@ -160,6 +177,13 @@
 				justify-content: center;
 				font-size: 14px;
 				color: #646464;
+			}
+			.line {
+				height: 26px;
+				&.vux-1px-r:after {
+					color: #999999;
+					border-right: 1px solid #999999;
+				}
 			}
 			.current {
 				color: #fea509;

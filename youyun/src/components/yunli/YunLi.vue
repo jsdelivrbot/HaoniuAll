@@ -14,16 +14,16 @@
 				车型
 			</div>
 		</div>
-		<div class="wapper">
+		<div class="wrapper">
 			<pull-to :top-load-method="refresh" :bottom-load-method="getData" :bottom-config="{failText: '没有更多信息'}">
 				<div class="content">
 					<!--<router-link :to="'/FastCreate/' + item.my_driver_id" tag="div" class="item" v-for="(item, index) in listData" :key="index">-->
-					<router-link :to="'/FileVehicle/' + item.my_driver_id" tag="div" class="item" v-for="(item, index) in listData" :key="index">
-					<!--<div @click="router('/FastCreate/' + item.my_driver_id, '/FileVehicle/' + item.my_driver_id, item.mobile_no, item.my_driver_id, item)" class="item" v-for="(item, index) in listData" :key="index">-->
+					<!--<router-link :to="'/FileVehicle/' + item.my_driver_id" tag="div" class="item" v-for="(item, index) in listData" :key="index">-->
+					<div @click="router('/FastCreate/' + item.my_driver_id, '/FileVehicle/' + item.my_driver_id, item.mobile_no, item.my_driver_id, item)" class="item" v-for="(item, index) in listData" :key="index">
 					<!--<div @click="yunliDeleItem(item.my_driver_id)" class="item" v-for="(item, index) in listData" :key="index">-->
 						<div class="first">
 							<p>
-								{{item.cart_badge_no}}，{{item.realname}}，{{item.mobile_no}}
+								{{item.cart_badge_no}},{{item.realname}},{{item.mobile_no}}
 							</p>
 							<img src="../../../static/image/yonghurengzheng@2x.png" v-show="item.service_state === '0'" />
 							<img src="../../../static/image/sijirengzheng@2x.png" v-show="item.approve_state === '1'" />
@@ -34,7 +34,7 @@
 						</div>
 						<div class="second">
 							<div class="text">
-								<p>{{item.cart_type}}，{{item.cart_length}}米,{{item.cart_tonnage}}吨</p>
+								<p>{{item.cart_type}},{{item.cart_length}}米,{{item.cart_tonnage}}吨</p>
 								<p>定位时间：{{item.last_cur_modified_time}}</p>
 							</div>
 							<div class="score">
@@ -44,8 +44,8 @@
 						<div class="third">
 							当前位置：{{item.cur_position}}
 						</div>
-					<!--</div>-->
-					</router-link>
+					</div>
+					<!--</router-link>-->
 				</div>
 				<load-more :show-loading="showLoading" :tip="tip" background-color="#f1eff2" v-show="listData.length === 0"></load-more>
 			</pull-to>
@@ -474,8 +474,8 @@
 		},
 		created() {
 			this.initData()
-			window.myvue.$initYunLi = this
-//			console.log(window.myvue.$initYunLi.initData)
+//			window.myvue.$initYunLi = this
+			window.$initYunLi = this
 		},
 		methods: {
 			emptDistance(closeType) {
@@ -496,6 +496,15 @@
 				//				console.log(text)
 				this.condition = text
 				this.initData()
+			},
+			emptOption() {
+				this.min_distance = ''
+				this.max_distance = ''
+				this.min_cart_length = ''
+				this.max_cart_length = ''
+				this.supplyofgoods = ''
+				this.corps = ''
+				this.condition = ''
 			},
 			initData() {
 				this.total_pages = 0
@@ -621,6 +630,10 @@
 						}
 						loaded('done')
 					})
+					.catch((err) => {
+						loaded('fail')
+						console.log(err)
+					})
 			},
 			//上拉加载数据
 			getData(loaded) {
@@ -650,6 +663,10 @@
 						} else {
 							loaded('fail')
 						}
+					})
+					.catch((err) => {
+						loaded('fail')
+						console.log(err)
 					})
 			}
 		}
@@ -689,7 +706,7 @@
 				}
 			}
 		}
-		.wapper {
+		.wrapper {
 			position: fixed;
 			width: 100%;
 			left: 0;
@@ -747,7 +764,7 @@
 			position: fixed;
 			right: 24px;
 			bottom: 24px;
-			box-shadow: 0 0px 9px #888888;
+			box-shadow: 0 2px 12px #c9ad69;
 		}
 		.vux-popup-picker-select {
 			span {

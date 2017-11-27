@@ -5,7 +5,7 @@
 			<x-input title="车牌号码:" :required="true" v-model="fileInfo.cart_badge_no">
 				<span slot="right" style="color: #63bffe;">*必填</span>
 			</x-input>
-			<x-input title="司机姓名:" :required="true" v-model="fileInfo.realname" :max="25">
+			<x-input title="司机姓名:" :required="true" v-model="fileInfo.realname" :max="16">
 				<span slot="right" style="color: #63bffe;">*必填</span>
 			</x-input>
 			<x-input title="手机号码:" :required="true" v-model="fileInfo.mobile_no" type="number" :max="11" disabled>
@@ -15,7 +15,7 @@
 				<span slot="right" style="color: #63bffe;">*必填</span>
 			</x-input>
 		</group>
-		<group>
+		<group labelWidth="65px">
 			<selector title="车型：" :options="categoryList1" v-model="fileInfo.axle" placeholder="拖挂及游轮"></selector>
 			<selector title=" " :options="categoryList2" v-model="fileInfo.supplyofgoods" placeholder="货箱结构"></selector>
 			<selector title=" " :options="categoryList3" v-model="fileInfo.corps" placeholder="特殊功能"></selector>
@@ -30,19 +30,19 @@
 				</div>
 			</div>
 			<selector title="车长：" :options="lengthList" v-model="fileInfo.cart_length" placeholder="选择车长"></selector>
-			<x-input title="车宽：" type="number" label-width="105px" v-model="fileInfo.cart_width" :max="8">
-				<span slot="right">m</span>
+			<x-input title="车宽：" type="number" label-width="65px" v-model="fileInfo.cart_width" :max="8">
+				<span slot="right">米</span>
 			</x-input>
-			<x-input title="车高：" type="number" label-width="105px" v-model="fileInfo.cart_height" :max="8">
-				<span slot="right">m</span>
+			<x-input title="车高：" type="number" label-width="65px" v-model="fileInfo.cart_height" :max="8">
+				<span slot="right">米</span>
 			</x-input>
 			<selector title="吨位：" :options="weightList" v-model="fileInfo.cart_tonnage" placeholder="选择吨位"></selector>
-			<x-input title="容积：" type="number" label-width="105px" v-model="fileInfo.cart_volume" :max="8">
+			<!--<x-input title="容积：" type="number" label-width="65px" v-model="fileInfo.cart_volume" :max="8">
 				<span slot="right">方</span>
-			</x-input>
+			</x-input>-->
 		</group>
 		<div>
-			<x-dialog v-model="show" class="dialog-demo">
+			<x-dialog v-model="show" class="dialog-demo6">
 				<div class="img-box">
 					<img :src="showPhote" style="max-width:60%">
 				</div>
@@ -153,15 +153,15 @@
 				//				corps: '',
 				categoryList4: ['中国重汽', '一汽解放', '东风商用车', '东风柳汽', '东风日产柴', '陕西重汽', '北汽福田', '依维柯', '重庆重汽', '北方奔驰', '江淮格尔发', '安徽华菱', '湖北三环', '福建新马龙', '精工镇江', '春兰卡车', '上海汇众', '金华青年曼', '洛阳福德', '南汽凌野', '瑞典沃尔沃', '法国雷诺', '德国曼', '德国奔驰', '瑞典斯堪尼亚', '日本五十玲', '日本日野', '其他'],
 				//				manufacturer: '',
-				lengthList: ['4m', '4.2m', '4.3m', '4.5m', '4.8m', '5m',
-					'5.2m', '5.8m', '6m', '6.2m', '6.8m', '7m', '7.2m',
-					'7.4m', '7.6m', '7.7m', '7.8m', '8m', '8.2m', '8.6m',
-					'8.7m', '8.8m', '9m', '9.2m', '9.6m', '9.8m', '10m',
-					'11m', '12.5m', '13m', '13.5m', '14m', '14.5m', '15m',
-					'15.5m', '16m', '16.5m', '17m', '17.5m', '18m', '19.5m',
-					'20m', '20.5m', '20.6m', '20.8m', '21.5m', '21.6m',
-					'21.8m', '22.5m', '22.6m', '22.8m', '30.5m', '31m', '31.5m',
-					'32m', '32.5m', '3.3m', '3.5m', '3.8m'
+				lengthList: ['4米', '4.2米', '4.3米', '4.5米', '4.8米', '5米',
+					'5.2米', '5.8米', '6米', '6.2米', '6.8米', '7米', '7.2米',
+					'7.4米', '7.6米', '7.7米', '7.8米', '8米', '8.2米', '8.6米',
+					'8.7米', '8.8米', '9米', '9.2米', '9.6米', '9.8米', '10米',
+					'11米', '12.5米', '13米', '13.5米', '14米', '14.5米', '15米',
+					'15.5米', '16米', '16.5米', '17米', '17.5米', '18米', '19.5米',
+					'20米', '20.5米', '20.6米', '20.8米', '21.5米', '21.6米',
+					'21.8米', '22.5米', '22.6米', '22.8米', '30.5米', '31米', '31.5米',
+					'32米', '32.5米', '3.3米', '3.5米', '3.8米'
 				],
 				//				cart_length: '',
 				weightList: ['2吨', '3吨', '4吨', '5吨', '6吨', '8吨', '10吨', '12吨', '13吨', '14吨', '15吨', '18吨', '20吨', '25吨', '28吨', '30吨', '33吨', '34吨', '35吨', '36吨', '37吨', '38吨', '40吨', '42吨', '45吨', '48吨', '50吨', '55吨', '60吨', '65吨', '70吨', '75吨', '80吨', '85吨', '90吨', '95吨', '100吨'],
@@ -215,7 +215,7 @@
 		created() {
 			let fileInfoString = sessionStorage.getItem('fileInfo')
 			this.fileInfo = JSON.parse(fileInfoString)
-			this.fileInfo.cart_length = this.fileInfo.cart_length + 'm'
+			this.fileInfo.cart_length = this.fileInfo.cart_length + '米'
 			this.fileInfo.cart_tonnage = this.fileInfo.cart_tonnage + '吨'
 			this.carframe64 = this.fileInfo.carframe_photo
 			this.car64 = this.fileInfo.car_photo
@@ -438,7 +438,7 @@
 				let pattern2 = /^(1[38][0-9]|15[0-35-9]|14[579]|17[0135678])[0-9]{8}$/
 				//				console.log(pattern.test(str))
 				if(!pattern2.test(this.fileInfo.mobile_no)) {
-					this.$vux.toast.text('手机号不正确，请重新输入')
+					this.$vux.toast.text('手机号不正确,请重新输入')
 					return
 				}
 				//				if(this.fileInfo.mobile_no === '') {
@@ -472,8 +472,8 @@
 								tqc_photo: this.fileInfo.tqc_photo,
 								driving_permit_photo: this.fileInfo.driving_permit_photo,
 								vfi_photo: this.fileInfo.vfi_photo,
-								id_card: this.fileInfo.id_card,
-								cart_volume: this.fileInfo.cart_volume
+								id_card: this.fileInfo.id_card
+//								cart_volume: this.fileInfo.cart_volume
 							}
 						}).then((res) => {
 							console.log(res)
@@ -497,16 +497,19 @@
 <style lang="less">
 	@import '~vux/src/styles/close';
 	.vehicle-info-box {
+		.weui-cell {
+			font-size: 13px;
+		}
 		padding-top: 44px;
 		.current-option {
 			display: flex;
-			padding: 10px 0 10px 120px;
+			padding: 10px 0 10px 80px;
 			background-color: white;
 			.title {
 				width: 50px;
 				display: block;
 				flex: 0 0 50px;
-				font-size: 16px;
+				font-size: 13px;
 			}
 			.content {
 				font-size: 0;
@@ -514,7 +517,7 @@
 					display: inline-block;
 					padding: 2px 10px;
 					background-color: #f7f7f7;
-					font-size: 14px;
+					font-size: 13px;
 					margin: 4px;
 				}
 			}
@@ -541,7 +544,7 @@
 					}
 					p {
 						text-align: center;
-						font-size: 14px;
+						font-size: 13px;
 						color: #646464;
 						margin-top: 4px;
 					}
@@ -595,7 +598,7 @@
 		.disabled {
 			background-color: #999999;
 		}
-		.dialog-demo {
+		.dialog-demo6 {
 			.weui-dialog {
 				border-radius: 8px;
 				padding-bottom: 8px;

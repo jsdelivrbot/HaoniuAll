@@ -14,7 +14,8 @@
 		<div class="tab vux-1px-b">
 			<div class="item" @click="goRoute">
 				卡车档案
-			</div>|
+			</div>
+			<span class="line vux-1px-r"></span>
 			<div class="item current">
 				司机档案
 			</div>
@@ -32,14 +33,14 @@
 				<img src="../../../static/image/shou@2x.png" class="img2" />
 			</div>
 		</div>
-		<group label-width="119px" style="margin-top: -1.17647059em;">
+		<group label-width="85px" style="margin-top: -1.17647059em;">
 			<x-input title="身份证号：" :value="fileInfo.id_card" disabled></x-input>
 			<!--<x-input title="期望流向：" :value="fileInfo.direction_name" disabled></x-input>-->
 			<cell title="期望流向：" value-align="left">
 				<p style="color: black;">{{fileInfo.direction_name}}</p>
 			</cell>
 		</group>
-		<group label-width="119px">
+		<group label-width="85px">
 			<x-input title="收款人姓名：" :value="fileInfo.pay_name" disabled></x-input>
 			<x-input title="收款银行：" :value="fileInfo.bank_name" disabled></x-input>
 			<x-input title="银行卡号：" :value="fileInfo.driver_bank_no" disabled></x-input>
@@ -106,11 +107,15 @@
 <style lang="less">
 	.file-driver-box {
 		padding: 45px 10px;
+		.weui-cell {
+			font-size: 13px;
+		}
 		.tab {
 			width: 100%;
 			height: 40px;
 			background-color: white;
 			display: flex;
+			align-items: center;
 			color: #999999;
 			line-height: 40px;
 			margin-top: 20px;
@@ -121,6 +126,13 @@
 				justify-content: center;
 				font-size: 14px;
 				color: #646464;
+			}
+			.line {
+				height: 26px;
+				&.vux-1px-r:after {
+					color: #999999;
+					border-right: 1px solid #999999;
+				}
 			}
 			.current {
 				color: #fea509;

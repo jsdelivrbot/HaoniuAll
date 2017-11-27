@@ -17,7 +17,7 @@
 			iconShow: Boolean
 		},
 		created() {
-			window.myvue.$initInput = this
+			window.$initInput = this
 		},
 		methods: {
 			back() {

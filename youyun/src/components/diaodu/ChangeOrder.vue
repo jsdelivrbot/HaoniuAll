@@ -1,47 +1,47 @@
 <template>
-	<div class="vehicle-info-box" v-show="isComplete">
+	<div class="change-order-box" v-show="isComplete">
 		<v-header title="运单修改"></v-header>
-		<group>
-			<x-input title="承运车辆：" :value="formInfo.driver_name + ',' + formInfo.cart_badge_no + ',' + formInfo.mobile_no" :disabled="true" label-width="88px"></x-input>
+		<group label-width="85px" style="margin-top: -20px;">
+			<x-input title="承运车辆：" :value="formInfo.driver_name + ',' + formInfo.cart_badge_no + ',' + formInfo.mobile_no" :disabled="true"></x-input>
 		</group>
-		<group label-width="102px">
-			<x-input title="运单号:" placeholder="请输入运单号" v-model="formInfo.waybill_no" label-width="88px"></x-input>
+		<group label-width="85px" style="margin-top: -10px;">
+			<x-input title="运单号:" placeholder="请输入运单号" v-model="formInfo.waybill_no"></x-input>
 			<!--<x-input title="装货地:" placeholder="请输入装货地" :required="true">
 				<span slot="right" style="color: #63bffe;">*必填</span>
 			</x-input>-->
 			<div class="address vux-1px-t">
-				<x-address title="装货地" :list="addressData" placeholder="请选择装货地" value-text-align="left" v-model="beginValue" @on-hide="test"></x-address>
+				<x-address title="装货地:" :list="addressData" placeholder="请选择装货地" value-text-align="left" v-model="beginValue" @on-hide="test"></x-address>
 				<p class="label">*必选</p>
 			</div>
 			<!--<x-input title="卸货地:" placeholder="请输入卸货地" :required="true">
 				<span slot="right" style="color: #63bffe;">*必填</span>
 			</x-input>-->
 			<div class="address vux-1px-t">
-				<x-address title="卸货地" :list="addressData" placeholder="请选择卸货地" value-text-align="left" v-model="endValue"></x-address>
+				<x-address title="卸货地:" :list="addressData" placeholder="请选择卸货地" value-text-align="left" v-model="endValue"></x-address>
 				<p class="label">*必选</p>
 			</div>
 			<!--<x-input title="起运时间:" v-model="qy_time" :required="true">
 				<span slot="right" style="color: #63bffe;">*必填</span>
 			</x-input>-->
 			<div class="address vux-1px-t">
-				<datetime v-model="qy_time" value-text-align="left" placeholder="请选择起运时间" format="YYYY-MM-DD HH:mm" title="起运时间" year-row="{value}年" month-row="{value}月" day-row="{value}日" hour-row="{value}点" minute-row="{value}分"></datetime>
+				<datetime v-model="qy_time" value-text-align="left" placeholder="请选择起运时间" format="YYYY-MM-DD HH:mm" title="起运时间:" year-row="{value}年" month-row="{value}月" day-row="{value}日" hour-row="{value}点" minute-row="{value}分"></datetime>
 				<!--<p class="label">*必选</p>-->
 			</div>
-		</group>
-		<group label-width="102px">
-			<x-input title="货物名称：" placeholder="请输入货物名称" v-model="goods_name"></x-input>
-			<x-input title="货物数量：" placeholder="请输入货物数量" v-model="goods_num" type="number"></x-input>
-			<!--<x-input title="货物单位：" placeholder="请输入货物数量单位" v-model="unit"></x-input>-->
-			<selector title="货物单位" :options="unitsList" v-model="unit" placeholder="请选择货物数量单位"></selector>
-			<x-input title="运输单价：" placeholder="请输入运输单价" v-model="unit_price" type="number"></x-input>
-			<x-input title="运单总价：" placeholder="请输入运单总价" v-model="total_price" type="number"></x-input>
-			<x-input title="预付款：" placeholder="请输入预付款" v-model="prepayments" type="number"></x-input>
-			<x-input title="回单押金：" placeholder="请输入回单押金" v-model="back_fee" type="number"></x-input>
 			<div class="selector vux-1px-t">
 				<selector title="项目名称" :options="optionsList" v-model="optionValueKey" placeholder="请选择项目">
 				</selector>
 				<!--<p class="label">*必选</p>-->
 			</div>
+		</group>
+		<group label-width="85px" style="margin-top: -10px;">
+			<x-input title="货物名称：" placeholder="请输入货物名称" v-model="goods_name" :max="16"></x-input>
+			<x-input title="货物数量：" placeholder="请输入货物数量" v-model="goods_num" type="number"></x-input>
+			<!--<x-input title="货物单位：" placeholder="请输入货物数量单位" v-model="unit"></x-input>-->
+			<selector title="货物单位" :options="unitsList" v-model="unit" placeholder="请选择货物数量单位"></selector>
+			<x-input title="运输单价：" placeholder="请输入运输单价" v-model="unit_price" type="number"></x-input>
+			<x-input title="运单总价：" placeholder="请输入运单总价" v-model="total_price"></x-input>
+			<x-input title="预付款：" placeholder="请输入预付款" v-model="prepayments" type="number"></x-input>
+			<x-input title="回单押金：" placeholder="请输入回单押金" v-model="back_fee" type="number"></x-input>
 		</group>
 		<div class="btn" @click="create" v-show="!loading">
 			确认
@@ -82,7 +82,7 @@
 				total_price: '',
 				prepayments: '',
 				back_fee: '',
-				unitsList: ['吨', '方'],
+				unitsList: ['吨', '方', '车'],
 				unitKey: '',
 				isComplete: false
 			}
@@ -143,8 +143,10 @@
 						this.beginValue = [this.formInfo.begin_province_code, this.formInfo.begin_city_code, this.formInfo.begin_county_code]
 						this.endValue = [this.formInfo.end_province_code, this.formInfo.end_city_code, this.formInfo.end_county_code]
 					}
-					this.$vux.loading.hide()
-					this.isComplete = true
+					this.$nextTick(() => {
+						this.isComplete = true
+						this.$vux.loading.hide()
+					})
 				})
 			this.$http.get('pub/html/get/v1/projects?token=' + this.token).then((res) => {
 				//				console.log(res)
@@ -189,15 +191,74 @@
 					this.$vux.toast.text('请选择项目名称')
 					return
 				}
+				if(this.goods_name.length > 16) {
+					this.$vux.toast.text('货物名称最多输入16个字')
+					return
+				}
 				if(parseFloat(this.prepayments) + parseFloat(this.back_fee) > this.total_price) {
 					this.$vux.toast.text('回单押金+预付款 不可大于运单总价')
 					return
+				}
+				let pattern = /^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(.[0-9]+)?$/
+				if(!pattern.test(this.total_price) && this.total_price !== '') {
+					this.$vux.toast.text('运费信息仅支持输入数字')
+					return
+				}
+				if(!pattern.test(this.unit_price) && this.unit_price !== '') {
+					this.$vux.toast.text('运费信息仅支持输入数字')
+					return
+				}
+				if(!pattern.test(this.prepayments) && this.prepayments !== '') {
+					this.$vux.toast.text('运费信息仅支持输入数字')
+					return
+				}
+				if(!pattern.test(this.back_fee) && this.back_fee !== '') {
+					this.$vux.toast.text('运费信息仅支持输入数字')
+					return
+				}
+				let haveFloat = this.goods_num.toString().indexOf('.')
+				if(haveFloat !== -1) {
+					if(this.goods_num.toString().split('.')[1].length > 4) {
+						this.$vux.toast.text('货物数量仅支持小数点后四位')
+						return
+					}
+				}
+				let haveFloat2 = parseFloat(this.total_price).toString().indexOf('.')
+				if(haveFloat2 !== -1) {
+					if(parseFloat(this.total_price).toString().split('.')[1].length > 2) {
+						this.$vux.toast.text('运单总价仅支持小数点后两位')
+						return
+					}
+				}
+				let haveFloat3 = parseFloat(this.unit_price).toString().indexOf('.')
+				if(haveFloat3 !== -1) {
+					if(parseFloat(this.unit_price).toString().split('.')[1].length > 2) {
+						this.$vux.toast.text('运输单价仅支持小数点后两位')
+						return
+					}
+				}
+				let haveFloat4 = parseFloat(this.prepayments).toString().indexOf('.')
+				if(haveFloat4 !== -1) {
+					if(parseFloat(this.prepayments).toString().split('.')[1].length > 2) {
+						this.$vux.toast.text('预付款仅支持小数点后两位')
+						return
+					}
+				}
+				let haveFloat5 = parseFloat(this.back_fee).toString().indexOf('.')
+				if(haveFloat5 !== -1) {
+					if(parseFloat(this.back_fee).toString().split('.')[1].length > 2) {
+						this.$vux.toast.text('回单押金仅支持小数点后两位')
+						return
+					}
 				}
 				if(this.unit === '吨') {
 					this.unitKey = '0'
 				}
 				if(this.unit === '方') {
 					this.unitKey = '1'
+				}
+				if(this.unit === '车') {
+					this.unitKey = '2'
 				}
 				this.loading = true
 				this.$http.post('dispatch/html/put/v1/start_waybill_update?token=' + this.token, {
@@ -266,8 +327,11 @@
 </script>
 
 <style lang="less">
-	.vehicle-info-box {
+	.change-order-box {
 		padding-top: 44px;
+		.weui-cell {
+			font-size: 13px;
+		}
 		.address {
 			display: flex;
 			padding-right: 15px;
@@ -279,7 +343,7 @@
 				margin-left: -15px;
 			}
 			.label {
-				font-size: 16px;
+				font-size: 13px;
 				color: rgb(99, 191, 254);
 				display: flex;
 				align-items: center;

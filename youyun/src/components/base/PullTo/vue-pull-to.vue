@@ -141,9 +141,13 @@
             : this._bottomConfig.failText;
           loadedStayTime = this._bottomConfig.loadedStayTime;
         }
+//      let test = function() {
+//					this.scrollTo(0);
+//      }
+//      test.bind(window)
         setTimeout(() => {
-          this.scrollTo(0);
-
+//				alert(1)
+					this.scrollTo(0);
           // reset state
           setTimeout(() => {
             this.state = '';
@@ -166,6 +170,7 @@
         this.startY = event.touches[0].clientY;
         this.beforeDiff = this.diff;
         this.startScrollTop = this.scrollEl.scrollTop;
+        //是否到达底部
         this.bottomReached = this.checkBottomReached();
       },
 

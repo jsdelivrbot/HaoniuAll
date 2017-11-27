@@ -2,13 +2,15 @@
 	<div class="yunshu-box">
 		<search-header @goSearch="goSearch"></search-header>
 		<div class="tab">
-			<div class="item" :class="{current: currentList === 1}" @click="initData(1)">
+			<div class="item" :class="{current: currentList === 1}" @click="initData(1, condition)">
 				在途中
-			</div>|
-			<div class="item" :class="{current: currentList === 2}" @click="initData(2)">
+			</div>
+			<span class="line vux-1px-r"></span>
+			<div class="item" :class="{current: currentList === 2}" @click="initData(2, condition)">
 				已到货
-			</div>|
-			<div class="item" :class="{current: currentList === 3}" @click="initData(3)">
+			</div>
+			<span class="line vux-1px-r"></span>
+			<div class="item" :class="{current: currentList === 3}" @click="initData(3, condition)">
 				已签收
 			</div>
 		</div>
@@ -27,7 +29,7 @@
 							</p>
 							<div class="position">
 								<div>
-									<p>{{item.cart_badge_no}}，{{item.driver_name}}，{{item.mobile_no}}</p>
+									<p>{{item.cart_badge_no}},{{item.driver_name}},{{item.mobile_no}}</p>
 									<p>{{item.begin_address}} 至 {{item.end_address}}</p>
 								</div>
 								<img src="../../../static/image/dingweizhongjie@2x.png" v-if="item.end_type === '1'" />
@@ -69,6 +71,7 @@
 						<p class="row">改后：{{item.update_end}}</p>
 					</div>
 					<p v-if="recordCount === '0'">未查询到操作记录</p>
+					<load-more :show-loading="true" tip="加载中" background-color="#f1eff2" v-show="recordLoading"></load-more>
 				</div>
 				<x-icon type="ios-close-empty" size="40" @click="closeMaster"></x-icon>
 			</div>
@@ -78,7 +81,7 @@
 				<div class="content">
 					<p>运单号：123450-1<span class="label">机械设备</span></p>
 					<p>建单时间：2017-9-9 12：23<span class="label label2">35.0吨</span></p>
-					<p>皖A123456，袁自林，13900000000</p>
+					<p>皖A123456,袁自林,13900000000</p>
 					<p>安徽-合肥-高新区 至 四川-成都-金牛区</p>
 				</div>
 				<div class="footer">
@@ -92,7 +95,7 @@
 					<p>建单时间：2017-9-9 12：23<span class="label label2">35.0吨</span></p>
 					<div class="position">
 						<div>
-							<p>皖A123456，袁自林，13900000000</p>
+							<p>皖A123456,袁自林,13900000000</p>
 							<p>安徽-合肥-高新区 至 四川-成都-金牛区</p>
 						</div>
 						<img src="../../../static/image/dingweizhongjie@2x.png" />
@@ -110,7 +113,7 @@
 				<div class="content">
 					<p>运单号：123450-1<span class="label">机械设备</span></p>
 					<p>建单时间：2017-9-9 12：23<span class="label label2">35.0吨</span></p>
-					<p>皖A123456，袁自林，13900000000</p>
+					<p>皖A123456,袁自林,13900000000</p>
 					<p>安徽-合肥-高新区 至 四川-成都-金牛区</p>
 				</div>
 				<div class="footer">
@@ -140,7 +143,8 @@
 				total_pages: 0,
 				masterShow: false,
 				recordList: [],
-				recordCount: ''
+				recordCount: '',
+				recordLoading: true
 			}
 		},
 		components: {
@@ -150,7 +154,11 @@
 		},
 		created() {
 			this.initData(1)
-			window.myvue.$initYunshu = this
+			window.$initYunshu = this
+		},
+		beforeRouteLeave(to, from, next) {
+			//			alert('test')
+			next()
 		},
 		methods: {
 			goSearch(text) {
@@ -179,8 +187,14 @@
 					this.showLoading = false
 				})
 			},
-			initData(state) {
-				this.condition = ''
+			initData(state, text) {
+				this.tip = '正在加载'
+				this.showLoading = true
+				if(text) {
+					this.condition = text
+				} else {
+					this.condition = ''
+				}
 				this.showLoading = true
 				this.currentList = state
 				this.listData = []
@@ -205,7 +219,7 @@
 				})
 			},
 			refresh(loaded) {
-				this.listData = []
+				//				this.listData = []
 				this.current_page = 1
 				this.total_pages = 0
 				this.$http.post('waybill/html/post/v1/waybill_list?token=' + this.token, {
@@ -222,6 +236,9 @@
 						this.current_page = this.current_page + 1
 					}
 					loaded('done')
+				}).catch((err) => {
+					loaded('fail')
+					console.log(err)
 				})
 			},
 			getData(loaded) {
@@ -245,6 +262,9 @@
 					} else {
 						loaded('fail')
 					}
+				}).catch((err) => {
+					loaded('fail')
+					console.log(err)
 				})
 			},
 			receive(id) {
@@ -272,15 +292,17 @@
 				this.masterShow = false
 			},
 			record(id) {
+				this.recordLoading = true
 				this.masterShow = true
 				this.recordList = []
 				this.$http.get('waybill/html/get/v1/record_list/' + id + '?token=' + this.token)
 					.then((res) => {
 						console.log(res)
+						this.recordLoading = false
 						if(res.data.data.record_count === 0) {
 							this.recordCount = '0'
-//							console.log(this.recordCount)
-						}else {
+							//							console.log(this.recordCount)
+						} else {
 							this.recordCount = ''
 						}
 						this.recordList = res.data.data.record_list
@@ -301,6 +323,7 @@
 			left: 0;
 			background-color: white;
 			display: flex;
+			align-items: center;
 			color: #999999;
 			line-height: 40px;
 			z-index: 2;
@@ -310,8 +333,15 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				font-size: 14px;
+				font-size: 15px;
 				color: #646464;
+			}
+			.line {
+				height: 26px;
+				&.vux-1px-r:after {
+					color: #999999;
+					border-right: 1px solid #999999;
+				}
 			}
 			.current {
 				color: #60BEFB;
@@ -332,6 +362,7 @@
 					background-color: white;
 					font-size: 14px;
 					p {
+						overflow: hidden;
 						.label {
 							color: #666666;
 							float: right;
@@ -397,9 +428,13 @@
 				max-height: 54vh;
 				overflow-y: hidden;
 				.in-content {
+					min-height: 108px;
 					max-height: 54vh;
 					overflow-y: auto;
 					margin: 0 15px;
+					.weui-loadmore {
+						margin-top: 42px;
+					}
 				}
 				p {
 					font-size: 14px;

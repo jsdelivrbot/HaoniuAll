@@ -2,7 +2,7 @@
 	<div class="offer-detail-box" v-show="isComplete">
 		<v-header title="报价详情"></v-header>
 		<div class="wapper">
-			<pull-to :bottom-load-method="getData" :bottom-config="{failText: '没有更多信息'}">
+			<pull-to :top-load-method="refresh" :bottom-load-method="getData" :bottom-config="{failText: '没有更多信息'}">
 				<div class="top">
 					<div class="title vux-1px-b">
 						<p class="row">
@@ -60,7 +60,7 @@
 						</div>
 						<div class="section vux-1px-b">
 							<p>
-								<span class="name">货源评价</span>
+								<span class="name">货源描述</span>
 								<span class="value">{{dispatch_detail.goods_description}}</span>
 							</p>
 						</div>
@@ -69,7 +69,7 @@
 						<p>
 							<span class="name">
 								共推送
-								<span class="red">{{dispatch_detail.driver_num}}</span> 位司机，已有
+								<span class="red">{{dispatch_detail.driver_num}}</span> 位司机,已有
 							<span class="red">{{dispatch_detail.offer_num}}</span> 位报价
 							</span>
 							<span class="value vux-1px-l" @click="cancel">取消发货</span>
@@ -94,7 +94,7 @@
 						<div class="item vux-1px-b" v-for="(item, index) in listData" :key="index">
 							<div class="first">
 								<p>
-									<span>{{item.cart_badge_no}}，{{item.driver_name}}，{{item.mobile_no}}</span>
+									<span>{{item.cart_badge_no}},{{item.driver_name}},{{item.mobile_no}}</span>
 									<img src="../../../static/image/1@2x.png" v-if="index === 0" />
 									<img src="../../../static/image/2@2x.png" v-if="index === 1" />
 									<img src="../../../static/image/3@2x.png" v-if="index === 2" />
@@ -103,7 +103,7 @@
 							<div class="second">
 								<div class="text">
 									<p>交易次数：{{item.offer_number}}次</p>
-									<p>车辆信息：{{item.cart_type}}，{{item.cart_length}}米</p>
+									<p>车辆信息：{{item.cart_type}},{{item.cart_length}}米</p>
 								</div>
 								<div class="score">
 									{{item.total_price}}元
@@ -157,12 +157,46 @@
 				.then((res) => {
 					//					console.log(res)
 					this.dispatch_detail = res.data.data.dispatch_detail
-					this.$vux.loading.hide()
-					this.isComplete = true
+					this.$nextTick(() => {
+						this.isComplete = true
+						this.$vux.loading.hide()
+					})
 				})
 			this.initList()
 		},
 		methods: {
+			refresh(loaded) {
+				this.total_pages = 0
+				this.current_page = 1
+				this.$http.post('dispatch/html/post/v1/dispatch_offer/' + this.dispatch_id + '?token=' + this.token, {
+						data: {
+							current_page: this.current_page.toString(),
+							offer_sort: this.offer_sort,
+							price_sort: this.price_sort
+						}
+					})
+					.then((res) => {
+						console.log(res)
+						if(res.data.result.reCode === '0') {
+							this.listData = res.data.data.offer_list
+							this.total_pages = res.data.data.total_pages
+							this.current_page = this.current_page + 1
+						}
+						this.$http.get('dispatch/html/get/v1/dispatch_detail/' + this.dispatch_id + '?token=' + this.token)
+							.then((res) => {
+								this.dispatch_detail = res.data.data.dispatch_detail
+							})
+						loaded('done')
+					})
+			},
+			getNum() {
+				this.$http.get('dispatch/html/get/v1/dispatch_detail/' + this.dispatch_id + '?token=' + this.token)
+					.then((res) => {
+						//					this.dispatch_detail = res.data.data.dispatch_detail
+						this.dispatch_detail.driver_num = res.data.data.dispatch_detail.driver_num
+						this.dispatch_detail.offer_num = res.data.data.dispatch_detail.offer_num
+					})
+			},
 			initList() {
 				this.listData = []
 				this.total_pages = 0
@@ -217,8 +251,14 @@
 					})
 					.then((res) => {
 						console.log(res)
-						this.listData = this.listData.concat(res.data.data.offer_list)
-						this.current_page = this.current_page + 1
+						if(res.data.result.reCode === '0') {
+							this.listData = this.listData.concat(res.data.data.offer_list)
+							this.current_page = this.current_page + 1
+							this.getNum()
+							loaded('done')
+						} else {
+							loaded('fail')
+						}
 					})
 			},
 			//取消发货
@@ -321,11 +361,11 @@
 						align-items: center;
 						min-height: 28px;
 						.name {
-							font-size: 16px;
+							font-size: 13px;
 							color: #646464;
 						}
 						.value {
-							font-size: 14px;
+							font-size: 12px;
 							width: 0px;
 							flex: 1;
 							display: flex;

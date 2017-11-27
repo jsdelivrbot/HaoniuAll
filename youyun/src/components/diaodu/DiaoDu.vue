@@ -2,10 +2,11 @@
 	<div class="diao-du-box">
 		<search-header @goSearch="goSearch"></search-header>
 		<div class="tab">
-			<div class="item" :class="{current:currentList === 1}" @click="tab1">
+			<div class="item" :class="{current:currentList === 1}" @click="tab1(search_param1)">
 				货源管理
-			</div>|
-			<div class="item" :class="{current:currentList === 2}" @click="tab2">
+			</div>
+			<span class="line vux-1px-r"></span>
+			<div class="item" :class="{current:currentList === 2}" @click="tab2(search_param1)">
 				发车管理
 			</div>
 		</div>
@@ -33,7 +34,7 @@
 						</p>
 						<p class="footer vux-1px-t">
 							已有
-							<span class="red">{{item.offer_num}}</span>位司机报价，最低报价
+							<span class="red">{{item.offer_num}}</span>位司机报价,最低报价
 							<span class="red">{{item.min_price}}</span>元/
 							<span v-if="item.offer_type === '0'">吨</span>
 							<span v-if="item.offer_type === '1'">方</span>
@@ -101,7 +102,7 @@
 							<span class="time" v-if="item.data_type !== '1'">用时：{{item.cost_time}}</span>
 						</p>
 						<p class="row">
-							<span class="text">{{item.cart_badge_no}}，{{item.driver_name}}，{{item.mobile_no}}</span>
+							<span class="text">{{item.cart_badge_no}},{{item.driver_name}},{{item.mobile_no}}</span>
 							<span class="time" v-if="item.data_type === '0'">调度建单</span>
 							<span class="time" v-if="item.data_type === '1'">快速建单</span>
 						</p>
@@ -164,7 +165,7 @@
 			}
 			this.init1()
 			this.init2()
-			window.myvue.$initDiaoDu = this
+			window.$initDiaoDu = this
 		},
 		methods: {
 			goSearch(text) {
@@ -173,22 +174,32 @@
 					this.init1()
 				}
 				if(this.currentList === 2) {
-					this.search_param2 = text
+					this.search_param1 = text
 					this.init2()
 				}
 			},
 			toOfferDetail(id) {
 				if(this.$power('DIS_NSEND_VQUO_BTN')) {
 					return '/OfferDetail/' + id
-				}else {
+				} else {
 					return ''
 				}
 			},
-			tab1() {
+			tab1(text) {
+				if(text) {
+					this.search_param1 = text
+				} else {
+					this.search_param1 = ''
+				}
 				this.currentList = 1
 				this.init1()
 			},
-			tab2() {
+			tab2(text) {
+				if(text) {
+					this.search_param1 = text
+				} else {
+					this.search_param1 = ''
+				}
 				this.currentList = 2
 				this.init2()
 			},
@@ -227,12 +238,12 @@
 				this.$http.post('dispatch/html/post/v1/start_waybill_list?token=' + this.token, {
 					data: {
 						current_page: this.current_page2.toString(),
-						search_param: this.search_param2,
+						search_param: this.search_param1,
 						mobile_number: this.mobile_number,
 						data_type: this.data_type
 					}
 				}).then((res) => {
-//					console.log(res)
+					//					console.log(res)
 					if(res.data.result.reCode === '0') {
 						this.listData2 = res.data.data.dispatch_list
 						this.total_pages2 = res.data.data.total_pages
@@ -244,7 +255,7 @@
 			},
 			refresh1(loaded) {
 				this.total_pages1 = 0
-				this.current_page1 = 0
+				this.current_page1 = 1
 				this.$http.post('dispatch/html/post/v1/dispatch_list?token=' + this.token, {
 					data: {
 						current_page: this.current_page1.toString(),
@@ -261,15 +272,18 @@
 						this.current_page1 = this.current_page1 + 1
 					}
 					loaded('done')
+				}).catch((err) => {
+					loaded('fail')
+					console.log(err)
 				})
 			},
 			refresh2(loaded) {
 				this.total_pages2 = 0
-				this.current_page2 = 0
+				this.current_page2 = 1
 				this.$http.post('dispatch/html/post/v1/start_waybill_list?token=' + this.token, {
 					data: {
 						current_page: this.current_page2.toString(),
-						search_param: this.search_param2,
+						search_param: this.search_param1,
 						mobile_number: this.mobile_number,
 						data_type: this.data_type
 					}
@@ -282,6 +296,9 @@
 						this.current_page2 = this.current_page2 + 1
 					}
 					loaded('done')
+				}).catch((err) => {
+					loaded('fail')
+					console.log(err)
 				})
 			},
 			getData1(loaded) {
@@ -306,6 +323,9 @@
 						} else {
 							loaded('fail')
 						}
+					}).catch((err) => {
+						loaded('fail')
+						console.log(err)
 					})
 			},
 			getData2(loaded) {
@@ -316,7 +336,7 @@
 				this.$http.post('dispatch/html/post/v1/start_waybill_list?token=' + this.token, {
 						data: {
 							current_page: this.current_page2.toString(),
-							search_param: this.search_param2,
+							search_param: this.search_param1,
 							mobile_number: this.mobile_number,
 							data_type: this.data_type
 						}
@@ -330,6 +350,9 @@
 						} else {
 							loaded('fail')
 						}
+					}).catch((err) => {
+						loaded('fail')
+						console.log(err)
 					})
 			},
 			qiyun(id) {
@@ -343,8 +366,8 @@
 								if(res.data.result.reCode === '0') {
 									$this.$vux.toast.text('起运成功')
 									$this.init2()
-//									$this.$router.go(0)
-//									$this.currentList = 2
+									//									$this.$router.go(0)
+									//									$this.currentList = 2
 								} else {
 									$this.$vux.toast.text(res.data.result.reInfo)
 								}
@@ -364,7 +387,7 @@
 								if(res.data.result.reCode === '0') {
 									$this.$vux.toast.text('取消成功')
 									$this.init2()
-//									this.$router.go(0)
+									//									this.$router.go(0)
 								} else {
 									$this.$vux.toast.text(res.data.result.reInfo)
 								}
@@ -387,6 +410,7 @@
 			left: 0;
 			background-color: white;
 			display: flex;
+			align-items: center;
 			color: #999999;
 			line-height: 40px;
 			z-index: 2;
@@ -396,8 +420,15 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				font-size: 14px;
+				font-size: 15px;
 				color: #646464;
+			}
+			.line {
+				height: 26px;
+				&.vux-1px-r:after {
+					color: #999999;
+					border-right: 1px solid #999999;
+				}
 			}
 			.current {
 				color: #60c1ff;
@@ -506,7 +537,7 @@
 			position: fixed;
 			right: 24px;
 			bottom: 24px;
-			box-shadow: 0 0px 9px #888888;
+			box-shadow: 0 2px 12px #c9ad69;
 		}
 	}
 </style>
