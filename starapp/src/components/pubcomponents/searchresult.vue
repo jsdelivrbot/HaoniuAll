@@ -23,11 +23,11 @@
 
 				<ul :class="{'the_more':openIndex==indexs}">
 					<router-link tag='li' :to='"/coursedetail/"+item.id' :key='index' v-for="(item,index) in items.courses" class="vux-1px-b">
-						<img :src="item.courseUrl" />
+						<!--<img :src="item.courseUrl" />-->
 						<div class="info_center">
 							<h2>{{item.courseName}}</h2>
 							<p>
-								上海市浦东新区康桥镇环桥路1280弄7#2018室上海市浦东新区康桥镇环桥路1280弄7#2018室上海市浦东新区康桥镇环桥路1280弄7#2018室
+								{{item.intro}}
 							</p>
 						</div>
 						<div class="info_right">

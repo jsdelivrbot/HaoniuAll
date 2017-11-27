@@ -99,7 +99,7 @@ Vue.use(vueEventCalendar, {
 })
 
 import BaiduMap from 'vue-baidu-map'
-import exmuis from './../static/exmui'
+import exmuis from '../static/exmui'
 Vue.use(exmuis)
 import { querystring, AjaxPlugin, AlertPlugin, ConfirmPlugin, ToastPlugin, LoadingPlugin } from 'vux'
 Vue.use(AjaxPlugin)
@@ -115,12 +115,7 @@ Vue.use(BaiduMap, {
 
 Vue.http.defaults.withCredentials = true
 localStorage.setItem('search', 'http://www.dianke8.com/xxdk/')
-//Vue.http.defaults.baseURL = 'http://wx.dianke8.com/xxdk/app'
-//Vue.http.defaults.baseURL = 'http://121.196.210.85:8450/xxdk/app'
 Vue.http.defaults.baseURL = 'http://wx.dianke8.com/xxdk/app'
-//Vue.http.defaults.baseURL = 'http://192.168.1.121:8081/xingxingdianke/app'
-//Vue.http.defaults.baseURL = 'http://dev.dianke8.com:7000/xxdk/app'
-//Vue.http.defaults.baseURL = 'http://192.168.1.121:8080/xingxingdianke/app'
 Vue.http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 Vue.http.defaults.headers.common['token'] = sessionStorage.getItem('token')
 Vue.http.interceptors.response.use(function(response) {

@@ -116,6 +116,7 @@
 					(res) => {
 						this.$vux.loading.hide()
 						this.ismaps = 'mapes'
+						this.searchdata.dist = ''
 						this.zooms = 12
 						this.resultData = res.data
 						this.tabbar = 0
@@ -126,7 +127,8 @@
 				this.$router.push('/jigoudetail/' + data)
 			},
 			search4() {
-				this.searchdata.areaId = this.selectvalue4[0]
+				this.searchdata.areaId = this.selectvalue4[1]
+				this.searchdata.dist = '3'
 				this.searchall()
 			},
 			goback() {
@@ -154,15 +156,15 @@
 			}
 		},
 		created() {
-			this.$http.get('/category/findAllArea').then(
+			this.$http.get(localStorage.getItem('search') + '/company/search/areas').then(
 				(res) => {
-					for(var i = 0; i < res.data.obj.length; i++) {
+					for(var i = 0; i < res.data.length; i++) {
 						let arr = {}
-						arr.latitude = res.data.obj[i].latitude
-						arr.longitude = res.data.obj[i].longitude
-						arr.name = res.data.obj[i].name
-						arr.parent = res.data.obj[i].parent.toString()
-						arr.value = res.data.obj[i].value.toString()
+						arr.latitude = res.data[i].latitude
+						arr.longitude = res.data[i].longitude
+						arr.name = res.data[i].name
+						arr.parent = res.data[i].parent.toString()
+						arr.value = res.data[i].value.toString()
 						this.address.push(arr)
 					}
 				}

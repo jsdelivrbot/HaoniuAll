@@ -1,12 +1,6 @@
 <template>
 	<div class="course-detail">
 		<topbar title='课程简介'></topbar>
-		<!--<div style="display: none;">
-			<img class="previewer-demo-img" v-for="(item, index) in list" :src="item.src" width="100" @click="show(index)">
-		</div>
-		<div v-transfer-dom>
-			<previewer :list="list" ref="previewer" :options="options"></previewer>
-		</div>-->
 		<div class="course-info vux-1px-b">
 			<img :src="detailInfo.coverUrl" />
 			<div>
@@ -43,7 +37,6 @@
 				</li>
 			</ul>
 		</div>
-
 		<div class="intro-box" v-if='detailInfo.douAmount>0||detailInfo.couponId>0||detailInfo.discount>0'>
 			<div class="title vux-1px-b">
 				优惠活动
@@ -51,7 +44,7 @@
 			<div class="couponlist">
 				<p class="p">1.购买可以获得{{detailInfo.douAmount}}转换豆(等值{{detailInfo.douAmount}}人民币)</p>
 				<p class="p">2.{{detailInfo.discount}}折优惠</p>
-				<p class="p" v-if='detailInfo.couponId>0'>3.{{detailInfo.coupon.name}}</p>
+				<p class="p" v-if='detailInfo.couponObject'>3.{{detailInfo.couponObject.name}}</p>
 			</div>
 		</div>
 
@@ -105,18 +98,7 @@
 				<li v-if='detailInfo.watched' @click="collect()">
 					加入收藏
 				</li>
-				<!--<li>
-					<router-link :to='"/orderaffirm/"+urls' v-if='token && detailInfo.priced'>
-						我要报名
-					</router-link>
-					<a href="javascript:;" @click="nologin()" v-if='!token'>
-						我要报名
-					</a>
-					<a href="javascript:;" v-if='token && !detailInfo.priced' style="background: #d2d2d2;">
-						我要报名
-					</a>
-				</li>-->
-				<li v-if='!detailInfo.priced'>
+				<li>
 					<router-link :to='"/orderaffirm/"+id' v-if='token'>
 						我要报名
 					</router-link>
@@ -132,7 +114,6 @@
 	import topbar from '@/components/callback'
 	import { Rater, Previewer, TransferDom } from 'vux'
 	export default {
-		name: 'nokeep',
 		directives: {
 			TransferDom
 		},
@@ -147,6 +128,19 @@
 		},
 		data() {
 			return {
+				list: [],
+				options: {
+					getThumbBoundsFn(index) {
+						let thumbnail = document.querySelectorAll('.previewer-demo-img')[index]
+						let pageYScroll = window.pageYOffset || document.documentElement.scrollTop
+						let rect = thumbnail.getBoundingClientRect()
+						return {
+							x: rect.left,
+							y: rect.top + pageYScroll,
+							w: rect.width
+						}
+					}
+				},
 				token: sessionStorage.getItem('token'),
 				star: 3,
 				detailInfo: {},
@@ -155,7 +149,7 @@
 				pltotal: ''
 			}
 		},
-		mounted() {
+		activated() {
 			window.scrollTo(0, 0)
 			this.token = sessionStorage.getItem('token')
 			this.id = this.$route.params.name
@@ -181,10 +175,28 @@
 						this.pllist = res.data.obj.result
 						this.pltotal = res.data.obj.totalRows
 					}
+					console.log(res.data)
 				}
 			)
 		},
 		methods: {
+			getPhotos() {
+				let props = this.$route.params.name.split(',')
+				this.$http.get('/business/course/schoolPic', {
+					params: {
+						companyName: props[1],
+						schoolName: props[0]
+					}
+				}).then(
+					(res) => {
+						for(var i = 0; i < res.data.obj.length; i++) {
+							let arr = {}
+							arr.src = res.data.obj[i]
+							this.list.push(arr)
+						}
+					}
+				)
+			},
 			show(index) {
 				if(this.detailInfo.school.nphotos >= 2) {
 					this.$refs.previewer.show(index)
@@ -281,7 +293,13 @@
 		}
 	}
 </script>
+<style type="text/css">
+	.line {
+		display: none;
+	}
+</style>
 <style lang="less">
+	@import url("../../../static/font/iconfont.css");
 	#star {
 		a {
 			width: 20px !important;
@@ -331,7 +349,6 @@
 			height: auto;
 			overflow: hidden;
 			background: #fff;
-			/*padding: 0 15px;*/
 			padding-left: 15px;
 			padding-bottom: 10px;
 			margin-top: 5px;
@@ -341,7 +358,6 @@
 				line-height: 44px;
 				font-size: 15px;
 				color: #333;
-				/*margin-bottom: 10px;*/
 			}
 			.couponlist {
 				padding: 8px 0;
@@ -357,7 +373,6 @@
 				line-height: 24px;
 				color: #666;
 				padding-right: 15px;
-				/*margin-top: 6px;*/
 				box-sizing: border-box;
 			}
 			li {

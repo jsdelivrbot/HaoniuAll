@@ -50,23 +50,28 @@
 						<em>{{detailInfo.discount}}折优惠</em>
 					</checker-item>
 				</checker>
-				<p style="font-size: 14px;color: #666;text-align: right;">优惠金额: <em style="font-style: normal;color: #ffa019;">¥{{oldmoney -detailInfo.price}}</em> </p>
+			</div>
+		</div>
+		<div class="coupon vux-1px-t" v-if='CouponInfo.length>0'>
+			<span>选择优惠券</span>
+			<div class="select">
+				<checker v-model="Coupon" default-item-class="select-item" @on-change='selectcoupon' selected-item-class="select-item-active">
+					<checker-item :value="index" v-for='(item,index) in CouponInfo' :key='index'>
+						<span></span>
+						<em>{{item.descript}}</em>
+					</checker-item>
+				</checker>
+
 			</div>
 		</div>
 
-		<div class="total vux-1px-t">
-			合计:
+		<div class="total vux-1px-t" style="height: auto;">
+			<p style="font-size: 14px;color: #666;text-align: right;">优惠金额: <em style="font-style: normal;color: #ffa019;">¥{{getCouponVal}}</em> </p>
+			<!--合计:
 			<em>
-				¥{{detailInfo.price}}
-			</em>
+				¥{{(oldmoney - getCouponVal).toFixed(2)}}
+			</em>-->
 		</div>
-		<!--<group title="联系人信息" v-if='token'>
-			<x-input title="姓名" text-align='right' disabled :placeholder="contacts">
-			</x-input>
-			<x-input title="手机号" text-align='right' disabled :placeholder="contactsPhone">
-			</x-input>
-		</group>-->
-
 		<div class="select-children">
 			<h2>选择上课的子女</h2>
 			<ul class="vux-1px-t" v-if='list!==""'>
@@ -89,7 +94,7 @@
 				</li>
 			</ul>
 
-			<div class="btn-addchildren vux-1px-b" v-if='list!==""'>
+			<div class="btn-addchildren vux-1px-b" v-if='list!==""&&list.length<3'>
 				<router-link tag='div' to='/addchildreninfo'>
 					<em></em>
 					<img src="~IMG/addicon3.png" />
@@ -125,20 +130,18 @@
 
 		<div class="footer vux-1px-t" v-if='token'>
 			<div class="left">
-				<em>还需支付:</em>¥{{detailInfo.price}}
+				<em>还需支付:</em>¥{{(oldmoney - getCouponVal).toFixed(2)}}
 			</div>
 			<div class="right" @click="topay()">
 				确认订单
 			</div>
 		</div>
-
 	</div>
 </template>
 <script>
 	import topbar from '@/components/callback'
 	import { Timeline, TimelineItem, XInput, Group, Checker, CheckerItem, CheckIcon } from 'vux'
 	export default {
-		name: 'nokeep',
 		components: {
 			Timeline,
 			TimelineItem,
@@ -153,6 +156,9 @@
 			return {
 				token: sessionStorage.getItem('token'),
 				select: '',
+				Coupon: '',
+				CouponPrice: 0,
+				CouponInfo: [],
 				detailInfo: [],
 				oldmoney: '',
 				contacts: '',
@@ -163,7 +169,9 @@
 				id: ''
 			}
 		},
-		mounted() {
+		activated() {
+			this.selectIndex = ''
+			this.select = ''
 			this.id = this.$route.params.name
 			this.$http.get('/business/course/courseDetail', {
 				params: {
@@ -180,12 +188,44 @@
 				(res) => {
 					this.contacts = res.data.obj.nickname
 					this.contactsPhone = res.data.obj.phone
+					console.log(res.data)
 				}
 			)
+
+			this.$http.get('/user/coupon/findCoupon', {
+				params: {
+					courseId: this.id
+				}
+			}).then(
+				(res) => {
+					this.CouponInfo = res.data.obj
+					console.log(res.data)
+				}
+			)
+			this.list = JSON.parse(localStorage.getItem('childrenInfo'))
+		},
+		computed: {
+			getCouponVal() {
+				let val = this.oldmoney - this.detailInfo.price + this.CouponPrice
+				if(val <= 0) {
+					return 0
+				} else {
+					if(val > this.oldmoney) {
+						return this.oldmoney
+					} else {
+						return val
+					}
+				}
+			}
 		},
 		methods: {
 			selectfn(val) {
 				this.selectIndex = val
+			},
+			selectcoupon(res) {
+				if(res !== '') {
+					this.CouponPrice = this.CouponInfo[res].dkPrice
+				}
 			},
 			changecoupon(val) {
 				if(val === '1') {
@@ -202,13 +242,17 @@
 					})
 					return false
 				}
-
+				let applyCouponId = ''
+				if(this.CouponInfo.length > 0) {
+					applyCouponId = this.CouponInfo[this.Coupon].id
+				}
 				let props = this.$route.params.name.split(',')
 				this.$http.get('/business/order/downOrder', {
 					params: {
 						courseId: this.id,
 						type: this.select,
-						childId: this.selectIndex
+						childId: this.selectIndex,
+						applyCouponId: applyCouponId
 					}
 				}).then(
 					(res) => {
@@ -220,6 +264,7 @@
 								content: res.data.msg
 							})
 						}
+						console.log(res.data)
 					}
 				)
 			}

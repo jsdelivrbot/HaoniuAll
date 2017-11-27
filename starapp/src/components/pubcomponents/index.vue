@@ -29,33 +29,33 @@
 
 		<div class="sort">
 			<ul class="sort-list vux-1px-t  vux-1px-b">
-				<router-link tag='li' to='/searchlist/cat=16'>
+				<router-link tag='li' to='/searchlist/dist=3'>
 					<div>
-						<img src="~IMG/newsort3.png" />
+						<img src="~IMG/fjsgl.png" />
 					</div>
-					<span>教辅</span>
+					<span>附近3公里</span>
 				</router-link>
 				<router-link tag='li' to='/searchlist/cat=281'>
 					<div>
-						<img src="~IMG/newsort4.png" />
+						<img src="~IMG/yq.png" />
 					</div>
-					<span>综合素质</span>
+					<span>乐器</span>
 				</router-link>
 				<router-link tag='li' to='/searchlist/cat=196'>
 					<div>
-						<img src="~IMG/newsort5.png" />
+						<img src="~IMG/yd.png" />
 					</div>
 					<span>运动</span>
 				</router-link>
 				<router-link tag='li' to='/searchlist/cat=249'>
 					<div>
-						<img src="~IMG/newsort1.png" />
+						<img src="~IMG/yz.png" />
 					</div>
 					<span>益智</span>
 				</router-link>
 				<router-link tag='li' to='/searchlist/cat=80'>
 					<div>
-						<img src="~IMG/newsort2.png" />
+						<img src="~IMG/jf.png" />
 					</div>
 					<span>艺术</span>
 				</router-link>
@@ -68,7 +68,7 @@
 
 				<swiper :options="swiperOption3" ref="mySwiper2" style='margin: 0;'>
 					<swiper-slide v-for='(item,index) in newslist' :key="index" class='swiper-contentBox'>
-						<router-link class='div' tag='div' to='/newslist'>
+						<router-link class='div' tag='a' to='/newslist'>
 							{{item.title}} {{item.intro}}
 						</router-link>
 					</swiper-slide>
@@ -89,9 +89,7 @@
 			<swiper :options="swiperOption" ref="mySwiper">
 				<swiper-slide v-for='(item,index) in tj' :key="index" class='swiper-contentBox'>
 					<router-link :to='"/coursedetail/"+item.id'>
-						<div>
-							<img :src="item.coverUrl" style="width: 100%;" />
-						</div>
+						<img :src="item.coverUrl" style="width: 100%;" />
 						<span>{{item.name.substring(0,6)}}</span>
 					</router-link>
 				</swiper-slide>
@@ -196,10 +194,6 @@
 				(res) => {
 					if(res.data.result === 0) {
 						this.tj = res.data.obj
-						let $this = this
-						//						setTimeout(() => {
-						//							$this.swiperOption.autoplay = 3000
-						//						}, 1000)
 					}
 				}
 			)

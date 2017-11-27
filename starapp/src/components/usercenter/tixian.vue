@@ -49,6 +49,7 @@
 	import { XInput, Group } from 'vux'
 	import topbar from '@/components/callback'
 	export default {
+		name: 'nokeep',
 		components: {
 			topbar,
 			Group,
