@@ -1,12 +1,6 @@
 <template>
 	<div class="course-detail">
 		<topbar title='课程简介'></topbar>
-		<!--<div style="display: none;">
-			<img class="previewer-demo-img" v-for="(item, index) in list" :src="item.src" width="100" @click="show(index)">
-		</div>
-		<div v-transfer-dom>
-			<previewer :list="list" ref="previewer" :options="options"></previewer>
-		</div>-->
 		<div class="course-info vux-1px-b">
 			<img :src="detailInfo.coverUrl" />
 			<div>
@@ -19,7 +13,6 @@
 		<div class="link">
 			<ul>
 				<li class="vux-1px-b">
-					<!--<router-link to='11'>-->
 					<router-link :to='"/maps/"+detailInfo.longitude+","+detailInfo.latitude'>
 						<img src="../../static/img/address.png" />
 						<span>
@@ -50,7 +43,7 @@
 			<div class="couponlist">
 				<p class="p">1.购买可以获得{{detailInfo.douAmount}}转换豆(等值{{detailInfo.douAmount}}人民币)</p>
 				<p class="p">2.{{detailInfo.discount}}折优惠</p>
-				<p class="p" v-if='detailInfo.couponId>0'>3.{{detailInfo.coupon.name}}</p>
+				<p class="p" v-if='detailInfo.couponId>0'>3.{{detailInfo.couponObject.name}}</p>
 			</div>
 		</div>
 
@@ -115,7 +108,7 @@
 						我要报名
 					</a>
 				</li>-->
-				<li v-if='!detailInfo.priced'>
+				<li>
 					<router-link :to='"/orderaffirm/"+id' v-if='token'>
 						我要报名
 					</router-link>

@@ -22,7 +22,7 @@
 			}
 		},
 		mounted() {
-			this.$http.get('/about').then(
+			this.$http.get('about/info').then(
 				(res) => {
 					this.info = res.data.obj.content
 					console.log(res.data)

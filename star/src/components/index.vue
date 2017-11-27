@@ -9,7 +9,7 @@
 				<em>地图</em>
 			</router-link>
 		</div>
-		<swiper :options="swiperOption2" ref="mySwiper2" style='margin: 0;' class='indexSwiper'>
+		<swiper :options="swiperOption2" ref="mySwiper3" style='margin: 0;' class='indexSwiper'>
 			<swiper-slide v-for='(item,index) in list' :key="index" class='swiper-contentBox'>
 				<router-link tag='a' v-if='item.type == 0' to='/invitereg' style='list-style: none;'>
 					<img :src="item.postUrl" alt="" style="display: block;" />
@@ -29,33 +29,33 @@
 
 		<div class="sort">
 			<ul class="sort-list vux-1px-t  vux-1px-b">
-				<router-link tag='li' to='/searchlist/cat=16'>
+				<router-link tag='li' to='/searchlist/dist=3'>
 					<div>
-						<img src="~IMG/newsort3.png" />
+						<img src="~IMG/fjsgl.png" />
 					</div>
-					<span>教辅</span>
+					<span>附近3公里</span>
 				</router-link>
 				<router-link tag='li' to='/searchlist/cat=281'>
 					<div>
-						<img src="~IMG/newsort4.png" />
+						<img src="~IMG/yq.png" />
 					</div>
-					<span>综合素质</span>
+					<span>乐器</span>
 				</router-link>
 				<router-link tag='li' to='/searchlist/cat=196'>
 					<div>
-						<img src="~IMG/newsort5.png" />
+						<img src="~IMG/yd.png" />
 					</div>
 					<span>运动</span>
 				</router-link>
 				<router-link tag='li' to='/searchlist/cat=249'>
 					<div>
-						<img src="~IMG/newsort1.png" />
+						<img src="~IMG/yz.png" />
 					</div>
 					<span>益智</span>
 				</router-link>
 				<router-link tag='li' to='/searchlist/cat=80'>
 					<div>
-						<img src="~IMG/newsort2.png" />
+						<img src="~IMG/jf.png" />
 					</div>
 					<span>艺术</span>
 				</router-link>
@@ -86,16 +86,25 @@
 				</router-link>
 			</div>
 
-			<swiper :options="swiperOption" ref="mySwiper">
-				<swiper-slide v-for='(item,index) in tj' :key="index" class='swiper-contentBox'>
+			<swiper class='index_swiper' v-if='tj!==""' :options="swiperOption" ref="mySwiper">
+				<swiper-slide v-for='(item,index) in tj' :key="index">
 					<router-link :to='"/coursedetail/"+item.id'>
-						<div>
-							<img :src="item.coverUrl" style="width: 100%;" />
-						</div>
+						<img :src="item.coverUrl" v-if="item.coverUrl" />
 						<span>{{item.name.substring(0,6)}}</span>
 					</router-link>
 				</swiper-slide>
 			</swiper>
+
+			<!--<swiper :options="swiperOption1" ref="mySwiper"class='swiper-contentBox-that'>
+				<swiper-slide v-for='(item,index) in tj' :key="index">
+					<router-link :to='"/coursedetail/"+item.id'>
+						<div>
+							<img :src="item.coverUrl" />
+						</div>
+						<span>{{item.name.substring(0,6)}}</span>
+					</router-link>
+				</swiper-slide>
+			</swiper>-->
 		</div>
 
 		<div class="course-sort">
@@ -144,7 +153,7 @@
 				courseSortMore: '',
 				isloop: true,
 				list: [],
-				tj: [],
+				tj: '',
 				newslist: [],
 				mores: false,
 				swiperOption2: {
@@ -165,21 +174,29 @@
 					loop: true
 				},
 				swiperOption: {
-					autoplayDisableOnInteraction: false,
 					autoplay: 3000,
-					effect: 'coverflow',
+					autoplayDisableOnInteraction: false,
+					slidesPerView: 'auto',
+					spaceBetween: 40,
 					initialSlide: 3,
-					height: 160,
+					grabCursor: true,
 					loop: true,
-					slidesPerView: 2,
-					centeredSlides: true,
-					spaceBetween: 60,
+					setWrapperSize: true,
+					autoHeight: true,
+					paginationClickable: true,
+					mousewheelControl: true,
+					observeParents: true,
+					effect: 'coverflow',
 					coverflow: {
 						rotate: 0,
 						stretch: 0,
 						depth: 40,
 						modifier: 10,
 						slideShadows: false
+					},
+					debugger: true,
+					onTransitionStart(swiper) {
+						console.log(swiper)
 					}
 				}
 			}
@@ -196,6 +213,7 @@
 				(res) => {
 					if(res.data.result === 0) {
 						this.tj = res.data.obj
+						console.log(this.tj)
 					}
 				}
 			)
@@ -232,11 +250,34 @@
 </script>
 
 <style lang="less">
-	.indexSwiper {
+	/*.indexSwiper {
 		a {
 			display: block;
 			img {
 				display: block;
+			}
+		}
+	}*/
+	
+	.index_swiper {
+		.swiper-slide {
+			position: relative;
+			left: 20vw;
+			width: 60vw !important;
+			img {
+				display: block;
+				/*width: 60vw;*/
+				height: 130px;
+				border-radius:5px ;
+				margin-bottom: 10px;
+			}
+			span {
+				display: block;
+				color: #363636;
+				text-align: center;
+				font-size: 12px;
+				height: 30px;
+				line-height: 20px;
 			}
 		}
 	}
@@ -365,11 +406,13 @@
 			height: auto;
 			background: #fff;
 			min-height: 180px;
+			margin-bottom: 10px;
+			overflow: hidden;
 			.swiper-container {
 				width: 100%;
 				height: 300px;
 				margin-top: 2px;
-				margin-bottom: 10px;
+				/*margin-bottom: 10px;*/
 			}
 			.swiper-slide {
 				text-align: center;

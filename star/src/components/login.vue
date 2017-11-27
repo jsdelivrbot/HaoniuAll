@@ -36,7 +36,6 @@
 	export default {
 		data() {
 			return {
-				localhttp: localStorage.getItem('localhttp'),
 				iphone: '',
 				pwd: '',
 				openid: '',

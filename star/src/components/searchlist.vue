@@ -85,6 +85,7 @@
 				let arr = querystring.parse(this.$route.params.name)
 				this.searchdata.category = arr.cat
 				this.searchdata.keyword = arr.keyword
+				this.searchdata.dist = arr.dist
 				this.searchall()
 			}
 		},
@@ -119,6 +120,7 @@
 					(res) => {
 						this.$vux.loading.hide()
 						this.ismaps = 'mapes'
+						this.searchdata.dist = ''
 						this.zooms = 12
 						this.resultData = res.data
 						this.tabbar = 0
@@ -129,8 +131,8 @@
 				this.$router.push('/jigoudetail/' + data)
 			},
 			search4() {
-				this.searchdata.areaId = this.selectvalue4[0]
-				console.log(this.searchdata.areaId)
+				this.searchdata.areaId = this.selectvalue4[1]
+				this.searchdata.dist = '3'
 				this.searchall()
 			},
 			goback() {
@@ -158,9 +160,9 @@
 			}
 		},
 		created() {
-			this.$http.get('/category/findAllArea').then(
+			this.$http.get(localStorage.getItem('search') + '/company/search/areas').then(
 				(res) => {
-					this.address = res.data.obj
+					this.address = res.data
 				}
 			)
 			this.$http.get('/category/findAllCategory').then(

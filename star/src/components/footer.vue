@@ -1,5 +1,5 @@
 <template>
-	<div class="footer">
+	<div class="footer vux-1px-t">
 		<ul>
 			<li>
 				<router-link to='/pub/home' replace>
@@ -28,12 +28,12 @@
 </script>
 <style lang="less">
 	.footer {
-		position: fixed;
+		position: fixed !important;
 		bottom: 0;
 		width: 100%;
 		height: 50px;
 		background: #ffffff;
-		border-top: 0.5px solid #e5e5e5;
+		z-index: 999;
 		ul {
 			display: flex;
 			li {

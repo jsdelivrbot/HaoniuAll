@@ -8,7 +8,7 @@
 				<div class="jigou vux-1px-b">
 					<img :src="items.schoolUrl" />
 					<div class="info">
-						<h2>{{items.schoolName}}</h2>
+						<h2>{{items.schoolName}}{{items.schoolName}}</h2>
 						<div class="address">
 							<p>
 								{{items.address}}
@@ -23,7 +23,7 @@
 
 				<ul :class="{'the_more':openIndex==indexs}">
 					<router-link tag='li' :to='"/coursedetail/"+item.id' :key='index' v-for="(item,index) in items.courses" class="vux-1px-b">
-						<img :src="item.courseUrl" />
+						<!--<img :src="item.courseUrl" />-->
 						<div class="center">
 							<h2>{{item.courseName}}</h2>
 							<p>
@@ -120,6 +120,9 @@
 						font-size: 15px;
 						color: #333;
 						font-weight: normal;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
 					}
 					.address {
 						width: 100%;
