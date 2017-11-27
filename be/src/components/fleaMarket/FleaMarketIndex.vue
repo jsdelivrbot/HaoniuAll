@@ -64,6 +64,7 @@
 						seachdata: {
 							'type_id': 38,
 							'city': sessionStorage.getItem('city'),
+							'country': sessionStorage.getItem('counties'),
 							'limit': this.count + ',12'
 						}
 					}
@@ -80,7 +81,7 @@
 							this.tip = '上拉加载更多'
 						})
 					} else {
-						this.tip = '没有数据了'
+						this.tip = '暂无数据'
 						this.loadingShow = false
 					}
 				})
@@ -92,7 +93,8 @@
 				httpUrl: localStorage.getItem('httpUrl'),
 				count: 0,
 				tip: '加载中',
-				loadingShow: true
+				loadingShow: true,
+				flag: true
 			}
 		},
 		methods: {
@@ -100,11 +102,16 @@
 				this.$router.push('/fleaMarket/release')
 			},
 			getListData() {
+				if(!this.flag) {
+					return
+				}
+				this.flag = false
 				this.$http.get('getData/index.php?m=home&c=Form&a=infoList', {
 						params: {
 							seachdata: {
 								'type_id': 38,
 								'city': sessionStorage.getItem('city'),
+								'country': sessionStorage.getItem('counties'),
 								'limit': this.count + ',12'
 							}
 						}
@@ -119,9 +126,11 @@
 							this.$nextTick(() => {
 								this.scroll.refresh()
 							})
+							this.flag = true
 						} else {
 							this.tip = '没有数据了'
 							this.loadingShow = false
+							this.flag = true
 						}
 					})
 			},
@@ -200,7 +209,7 @@
 				line-height: 49px;
 				font-size: 14px;
 				padding-left: 30px;
-				background: url(../../../static/property-hot-icon.png) 12px center no-repeat;
+				background: url(../../../static/usercenter/property-hot-icon.png) 12px center no-repeat;
 				background-size: 9px 15px;
 				.border-1px(#ececec);
 				background-color: white;

@@ -47,16 +47,17 @@
 				</div>
 				<p>订单管理</p>
 			</router-link>
-			<router-link to="/coupon/myCoupon" tag="div" class="item border-1px-right coupon">
+			<router-link to="/Getqrcode" tag="div" class="item border-1px-right coupon">
 				<div class="item-img">
-					<img src="../../../static/usercenter/coupon.png" />
+					<img src="../../../static/usercenter/erweimazx.png" />
 					<!--<badge text="1" v-if="login"></badge>-->
 				</div>
-				<p>优惠券</p>
+				<p>我的二维码</p>
 			</router-link>
 		</div>
 		<group>
-			<cell is-link link="/usercenter/alltask" style="height: 29px;">
+
+			<cell is-link link="/usercenter/alltask" style="height: 29px;" v-if="showAll === '1'">
 				<div slot="icon" style="width: 26px; margin-right: 20px;">
 					<img slot="icon" width="18" src="../../../static/usercenter/icon1.png" style="vertical-align:middle; display: block; margin: auto;">
 				</div>
@@ -64,7 +65,15 @@
         			<span style="font-size: 14px; line-height: 49px;">全部任务</span>
 				</span>
 			</cell>
-			<cell is-link link="/usercenter/sharetask" style="height: 29px;">
+			<cell is-link link="/coupon/myCoupon" style="height: 29px;" v-if="showAll === '1'">
+				<div slot="icon" style="width: 26px; margin-right: 20px;">
+					<img slot="icon" width="18" src="../../../static/usercenter/zkquan.png" style="vertical-align:middle; display: block; margin: auto;">
+				</div>
+				<span slot="title">
+        			<span style="font-size: 14px; line-height: 49px;">优惠券</span>
+				</span>
+			</cell>
+			<cell is-link link="/usercenter/sharetask" style="height: 29px;" v-if="showAll === '1'">
 				<div slot="icon" style="width: 26px; margin-right: 20px;">
 					<img slot="icon" width="20" src="../../../static/usercenter/icon15.png" style="vertical-align:middle; display: block; margin: auto;">
 				</div>
@@ -72,7 +81,7 @@
         			<span style="font-size: 14px; line-height: 49px;">分享购任务</span>
 				</span>
 			</cell>
-			<cell is-link link="/usercenter/collection" style="height: 29px;">
+			<cell is-link link="/usercenter/collection" style="height: 29px;" v-if="showAll === '1'">
 				<div slot="icon" style="width: 26px; margin-right: 20px;">
 					<img slot="icon" width="25" src="../../../static/usercenter/icon2.png" style="vertical-align:middle; display: block; margin: auto;">
 				</div>
@@ -80,7 +89,15 @@
         			<span style="font-size: 14px; line-height: 49px;">任务收藏</span>
 				</span>
 			</cell>
-			<cell is-link link="/usercenter/getCash" style="height: 29px;">
+			<cell is-link link="/usercenter/shoppingCollection" style="height: 29px;">
+				<div slot="icon" style="width: 26px; margin-right: 20px;">
+					<img slot="icon" width="25" src="../../../static/usercenter/icon16.png" style="vertical-align:middle; display: block; margin: auto;">
+				</div>
+				<span slot="title">
+        			<span style="font-size: 14px; line-height: 49px;">商品收藏</span>
+				</span>
+			</cell>
+			<cell is-link link="/usercenter/getCash" style="height: 29px;" v-if="showAll === '1'">
 				<div slot="icon" style="width: 26px; margin-right: 20px;">
 					<img slot="icon" width="25" src="../../../static/usercenter/icon14.png" style="vertical-align:middle; display: block; margin: auto;">
 				</div>
@@ -96,7 +113,7 @@
         			<span style="font-size: 14px; line-height: 49px;">收货地址</span>
 				</span>
 			</cell>
-			<cell is-link style="height: 29px;" link="/fleaMarket/my">
+			<cell is-link style="height: 29px;" link="/fleaMarket/my" v-if="showAll === '1'">
 				<div slot="icon" style="width: 26px; margin-right: 20px;">
 					<img slot="icon" width="20" src="../../../static/usercenter/icon4.png" style="vertical-align:middle; display: block; margin: auto;">
 				</div>
@@ -105,7 +122,7 @@
 				<!--<badge text="1" style="float: right; margin-top: 17px;" v-if="login"></badge>-->
 				</span>
 			</cell>
-			<cell is-link style="height: 29px;" link="/usercenter/myActivity">
+			<cell is-link style="height: 29px;" link="/usercenter/myActivity" v-if="showAll === '1'">
 				<div slot="icon" style="width: 26px; margin-right: 20px;">
 					<img slot="icon" width="21" src="../../../static/usercenter/icon5.png" style="vertical-align:middle; display: block; margin: auto;">
 				</div>
@@ -114,7 +131,7 @@
 				<!--<badge text="1" style="float: right; margin-top: 17px;" v-if="login"></badge>-->
 				</span>
 			</cell>
-			<cell is-link style="height: 29px;" link="/usercenter/myFree">
+			<cell is-link style="height: 29px;" link="/usercenter/myFree" v-if="showAll === '1'">
 				<div slot="icon" style="width: 26px; margin-right: 20px;">
 					<img slot="icon" width="21" src="../../../static/usercenter/icon13.png" style="vertical-align:middle; display: block; margin: auto;">
 				</div>
@@ -199,7 +216,8 @@
 				httpUrl: localStorage.getItem('httpUrl'),
 				//				avatar: localStorage.getItem('avatar'),
 				mobile: localStorage.getItem('mobile'),
-				nickname: localStorage.getItem('nickname')
+				nickname: localStorage.getItem('nickname'),
+				showAll: sessionStorage.getItem('showAll')
 			}
 		},
 		created() {
@@ -213,7 +231,7 @@
 		computed: {
 			avatar() {
 				if(!localStorage.getItem('avatar')) {
-					return '../../../../static/avatar.png'
+					return '../../../../static/usercenter/avatar.png'
 				} else {
 					let res = localStorage.getItem('avatar').substring(0, 4)
 					if(res === 'http') {
@@ -224,16 +242,16 @@
 				}
 			}
 		}
-//		beforeRouteEnter(to, from, next) {
-//			next(vm => {
-//				vm.login = sessionStorage.getItem('token')
-//				vm.path = vm.$route.fullPath
-//				vm.httpUrl = localStorage.getItem('httpUrl')
-//				//				avatar: localStorage.getItem('avatar')
-//				vm.mobile = localStorage.getItem('mobile')
-//				vm.nickname = localStorage.getItem('nickname')
-//			})
-//		}
+		//		beforeRouteEnter(to, from, next) {
+		//			next(vm => {
+		//				vm.login = sessionStorage.getItem('token')
+		//				vm.path = vm.$route.fullPath
+		//				vm.httpUrl = localStorage.getItem('httpUrl')
+		//				//				avatar: localStorage.getItem('avatar')
+		//				vm.mobile = localStorage.getItem('mobile')
+		//				vm.nickname = localStorage.getItem('nickname')
+		//			})
+		//		}
 	}
 </script>
 
@@ -440,7 +458,6 @@
 			}
 			.coupon {
 				img {
-					width: 25px;
 					height: 16px;
 					margin: auto;
 					margin-top: 3px;

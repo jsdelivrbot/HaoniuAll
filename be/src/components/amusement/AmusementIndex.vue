@@ -165,7 +165,7 @@
 					<p>小吃快餐</p>
 				</router-link>-->
 						<router-link to="/amusement/more" tag="div" class="item">
-							<img src="../../../static/amusement-icon8.png" />
+							<img src="../../../static/usercenter/amusement-icon8.png" />
 							<p>全部</p>
 						</router-link>
 					</div>
@@ -200,6 +200,7 @@
 							seachdata: {
 								'type_id': 3,
 								'city': sessionStorage.getItem('city'),
+								'country': sessionStorage.getItem('counties'),
 								'limit': this.count + ',12'
 							}
 						}
@@ -241,17 +242,23 @@
 				listData: [],
 				count: 0,
 				tip: '加载中',
-				loadingShow: true
+				loadingShow: true,
+				flag: true
 			}
 		},
 		methods: {
 			getListData() {
 				//吃喝玩乐信息列表
+				if(!this.flag) {
+					return
+				}
+				this.flag = false
 				this.$http.get('getData/index.php?m=home&c=Form&a=infoList', {
 						params: {
 							seachdata: {
 								'type_id': 3,
 								'city': sessionStorage.getItem('city'),
+								'country': sessionStorage.getItem('counties'),
 								'limit': this.count + ',12'
 							}
 						}
@@ -266,9 +273,11 @@
 							this.$nextTick(() => {
 								this.scroll.refresh()
 							})
+							this.flag = true
 						} else {
 							this.tip = '没有数据了'
 							this.loadingShow = false
+							this.flag = true
 						}
 					})
 			},
@@ -450,7 +459,7 @@
 				line-height: 49px;
 				font-size: 14px;
 				padding-left: 30px;
-				background: url(../../../static/property-hot-icon.png) 12px center no-repeat;
+				background: url(../../../static/usercenter/property-hot-icon.png) 12px center no-repeat;
 				background-size: 9px 15px;
 				.border-1px(#ececec);
 			}

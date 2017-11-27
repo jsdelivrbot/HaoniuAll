@@ -205,7 +205,7 @@
 					flex: 1;
 					outline: none;
 					border: none;
-					background: url(../../../static/search.png) 10px center no-repeat;
+					background: url(../../../static/usercenter/search.png) 10px center no-repeat;
 					background-size: 16px 16px;
 					background-color: #e2e2e2;
 					text-indent: 2em;

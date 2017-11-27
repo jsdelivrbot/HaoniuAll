@@ -54,6 +54,9 @@
 			<img src="../../../static/login4.png" />
 			<img src="../../../static/login5.png" />
 		</div>-->
+		<div class="bg_img">
+			<img src="../../../static/usercenter/loginbg.png" />
+		</div>
 	</div>
 </template>
 
@@ -82,14 +85,17 @@
 					})
 					return
 				}
-				this.$http.get('getData/index.php?m=home&c=Form&a=usercenter_SendCode', {
+				this.$http.get('getData/home/Form/usercenter_SCCode').then((res) => {
+					let sccode = res.data.data.sccode
+					sccode = sccode * 3 / 2 + 4
+					this.$http.get('getData/index.php?m=home&c=Form&a=usercenter_SendCode', {
 						params: {
 							seachdata: {
-								'username': String.trim(this.phone)
+								'username': String.trim(this.phone),
+								'sccode': sccode
 							}
 						}
-					})
-					.then((res) => {
+					}).then((res) => {
 						if(res.data.result === 1) {
 							this.count = 60
 							this.$vux.toast.show({
@@ -104,6 +110,7 @@
 							})
 						}
 					})
+				})
 			},
 			reg() {
 				if(String.trim(this.phone).length !== 11) {
@@ -185,14 +192,14 @@
 				code: '',
 				psw: '',
 				pswAgin: '',
-				checked: false,
+				checked: true,
 				count: -1
 			}
 		},
 		watch: {
-//			checked() {
-//				console.log(this.checked)
-//			},
+			//			checked() {
+			//				console.log(this.checked)
+			//			},
 			count: function() {
 				if(this.count === 60) {
 					var timer = setInterval(this.countChange, 1000)
@@ -211,7 +218,21 @@
 	.register-box {
 		width: 100%;
 		min-height: 100vh;
-		background: linear-gradient(#f39500, #e60112);
+		/*background: linear-gradient(#f39500, #e60112);*/
+		/*background: url(../../../static/usercenter/loginbg.png) center no-repeat;
+		background-size: cover;*/
+		.bg_img {
+			width: 100%;
+			min-height: 100vh;
+			overflow: hidden;
+			position: fixed;
+			left: 0;
+			top: 0;
+			z-index: -1;
+			img {
+				width: 100%;
+			}
+		}
 		.title {
 			.back {
 				width: 88/@rem;
@@ -295,7 +316,8 @@
 			height: 88/@rem;
 			border-radius: 48/@rem;
 			margin: 100/@rem auto 0;
-			box-shadow: 0 2px 2px white inset, 0 2px 2px rgba(0, 0, 0, 0.4);
+			/*box-shadow: 0 2px 2px white inset, 0 2px 2px rgba(0, 0, 0, 0.4);*/
+			background-color: #E60012;
 			p {
 				text-align: center;
 				color: white;
@@ -308,7 +330,7 @@
 			height: 42/@rem;
 			margin: 0 auto;
 			text-align: center;
-			background: url(../../../static/login6.png) left center no-repeat;
+			background: url(../../../static/usercenter/login6.png) left center no-repeat;
 			background-size: contain;
 			p {
 				font-size: 24/@rem;

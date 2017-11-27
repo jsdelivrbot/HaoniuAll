@@ -146,11 +146,11 @@
 					flex: 1;
 					width: 0;
 					&.go-collect {
-						background: url(../../../static/home-icon1.png) center 6px no-repeat;
+						background: url(../../../static/usercenter/home-icon1.png) center 6px no-repeat;
 						background-size: 18px 18px;
 					}
 					&.collected {
-						background: url(../../../static/isgood.png) center 6px no-repeat;
+						background: url(../../../static/usercenter/isgood.png) center 6px no-repeat;
 						background-size: 18px 18px;
 					}
 					span {

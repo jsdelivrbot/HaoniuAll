@@ -3,9 +3,10 @@
 		<!--<router-link to="/home/position" tag="div" class="city">
 			合肥<span class="iconfont icon-moreunfold"></span>
 		</router-link>-->
-		<router-link to="/home/position" tag="div" class="city">
-			{{city}}<span class="iconfont icon-moreunfold"></span>
-		</router-link>
+		<div tag="div" class="city">
+			{{city}}
+			<!--<span class="iconfont icon-moreunfold"></span>-->
+		</div>
 		<input class="search" type="text" @focus="search"
 			placeholder="请输入关键词"/>
 		<router-link to="/service" class="service"></router-link>
@@ -69,7 +70,7 @@
 			font-size: 14px;
 			text-indent: 1em;
 			outline: none;
-			background: url(../../../static/search.png) 12px center no-repeat;
+			background: url(../../../static/usercenter/search.png) 12px center no-repeat;
 			background-size: 17px 17px;
 			background-color: white;
 			padding-left: 36px;
@@ -81,7 +82,7 @@
 			font-size: 14px;
 			color: white;
 			text-align: center;
-			background: url(../../../static/service.png) center no-repeat;
+			background: url(../../../static/usercenter/service.png) center no-repeat;
 			background-position: 20px center;
 			background-size: 22px;
 		}

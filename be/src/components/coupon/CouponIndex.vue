@@ -3,9 +3,11 @@
 		<v-header title="折扣券" map="我的券包" @edit="goMyCoupon"></v-header>
 		<tab :data="tabList" type_id="1" @getData="getData"></tab>
 		<div ref="wrapper" class="wrapper">
-			<coupon-list :list="listData" :tip="tip" :loadingShow="loadingShow"></coupon-list>
+			<div>
+				<coupon-list :list="listData" :tip="tip" :loadingShow="loadingShow"></coupon-list>
+			</div>
 		</div>
-		<index-footer></index-footer>
+		<!--<index-footer></index-footer>-->
 	</div>
 </template>
 
@@ -28,6 +30,7 @@
 						seachdata: {
 							'type_id': 1,
 							'city': sessionStorage.getItem('city'),
+							'country': sessionStorage.getItem('counties'),
 							'option_data': this.searchData,
 							'limit': this.count + ',12'
 						}
@@ -43,17 +46,15 @@
 							this._initScroll()
 							this.loadingShow = false
 							this.tip = '上拉加载更多'
-							//									this.scroll.scrollTo(0, this.posY)
-							//									this.falg = true
+							if(this.scroll.maxScrollY === 0) {
+								this.tip = '没有数据了'
+							}
 						})
-//						console.log(this.posY)
 					} else {
-						this.tip = '没有数据了'
+						this.tip = '暂无折扣券'
 						this.loadingShow = false
-						//								this.falg = true
 					}
 				})
-			//			this.getListData()
 			//选项结果
 			this.$http.get('getData/index.php?m=home&c=Form&a=optionList', {
 					params: {
@@ -76,9 +77,8 @@
 				searchData: [],
 				count: 0,
 				tip: '加载中',
-				loadingShow: true
-//				posY: 0,
-//				falg: true
+				loadingShow: true,
+				flag: true
 			}
 		},
 		methods: {
@@ -89,7 +89,7 @@
 				console.log('选项结果')
 				console.log(res, searchData)
 				this.searchData = searchData
-//				this.posY = 0
+				//				this.posY = 0
 				this.tip = '上拉加载更多'
 				let $this = this
 				this.count = 12
@@ -107,14 +107,19 @@
 				}, 20)
 			},
 			getListData() {
-//				alert(1)
+				//				alert(1)
 				//				if(this.falg) {
 				//					this.falg = false
+				if(!this.flag) {
+					return
+				}
+				this.flag = false
 				this.$http.get('getData/index.php?m=home&c=Form&a=infoList', {
 						params: {
 							seachdata: {
 								'type_id': 1,
 								'city': sessionStorage.getItem('city'),
+								'country': sessionStorage.getItem('counties'),
 								'option_data': this.searchData,
 								'limit': this.count + ',12'
 							}
@@ -127,15 +132,19 @@
 							this.listData.push.apply(this.listData, res.data.data)
 							this.loadingShow = false
 							this.count = this.count + 12
+							let $this = this
 							this.$nextTick(() => {
-								this.scroll.refresh()
-//								this.scroll.scrollTo(0, this.posY)
-//								this.falg = true
+								console.log(this.count)
+								$this.scroll.refresh()
+								//								this.scroll.scrollTo(0, this.posY)
+								//								this.falg = true
 							})
-//							console.log(this.posY)
+							this.flag = true
+							//							console.log(this.posY)
 						} else {
 							this.tip = '没有数据了'
 							this.loadingShow = false
+							this.flag = true
 							//								this.falg = true
 						}
 					})
@@ -150,14 +159,20 @@
 					click: true
 				})
 				this.scroll.on('touchend', (pos) => {
-					console.log(pos)
-					if(pos.y <= this.scroll.maxScrollY + 20) {
-//						this.posY = pos.y
-						this.tip = '上拉加载更多'
+					//					console.log(pos.y)
+					//					console.log(this.scroll.maxScrollY)
+					if(pos.y <= this.scroll.maxScrollY + 20 && this.scroll.maxScrollY !== 0) {
+						this.tip = '加载中'
 						this.loadingShow = true
 						this.getListData()
 						console.log(pos)
 					}
+					//					if(pos.y > 60) {
+					//						this.tip = '上拉加载更多'
+					//						this.loadingShow = true
+					//						this.getListData()
+					//						console.log(pos)
+					//					}
 				})
 			}
 		}
@@ -176,7 +191,7 @@
 		.wrapper {
 			position: fixed;
 			top: 88px;
-			bottom: 49px;
+			bottom: 0;
 			width: 100%;
 			overflow: hidden;
 		}

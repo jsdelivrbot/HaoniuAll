@@ -194,7 +194,7 @@
 			}
 			.tel {
 				height: 44px;
-				background: url(../../../static/tel.png) 12px center no-repeat;
+				background: url(../../../static/usercenter/tel.png) 12px center no-repeat;
 				background-size: 15px 15px;
 				.number {
 					font-size: 14px;
@@ -231,7 +231,8 @@
 			}
 			.resources-content {
 				padding: 5px 12px;
-				p {
+				overflow: hidden;
+				/*p {
 					font-size: 12px;
 					height: 22px;
 					line-height: 22px;
@@ -243,7 +244,7 @@
 						display: inline-block;
 						width: 77px;
 					}
-				}
+				}*/
 			}
 		}
 	}

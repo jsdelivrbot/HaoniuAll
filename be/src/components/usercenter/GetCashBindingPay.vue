@@ -17,7 +17,12 @@
 				</span>
 			</x-input>
 		</group>
-		<p class="detail">1.支付宝账号只能输1次，一经绑定不能更换</p>
+		<!--<p class="detail">1.支付宝账号只能输1次，一经绑定不能更换</p>-->
+		<p class="detail">1、提现最低50元起，最高提现500元；</p>
+		<p class="detail">2、每天提现次数不得超过10次；</p>
+		<p class="detail">3、提现处理周期：自申请1--5个工作日内完成处理；</p>
+		<p class="detail">4、如有任何疑问请咨询客服：0551-62681280。</p>
+
 		<div class="btn" @click="bind">
 			保存
 		</div>
@@ -102,8 +107,8 @@
 						this.$vux.toast.text(res.data.message)
 					}
 				})
-//				this.$vux.toast.text('支付宝绑定成功')
-//				this.$router.push('/usercenter/getCashGo')
+				//				this.$vux.toast.text('支付宝绑定成功')
+				//				this.$router.push('/usercenter/getCashGo')
 			}
 		}
 	}

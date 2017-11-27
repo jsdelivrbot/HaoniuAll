@@ -16,7 +16,7 @@
 					<p class="text-position">地址：{{content.address}}</p>
 				</div>
 				<a :href="'tel:' + content.phone" class="text-btn  vux-1px-l">
-					<img src="../../../static/coupon9.png" />
+					<img src="../../../static/usercenter/coupon9.png" />
 				</a>
 			</div>
 		</div>
@@ -179,7 +179,7 @@
 				.date {
 					font-size: 12px;
 					color: #afafaf;
-					background: url(../../../static/coupon7.png) left center no-repeat;
+					background: url(../../../static/usercenter/coupon7.png) left center no-repeat;
 					background-size: 13px 13px;
 					padding-left: 19px;
 				}

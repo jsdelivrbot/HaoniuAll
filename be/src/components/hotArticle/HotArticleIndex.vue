@@ -41,6 +41,7 @@
 							seachdata: {
 								page_type: 2,
 								city: sessionStorage.getItem('city'),
+								country: sessionStorage.getItem('counties'),
 								'limit': this.count + ',12'
 							}
 						}
@@ -67,17 +68,23 @@
 				articleList: [],
 				count: 0,
 				tip: '加载中',
-				loadingShow: true
+				loadingShow: true,
+				flag: true
 			}
 		},
 		methods: {
 			getData() {
+				if(!this.flag) {
+					return
+				}
+				this.flag = false
 				this.$http('getData/index.php?m=home&c=Form&a=articleList', {
 						params: {
 							type: 1,
 							seachdata: {
 								page_type: 2,
 								city: sessionStorage.getItem('city'),
+								country: sessionStorage.getItem('counties'),
 								'limit': this.count + ',12'
 							}
 						}
@@ -92,9 +99,11 @@
 							this.$nextTick(() => {
 								this.scroll.refresh()
 							})
+							this.flag = true
 						} else {
 							this.tip = '没有数据了'
 							this.loadingShow = false
+							this.flag = true
 						}
 					})
 			},

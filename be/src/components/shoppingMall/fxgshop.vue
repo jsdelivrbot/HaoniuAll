@@ -5,21 +5,21 @@
 			<div class="categorycby">
 				<div class="row row1">
 					<div class="icon" @click="share('tm')">
-						<img src="../../../static/hot-article-category5.png" width="38px" />
+						<img src="../../../static/usercenter/hot-article-category5.png" width="38px" />
 						<p>微信朋友圈</p>
 					</div>
 					<div class="icon" @click="share('wx')">
-						<img src="../../../static/hot-article-category4.png" width="40px" />
+						<img src="../../../static/usercenter/hot-article-category4.png" width="40px" />
 						<p>微信好友</p>
 					</div>
 					<div class="icon">
-						<img src="../../../static/hot-article-category6.png" width="40px" />
+						<img src="../../../static/usercenter/hot-article-category6.png" width="40px" />
 						<p>QQ好友</p>
 					</div>
 				</div>
 				<div class="row row2">
 					<div class="icon">
-						<img src="../../../static/hot-article-category3.png" width="38px" />
+						<img src="../../../static/usercenter/hot-article-category3.png" width="38px" />
 						<p>微博</p>
 					</div>
 					<div class="icon"></div>

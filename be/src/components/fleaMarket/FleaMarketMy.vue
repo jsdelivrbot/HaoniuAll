@@ -15,21 +15,22 @@
 				<p class="process">
 					{{item.create_time | formDate}}发布
 				</p>
+				<p class="status" v-if="item.status === '-1'">待审核</p>
 				<div class="btn">
 					<span class="btn-item dele" @click="deleItem(item.id, index)">
 						删除
 					</span>
-					<!--<router-link to="/fleaMarket/release" tag="span" class="btn-item edit">
+					<router-link :to="'/fleaMarket/edit/' + item.id" tag="span" class="btn-item edit">
 						编辑
-					</router-link>-->
-					<span class="btn-item edit" @click="goEdit">
+					</router-link>
+					<!--<span class="btn-item edit" @click="goEdit">
 						编辑
-					</span>
+					</span>-->
 				</div>
 			</div>
 		</router-link>
 		<div v-show="listInfo.length === 0">
-			<load-more :show-loading="false" tip="暂无待卖商品" background-color="#f0f0f0"></load-more>
+			<load-more :show-loading="loadingShow" :tip="tip" background-color="#f0f0f0"></load-more>
 		</div>
 	</div>
 </template>
@@ -42,7 +43,9 @@
 		data() {
 			return {
 				listInfo: [],
-				httpUrl: localStorage.getItem('httpUrl')
+				httpUrl: localStorage.getItem('httpUrl'),
+				tip: '加载中',
+				loadingShow: true
 			}
 		},
 		components: {
@@ -58,7 +61,16 @@
 				}
 			}).then((res) => {
 				console.log(res)
-				this.listInfo = res.data.data
+				if(res.data.datastatus === 1) {
+					this.listInfo = res.data.data
+					this.$nextTick(() => {
+						this.tip = '暂无待卖商品'
+						this.loadingShow = false
+					})
+				}else {
+					this.tip = '暂无待卖商品'
+					this.loadingShow = false
+				}
 			})
 		},
 		methods: {
@@ -88,10 +100,11 @@
 				})
 			},
 			goEdit() {
-				this.$vux.alert.show({
-					title: '提示',
-					content: '正在优化，敬请期待'
-				})
+//				this.$vux.alert.show({
+//					title: '提示',
+//					content: '正在优化，敬请期待'
+//				})
+				this.$router.push('/fleaMarket/edit/1505')
 			}
 		}
 	}
@@ -139,6 +152,10 @@
 				.process {
 					font-size: 14px;
 					color: #707070;
+				}
+				.status {
+					font-size: 14px;
+					color: #F76260;
 				}
 				.btn {
 					display: flex;

@@ -25,7 +25,7 @@
 				<p class="main main-index">{{item.article_title}}</p>
 				<!--<p class="count">投放量： 10000</p>-->
 				<p class="price">
-					剩余金额： 
+					剩余： 
 					<span class="price-red">{{item.article_rule_moneytotal}}</span>
 				</p>
 				<div class="share-btn-wrapper">
@@ -36,8 +36,8 @@
 					</div>
 					<span class="page-type">
 						<!--{{item.page_type}}-->
-						<img src="../../../static/ren.png" v-if="item.page_type === '1'" />
-						<img src="../../../static/re.png" v-if="item.page_type === '2'" />
+						<img src="../../../static/usercenter/ren.png" v-if="item.page_type === '1'" />
+						<img src="../../../static/usercenter/wen.png" v-if="item.page_type === '2'" />
 					</span>
 				</div>
 			</div>
@@ -52,19 +52,19 @@
 				<p class="main">{{item.article_title}}</p>
 				<!--<p class="count">投放量： 10000</p>-->
 				<p class="price">
-					剩余金额： 
+					剩余： 
 					<span class="price-red">{{item.article_rule_moneytotal}}</span>
 				</p>
 				<div class="share-btn-wrapper">
-					<div class="share-btn">
+					<div class="share-btn" :class="{shared:item.is_checked === '1'}">
 						<span class="share-price" v-if="item.is_checked === '0'">￥{{item.article_rule_money}}</span>
 						<span class="share-price" v-if="item.is_checked === '1'">已赚取</span>
 						<span class="share-go">去分享</span>
 					</div>
 					<span v-if="isIndex" class="page-type">
 						<!--{{item.page_type}}-->
-						<img src="../../../static/ren.png" v-if="item.page_type === '1'" />
-						<img src="../../../static/re.png" v-if="item.page_type === '2'" />
+						<img src="../../../static/usercenter/ren.png" v-if="item.page_type === '1'" />
+						<img src="../../../static/usercenter/wen.png" v-if="item.page_type === '2'" />
 					</span>
 				</div>
 			</div>
@@ -120,24 +120,29 @@
 		box-sizing: border-box;
 		.item {
 			background-color: white;
-			height: 140px;
+			/*height: 140px;*/
 			margin-top: 10px;
 			box-shadow: 0 4px 4px #ab9c9b;
 			padding: 5px;
 			box-sizing: border-box;
 			display: flex;
 			width:100%;
+			position: relative;
 			.img {
-				flex: 0 0 160px;
-				width: 160px;
-				height: 128px;
+				flex: 1;
+				display: flex;
+				align-items: center;
+				background-color: #EFEFEF;
+				/*flex: 0 0 160px;*/
+				/*width: 160px;*/
+				/*height: 128px;*/
 				img {
 					width: 100%;
-					height: 100%;
+					/*height: 100%;*/
 				}
 			}
 			.content {
-				flex: 1;
+				flex: 2;
 				margin: -2px 5px 0 10px;
 				width: 0;
 				overflow: hidden;
@@ -212,16 +217,19 @@
 						background-color: #999999;
 					}
 					.page-type {
-						margin-top: 6px;
+						/*margin-top: 6px;*/
 						height: 30px;
 						line-height: 30px;
 						flex: 1;
 						text-align: center;
 						display: flex;
 						justify-content: flex-end;
+						position: absolute;
+						top: -3px;
+						right: -3px;
 						img {
-							width: 30px;
-							height: 30px;
+							width: 40px;
+							height: 40px;
 						}
 					}
 				}

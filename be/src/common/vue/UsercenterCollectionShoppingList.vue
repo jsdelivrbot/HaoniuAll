@@ -3,7 +3,7 @@
 		<transition-group name="flip-list" tag="ul" class="clearfix">
 			<li v-for="item,index in list" :key="item" class="test">
 				<div class="img">
-					<img src="../../../static/usercenter/collection-good.png">
+					<!--<img src="../../../static/usercenter/collection-good.png">-->
 				</div>
 				<div class="text">
 					<p class="title">韩国可爱波点iphone6手机壳 苹果7时尚光面硬壳6s保护套女款7plus</p>

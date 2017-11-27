@@ -95,7 +95,7 @@
 		},
 		created() {
 			if(!localStorage.getItem('avatar')) {
-				this.avatar.link = '../../../../static/avatar.png'
+				this.avatar.link = '../../../../static/usercenter/avatar.png'
 			} else {
 				let res = localStorage.getItem('avatar').substring(0, 4)
 				if(res === 'http') {

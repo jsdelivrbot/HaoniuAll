@@ -9,12 +9,10 @@
 		<group style="margin-top: 0;">
 			<x-input title="金额（元）：" placeholder="最低50元起" style="font-size: 16px;" v-model="cash"></x-input>
 		</group>
-		<p class="detail">
-			1、提现最低50元起，手续费按0.2%计算，最低2元/笔，最高25元/笔；<br />
-			2、根据国家规定，个人用户每月提现超800元部分需缴纳个人所得税； <br />
-			3、提现处理周期，自申请3-5个工作日内按成处理；<br />
-			4、如有疑问请致电咨询，电话4008-566-116
-		</p>
+		<p class="detail">1、提现最低50元起，最高提现500元；</p>
+		<p class="detail">2、每天提现次数不得超过10次；</p>
+		<p class="detail">3、提现处理周期：自申请1--5个工作日内完成处理；</p>
+		<p class="detail">4、如有任何疑问请咨询客服：0551-62681280。</p>
 		<div class="btn" @click="getCash">
 			提交申请
 		</div>

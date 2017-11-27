@@ -1,7 +1,7 @@
 <template>
 	<div class="usercenter-my-activity-box">
 		<v-header :title="title"></v-header>
-		<swiper :list="imgList" :show-desc-mask="false" :loop="true" :aspect-ratio="360/750"></swiper>
+		<!--<swiper :list="imgList" :show-desc-mask="false" :loop="true" :aspect-ratio="360/750"></swiper>-->
 		<div class="home-info">
 			<div class="info-top border-1px">
 				<p class="info-title">
@@ -41,8 +41,12 @@
 				<span class="name">联系电话：</span>
 				<span class="value">{{phone}}</span>
 			</div>
+			<div class="item vux-1px-b">
+				<span class="name">报名凭证：</span>
+				<span class="value">{{ordersn}}</span>
+			</div>
 		</div>
-		<div class="btn">
+		<div class="btn" @click="cancelJoin">
 			取消报名
 		</div>
 		<div class="footer-info">
@@ -69,20 +73,21 @@
 					}
 				}
 			}).then((res) => {
-				console.log('详情页')
-				console.log(res)
+//				console.log('详情页')
+//				console.log(res)
 				this.content = res.data.data[0].info_detail
 				this.username = res.data.data[0].username
 				this.phone = res.data.data[0].phone
+				this.ordersn = res.data.data[0].ordersn
 //				this.detail = res.data.detail
-				var imgData = res.data.img_data
-				for(let i = 0; i < imgData.length; i++) {
-					this.imgList.push({
-						url: 'javascript:',
-						img: this.httpUrl + imgData[i].content,
-						title: imgData[i].title
-					})
-				}
+//				var imgData = res.data.img_data
+//				for(let i = 0; i < imgData.length; i++) {
+//					this.imgList.push({
+//						url: 'javascript:',
+//						img: this.httpUrl + imgData[i].content,
+//						title: imgData[i].title
+//					})
+//				}
 			})
 		},
 		data() {
@@ -91,13 +96,34 @@
 				imgList: [],
 				content: {},
 				username: '',
-				phone: ''
+				phone: '',
+				ordersn: ''
 //				detail: []
 			}
 		},
 		computed: {
 			title() {
 				return '报名凭证'
+			}
+		},
+		methods: {
+			cancelJoin() {
+				this.$http.get('getData/index.php?m=home&c=Form&a=deleteMyInJoin', {
+					params: {
+						seachdata: {
+							id: this.$route.params.id
+						}
+					}
+				}).then((res) => {
+					if(res.data.datastatus === 1) {
+						this.$vux.toast.show({
+							text: '取消成功'
+						})
+						this.$router.back(-1)
+					}else {
+						this.$vux.toast.text(res.data.message)
+					}
+				})
 			}
 		}
 	}
@@ -151,7 +177,7 @@
 			}
 			.position {
 				height: 44px;
-				background: url(../../../static/position.png) 12px center no-repeat;
+				background: url(../../../static/usercenter/position.png) 12px center no-repeat;
 				background-size: 15px 20px;
 				font-size: 14px;
 				line-height: 44px;
@@ -166,7 +192,7 @@
 			}
 			.tel {
 				height: 44px;
-				background: url(../../../static/tel.png) 12px center no-repeat;
+				background: url(../../../static/usercenter/tel.png) 12px center no-repeat;
 				background-size: 15px 15px;
 				.number {
 					font-size: 14px;

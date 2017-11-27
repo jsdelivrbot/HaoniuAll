@@ -34,7 +34,8 @@
 				listData: [],
 				count: 0,
 				tip: '上拉加载更多',
-				loadingShow: false
+				loadingShow: false,
+				flag: true
 			}
 		},
 		created() {
@@ -67,6 +68,10 @@
 				this.$store.commit('edit')
 			},
 			getData() {
+				if(!this.flag) {
+					return
+				}
+				this.flag = false
 				this.$http('getData/index.php?m=home&c=Form&a=infoCollectList', {
 						params: {
 							seachdata: {
@@ -84,9 +89,11 @@
 							this.$nextTick(() => {
 								this.scroll.refresh()
 							})
+							this.flag = true
 						} else {
 							this.tip = '没有数据了'
 							this.loadingShow = false
+							this.flag = true
 						}
 					})
 			},

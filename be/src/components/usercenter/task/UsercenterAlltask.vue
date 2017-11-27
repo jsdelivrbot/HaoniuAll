@@ -25,7 +25,8 @@
 				count: 0,
 				tip: '上拉加载更多',
 				loadingShow: false,
-				status: ''
+				status: '',
+				flag: true
 			}
 		},
 		components: {
@@ -103,6 +104,10 @@
 				})
 			},
 			getListData() {
+				if(!this.flag) {
+					return
+				}
+				this.flag = false
 				this.$http.get('getData/index.php?m=home&c=Form&a=articleShareList', {
 						params: {
 							seachdata: {
@@ -121,9 +126,11 @@
 							this.$nextTick(() => {
 								this.scroll.refresh()
 							})
+							this.flag = true
 						} else {
 							this.tip = '没有数据了'
 							this.loadingShow = false
+							this.flag = true
 						}
 					})
 			},

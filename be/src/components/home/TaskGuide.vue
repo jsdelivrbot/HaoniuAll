@@ -17,16 +17,16 @@
 	    	<div class="guide-tab-item vux-1px-r" tag="div" @click="toPerfect">
 	    		<div class="guide-content">
 	    			<div class="img-content">
-	    				<img src="../../../static/task-guide1.png" />
+	    				<img src="../../../static/usercenter/task-guide1.png" />
 	    				<span>完善资料</span>
 	    			</div>
 	    			<p class="guide-text">只关注自己喜欢的</p>
 	    		</div>
 	    	</div>
-	    	<router-link to="/task" class="guide-tab-item" tag="div">
+	    	<router-link to="/task" class="guide-tab-item" tag="div" v-if="showAll === '1'">
 	    		<div class="guide-content">
 	    			<div class="img-content">
-	    				<img src="../../../static/task-guide2.png" />
+	    				<img src="../../../static/usercenter/task-guide2.png" />
 	    				<span>多做任务</span>
 	    			</div>
 	    			<p class="guide-text">积极分享 认真完成 早日成壕</p>
@@ -51,7 +51,8 @@
 		data() {
 			return {
 				weekList: ['日', '一', '二', '三', '四', '五', '六'],
-				token: sessionStorage.getItem('token')
+				token: sessionStorage.getItem('token'),
+				showAll: sessionStorage.getItem('showAll')
 			}
 		},
 		computed: {

@@ -1,6 +1,6 @@
 <template>
 	<div class="profit-ranking-box">
-		<v-header title="收益排行榜" map="活动规则" @edit="showMaster"></v-header>
+		<v-header title="收益排行榜"></v-header>
 		<div class="master" @touchmove.prevent v-show="masterShow" @click="masterShow=!masterShow">
 			<div class="content">
 				<p>

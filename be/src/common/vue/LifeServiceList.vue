@@ -13,7 +13,7 @@
 					:font-size="16" :margin="2" :disabled="true"></rater>
 				<span class="score">{{toFixed(item.score)}}</span>
 				<p class="detail">
-					<span class="price">{{item.price}}{{item.company}}起</span>
+					<span class="price" v-show="item.price != 0">{{item.price}}{{item.company}}起</span>
 					<span class="adress">{{item.address}}</span>
 				</p>
 				<!--<div class="decorate-label">

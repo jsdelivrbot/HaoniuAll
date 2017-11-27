@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Getqrcode from '@/components/getqrcode'
 //首页
 import Home from '@/components/home/Home'
 import HomeIndex from '@/components/home/HomeIndex'
@@ -15,10 +16,10 @@ import Search from '@/common/vue/Search'
 import Task from '@/components/task/Task'
 import TaskIndex from '@/components/task/TaskIndex'
 //房产家居
-import HomeProperty from '@/components/homeProperty/HomeProperty'
-import HomePropertyIndex from '@/components/homeProperty/HomePropertyIndex'
-import HomePropertyIn from '@/components/homeProperty/HomePropertyIn'
-import HomePropertyDetail from '@/components/homeProperty/HomePropertyDetail'
+//import HomeProperty from '@/components/homeProperty/HomeProperty'
+//import HomePropertyIndex from '@/components/homeProperty/HomePropertyIndex'
+//import HomePropertyIn from '@/components/homeProperty/HomePropertyIn'
+//import HomePropertyDetail from '@/components/homeProperty/HomePropertyDetail'
 //今日免单
 import Free from '@/components/free/Free'
 import FreeIndex from '@/components/free/FreeIndex'
@@ -30,6 +31,7 @@ import FleaMarketIndex from '@/components/fleaMarket/FleaMarketIndex'
 import FleaMarketDetail from '@/components/fleaMarket/FleaMarketDetail'
 import FleaMarketIn from '@/components/fleaMarket/FleaMarketIn'
 import FleaMarketRelease from '@/components/fleaMarket/FleaMarketRelease'
+import FleaMarketEdit from '@/components/fleaMarket/FleaMarketEdit'
 import FleaMarketMy from '@/components/fleaMarket/FleaMarketMy'
 //用户中心
 import Usercenter from '@/components/usercenter/Usercenter'
@@ -37,6 +39,7 @@ import UsercenterIndex from '@/components/usercenter/UsercenterIndex'
 import UsercenterAlltask from '@/components/usercenter/task/UsercenterAlltask'
 import UsercenterSharetask from '@/components/usercenter/task/UsercenterSharetask'
 import UsercenterCollection from '@/components/usercenter/collection/UsercenterCollection'
+import UsercenterShoppingCollection from '@/components/usercenter/collection/UsercenterShoppingCollection'
 import Perfect from '@/components/usercenter/perfect/Perfect'
 import UsercenterAdress from '@/components/usercenter/adress/UsercenterAdress'
 import UsercenterMyActivity from '@/components/usercenter/UsercenterMyActivity'
@@ -67,9 +70,9 @@ import AmusementIndexMore from '@/components/amusement/AmusementIndexMore'
 import AmusementIn from '@/components/amusement/AmusementIn'
 import AmusementDetail from '@/components/amusement/AmusementDetail'
 //分享购
-import ShareShopping from '@/components/shareShopping/ShareShopping'
-import ShareShoppingIndex from '@/components/shareShopping/ShareShoppingIndex'
-import ShareShoppingDetail from '@/components/shareShopping/ShareShoppingDetail'
+//import ShareShopping from '@/components/shareShopping/ShareShopping'
+//import ShareShoppingIndex from '@/components/shareShopping/ShareShoppingIndex'
+//import ShareShoppingDetail from '@/components/shareShopping/ShareShoppingDetail'
 //折扣券
 import Coupon from '@/components/coupon/Coupon'
 import CouponIndex from '@/components/coupon/CouponIndex'
@@ -91,6 +94,9 @@ import ProfitIndex from '@/components/profit/ProfitIndex'
 import ProfitRanking from '@/components/profit/ProfitRanking'
 //佣金商城
 import ShoppingMall from '@/components/shoppingMall/ShoppingMall'
+import Shopping from '@/components/shoppingMall/Shopping'
+import ShoppingDetail from '@/components/shoppingMall/ShoppingDetail'
+import SureShopping from '@/components/shoppingMall/SureShopping'
 //登录注册
 import Login from '@/components/loginRegister/Login'
 import Register from '@/components/loginRegister/Register'
@@ -131,6 +137,13 @@ const router = new Router({
 				path: '/home/detail2/:id',
 				component: HomeDetail
 			}]
+		},
+		{
+			path: '/Getqrcode',
+			component: Getqrcode,
+			meta: {
+				requiresAuth: true
+			}
 		},
 		{
 			path: '/guide',
@@ -197,20 +210,21 @@ const router = new Router({
 		//			component: ShareShoppingDetail
 		//		}]
 		//	},
+//		{
+//			path: '/homeProperty',
+//			component: HomeProperty,
+//			children: [{
+//				path: '/',
+//				component: HomePropertyIndex
+//			}, {
+//				path: '/homeProperty/In/:id',
+//				component: HomePropertyIn
+//			}, {
+//				path: '/homeProperty/detail/:id',
+//				component: HomePropertyDetail
+//			}]
+//		},
 		{
-			path: '/homeProperty',
-			component: HomeProperty,
-			children: [{
-				path: '/',
-				component: HomePropertyIndex
-			}, {
-				path: '/homeProperty/In/:id',
-				component: HomePropertyIn
-			}, {
-				path: '/homeProperty/detail/:id',
-				component: HomePropertyDetail
-			}]
-		}, {
 			path: '/free',
 			component: Free,
 			children: [{
@@ -241,6 +255,12 @@ const router = new Router({
 			}, {
 				path: '/fleaMarket/release',
 				component: FleaMarketRelease,
+				meta: {
+					requiresAuth: true
+				}
+			}, {
+				path: '/fleaMarket/edit/:id',
+				component: FleaMarketEdit,
 				meta: {
 					requiresAuth: true
 				}
@@ -302,6 +322,26 @@ const router = new Router({
 			meta: {
 				requiresAuth: true
 			}
+		}, {
+			path: '/Shopping',
+			component: Shopping,
+			meta: {
+				requiresAuth: true
+			}
+		},
+		{
+			path: '/ShoppingDetail/:id',
+			component: ShoppingDetail,
+			meta: {
+				requiresAuth: true
+			}
+		},
+		{
+			path: '/SureShopping',
+			component: SureShopping,
+			meta: {
+				requiresAuth: true
+			}
 		},
 		//	{
 		//		path: '/center',
@@ -357,6 +397,9 @@ const router = new Router({
 				meta: {
 					requiresAuth: true
 				}
+			}, {
+				path: '/usercenter/shoppingCollection',
+				component: UsercenterShoppingCollection
 			}, {
 				path: '/usercenter/perfect',
 				component: Perfect

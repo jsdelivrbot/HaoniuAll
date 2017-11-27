@@ -6,7 +6,7 @@
 		<span class="map" @click="mapfn">{{map}}</span>
 		<search v-if="searchShow" @closeSearchHandle="closeSearch"></search>
 		<div class="shares" v-if='isshare' @click="touchShaer">
-			<img src="../../../static/share2ad.png" />
+			<img src="../../../static/usercenter/share2ad.png" />
 		</div>
 	</div>
 </template>
@@ -127,7 +127,7 @@
 			font-size: 14px;
 			text-indent: 3em;
 			outline: none;
-			background: url(../../../static/search.png) 12px center no-repeat;
+			background: url(../../../static/usercenter/search.png) 12px center no-repeat;
 			background-color: white;
 			background-size: 16px 16px;
 		}

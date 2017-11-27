@@ -29,7 +29,7 @@
 						let url = $this.$route.query.url
 						link = 'app/' + decodeURIComponent(url) + '&token=' + $this.token
 					}else {
-						link = 'app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=goods&token=' + $this.token
+						link = 'app/index.php?i=3&c=entry&m=ewei_shopv2&do=mobile&r=goods&groupid=2&token=' + $this.token
 					}
 					mui.openWindow({
 						url: $this.httpUrl + link,

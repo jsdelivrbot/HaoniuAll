@@ -85,7 +85,22 @@
 					onConfirm() {
 						sessionStorage.clear()
 						localStorage.clear()
-//						localStorage.setItem('httpUrl', 'http://afx.hfrjkf.cn/')
+						//判断是否显示全部
+						_this.$http.get('getData/index.php?m=home&c=Form&a=showMenu', {
+								params: {
+									seachdata: {
+										versions: '1.0101'
+									}
+								}
+							})
+							.then((res) => { //		console.log(res)
+								if(res.data.result === 0) {
+									sessionStorage.setItem('showAll', '0')
+								} else {
+									sessionStorage.setItem('showAll', '1')
+								}
+							})
+						//						localStorage.setItem('httpUrl', 'http://afx.hfrjkf.cn/')
 						localStorage.setItem('httpUrl', 'http://aifengxiang.hfrjkf.cn/')
 						_this.$http.defaults.baseURL = localStorage.getItem('httpUrl')
 						localStorage.setItem('newUser', 'notNew')
@@ -93,7 +108,7 @@
 						sessionStorage.setItem('cityPosition', '')
 						sessionStorage.setItem('counties', '')
 						_this.$http.defaults.headers.get['token'] = ''
-//						_this.$router.replace('/usercenter')
+						//						_this.$router.replace('/usercenter')
 						_this.$router.back(-2)
 					}
 				})
@@ -110,7 +125,7 @@
 				let mobile = localStorage.getItem('mobile')
 				if(mobile === 'null' || !mobile) {
 					return ''
-				}else {
+				} else {
 					return mobile
 				}
 			}

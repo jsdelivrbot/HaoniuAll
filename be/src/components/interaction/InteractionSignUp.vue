@@ -16,28 +16,12 @@
 					<span class="count">选择数量</span>
 				</div>
 				<div class="content">
-					<div class="item">
-						<span class="price">成人票：￥{{adultPrice}}</span>
+					<div class="item" v-for="(item, index) in info_list" :key="index">
+						<span class="price">{{item.title}}：￥{{item.price}}</span>
 						<div class="count">
-							<span class="subtract" @click="subtractadult">-</span>
-							<span class="now">{{adult}}</span>
-							<span class="add" @click="adult = adult + 1">+</span>
-						</div>
-					</div>
-					<div class="item">
-						<span class="price">儿童票：￥{{childrenPrice}}</span>
-						<div class="count">
-							<span class="subtract" @click="subtractchildren">-</span>
-							<span class="now">{{children}}</span>
-							<span class="add" @click="children = children + 1">+</span>
-						</div>
-					</div>
-					<div class="item">
-						<span class="price">免费票：￥{{freePrice}}</span>
-						<div class="count">
-							<span class="subtract" @click="subtractfree">-</span>
-							<span class="now">{{free}}</span>
-							<span class="add" @click="free = free + 1">+</span>
+							<span class="subtract" @click="subtractNum(index)">-</span>
+							<span class="now">{{item.num}}</span>
+							<span class="add" @click="addNum(index)">+</span>
 						</div>
 					</div>
 				</div>
@@ -58,45 +42,50 @@
 		},
 		data() {
 			return {
-				adult: 0,
-				children: 0,
-				free: 0,
 				username: '',
-				phone: ''
+				phone: '',
+				info_list: []
 			}
 		},
-		computed: {
-			adultPrice() {
-				return 100 * this.adult
-			},
-			childrenPrice() {
-				return 50 * this.children
-			},
-			freePrice() {
-				return 0 * this.free
-			}
+		created() {
+			this.init()
 		},
 		methods: {
-			subtractadult() {
-				if(this.adult === 0) {
+			init() {
+				this.$http.get('getData/home/Form/info_pj_list', {
+					params: {
+						seachdata: {
+							id: this.$route.params.id
+						}
+					}
+				}).then((res) => {
+//										console.log(res)
+					if(res.data.datastatus === 1) {
+						this.info_list = res.data.data
+						for(let i = 0; i < this.info_list.length; i++) {
+							this.info_list[i].num = 0
+						}
+					}
+				})
+			},
+			subtractNum(index) {
+				if(this.info_list[index].num === 0) {
 					return
 				} else {
-					this.adult = this.adult - 1
+					this.$set(this.info_list, index, {
+						title: this.info_list[index].title,
+						price: this.info_list[index].price,
+						num: this.info_list[index].num - 1
+					})
 				}
 			},
-			subtractchildren() {
-				if(this.children === 0) {
-					return
-				} else {
-					this.children = this.children - 1
-				}
-			},
-			subtractfree() {
-				if(this.free === 0) {
-					return
-				} else {
-					this.free = this.free - 1
-				}
+			addNum(index) {
+				this.$set(this.info_list, index, {
+						title: this.info_list[index].title,
+						price: this.info_list[index].price,
+						num: this.info_list[index].num + 1
+					})
+//				console.log(this.info_list)
 			},
 			goSignUp() {
 				//				console.log(this.username)
@@ -115,23 +104,7 @@
 					})
 					return
 				}
-				let remark = {
-					adult: {
-						title: '成人票',
-						price: '￥' + this.adultPrice,
-						num: '×' + this.adult
-					},
-					children: {
-						title: '儿童票',
-						price: '￥' + this.childrenPrice,
-						num: '×' + this.children
-					},
-					free: {
-						title: '免费票',
-						price: '￥' + this.freePrice,
-						num: '×' + this.free
-					}
-				}
+				let remark = JSON.stringify(this.info_list)
 				this.$http.get('getData/index.php?m=home&c=Form&a=infoJoin', {
 					params: {
 						seachdata: {

@@ -25,11 +25,11 @@
 					<div class="category" @click.stop v-show="masterShow">
 						<div class="row row1">
 							<div class="icon" @click="share('tm')">
-								<img src="../../../static/hot-article-category5.png" width="38px" />
+								<img src="../../../static/usercenter/hot-article-category5.png" width="38px" />
 								<p>微信朋友圈</p>
 							</div>
 							<div class="icon" @click="share('wx')">
-								<img src="../../../static/hot-article-category4.png" width="40px" />
+								<img src="../../../static/usercenter/hot-article-category4.png" width="40px" />
 								<p>微信好友</p>
 							</div>
 							<!--<div class="icon">
@@ -37,13 +37,13 @@
 								<p>QQ空间</p>
 							</div>-->
 							<div class="icon">
-								<img src="../../../static/hot-article-category6.png" width="40px" />
+								<img src="../../../static/usercenter/hot-article-category6.png" width="40px" />
 								<p>QQ好友</p>
 							</div>
 						</div>
 						<div class="row row2">
 							<div class="icon">
-								<img src="../../../static/hot-article-category3.png" width="38px" />
+								<img src="../../../static/usercenter/hot-article-category3.png" width="38px" />
 								<p>微博</p>
 							</div>
 							<!--<div class="icon">
@@ -65,7 +65,7 @@
 
 <script>
 	export default {
-		props: ['articleId', 'article_rule_money', 'title', 'id', 'isChecked', 'shareImg'],
+		props: ['articleId', 'article_rule_money', 'title', 'id', 'isChecked', 'shareImg', 'isCollected'],
 		data() {
 			return {
 				collected: false,
@@ -81,6 +81,9 @@
 //			console.log(this.shareImg)
 			if(this.isChecked === '1') {
 				this.getted = true
+			}
+			if(this.isCollected === '1') {
+				this.collected = true
 			}
 		},
 		methods: {
@@ -243,17 +246,17 @@
 					width: 0;
 					&.go-collect {
 						flex: 1;
-						background: url(../../../static/hot-article-collect.png) center 6px no-repeat;
+						background: url(../../../static/usercenter/hot-article-collect.png) center 6px no-repeat;
 						background-size: 22px 22px;
 					}
 					&.collected {
 						flex: 1;
-						background: url(../../../static/hot-article-share-active.png) center 6px no-repeat;
+						background: url(../../../static/usercenter/hot-article-share-active.png) center 6px no-repeat;
 						background-size: 20px 20px;
 					}
 					&.go-share {
 						flex: 2;
-						background: url(../../../static/hot-article-share.png) center 6px no-repeat;
+						background: url(../../../static/usercenter/hot-article-share.png) center 6px no-repeat;
 						background-size: 16px 19px;
 						background-color: rgb(255, 82, 33);
 					}

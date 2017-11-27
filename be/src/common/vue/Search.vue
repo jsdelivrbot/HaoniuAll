@@ -36,6 +36,13 @@
 				this.$emit('closeSearchHandle')
 			},
 			goSearch() {
+				if(this.showAll === '0') {
+					this.$vux.alert.show({
+						title: '提示',
+						content: '没有搜索结果'
+					})
+					return
+				}
 				this.count = 0
 				this.$http.get('getData/index.php?m=home&c=Form&a=articleList', {
 						params: {
@@ -126,7 +133,8 @@
 				listData: [],
 				count: 0,
 				tip: '上拉加载更多',
-				loadingShow: false
+				loadingShow: false,
+				showAll: sessionStorage.getItem('showAll')
 			}
 		},
 		components: {
@@ -176,7 +184,7 @@
 				display: block;
 				border-radius: 24px;
 				flex: 1;
-				background: url(../../../static/search.png) 12px center no-repeat;
+				background: url(../../../static/usercenter/search.png) 12px center no-repeat;
 				background-size: 17px 17px;
 				background-color: #e2e2e2;
 				font-size: 14px;

@@ -183,6 +183,11 @@ export default {
 				var u = navigator.userAgent
 				var result = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1
 				return result
+			},
+			Vue.prototype.$CopenUrl = function(url) {
+				mui.plusReady(function() {
+					plus.runtime.openURL(url)
+				})
 			}
 	}
 }

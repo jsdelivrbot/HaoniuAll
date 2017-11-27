@@ -157,7 +157,7 @@
 			}
 			.tel {
 				height: 44px;
-				background: url(../../../static/tel.png) 12px center no-repeat;
+				background: url(../../../static/usercenter/tel.png) 12px center no-repeat;
 				background-size: 15px 15px;
 				.number {
 					font-size: 14px;
@@ -193,6 +193,7 @@
 			}
 			.resources-content {
 				padding: 5px 12px;
+				overflow: hidden;
 			}
 		}
 	}

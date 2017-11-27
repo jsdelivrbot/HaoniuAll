@@ -4,13 +4,13 @@
 			<div class="item-title">男人也可以活的精致</div>
 			<div class="content">
 				<div class="img">
-					<img src="../../../static/shareshopping1.png" />
+					<!--<img src="../../../static/shareshopping1.png" />-->
 				</div>
 				<div class="img">
-					<img src="../../../static/shareshopping2.png" />
+					<!--<img src="../../../static/shareshopping2.png" />-->
 				</div>
 				<div class="img">
-					<img src="../../../static/shareshopping3.png" />
+					<!--<img src="../../../static/shareshopping3.png" />-->
 				</div>
 			</div>
 			<div class="item-footer">
@@ -20,11 +20,11 @@
 				</div>
 				<div class="count">
 					<div class="good">
-						<img src="../../../static/shareshopping4.png" />
+						<!--<img src="../../../static/shareshopping4.png" />-->
 						<span>10</span>
 					</div>
 					<div class="share">
-						<img src="../../../static/shareshopping5.png" />
+						<!--<img src="../../../static/shareshopping5.png" />-->
 						<span>21</span>
 					</div>
 				</div>

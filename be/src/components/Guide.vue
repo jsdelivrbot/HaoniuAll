@@ -1,29 +1,29 @@
 <template>
 	<div class="guide-box">
 		<swiper height="100vh">
-			<swiper-item class="black">
+			<swiper-item class="black" v-if="showAll === '1'">
 				<div class="swiper-item swiper-item1">
-					<img src="../../static/guide1.png" />
+					<img src="../../static/usercenter/guide1.png" />
 				</div>
 			</swiper-item>
-			<swiper-item class="black">
+			<swiper-item class="black" v-if="showAll === '1'">
 				<div class="swiper-item swiper-item2">
-					<img src="../../static/guide2.png" />
+					<img src="../../static/usercenter/guide2.png" />
 				</div>
 			</swiper-item>
-			<swiper-item class="black">
+			<swiper-item class="black" v-if="showAll === '1'">
 				<div class="swiper-item swiper-item3">
-					<img src="../../static/guide3.png" />
+					<img src="../../static/usercenter/guide3.png" />
 				</div>
 			</swiper-item>
-			<swiper-item class="black">
+			<swiper-item class="black" v-if="showAll === '1'">
 				<div class="swiper-item swiper-item4">
-					<img src="../../static/guide4.png" />
+					<img src="../../static/usercenter/guide4.png" />
 				</div>
 			</swiper-item>
 			<swiper-item class="black">
 				<div class="swiper-item swiper-item5" @click="goIndex">
-					<img src="../../static/guide5.png" />
+					<img src="../../static/usercenter/guide5.png" />
 				</div>
 			</swiper-item>
 		</swiper>
@@ -33,6 +33,30 @@
 <script>
 	import { Swiper, SwiperItem } from 'vux'
 	export default {
+		data() {
+			return {
+				showAll: ''
+			}
+		},
+		created() {
+			//判断是否显示全部
+			this.$http.get('getData/index.php?m=home&c=Form&a=showMenu', {
+					params: {
+						seachdata: {
+							versions: '1.0101'
+						}
+					}
+				})
+				.then((res) => {
+					//		console.log(res)
+					if(res.data.result === 0) {
+						sessionStorage.setItem('showAll', '0')
+					} else {
+						sessionStorage.setItem('showAll', '1')
+					}
+					this.showAll = sessionStorage.getItem('showAll')
+				})
+		},
 		components: {
 			Swiper,
 			SwiperItem
@@ -52,22 +76,18 @@
 			width: 100%;
 			height: 100vh;
 		}
-		
 		.swiper-item2 {
 			width: 100%;
 			height: 100vh;
 		}
-		
 		.swiper-item3 {
 			width: 100%;
 			height: 100vh;
 		}
-		
 		.swiper-item4 {
 			width: 100%;
 			height: 100vh;
 		}
-		
 		.swiper-item5 {
 			width: 100%;
 			height: 100vh;

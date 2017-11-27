@@ -26,6 +26,7 @@
 						seachdata: {
 							'type_id': 5,
 							'city': sessionStorage.getItem('city'),
+							'country': sessionStorage.getItem('counties'),
 							'option_data': this.searchData,
 							'limit': this.count + ',12'
 						}
@@ -69,7 +70,8 @@
 				searchData: [],
 				count: 0,
 				tip: '加载中',
-				loadingShow: true
+				loadingShow: true,
+				flag: true
 			}
 		},
 		methods: {
@@ -94,11 +96,16 @@
 				}, 20)
 			},
 			getListData() {
+				if(!this.flag) {
+					return
+				}
+				this.flag = false
 				this.$http.get('getData/index.php?m=home&c=Form&a=infoList', {
 						params: {
 							seachdata: {
 								'type_id': 5,
 								'city': sessionStorage.getItem('city'),
+								'country': sessionStorage.getItem('counties'),
 								'option_data': this.searchData,
 								'limit': this.count + ',12'
 							}
@@ -114,9 +121,11 @@
 							this.$nextTick(() => {
 								this.scroll.refresh()
 							})
+							this.flag = true
 						} else {
 							this.tip = '没有数据了'
 							this.loadingShow = false
+							this.flag = true
 						}
 					})
 			},

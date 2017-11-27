@@ -19,23 +19,11 @@
 						</div>
 					</div>
 					<div class="total">
-						<p>
+						<p v-for="(list, index2) in josn2Obj(josn2Obj(item.remark))">
 							<!--{{item.remark}}-->
-							<span v-text="josn2Obj(item.remark).adult.title"></span> 
-							<span class="count" v-text="josn2Obj(item.remark).adult.num"></span>
-							<span class="price" v-text="josn2Obj(item.remark).adult.price"></span>
-						</p>
-						<p>
-							<!--{{item.remark}}-->
-							<span v-text="josn2Obj(item.remark).children.title"></span> 
-							<span class="count" v-text="josn2Obj(item.remark).children.num"></span>
-							<span class="price" v-text="josn2Obj(item.remark).children.price"></span>
-						</p>
-						<p>
-							<!--{{item.remark}}-->
-							<span v-text="josn2Obj(item.remark).free.title"></span> 
-							<span class="count" v-text="josn2Obj(item.remark).free.num"></span>
-							<span class="price" v-text="josn2Obj(item.remark).free.price"></span>
+							<span>{{list.title}}</span> 
+							<span class="count" v-text="'x' + list.num"></span>
+							<span class="price" v-text="'￥' + list.price * list.num"></span>
 						</p>
 					</div>
 				</router-link>
@@ -82,8 +70,9 @@
 				listData: [],
 				httpUrl: localStorage.getItem('httpUrl'),
 				count: 0,
-				tip: '上拉加载更多',
-				loadingShow: false
+				tip: '加载中',
+				loadingShow: true,
+				flag: true
 			}
 		},
 		created() {
@@ -96,14 +85,19 @@
 					}
 				})
 				.then((res) => {
-					console.log(res)
+//					console.log(res.data.data[0].remark)
+//					console.log(JSON.parse(res.data.data[0].remark))
+//					console.log(JSON.parse(JSON.parse(res.data.data[0].remark)))
 					if(res.data.datastatus === 1) {
-						console.log('我的活动列表')
 						this.listData = res.data.data
 						this.loadingShow = false
 						this.count = this.count + 12
 						this.$nextTick(() => {
 							this._initScroll()
+							this.tip = '上拉加载更多'
+							if(this.scroll.maxScrollY === 0) {
+								this.tip = '没有数据了'
+							}
 						})
 					} else {
 						this.tip = '暂无已报名活动'
@@ -125,8 +119,8 @@
 				})
 				this.scroll.on('touchend', (pos) => {
 					//					console.log(pos)
-					if(pos.y <= this.scroll.maxScrollY + 20) {
-						this.tip = '上拉加载更多'
+					if(pos.y <= this.scroll.maxScrollY + 20 && this.scroll.maxScrollY !== 0) {
+						this.tip = '加载中'
 						this.loadingShow = true
 						this.getListData()
 						console.log(pos)
@@ -134,6 +128,10 @@
 				})
 			},
 			getListData() {
+				if(!this.flag) {
+					return
+				}
+				this.flag = false
 				this.$http.get('getData/index.php?m=home&c=Form&a=infoJoinList', {
 						params: {
 							seachdata: {
@@ -152,9 +150,11 @@
 							this.$nextTick(() => {
 								this.scroll.refresh()
 							})
+							this.flag = true
 						} else {
 							this.tip = '没有数据了'
 							this.loadingShow = false
+							this.flag = true
 						}
 					})
 			}

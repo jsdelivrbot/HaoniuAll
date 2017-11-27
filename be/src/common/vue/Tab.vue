@@ -15,10 +15,11 @@
 
 <script>
 	export default {
+		name: 'tab',
 		props: ['data', 'type_id'],
 		data() {
 			return {
-				currentList: Number,
+				currentList: -1,
 				listData: [],
 				searchArr: []
 			}
@@ -109,7 +110,7 @@
 				align-items: center;
 			}
 			.tabItemBg {
-				background: url(../../../static/home-tab-icon.png) right 9px bottom no-repeat;
+				background: url(../../../static/usercenter/home-tab-icon.png) right 9px bottom no-repeat;
 				background-size: 6px 6px;
 			}
 		}
@@ -129,7 +130,7 @@
 					box-sizing: border-box;
 					.border-1px-top(#e2e2e2);
 					&.active {
-						background: url(../../../static/choose.png) right center no-repeat;
+						background: url(../../../static/usercenter/choose.png) right center no-repeat;
 						background-position: right 20px center;
 						background-size: 12px 12px;
 					}

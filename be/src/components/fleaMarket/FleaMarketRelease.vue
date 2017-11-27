@@ -283,7 +283,7 @@
 				}
 			}
 			.choose-btn {
-				background: url(../../../static/flea-market5.png) center 18px no-repeat;
+				background: url(../../../static/usercenter/flea-market5.png) center 18px no-repeat;
 				background-size: 34px 28px;
 				background-color: #f0f0f0;
 				position: relative;

@@ -151,7 +151,7 @@
 						left: 16px;
 						border: 1px solid #e60012;
 						border-radius: 7px;
-						background: url(../../../static/share.png) 4px center no-repeat;
+						background: url(../../../static/usercenter/share.png) 4px center no-repeat;
 						background-size: 10px;
 						font-size: 10px;
 						line-height: 16px;

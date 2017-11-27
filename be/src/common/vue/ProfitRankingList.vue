@@ -84,15 +84,15 @@
 					justify-content: center;
 					align-items: center;
 					&.first {
-						background: url(../../../static/ranking1.png) center no-repeat;
+						background: url(../../../static/usercenter/ranking1.png) center no-repeat;
 						background-size: 14px 22px;
 					}
 					&.second {
-						background: url(../../../static/ranking2.png) center no-repeat;
+						background: url(../../../static/usercenter/ranking2.png) center no-repeat;
 						background-size: 14px 22px;
 					}
 					&.third {
-						background: url(../../../static/ranking3.png) center no-repeat;
+						background: url(../../../static/usercenter/ranking3.png) center no-repeat;
 						background-size: 14px 22px;
 					}
 				}

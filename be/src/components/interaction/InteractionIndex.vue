@@ -38,6 +38,7 @@
 							'type_id': 6,
 							'action_status': id,
 							'city': sessionStorage.getItem('city'),
+							'country': sessionStorage.getItem('counties'),
 							'limit': this.count + ',12'
 						}
 					}
@@ -54,21 +55,29 @@
 							this._initScroll(id)
 							this.loadingShow = false
 							this.tip = '上拉加载更多'
+							if(this.scroll.maxScrollY === 0) {
+								this.tip = '没有数据了'
+							}
 						})
 					} else {
-						this.tip = '没有数据了'
+						this.tip = '暂无数据'
 						this.loadingShow = false
 						this.scroll.refresh()
 					}
 				})
 			},
 			getListData(id) {
+				if(!this.flag) {
+					return
+				}
+				this.flag = false
 				this.$http.get('getData/index.php?m=home&c=Form&a=infoList', {
 						params: {
 							seachdata: {
 								'type_id': 6,
 								'action_status': id,
 								'city': sessionStorage.getItem('city'),
+								'country': sessionStorage.getItem('counties'),
 								'limit': this.count + ',12'
 							}
 						}
@@ -83,9 +92,11 @@
 							this.$nextTick(() => {
 								this.scroll.refresh()
 							})
+							this.flag = true
 						} else {
 							this.tip = '没有数据了'
 							this.loadingShow = false
+							this.flag = true
 						}
 					})
 			},
@@ -99,7 +110,7 @@
 				})
 				this.scroll.on('touchend', (pos) => {
 					//					console.log(pos)
-					if(pos.y <= this.scroll.maxScrollY + 20) {
+					if(pos.y <= this.scroll.maxScrollY + 20 && this.scroll.maxScrollY !== 0) {
 						this.tip = '上拉加载更多'
 						this.loadingShow = true
 						this.getListData(this.currentId)
@@ -114,7 +125,8 @@
 				count: 0,
 				tip: '加载中',
 				loadingShow: true,
-				currentId: 1
+				currentId: 1,
+				flag: true
 			}
 		}
 	}

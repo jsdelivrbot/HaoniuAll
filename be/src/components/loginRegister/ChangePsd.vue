@@ -35,6 +35,9 @@
 		<div class="btn" @click="change">
 			<p>确&nbsp;&nbsp;&nbsp;&nbsp;定</p>
 		</div>
+		<div class="bg_img">
+			<img src="../../../static/usercenter/loginbg.png" />
+		</div>
 	</div>
 </template>
 
@@ -75,14 +78,18 @@
 					})
 					return
 				}
-				this.$http.get('getData/index.php?m=home&c=Form&a=usercenter_SendCode', {
-					params: {
-						seachdata: {
-							username: this.mobile
+				this.$http.get('getData/home/Form/usercenter_SCCode').then((res) => {
+					let sccode = res.data.data.sccode
+					sccode = sccode * 3 / 2 + 4
+//					console.log(sccode)
+					this.$http.get('getData/index.php?m=home&c=Form&a=usercenter_SendCode', {
+						params: {
+							seachdata: {
+								username: this.mobile,
+								sccode: sccode
+							}
 						}
-					}
-				})
-					.then((res) => {
+					}).then((res) => {
 						if(res.data.result === 1) {
 							this.count = 60
 							this.$vux.toast.show({
@@ -97,6 +104,7 @@
 							})
 						}
 					})
+				})
 			},
 			change() {
 				if(this.code === '') {
@@ -165,7 +173,21 @@
 	.change-psd-box {
 		width: 100%;
 		min-height: 100vh;
-		background: linear-gradient(#f39500, #e60112);
+		/*background: linear-gradient(#f39500, #e60112);*/
+		/*background: url(../../../static/usercenter/loginbg.png) center no-repeat;
+		background-size: cover;*/
+		.bg_img {
+			width: 100%;
+			min-height: 100vh;
+			overflow: hidden;
+			position: fixed;
+			left: 0;
+			top: 0;
+			z-index: -1;
+			img {
+				width: 100%;
+			}
+		}
 		.title {
 			position: relative;
 			width: 100%;
@@ -247,7 +269,8 @@
 			height: 88/@rem;
 			border-radius: 48/@rem;
 			margin: 100/@rem auto 0;
-			box-shadow: 0 2px 2px white inset, 0 2px 2px rgba(0, 0, 0, 0.4);
+			/*box-shadow: 0 2px 2px white inset, 0 2px 2px rgba(0, 0, 0, 0.4);*/
+			background-color: #E60012;
 			p {
 				text-align: center;
 				color: white;

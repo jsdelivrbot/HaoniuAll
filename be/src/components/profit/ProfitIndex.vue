@@ -4,11 +4,11 @@
 			<!--<span class="iconfont icon-fanhui" @click="back"></span>-->
 			<span class="text">我的收益</span>
 			<router-link to="/profit/ranking" tag="div" class="rank">
-				<img src="../../../static/rank.png" />
+				<img src="../../../static/usercenter/rank.png" />
 			</router-link>
 		</div>
 		<div class="img">
-			<img src="../../../static/profit.png" />
+			<img src="../../../static/usercenter/profit.png" />
 			<div class="today">
 				<p class="first">今日收益（元）</p>
 				<p class="second">{{today_money}}元</p>
@@ -46,7 +46,7 @@
 				<span @click="data1 = 4">30天</span>
 			</div>
 		</div>
-		<div class="reward">
+		<div class="reward" style="display: none;">
 			<p class="reward-title">双重奖励</p>
 			<div class="reward-content">
 				<p>1.返佣奖励</p>
@@ -58,7 +58,7 @@
 				</p>
 			</div>
 		</div>
-		<div class="btn" @click="getCash">
+		<div class="btn" @click="getCash" style="margin-top: 80px;">
 			立即提现
 		</div>
 		<index-footer></index-footer>

@@ -6,7 +6,7 @@
 			</div>
 		</div>
 		<div class="photo">
-			<img src="../../../static/login1.png" />
+			<img src="../../../static/usercenter/login1.png" />
 		</div>
 		<div class="content">
 			<div class="input-group">
@@ -35,8 +35,11 @@
 			<p>第三方登录</p>
 		</div>
 		<div class="otherway">
-			<!--<img src="../../../static/login4.png" />-->
-			<img src="../../../static/login5.png" @click="otherLogin('weixin')" />
+			<!--<img src="../../../static/usercenter/login4.png" />-->
+			<img src="../../../static/usercenter/login5.png" @click="otherLogin('weixin')" />
+		</div>
+		<div class="bg_img">
+			<img src="../../../static/usercenter/loginbg.png" />
 		</div>
 	</div>
 </template>
@@ -74,6 +77,7 @@
 										localStorage.setItem('hy_area', res.data.data[0].hy_area || '')
 										localStorage.setItem('hbt_list', res.data.data[0].hbt_list || '')
 										sessionStorage.setItem('token', res.data.data[0].token)
+										localStorage.setItem('token', res.data.data[0].token)
 //										$this.$http.defaults.headers.common['token'] = sessionStorage.getItem('token')
 										$this.$http.defaults.headers.get['token'] = sessionStorage.getItem('token')
 //										let token = $this.$http.defaults.headers.get['token']
@@ -149,6 +153,7 @@
 							localStorage.setItem('phone', String.trim($this.phone))
 							localStorage.setItem('psw', $this.psw)
 							sessionStorage.setItem('token', res.data.data[0].token)
+							localStorage.removeItem('token')
 							localStorage.setItem('avatar', res.data.data[0].avatar)
 							localStorage.setItem('mobile', res.data.data[0].mobile)
 							localStorage.setItem('nickname', res.data.data[0].nickname)
@@ -187,7 +192,21 @@
 	.login-box {
 		width: 100%;
 		min-height: 100vh;
-		background: linear-gradient(#f39500, #e60112);
+		/*background: url(../../../static/usercenter/loginbg.png) center no-repeat;
+		background-size: cover;*/
+		/*background: linear-gradient(#f39500, #e60112);*/
+		.bg_img {
+			width: 100%;
+			min-height: 100vh;
+			overflow: hidden;
+			position: fixed;
+			left: 0;
+			top: 0;
+			z-index: -1;
+			img {
+				width: 100%;
+			}
+		}
 		.title {
 			.back {
 				width: 88/@rem;
@@ -220,10 +239,10 @@
 				width: 550/@rem;
 				height: 200/@rem;
 				.item1 {
-					background: url(../../../static/login2.png) left 36/@rem no-repeat;
+					background: url(../../../static/usercenter/login2.png) left 36/@rem no-repeat;
 				}
 				.item2 {
-					background: url(../../../static/login3.png) left 36/@rem no-repeat;
+					background: url(../../../static/usercenter/login3.png) left 36/@rem no-repeat;
 				}
 				.item {
 					overflow: hidden;
@@ -265,7 +284,8 @@
 			height: 88/@rem;
 			border-radius: 48/@rem;
 			margin: 100/@rem auto 0;
-			box-shadow: 0 2px 2px white inset, 0 2px 2px rgba(0, 0, 0, 0.4);
+			/*box-shadow: 0 2px 2px white inset, 0 2px 2px rgba(0, 0, 0, 0.4);*/
+			background-color: #E60012;
 			p {
 				text-align: center;
 				color: white;
@@ -292,8 +312,9 @@
 				color: white;
 				text-align: center;
 				line-height: 42/@rem;
-				box-shadow: 0 2px 2px white inset, 0 2px 2px rgba(0, 0, 0, 0.4);
+				/*box-shadow: 0 2px 2px white inset, 0 2px 2px rgba(0, 0, 0, 0.4);*/
 				border-radius: 48/@rem;
+				background-color: black;
 			}
 		}
 		.slider {
@@ -301,7 +322,7 @@
 			height: 42/@rem;
 			margin: 0 auto;
 			text-align: center;
-			background: url(../../../static/login6.png) left center no-repeat;
+			background: url(../../../static/usercenter/login6.png) left center no-repeat;
 			background-size: contain;
 			p {
 				font-size: 24/@rem;

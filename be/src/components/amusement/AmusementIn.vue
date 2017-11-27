@@ -1,7 +1,7 @@
 <template>
 	<div class="amusement-in-box">
 		<v-header :search="true" map="搜索" @getSearchData="getSearchData"></v-header>
-		<tab :data="tabList" :type_id="listId" @getData="getData"></tab>
+		<tab :data="tabList" :type_id="listId" @getData="getData" ref="tab"></tab>
 		<div ref="wrapper" class="wrapper">
 			<amusement-list :list="listData" :tip="tip" :loadingShow="loadingShow"></amusement-list>
 		</div>
@@ -29,7 +29,8 @@
 				count: 0,
 				tip: '加载中',
 				loadingShow: true,
-				searchData2: ''
+				searchData2: '',
+				flag: true
 			}
 		},
 		created() {
@@ -46,6 +47,7 @@
 					vm.tip = '加载中'
 					vm.loadingShow = true
 					vm.searchData2 = ''
+					vm.$refs.tab.currentList = -1
 					vm.init()
 				})
 			}
@@ -58,6 +60,7 @@
 							seachdata: {
 								'type_id': this.listId,
 								'city': sessionStorage.getItem('city'),
+								'country': sessionStorage.getItem('counties'),
 								'option_data': this.searchData,
 								'limit': this.count + ',12'
 							}
@@ -135,11 +138,16 @@
 				}, 20)
 			},
 			getListData() {
+				if(!this.flag) {
+					return
+				}
+				this.flag = false
 				this.$http.get('getData/index.php?m=home&c=Form&a=infoList', {
 						params: {
 							seachdata: {
 								'type_id': this.listId,
 								'city': sessionStorage.getItem('city'),
+								'country': sessionStorage.getItem('counties'),
 								'option_data': this.searchData,
 								'limit': this.count + ',12',
 								'searchData2': this.searchData2
@@ -156,9 +164,11 @@
 							this.$nextTick(() => {
 								this.scroll.refresh()
 							})
+							this.flag = true
 						} else {
 							this.tip = '没有数据了'
 							this.loadingShow = false
+							this.flag = true
 						}
 					})
 			},
