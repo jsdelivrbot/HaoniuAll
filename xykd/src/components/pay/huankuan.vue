@@ -1,9 +1,13 @@
 <template>
-	<section class="quick-box">
-		<v-header title='快速审核直通车'></v-header>
-		<h2 class="show_money">
-			快速审核费:<em>¥20.00</em>
-		</h2>
+	<div class="pay_box">
+		<v-header title="立即还款"></v-header>
+		<div class="content">
+			<p>￥{{money}}</p>
+			<div>
+				还款金额
+			</div>
+		</div>
+
 		<div class="pay_select_list vux-1px-tb">
 			<div class="item vux-1px-b" @click="current = 1">
 				<img src="./img/weicinzhifu@3x.png" class="icon icon0" />
@@ -17,15 +21,11 @@
 			</div>
 		</div>
 
-		<div class="tips">
-			快速直通车说明:快速直通车说明快速直通车说明快速直通车说明快速直通车说明快速直通车说明
-		</div>
-
 		<div class="global_btn_wrapper">
 			<p class="btn active" v-if="current!==''" @click="toPayment">确认支付</p>
 			<p class="btn" v-else>确认支付</p>
 		</div>
-	</section>
+	</div>
 </template>
 
 <script>
@@ -33,11 +33,22 @@
 	export default {
 		data() {
 			return {
-				current: ''
+				current: 1,
+				money: '',
+				detail: ''
 			}
 		},
 		components: {
 			'v-header': Header
+		},
+		mounted() {
+			this.money = (this.$route.params.money * 1).toFixed(2)
+			this.$http.get('api/order/preRenewal').then(
+				(res) => {
+					this.detail = res.data.obj
+					console.log(res.data)
+				}
+			)
 		},
 		methods: {
 			toPayment() {
@@ -66,28 +77,7 @@
 		}
 	}
 </script>
-<style lang="less">
-	.quick-box {
-		padding-top: 48px;
-		height: auto;
-		overflow: hidden;
-		.tips {
-			font-size: 12px;
-			padding: 15px;
-			color: #999;
-		}
-		.show_money {
-			font-size: 18px;
-			color: #282828;
-			font-weight: normal;
-			padding-top: 20px;
-			padding-left: 15px;
-			line-height: 60px;
-			background: #fff;
-			em {
-				margin-left: 10px;
-				font-style: normal;
-			}
-		}
-	}
+
+<style type="text/css">
+
 </style>

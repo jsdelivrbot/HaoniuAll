@@ -2,14 +2,29 @@
 	<section class="record-box">
 		<v-header title='借款记录'></v-header>
 		<ul class="record_list">
-			<router-link tag='li' to='/recordDetail/1' v-for="(item,index) in 10" class="vux-1px-b" :key='index'>
+			<router-link tag='li' :to='/recordDetail/+item.id' v-for="(item,index) in recordList" class="vux-1px-b" :key='index'>
 				<div class="info">
-					<h3>1000.00</h3>
-					<p>2017年11月20日借</p>
+					<h3>{{item.money.toFixed(2)}}</h3>
+					<p>{{item.applyTime}}</p>
 				</div>
 				<div class="operation">
-					<span>
+					<span v-if='item.orderStatus==0'>
+						审批中
+					</span>
+					<span v-else-if='item.orderStatus==1'>
+						待还款
+					</span>
+					<span v-else-if='item.orderStatus==2'>
+						待还款
+					</span>
+					<span v-else-if='item.orderStatus==3'>
 						已结清
+					</span>
+					<span v-else-if='item.orderStatus==4'>
+						已逾期
+					</span>
+					<span v-else>
+						已严重逾期
 					</span>
 					<i>
 						<img src="./img/youla@3x.png"/>
@@ -25,6 +40,18 @@
 	export default {
 		components: {
 			'v-header': Header
+		},
+		data() {
+			return {
+				recordList: ''
+			}
+		},
+		mounted() {
+			this.$http.get('api/order/list').then(
+				(res) => {
+					this.recordList = res.data.obj
+				}
+			)
 		}
 	}
 </script>

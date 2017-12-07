@@ -11,6 +11,11 @@ import More from '@/components/home/more'
 import userCenter from '@/components/usercenter/userCenter'
 import Record from '@/components/usercenter/record'
 import recordDetail from '@/components/usercenter/recordDetail'
+import userSet from '@/components/usercenter/set'
+import changeName from '@/components/usercenter/changeName'
+import changePwd from '@/components/usercenter/changePwd'
+import Invite from '@/components/usercenter/invite'
+
 //news
 import Message from '@/components/news/message'
 import newsDetail from '@/components/news/newsDetail'
@@ -19,19 +24,25 @@ import newsDetail from '@/components/news/newsDetail'
 import Authentication from '@/components/authentication/index'
 import Identity from '@/components/authentication/identity'
 import Zhima from '@/components/authentication/zhima'
+import Face from '@/components/authentication/face'
+import phone from '@/components/authentication/phone'
 import bindBank from '@/components/authentication/bindBank'
+import emergency from '@/components/authentication/emergency'
 
 //pay
 import xqPay from '@/components/pay/xqpay'
-import successMoney from '@/components/pay/successMoney'
+import paySuccess from '@/components/pay/paySuccess'
 import Repayment from '@/components/pay/repayment'
 import Quick from '@/components/pay/quick'
+import placeOrder from '@/components/pay/placeOrder'
+import huanKuan from '@/components/pay/huankuan'
+import wechatPay from '@/components/pay/wechatpay'
 Vue.use(Router)
 
 export default new Router({
 	routes: [{
 			path: '/',
-			redirect: '/login'
+			redirect: '/borrowMoney'
 		},
 		{
 			path: '/login', //需检测用户是否存在
@@ -88,6 +99,21 @@ export default new Router({
 			name: 'Quick',
 			component: Quick
 		},
+		{
+			path: '/Face', //绑定银行
+			name: 'Face',
+			component: Face
+		},
+		{
+			path: '/phone', //绑定银行
+			name: 'phone',
+			component: phone
+		},
+		{
+			path: '/emergency', //绑定银行
+			name: 'emergency',
+			component: emergency
+		},
 		//pay
 		{
 			path: '/Repayment', //借款成功
@@ -95,14 +121,29 @@ export default new Router({
 			component: Repayment
 		},
 		{
-			path: '/successMoney', //借款成功
-			name: 'successMoney',
-			component: successMoney
+			path: '/placeOrder',
+			name: 'placeOrder',
+			component: placeOrder
+		},
+		{
+			path: '/paySuccess', //借款成功
+			name: 'paySuccess',
+			component: paySuccess
 		},
 		{
 			path: '/xqPay', //支付续期费用
 			name: 'xqPay',
 			component: xqPay
+		},
+		{
+			path: '/huanKuan/:money', //支付续期费用
+			name: 'huanKuan',
+			component: huanKuan
+		},
+		{
+			path: '/wechatPay', //支付续期费用
+			name: 'wechatPay',
+			component: wechatPay
 		},
 		//home
 		{
@@ -128,14 +169,32 @@ export default new Router({
 		},
 		//usercenter
 		{
-			path: '/Record', //支付续期费用
+			path: '/Record', //借款记录
 			name: 'Record',
 			component: Record
 		},
 		{
-			path: '/recordDetail/:id', //支付续期费用
+			path: '/recordDetail/:id', //借款详情
 			name: 'recordDetail',
 			component: recordDetail
+		},
+		{
+			path: '/userSet', //借款详情
+			name: 'userSet',
+			component: userSet
+		},
+		{
+			path: '/changeName', //借款详情
+			name: 'changeName',
+			component: changeName
+		}, {
+			path: '/changePwd', //借款详情
+			name: 'changePwd',
+			component: changePwd
+		}, {
+			path: '/Invite', //借款详情
+			name: 'Invite',
+			component: Invite
 		}
 	]
 })

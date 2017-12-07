@@ -12,8 +12,8 @@
 			</cell>
 		</group>
 
-		<div class="btn_wrapper">
-			<p class="btn">在线客服</p>
+		<div class="global_btn_wrapper">
+			<p class="btn active">在线客服</p>
 		</div>
 	</div>
 </template>
@@ -81,23 +81,6 @@
 				&::before {
 					left: 39px;
 				}
-			}
-		}
-		.btn_wrapper {
-			width: 100%;
-			height: 50px;
-			margin: 45px auto 0;
-			padding: 0 30px;
-			box-sizing: border-box;
-			.btn {
-				width: 100%;
-				height: 100%;
-				border-radius: 25px;
-				background-color: #dbb76c;
-				font-size: 18px;
-				text-align: center;
-				line-height: 50px;
-				color: white;
 			}
 		}
 	}

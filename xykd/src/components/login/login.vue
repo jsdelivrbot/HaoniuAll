@@ -55,6 +55,7 @@
 <script>
 	import Header from '@/components/element/header'
 	export default {
+		name: 'nokeep',
 		components: {
 			'v-header': Header
 		},
@@ -76,7 +77,7 @@
 						$this.loginStatus -= 1
 						return false
 					} else {
-						return false
+						return true
 					}
 				}
 			})
@@ -109,6 +110,9 @@
 			changeStatus(status) {
 				this.loginStatus = status
 			},
+			autoLogin(val) {
+				localStorage.setItem('autoLogin', val)
+			},
 			Login() {
 				if(this.password !== '') {
 					this.$http.post('api/user/login', {
@@ -119,6 +123,8 @@
 						(res) => {
 							if(res.data.result === 0) {
 								sessionStorage.setItem('token', res.data.obj.token)
+								this.setUserInfo(res.data.obj)
+								this.autoLogin(res.data.obj.autoLogin)
 								this.$http.defaults.headers.common['token'] = sessionStorage.getItem('token')
 								this.$router.replace('/borrowMoney')
 							}
@@ -137,7 +143,9 @@
 					}).then(
 						(res) => {
 							if(res.data.result === 0) {
+								this.setUserInfo(res.data.obj)
 								sessionStorage.setItem('token', res.data.obj.token)
+								this.autoLogin(res.data.obj.autoLogin)
 								this.$http.defaults.headers.common['token'] = sessionStorage.getItem('token')
 								this.$router.replace('/borrowMoney')
 							}
@@ -172,9 +180,11 @@
 								}
 							}, 1000)
 						}
-						console.log(res.data)
 					}
 				)
+			},
+			setUserInfo(val) {
+				localStorage.setItem('userInfo', JSON.stringify(val))
 			}
 		},
 		beforeRouteLeave(to, from, next) {

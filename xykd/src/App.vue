@@ -10,7 +10,17 @@
 	export default {
 		name: 'app',
 		mounted() {
-			this.$CautoUpdate('http://admin.chenbowen.cc/static/update.wgt')
+//			this.$http.get('xxxx', {
+//				params: {
+//					version: localStorage.getItem('version')
+//				}
+//			}).then(
+//				(res) => {
+//					if(res.data.result === 0) {
+//						this.$CautoUpdate(res.data.obj)
+//					}
+//				}
+//			)
 		}
 	}
 </script>
@@ -26,5 +36,6 @@
 	body {
 		min-height: 100vh;
 		background-color: #fafafa;
+		height: auto;
 	}
 </style>

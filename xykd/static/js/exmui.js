@@ -205,15 +205,86 @@ export default {
 
 					function installWgt(path) {
 						plus.runtime.install(path, {}, function() {
-							plus.nativeUI.alert('资源更新完成！', function() {
-								plus.runtime.restart();
-							});
+							plus.runtime.restart()
+//							plus.nativeUI.alert('资源更新完成！', function() {
+//								plus.runtime.restart();
+//							});
 						}, function(e) {
 							console.log("安装wgt文件失败[" + e.code + "]：" + e.message);
 						})
 					}
 					downWgt()
 				})
+			},
+			Vue.prototype.$CgetCamera = function(cb) {
+				var c = plus.camera.getCamera()
+				c.captureImage(function(e) {
+					plus.io.resolveLocalFileSystemURL(e, function(entry) {
+						var ImgPath = entry.toLocalURL() + "?version=" + new Date().getTime();
+						cb(ImgPath)
+					}, function(e) {
+						console.log("读取拍照文件错误：" + e.message);
+					})
+				}, function(s) {
+					console.log("error" + s);
+				}, {
+					filename: "_doc/head.png"
+				})
+			},
+			Vue.prototype.$CuploadImg = function(server, path, cb) {
+				plus.zip.compressImage({
+					src: path,
+					dst: "_doc/chat/gallery/" + path,
+					quality: 20,
+					overwrite: true
+				}, function(e) {
+					var wt = plus.nativeUI.showWaiting()
+					var task = plus.uploader.createUpload(server, {
+						method: 'post'
+					}, function(t, status) {
+						if(status === 200) {
+							wt.close()
+							cb(JSON.parse(t.responseText))
+						} else {
+							mui.toast('上传失败：' + status)
+							wt.close()
+						}
+					})
+					task.addFile(e.target, {
+						key: 'file'
+					})
+					task.start()
+				})
+			},
+			Vue.prototype.$CgetGallery = function(cb) {
+				plus.gallery.pick(function(path) {
+					cb(path)
+				})
+			},
+			Vue.prototype.$ClinkMan = function(cb) {
+				mui.plusReady(function() {
+					plus.contacts.getAddressBook(plus.contacts.ADDRESSBOOK_PHONE, function(addressbook) {
+						addressbook.find(['displayName', 'phoneNumbers'], function(contacts) {
+							cb(contacts)
+						})
+					}, function(e) {
+						cb(e.message)
+					})
+				})
+			},
+			Vue.prototype.$CdownImg = function(picurl, picname, cb) {
+				var dtask = plus.downloader.createDownload(picurl, {}, function(d, status) {
+					if(status == 200) {
+						plus.gallery.save(picname, function() {
+							cb(true)
+						}, function() {
+							cb(false)
+						});
+					} else {
+						cb(false)
+					}
+				});
+				dtask.start()
 			}
 	}
 }

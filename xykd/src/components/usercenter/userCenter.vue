@@ -2,43 +2,53 @@
 	<section class="usercenter-box">
 		<div class="userinfo_box">
 			<div class="user_avatar">
-				<img src="./img/touxiang@3x.png" />
+				<img :src="userInfo.headImg" v-if='userInfo.headImg!==""' />
+				<img src="./img/touxiang@3x.png" v-else/>
 			</div>
 			<div class="detail_info">
 				<h2 class="name">
-					俞强
+					{{userInfo.nickName==''?'匿名':userInfo.nickName}}
 				</h2>
-				<p>182****1147</p>
+				<p>{{userInfo.phone.substr(0,3)}}****{{userInfo.phone.substr(7,10)}}</p>
 			</div>
 
 			<div class="right_top_box">
-				<span>
-					<img src="./img/shezhi@3x.png"/>
-				</span>
+				<router-link tag='span' to='/userSet'>
+					<img src="./img/shezhi@3x.png" />
+				</router-link>
+
 				<router-link tag='span' to='/Record'>
 					<img src="./img/jie@3x.png" />
 				</router-link>
-				<!--<span>
-					<img src="./img/jie@3x.png"/>
-				</span>-->
 			</div>
 		</div>
 
 		<div class="money_info">
-			<div class="money_info_children">
+			<div class="money_info_children" v-if='limitDetail.state==0||limitDetail.state==1||limitDetail.state==6'>
 				<div>
 					<p>当前可借</p>
-					<h2>50000</h2>
+					<h2>{{limitDetail.loanableMoney}}</h2>
 				</div>
 				<div>
 					<p>总额度限</p>
-					<h2>8000</h2>
+					<h2>{{limitDetail.dicCertifiedMoney}}</h2>
+				</div>
+			</div>
+			
+			<div class="money_info_children" v-else>
+				<div>
+					<p>当前可借</p>
+					<h2>{{limitDetail.loanableMoney}}</h2>
+				</div>
+				<div>
+					<p>总额度限</p>
+					<h2>{{limitDetail.certifiedMoney}}</h2>
 				</div>
 			</div>
 		</div>
 
 		<ul class="list_box">
-			<li>
+			<!--<li>
 				<div class="top">待还</div>
 				<div class="bottom">
 					<h2>暂无待还借款</h2>
@@ -46,32 +56,48 @@
 				</div>
 			</li>
 			<li>
-				<div class="top">待还</div>
+				<div class="top">账户余额</div>
 				<div class="bottom">
-					<h2>暂无待还借款</h2>
+					<h2>0.00</h2>
 					<i class="left_icon"></i>
 				</div>
-			</li>
-			<li>
-				<div class="top">待还</div>
+			</li>-->
+			<router-link to='/invite' tag='li'>
+				<div class="top">福利</div>
 				<div class="bottom">
-					<h2>暂无待还借款</h2>
+					<h2>邀请好友赢万元现金</h2>
 					<i class="left_icon"></i>
 				</div>
-			</li>
-			<li>
-				<div class="top">待还</div>
-				<div class="bottom">
-					<h2>暂无待还借款</h2>
-					<i class="left_icon"></i>
-				</div>
-			</li>
+			</router-link>
 		</ul>
 	</section>
 </template>
 
 <script>
-	export default {}
+	export default {
+		data() {
+			return {
+				dataUserInfo: JSON.parse(localStorage.getItem('userInfo')),
+				limitDetail: ''
+			}
+		},
+		activated() {
+			this.dataUserInfo = JSON.parse(localStorage.getItem('userInfo'))
+		},
+		computed: {
+			userInfo: function() {
+				return this.dataUserInfo
+			}
+		},
+		mounted() {
+			this.$http.get('api/user/accountInfo').then(
+				(res) => {
+					this.limitDetail = res.data.obj
+					console.log(res.data)
+				}
+			)
+		}
+	}
 </script>
 <style lang="less">
 	.usercenter-box {
@@ -139,6 +165,7 @@
 				img {
 					display: block;
 					width: 90px;
+					height: 90px;
 				}
 			}
 			.detail_info {

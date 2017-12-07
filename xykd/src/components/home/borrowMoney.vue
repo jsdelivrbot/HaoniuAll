@@ -5,7 +5,8 @@
 			<div class="bg"></div>
 			<swiper class='index_swiper' v-if='swiperImg!==""' :options="swiperOption" ref="mySwiper">
 				<swiper-slide v-for='(item,index) in swiperImg' :key='index'>
-					<img :src="item.imgUrl" />
+					<!--<img :src="item.imgUrl" />-->
+					<img src="./img/banner1@3x.png" />
 				</swiper-slide>
 				<div class="swiper-pagination" slot="pagination"></div>
 			</swiper>
@@ -21,7 +22,17 @@
 			</marquee>
 		</div>
 
-		<div class="shenhe_box">
+		<div class="shenhe_box" v-if='orderStatus.state==0'>
+			<div class="status_two">
+				<p>可借款额度</p>
+				<h2>¥50000</h2>
+			</div>
+			<router-link to='/Authentication' tag='div' class='button_no_radius'>
+				立即借款(未认证)
+			</router-link>
+		</div>
+
+		<div class="shenhe_box" v-if='orderStatus.state==1'>
 			<div class="status_one">
 				<img src="./img/dengdai@3x.png" />
 			</div>
@@ -34,18 +45,74 @@
 					快速审核直通车
 				</router-link>
 			</div>
+		</div>
 
+		<div class="shenhe_box" v-if='orderStatus.state==2'>
 			<div class="status_two">
 				<p>可借款额度</p>
 				<h2>¥50000</h2>
 			</div>
-			<router-link to='/Authentication' tag='div' class='button_no_radius'>
-				立即借款
-			</router-link>
 
-			<!--<div class="button_no_radius">
-				立即借款
-			</div>-->
+			<div class="button_no_radius" @click="createrOrder">
+				立即借款(已认证可借款)
+			</div>
+		</div>
+
+		<div class="shenhe_box" v-if='orderStatus.state==3'>
+			<div class="status_one">
+				<img src="./img/dengdai@3x.png" />
+			</div>
+			<div class="button_no_radius">
+				正在放款中
+			</div>
+		</div>
+
+		<div class="shenhe_box" v-if='orderStatus.state==4'>
+			<div class="status_three">
+				<div>
+					<p>待还款</p>
+					<h2>¥{{orderStatus.deadlineMoney}}</h2>
+				</div>
+				<div>
+					<p>还款日</p>
+					<h2>{{orderStatus.deadlineTime}}</h2>
+				</div>
+			</div>
+			<router-link to='/repayment' tag='div' class='button_no_radius'>
+				立即还款
+			</router-link>
+			<div class="tips">
+				资金周转困难?
+				<router-link to='/xqPay' class='a'>
+					申请续贷
+				</router-link>
+			</div>
+		</div>
+
+		<div class="shenhe_box" v-if='orderStatus.state==6'>
+			<div class="status_two">
+				<h2>认证失败</h2>
+				<p>信用认证失败,请提高您的信用</p>
+			</div>
+			<router-link to='/Authentication' tag='div' class='button_no_radius'>
+				<!--立即借款(未认证)-->
+				提高信用
+			</router-link>
+		</div>
+
+		<!--<div class="shenhe_box">
+			<div class="status_one">
+				<img src="./img/dengdai@3x.png" />
+			</div>
+			<div class="button_no_radius">
+				额度评审中
+			</div>
+			<div class="tips">
+				审核太慢?&nbsp;试试
+				<router-link to='/Quick' class='a'>
+					快速审核直通车
+				</router-link>
+			</div>
 
 			<div class="status_three">
 				<div>
@@ -66,7 +133,7 @@
 					申请续贷
 				</router-link>
 			</div>
-		</div>
+		</div>-->
 
 	</section>
 </template>
@@ -104,27 +171,61 @@
 						slideShadows: false
 					},
 					debugger: true,
-					onTransitionStart(swiper) {
-						console.log(swiper)
-					}
+					onTransitionStart(swiper) {}
 				},
 				swiperImg: '',
-				tips: ''
+				tips: '',
+				orderStatus: ''
 			}
 		},
-		mounted() {
+		computed: {
+			swiper() {
+				return this.$refs.mySwiper.swiper
+			}
+		},
+		activated() {
+			this.swiperImg = JSON.parse(localStorage.getItem('swiper'))
 			this.$http.get('api/banner/list').then(
 				(res) => {
 					this.swiperImg = res.data.obj
 					console.log(res)
 				}
 			)
+			this.getOrderStatus()
+		},
+		mounted() {
+			this.$http.post('api/certify/create').then(
+				(res) => {}
+			)//创建认证订单
+			this.$http.get('api/banner/list').then(
+				(res) => {
+					this.swiperImg = res.data.obj
+				}
+			)//获取banner
 			this.$http.get('api/notice/list').then(
 				(res) => {
 					this.tips = res.data.obj.content
-					console.log(res)
 				}
-			)
+			)//获取公告
+			this.getOrderStatus()
+		},
+		methods: {
+			getOrderStatus() {
+				this.$http.get('api/user/borrowState').then(
+					(res) => {
+						this.orderStatus = res.data.obj
+						console.log(res.data)
+					}
+				)
+			},
+			createrOrder() {
+				this.$router.push('/placeOrder')
+			}
+		},
+		beforeRouteLeave(to, from, next) {
+			localStorage.setItem('swiper', JSON.stringify(this.swiperImg))
+			this.swiperImg = ''
+			next()
 		}
 	}
 </script>
